@@ -1,0 +1,2 @@
+set "PATH=%PATH%;C:\Keil_v5\C51\BIN"
+SET "C51INC=C:\Keil_v5\C51\INC"
