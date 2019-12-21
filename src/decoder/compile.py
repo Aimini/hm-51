@@ -4,7 +4,7 @@ import sys
 import tokenize
 import json
 import enum
-
+import decoder_token
 
 class cstate(enum.Enum):
     ERROR = enum.auto()
@@ -34,9 +34,6 @@ class cstate(enum.Enum):
         """
         ttype = token.type
         tstr = token.string
-        if ttype in (tokenize.COMMENT, tokenize.ENCODING):
-            if not self.isnoconsume():
-                return self
         is_name = ttype == tokenize.NAME
         is_number = ttype == tokenize.NUMBER
         is_lineend = ttype in (tokenize.ENDMARKER, tokenize.NEWLINE) or ttype == tokenize.NL
@@ -78,7 +75,7 @@ class cstate(enum.Enum):
             if is_name:
                 return scls.NAME
             elif is_lineend:
-                return scls.START
+                return scls.CONVERT
             else:
                 return scls.ERROR
         elif self == scls.PARAMETER_LIST_BEGIN:
@@ -127,34 +124,59 @@ class cstate(enum.Enum):
         pass
 
 
-class statement_accumulator:
+class decoder_statement_accumulator:
     """
-    control accumulator pack tokens to a control label
+    control accumulator pack tokens to a control label,
     parameterized control label or jump label.
+    result store in memeber list self.mark_lines
+    mark_lines[n][0] is line number in source file
+    mark_lines[n][1] is a list of decoders' tokens at this line
     """
 
     def __init__(self):
         self.parameters_owner = None
-        self.parameters = []
+        self.parameters = [] #store control's parameters
 
-        self.mark_lines = []
-        self.marks_per_line = []
-        pass
+        self.mark_lines = [] 
+        self.marks_per_line = [] # all marks in one(current) line
 
+
+    def decoder_token_from_py_token(self, pytoken, dtype):
+        return decoder_token.decoder_token(pytoken.start[0], dtype, pytoken.string)
+        
     def add(self, state, appendtokens):
+        """
+            according state and appendtokens to generate decoder token
+
+        """
+        t1 = appendtokens[-1]
+
         if state in (cstate.CONTROL_LINEEND, cstate.CONTROL):
-            self.marks_per_line.append(appendtokens[-2])
+            dt2 = self.decoder_token_from_py_token(appendtokens[-2],None)
+            dt2.type = decoder_token.CONTROL
+            self.marks_per_line.append(dt2)
+        elif state == cstate.JUMP_MARK:
+            dt2 = self.decoder_token_from_py_token(appendtokens[-2],None)
+            dt2.type = decoder_token.JUMP_MARK
+            self.marks_per_line.append(dt2)
         elif state == cstate.PARAMETER_LIST_BEGIN:
             self.parameters_owner = appendtokens[-2]
         elif state == cstate.GET_ONE_PARAMETER:
-            self.parameters.append(appendtokens[-1])
+            if t1.type == tokenize.NUMBER:
+                self.parameters.append(int(t1.string,0))
+            else:
+                self.parameters.append(t1.string)
         elif state == cstate.PARAMETER_LIST_END:
-            self.marks_per_line.append([self.parameters_owner, self.parameters])
+            t = self.decoder_token_from_py_token(self.parameters_owner, decoder_token.PAR_CONTROL)
+            t.parameters = self.parameters
+            self.marks_per_line.append(t)
             self.parameters = []
         elif state == cstate.CONVERT:
-            self.mark_lines.append(self.marks_per_line)
+            self.mark_lines.append([self.marks_per_line[0].lineno, self.marks_per_line])
             self.marks_per_line = []
-        
+            return
+        else:
+            return
 
 def compile_ds(readline, write):
     """
@@ -173,17 +195,21 @@ def compile_ds(readline, write):
 
     state = cstate.START
     previous_state = state  # debug
-    sa = statement_accumulator()
+    sa = decoder_statement_accumulator()
     for t in tks:
-
         previous_state = state
         while True:
+            if t.type == tokenize.COMMENT or t.type == tokenize.ENCODING:
+                break
             state = state.next(t)        
             scanned_tokens.append(t)
+
             if t.type == tokenize.NL or t.type == tokenize.NEWLINE:
                 tokens_lines.append([])
             else:
                 tokens_lines[-1].append(t)
+
+           
 
             sa.add(state, scanned_tokens)
             if state == cstate.ERROR:
@@ -200,19 +226,8 @@ def compile_ds(readline, write):
                 continue
             else:
                 break
-
-    for i in sa.mark_lines:
-        for x in i:
-            if isinstance(x, list):
-                print(x[0].string,end = '')
-                print("(", end = '')
-                for y in x[1]:
-                    print(y.string, end=',')
-                print(")", end = '')
-            else:
-                print(x.string,end = '')
-            print('',end = ',')
-        print()
+    for x in sa.mark_lines:
+        print(x)
 
 def compile_ds_to_file(infile, outfile):
     """
