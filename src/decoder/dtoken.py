@@ -2,7 +2,7 @@ CONTROL = "CONTROL"
 JUMP_MARK = "JUMP_MARK"
 PAR_CONTROL = "PAR_CONTROL"
 
-class decoder_token():
+class dtoken():
     def __init__(self, lineno, t, v):
         self.lineno = lineno
         self.type = t
