@@ -6,19 +6,19 @@
 #       RF(WE) -> RF(LWE, HWE)
 #       IMMED(0xFF)  -> JUMP(0xFF,0), BUS(IMMED)
 #
-#  class *_translater:
+#  class *_translator:
 #   do translate work
 #   when hl_dtoken_converter prepare to scan a line of of dtokens
-#   it's will invoke translater.prepare
-#   when hl_dtoken_converter first scan the line, it will call translater.scan1
+#   it's will invoke translator.prepare
+#   when hl_dtoken_converter first scan the line, it will call translator.scan1
 #   you can get inform about this line in this method.
-#   when hl_dtoken_converter second scan the same line of dtokens, it's call translater.scan2,
+#   when hl_dtoken_converter second scan the same line of dtokens, it's call translator.scan2,
 #   you will translate the dtoken to target dtoken(s) and return a list of target dtokens.
 ##########################################
 import dtoken
 import control_LUT
 import copy
-class alu_translater():
+class alu_translator():
     def prepare(self):
         self.type = None
 
@@ -61,7 +61,7 @@ class alu_translater():
             r = copy.deepcopy(dt)
             r.value = 'ALUSD'
             return r
-            
+
         # "BUS(ALU) -> BUS(ALUS) or BUS(ALUD)"
         if dt.value == "BUS":
             r = copy.deepcopy(dt)
@@ -71,7 +71,7 @@ class alu_translater():
             return r
         return None
 
-class rf_translater():
+class rf_translator():
     def prepare(self):
         pass
 
@@ -160,11 +160,11 @@ class load_immed_translator():
             return r
         return None
 
-DEFAULT_TRANSLATOR = [alu_translater(),rf_translater(),jump_translator(),load_immed_translator()]
+DEFAULT_TRANSLATOR = [alu_translator(),rf_translator(),jump_translator(),load_immed_translator()]
 
 class hl_dtoken_converter:
     def __init__(self,dtoken_translators = DEFAULT_TRANSLATOR):
-        self.dtokens_translater = dtoken_translators
+        self.dtokens_translator = dtoken_translators
 
 
     def convert(self, dtoken_lines):
@@ -177,17 +177,17 @@ class hl_dtoken_converter:
         for lineno, one_line in dtoken_lines:
             a = []
             try:
-                for one_translater in self.dtokens_translater:
-                    one_translater.prepare()
+                for one_translator in self.dtokens_translator:
+                    one_translator.prepare()
 
                 for one_dtoken in one_line:
-                    for one_translater in self.dtokens_translater:
-                        one_translater.scan1(one_dtoken)
+                    for one_translator in self.dtokens_translator:
+                        one_translator.scan1(one_dtoken)
                 
                 for one_dtoken in one_line:
                     translated = False
-                    for one_translater in self.dtokens_translater:
-                        r = one_translater.scan2(one_dtoken)
+                    for one_translator in self.dtokens_translator:
+                        r = one_translator.scan2(one_dtoken)
                         if r is not None:
                             translated = True
                             if isinstance(r,(tuple,list)):
