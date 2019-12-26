@@ -3,8 +3,8 @@ import os
 import sys
 import tokenize
 import dtoken_converter
+import hl_dtoken_converter
 import dtoken_compiler
-
 def compile_ds(readline, write):
     """
     parameters
@@ -15,10 +15,13 @@ def compile_ds(readline, write):
             must be a callable object which provides the same interface as the io.RawIOBase.write() method of file objects.
             namely, write(bytes) can write a bytes stream to traget. 
     """
-    sa = dtoken_converter.dtoken_converter()
-    dtoken_lines,pytoken_lines = sa.convert(tokenize.tokenize(readline))
+    dc = dtoken_converter.dtoken_converter()
+    hlc =  hl_dtoken_converter.hl_dtoken_converter()
     c = dtoken_compiler.dtoken_compiler(13)
-    c.compile(dtoken_lines)
+
+    dtoken_lines,pytoken_lines = dc.convert(tokenize.tokenize(readline))
+    hl_token_lines = hlc.convert(dtoken_lines)
+    c.compile(hl_token_lines)
     
 
 def compile_ds_to_file(infile, outfile):
