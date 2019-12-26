@@ -21,14 +21,13 @@ import dtoken
 import control_LUT
 
 class dtoken_compiler:
-    def __init__(self, address_space,  CTL_LUT= control_LUT.CTL_LUT):
+    def __init__(self, CTL_LUT= control_LUT.CTL_LUT):
         """
         parameter:
             address_space: int
                 provide rom capacity info, 2**address_space bytes
         """
-        self.capacity= 2**address_space
-        self.CTL_LUT= CTL_LUT
+        self.CTL_LUT = CTL_LUT
         self.calcuate_LUT_parameters_position()
 
     def reset(self):
@@ -52,29 +51,45 @@ class dtoken_compiler:
     def calcuate_LUT_parameters_position(self):
         pos= 0
         for k, v in self.CTL_LUT.items():  # v = RF LUT , WR LUT ...
-                pos = v.auto_position(pos)
+            pos = v.auto_position(pos)
 
+    def controls_parameters_position_info(self):
+        pi = []
+        for k, v in self.CTL_LUT.items():
+            pi.extend( [(x[0],x[1], k +'_' + x[2]) for x in v.position_info()] )
+        return pi
     
-    def find_parameter_encoding_info(self, p, LUT):
+    def find_parameter_encoding_info(self,i, p, LUT):
         """
-        find parameter
+        find parameter's place info and encoding
+        return:
+            place_info:tuple, encoding:int
+                place_info:(pos:int, len:int)
         """
-        return LUT.get_info(p)
-
+        if isinstance(LUT, control_LUT.name_parameters_lut):
+            return LUT.get_info(p)
+        elif isinstance(LUT, control_LUT.value_parameter_lut):
+            return LUT.get_place_info(i), p
 
     def convert_one_token(self, dt):
         control_parameter_LUTs = self.CTL_LUT.get(dt.value)
         if control_parameter_LUTs is None:
             raise SyntaxError('unkonw control name "{}"'.format(dt.value))
         
-        print('encoding control "{}":'.format(dt.value))
-        for p in dt.parameters:
-            place_info, index = self.find_parameter_encoding_info(p, control_parameter_LUTs)
+        for i,p in enumerate(dt.parameters):
+            place_info, encoding = self.find_parameter_encoding_info(i, p, control_parameter_LUTs)
 
             if place_info is None:
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
 
-            print('parameter "{}"({}) at {}:'.format(p, index, place_info))
+            # jump mark in address, etc.
+            if not isinstance(encoding,int):
+                encoding = self.jump_table.get(encoding)
+
+            if  not isinstance(encoding,int):
+                print(dt)
+                raise SyntaxError('unkonw control parameter "{}"'.format(p))
+
 
     def convert_one_line(self, dtokens):
         """
@@ -98,7 +113,7 @@ class dtoken_compiler:
                 v = one_dtoken.value
                 if one_dtoken.type == dtoken.JUMP_MARK:
                     if self.jump_table.get(v) is not None:
-                        raise SyntaxError('duplicate jump label "{}" at line'.format(v))
+                        raise SyntaxError('duplicate jump label "{}" at line {}'.format(v, lineno))
                     self.jump_table[v]= self.pc
                 else:
                     a.append(one_dtoken)
@@ -118,5 +133,5 @@ class dtoken_compiler:
                 self.convert_one_line(one)
                 self.pc_inc()
             except SyntaxError as e:
-                e.msg= e.msg + "at line " + str(lineno)
-                print(e)
+                e.msg= e.msg + " at line " + str(lineno)
+                raise e

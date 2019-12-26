@@ -17,11 +17,13 @@ def compile_ds(readline, write):
     """
     dc = dtoken_converter.dtoken_converter()
     hlc =  hl_dtoken_converter.hl_dtoken_converter()
-    c = dtoken_compiler.dtoken_compiler(13)
+    c = dtoken_compiler.dtoken_compiler()
+    print(c.controls_parameters_position_info())
 
     dtoken_lines,pytoken_lines = dc.convert(tokenize.tokenize(readline))
     hl_token_lines = hlc.convert(dtoken_lines)
     c.compile(hl_token_lines)
+
     
 
 def compile_ds_to_file(infile, outfile):
@@ -43,7 +45,7 @@ if __name__ == "__main__":
     arg_parser.add_option('-o', '--output', action='store', type="string", dest='output', default=None)
 
     # iarg = sys.argv[1:]
-    darg = ['-i', R"D:\OneDrive\51cpu\src\decoder\test.ds"]
+    darg = ['-i', R"D:\OneDrive\51cpu\src\decoder\decoder.ds"]
     iarg = darg
 
     op, ar = arg_parser.parse_args(darg)
