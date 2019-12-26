@@ -32,8 +32,11 @@ class name_parameters_lut:
 
     def try_enum_multiname_encoding(self, multiname_list, parameter_name):
         if isinstance(multiname_list,(tuple,list)):
-            multiname_list.index(parameter_name)
-            return True
+            try:
+                multiname_list.index(parameter_name)
+                return True
+            except ValueError:
+                return False
         else:
             return False
 
