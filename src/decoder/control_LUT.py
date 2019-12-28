@@ -11,6 +11,7 @@
 #
 import copy
 
+
 class abstract_parameters_lut():
     def __init__(self, LUT):
         self.LUT = LUT
@@ -24,14 +25,16 @@ class abstract_parameters_lut():
 
     def position_info(self):
         """
-        return parameters position info
-        return:
-            tuple:(pos:int , len:int ,name:str)
+        return parameters position info.
+            return:
+                tuple:(pos:int , len:int ,name:str)
         """
         r = []
         for one in self.LUT:
             r.append((one['pos'], one['len'], one['sh']))
         return r
+
+
 class name_parameters_lut(abstract_parameters_lut):
     def __init__(self, LUT):
         super().__init__(LUT)
@@ -54,13 +57,13 @@ class name_parameters_lut(abstract_parameters_lut):
             (place_info:Tuple,encoding:int)
             place_info : (pos:int, len:int)
         '''
-        idx,encoding = self.get_encoding(parameter_name)
+        idx, encoding = self.get_encoding(parameter_name)
         if idx is None:
-            return None,None
+            return None, None
         else:
             one = self.LUT[idx]
             place_info = (one['pos'], one['len'])
-            return  place_info, encoding
+            return place_info, encoding
 
     def get_encoding(self, name):
         """
@@ -77,11 +80,12 @@ class name_parameters_lut(abstract_parameters_lut):
 
                 if name == enum_name:
                     return idx, encoding
-        return None,None
+        return None, None
 
-    def have_encoding_name(self,name):
+    def have_encoding_name(self, name):
         idx, encoding = self.get_encoding(name)
         return idx != None
+
 
 class value_parameter_lut(abstract_parameters_lut):
     def __init__(self, LUT):
@@ -94,7 +98,7 @@ class value_parameter_lut(abstract_parameters_lut):
         return:
             place_info : (pos:int, len:int)
         '''
-        one =  self.LUT[i]
+        one = self.LUT[i]
         # find parameter name in one parameter LUST
         return (one['pos'], one['len'])
 
@@ -104,7 +108,7 @@ class value_parameter_lut(abstract_parameters_lut):
 # one encoding  enum name
 REGISTER_FILE = name_parameters_lut([
     {
-        'sh' : 'SRC',
+        'sh': 'SRC',
         'name': 'register selector',
         'len': 4,
         'enum': ['A',   'B',  'SP', 'PSW',
@@ -113,13 +117,13 @@ REGISTER_FILE = name_parameters_lut([
                  'T0', 'T1',  'T2',  'T3']
     },
     {
-        'sh' : 'LWE',
+        'sh': 'LWE',
         'name': 'write low nibble',
         'len': 1,
         'enum': ['', 'LWE']
     },
     {
-        'sh' : 'HWE',
+        'sh': 'HWE',
         'name': 'write high nibble',
         'len': 1,
         'enum': ['', 'HWE']
@@ -128,7 +132,7 @@ REGISTER_FILE = name_parameters_lut([
 
 BUS = name_parameters_lut([
     {
-        'sh' : 'SRC',
+        'sh': 'SRC',
         'name': 'bus ouput driver',
         'len': 3,
         'enum': ['Z', 'ALUS', 'ALUD', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRQ']
@@ -137,7 +141,7 @@ BUS = name_parameters_lut([
 
 WR = name_parameters_lut([
     {
-        'sh' : 'WE',
+        'sh': 'WE',
         'name': 'write enable',
         'len': 1,
         'enum': ['', 'WE']
@@ -146,7 +150,7 @@ WR = name_parameters_lut([
 
 SR = name_parameters_lut([
     {
-        'sh' : 'WE',
+        'sh': 'WE',
         'name': 'write enable',
         'len': 1,
         'enum': ['', 'WE']
@@ -156,7 +160,7 @@ SR = name_parameters_lut([
 
 BR = name_parameters_lut([
     {
-        'sh' : 'SRC',
+        'sh': 'SRC',
         'name': 'input select',
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
@@ -166,7 +170,7 @@ BR = name_parameters_lut([
 
 RAM = name_parameters_lut([
     {
-        'sh' : 'WE',
+        'sh': 'WE',
         'name': 'write enable',
         'len': 1,
         'enum': ['', 'WE']
@@ -197,58 +201,60 @@ ALUS = name_parameters_lut([
                   'SSETCY', 'SETOVCLRCY', 'CHIRQ', 'SWAP']
     }
 ])
-def copy_one_parameter(dest,src):
+
+
+def copy_one_parameter(dest, src):
     dest_enum = dest["enum"]
     src_enum = src["enum"]
-    for idx,value in enumerate(dest_enum):
+    for idx, value in enumerate(dest_enum):
         if idx >= len(dest_enum):
             break
         vr = dest_enum[idx]
         va = src_enum[idx]
 
-        if isinstance(vr,(list,tuple)):
-            a =vr
+        if isinstance(vr, (list, tuple)):
+            a = vr
         else:
             a = [vr]
-        
-        if isinstance(va,(list,tuple)):
+
+        if isinstance(va, (list, tuple)):
             a.extend(va)
         else:
             a.append(va)
 
         dest_enum[idx] = a
 
+
 ALUSD = name_parameters_lut(copy.deepcopy(ALUD.LUT))
-for idx,one in enumerate(ALUSD.LUT):
+for idx, one in enumerate(ALUSD.LUT):
     copy_one_parameter(one, ALUS.LUT[idx])
 
-print(ALUSD.LUT)
 JUMPABS = name_parameters_lut([
     {
         'sh': 'TYPE',
         'name': 'jump type',
         'len': 3,
-        'enum':  ['', 'J', 'JGT', 'JLT',
-                  'JBIT', 'JEQ', '', '']
+        'enum':  ['', 'J', 'JGT', 'JEQ',
+                  'JLT', 'JBIT', 'JRST', '']
     }
 ])
 
 ADDRESS = value_parameter_lut([
     {
-        
+
         'sh': '',
-        "name" : "target address",
-        "len" : 12
+        "name": "target address",
+        "len": 12
     }
 ])
 
 IMMED = value_parameter_lut([
-   {
-       
+    {
+
         'sh': '',
-        "name" : "a byte of immediate value",
-        "len" : 8
-    } 
+        "name": "a byte of immediate value",
+        "len": 8
+    }
 ])
 
 ##################
@@ -261,7 +267,7 @@ CTL_LUT = {
     'BR': BR,
     'RAM': RAM,
     'ALUSD': ALUSD,
-    'JUMPABS':JUMPABS,
-    'ADDRESS' : ADDRESS,
-    'IMMED' : IMMED,
+    'JUMPABS': JUMPABS,
+    'ADDRESS': ADDRESS,
+    'IMMED': IMMED,
 }

@@ -117,14 +117,14 @@ class jump_translator():
     
     def scan2(self, dt):
         r = []
-        if dt.value in ("J","JLT","JGT","JBIT"):
+        if dt.value in ("J","JLT","JGT","JBIT","JRST"):
             lineno = dt.lineno
             jump_token = self.create_jump(lineno, dt.value)
             r.append(jump_token)
 
             p0 = "" if len(dt.parameters) < 1 else dt.parameters[0]
             p1 = "" if len(dt.parameters) < 2 else dt.parameters[1]
-            if dt.value in ("J","JBIT"):
+            if dt.value in ("J","JBIT","JRST"):
                 
                 addr_token = self.create_address(lineno, p0)
             else:
