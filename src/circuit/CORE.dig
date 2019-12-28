@@ -199,40 +199,40 @@
 3e40520000a,3d00620000a,3d805e0000a,3dc05e0000a,3d40620000a,3c806a0000a,3cc06a0000a,
 3c406e0000a,3a008e0000a,3b00820000a,3b807e0000a,3bc07e0000a,3b40820000a,3a808a0000a,
 3ac08a0000a,3a408e0000a,39009e0000a,39809a0000a,39c09a0000a,39409e0000a,3880a60000a,
-38c0a60000a,3840ae0000a,44480248,3400ee0000a,3600d20000a,3700c60000a,3780c20000a,
+38c0a60000a,3840ae0000a,45c80248,3400ee0000a,3600d20000a,3700c60000a,3780c20000a,
 37c0c20000a,3740c60000a,3680ce0000a,36c0ce0000a,3640d20000a,3500e20000a,3580de0000a,
 35c0de0000a,3540e20000a,3480ea0000a,34c0ea0000a,3440ee0000a,32010e0000a,3301020000a,
 3380fe0000a,33c0fe0000a,3341020000a,32810a0000a,32c10a0000a,32410e0000a,31011e0000a,
-31811a0000a,31c11a0000a,31411e0000a,3081260000a,30c1260000a,30412e0000a,44480248,
+31811a0000a,31c11a0000a,31411e0000a,3081260000a,30c1260000a,30412e0000a,45c80248,
 2801c20000a,2c01720000a,2e01560000a,2f014a0000a,2f81460000a,2fc1460000a,2f414a0000a,
 2e81520000a,2ec1520000a,2e41560000a,2d01660000a,2d81620000a,2dc1620000a,2d41660000a,
 2c816e0000a,2cc16e0000a,2c41720000a,2a01920000a,2b01860000a,2b81820000a,2bc1820000a,
 2b41860000a,2a818e0000a,2ac18e0000a,2a41920000a,2901a20000a,29819e0000a,29c19e0000a,
-2941a20000a,2881ba0000a,28c1ba0000a,10c0,2a834,29035,46080000,2841c20000a,44480248,
+2941a20000a,2881ba0000a,28c1ba0000a,10c0,2a834,29035,47880000,2841c20000a,45c80248,
 2401e20000a,2601ca0000a,2501d60000a,2581d20000a,2541d60000a,2481de0000a,24c1de0000a,
 2441e20000a,2202020000a,2301f60000a,2381f20000a,23c1f20000a,2341f60000a,2281fe0000a,
 22c1fe0000a,2242020000a,2102120000a,21820e0000a,21c20e0000a,2142120000a,20821a0000a,
-20c21a0000a,2042220000a,44480248,10032a0000a,1802aa0000a,1c026a0000a,1e024e0000a,
+20c21a0000a,2042220000a,45c80248,1003420000a,1802c20000a,1c02820000a,1e024e0000a,
 1f02420000a,1f823e0000a,1fc23e0000a,1f42420000a,1e824a0000a,1ec24a0000a,1e424e0000a,
-1d025e0000a,1d825a0000a,1dc25a0000a,1d425e0000a,1c82660000a,1cc2660000a,1c426a0000a,
-1a028a0000a,1b027e0000a,1b827a0000a,1bc27a0000a,1b427e0000a,1a82860000a,1ac2860000a,
-1a428a0000a,19029a0000a,1982960000a,19c2960000a,19429a0000a,1882a20000a,18c2a20000a,
-1842aa0000a,44480248,1402ea0000a,1602ce0000a,1702c20000a,1782be0000a,17c2be0000a,
-1742c20000a,1682ca0000a,16c2ca0000a,1642ce0000a,1502de0000a,1582da0000a,15c2da0000a,
-1542de0000a,1482e60000a,14c2e60000a,1442ea0000a,12030a0000a,1302fe0000a,1382fa0000a,
-13c2fa0000a,1342fe0000a,1283060000a,12c3060000a,12430a0000a,11031a0000a,1183160000a,
-11c3160000a,11431a0000a,1083220000a,10c3220000a,10432a0000a,44480248,803ae0000a,c036e0000a,
-e03520000a,f03460000a,f83420000a,fc3420000a,f43460000a,e834e0000a,ec34e0000a,e43520000a,
-d03620000a,d835e0000a,dc35e0000a,d43620000a,c836a0000a,cc36a0000a,c436e0000a,a038e0000a,
-b03820000a,b837e0000a,bc37e0000a,b43820000a,a838a0000a,ac38a0000a,a438e0000a,9039e0000a,
-9839a0000a,9c39a0000a,9439e0000a,883aa0000a,8c3aa0000a,44480248,843ae0000a,403ee0000a,
-603d20000a,703c60000a,783c20000a,7c3c20000a,743c60000a,683ce0000a,6c3ce0000a,643d20000a,
-503e20000a,583de0000a,5c3de0000a,543e20000a,483ea0000a,4c3ea0000a,443ee0000a,2040e0000a,
-304020000a,383fe0000a,3c3fe0000a,344020000a,2840a0000a,2c40a0000a,2440e0000a,104220000a,
-1841a0000a,1c41a0000a,1441e0000a,40070,843e0000a,c42e0000a,20070,278,478,1bc,460801bc,
-44620000a,248,449,1bc,2a838,2a839,24c,180b8,24a,200002003c6,1803c,40020000c,400bc,
-24b,180bd,180be,402bd,124c,3280d,49280000,80000,482bc,100000,40472,4048,40472,4049,
-c000002c0,200bc,980b8</data>
+1d02760000a,1d825a0000a,1dc25a0000a,1d425e0000a,248,449,1b0,1ac0,2a8b8,478a90b9,1c827e0000a,
+1cc27e0000a,1c42820000a,1a02a20000a,1b02960000a,1b82920000a,1bc2920000a,1b42960000a,
+1a829e0000a,1ac29e0000a,1a42a20000a,1902b20000a,1982ae0000a,19c2ae0000a,1942b20000a,
+1882ba0000a,18c2ba0000a,1842c20000a,45c80248,1403020000a,1602e60000a,1702da0000a,
+1782d60000a,17c2d60000a,1742da0000a,1682e20000a,16c2e20000a,1642e60000a,1502f60000a,
+1582f20000a,15c2f20000a,1542f60000a,1482fe0000a,14c2fe0000a,1443020000a,1203220000a,
+1303160000a,1383120000a,13c3120000a,1343160000a,12831e0000a,12c31e0000a,1243220000a,
+1103320000a,11832e0000a,11c32e0000a,1143320000a,10833a0000a,10c33a0000a,1043420000a,
+45c80248,803c60000a,c03860000a,e036a0000a,f035e0000a,f835a0000a,fc35a0000a,f435e0000a,
+e83660000a,ec3660000a,e436a0000a,d037a0000a,d83760000a,dc3760000a,d437a0000a,c83820000a,
+cc3820000a,c43860000a,a03a60000a,b039a0000a,b83960000a,bc3960000a,b439a0000a,a83a20000a,
+ac3a20000a,a43a60000a,903b60000a,983b20000a,9c3b20000a,943b60000a,883c20000a,8c3c20000a,
+45c80248,843c60000a,404060000a,603ea0000a,703de0000a,783da0000a,7c3da0000a,743de0000a,
+683e60000a,6c3e60000a,643ea0000a,503fa0000a,583f60000a,5c3f60000a,543fa0000a,484020000a,
+4c4020000a,444060000a,204260000a,3041a0000a,384160000a,3c4160000a,3441a0000a,284220000a,
+2c4220000a,244260000a,1043a0000a,184320000a,1c4320000a,144360000a,40070,84560000a,
+c4460000a,20070,278,478,1bc,478801bc,447a0000a,248,449,1bc,2a838,2a839,24c,180b8,
+24a,200002003c6,1803c,40020000c,400bc,24b,180bd,180be,402bd,124c,3280d,4aa80000,80000,
+482bc,100000,40472,4048,40472,4049,c000002c0,200bc,980b8</data>
         </entry>
         <entry>
           <string>lastDataFile</string>
@@ -531,6 +531,32 @@ c000002c0,200bc,980b8</data>
           <string>Bits</string>
           <int>8</int>
         </entry>
+        <entry>
+          <string>Data</string>
+          <data>74,0,74,1,74,2,74,3,74,4,74,5,74,6,74,7,74,8,74,9,74,a,74,b,74,c,74,d,74,e,74,f,74,
+10,74,11,74,12,74,13,74,14,74,15,74,16,74,17,74,18,74,19,74,1a,74,1b,74,1c,74,1d,
+74,1e,74,1f,74,20,74,21,74,22,74,23,74,24,74,25,74,26,74,27,74,28,74,29,74,2a,74,
+2b,74,2c,74,2d,74,2e,74,2f,74,30,74,31,74,32,74,33,74,34,74,35,74,36,74,37,74,38,
+74,39,74,3a,74,3b,74,3c,74,3d,74,3e,74,3f,74,40,74,41,74,42,74,43,74,44,74,45,74,
+46,74,47,74,48,74,49,74,4a,74,4b,74,4c,74,4d,74,4e,74,4f,74,50,74,51,74,52,74,53,
+74,54,74,55,74,56,74,57,74,58,74,59,74,5a,74,5b,74,5c,74,5d,74,5e,74,5f,74,60,74,
+61,74,62,74,63,74,64,74,65,74,66,74,67,74,68,74,69,74,6a,74,6b,74,6c,74,6d,74,6e,
+74,6f,74,70,74,71,74,72,74,73,74,74,74,75,74,76,74,77,74,78,74,79,74,7a,74,7b,74,
+7c,74,7d,74,7e,74,7f,74,80,74,81,74,82,74,83,74,84,74,85,74,86,74,87,74,88,74,89,
+74,8a,74,8b,74,8c,74,8d,74,8e,74,8f,74,90,74,91,74,92,74,93,74,94,74,95,74,96,74,
+97,74,98,74,99,74,9a,74,9b,74,9c,74,9d,74,9e,74,9f,74,a0,74,a1,74,a2,74,a3,74,a4,
+74,a5,74,a6,74,a7,74,a8,74,a9,74,aa,74,ab,74,ac,74,ad,74,ae,74,af,74,b0,74,b1,74,
+b2,74,b3,74,b4,74,b5,74,b6,74,b7,74,b8,74,b9,74,ba,74,bb,74,bc,74,bd,74,be,74,bf,
+74,c0,74,c1,74,c2,74,c3,74,c4,74,c5,74,c6,74,c7,74,c8,74,c9,74,ca,74,cb,74,cc,74,
+cd,74,ce,74,cf,74,d0,74,d1,74,d2,74,d3,74,d4,74,d5,74,d6,74,d7,74,d8,74,d9,74,da,
+74,db,74,dc,74,dd,74,de,74,df,74,e0,74,e1,74,e2,74,e3,74,e4,74,e5,74,e6,74,e7,74,
+e8,74,e9,74,ea,74,eb,74,ec,74,ed,74,ee,74,ef,74,f0,74,f1,74,f2,74,f3,74,f4,74,f5,
+74,f6,74,f7,74,f8,74,f9,74,fa,74,fb,74,fc,74,fd,74,fe,74,ff</data>
+        </entry>
+        <entry>
+          <string>lastDataFile</string>
+          <string>D:\OneDrive\51cpu\test\temp\test.hex</string>
+        </entry>
       </elementAttributes>
       <pos x="980" y="620"/>
     </visualElement>
@@ -763,11 +789,6 @@ c000002c0,200bc,980b8</data>
       <pos x="220" y="780"/>
     </visualElement>
     <visualElement>
-      <elementName>Button</elementName>
-      <elementAttributes/>
-      <pos x="-220" y="140"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -775,12 +796,21 @@ c000002c0,200bc,980b8</data>
           <string>CLR</string>
         </entry>
       </elementAttributes>
-      <pos x="-140" y="140"/>
+      <pos x="-260" y="-80"/>
     </visualElement>
     <visualElement>
       <elementName>Clock</elementName>
-      <elementAttributes/>
-      <pos x="-240" y="180"/>
+      <elementAttributes>
+        <entry>
+          <string>Frequency</string>
+          <int>500</int>
+        </entry>
+        <entry>
+          <string>runRealTime</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="-360" y="-40"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -790,7 +820,7 @@ c000002c0,200bc,980b8</data>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="-140" y="200"/>
+      <pos x="-180" y="-20"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1121,7 +1151,7 @@ c000002c0,200bc,980b8</data>
     <visualElement>
       <elementName>Button</elementName>
       <elementAttributes/>
-      <pos x="-240" y="220"/>
+      <pos x="-360" y="0"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1142,7 +1172,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1156,7 +1186,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1170,7 +1200,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1184,7 +1214,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1198,7 +1228,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1212,7 +1242,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1226,7 +1256,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1240,7 +1270,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1254,7 +1284,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1268,7 +1298,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1282,7 +1312,7 @@ c000002c0,200bc,980b8</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[94]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[93]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1293,7 +1323,12 @@ c000002c0,200bc,980b8</data>
     </visualElement>
     <visualElement>
       <elementName>Probe</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>RF_SRC</string>
+        </entry>
+      </elementAttributes>
       <pos x="180" y="340"/>
     </visualElement>
     <visualElement>
@@ -1359,7 +1394,7 @@ c000002c0,200bc,980b8</data>
           <rotation rotation="2"/>
         </entry>
       </elementAttributes>
-      <pos x="-160" y="200"/>
+      <pos x="-280" y="-20"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1378,7 +1413,7 @@ c000002c0,200bc,980b8</data>
     <visualElement>
       <elementName>Probe</elementName>
       <elementAttributes/>
-      <pos x="260" y="300"/>
+      <pos x="280" y="300"/>
     </visualElement>
     <visualElement>
       <elementName>PullDown</elementName>
@@ -1388,7 +1423,7 @@ c000002c0,200bc,980b8</data>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="240" y="320"/>
+      <pos x="260" y="320"/>
     </visualElement>
     <visualElement>
       <elementName>Probe</elementName>
@@ -1438,15 +1473,29 @@ c000002c0,200bc,980b8</data>
       <elementAttributes/>
       <pos x="520" y="520"/>
     </visualElement>
+    <visualElement>
+      <elementName>Probe</elementName>
+      <elementAttributes/>
+      <pos x="-240" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="-360" y="-80"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
       <p1 x="-260" y="320"/>
-      <p2 x="-220" y="320"/>
+      <p2 x="-240" y="320"/>
     </wire>
     <wire>
       <p1 x="-360" y="320"/>
       <p2 x="-320" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="-240" y="320"/>
+      <p2 x="-220" y="320"/>
     </wire>
     <wire>
       <p1 x="720" y="640"/>
@@ -1463,6 +1512,10 @@ c000002c0,200bc,980b8</data>
     <wire>
       <p1 x="740" y="640"/>
       <p2 x="900" y="640"/>
+    </wire>
+    <wire>
+      <p1 x="-360" y="0"/>
+      <p2 x="-320" y="0"/>
     </wire>
     <wire>
       <p1 x="1040" y="260"/>
@@ -1505,10 +1558,6 @@ c000002c0,200bc,980b8</data>
       <p2 x="660" y="200"/>
     </wire>
     <wire>
-      <p1 x="-160" y="200"/>
-      <p2 x="-140" y="200"/>
-    </wire>
-    <wire>
       <p1 x="1040" y="840"/>
       <p2 x="1100" y="840"/>
     </wire>
@@ -1541,12 +1590,12 @@ c000002c0,200bc,980b8</data>
       <p2 x="180" y="460"/>
     </wire>
     <wire>
-      <p1 x="-220" y="140"/>
-      <p2 x="-140" y="140"/>
-    </wire>
-    <wire>
       <p1 x="640" y="140"/>
       <p2 x="660" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="-360" y="-80"/>
+      <p2 x="-260" y="-80"/>
     </wire>
     <wire>
       <p1 x="180" y="720"/>
@@ -1567,6 +1616,10 @@ c000002c0,200bc,980b8</data>
     <wire>
       <p1 x="640" y="400"/>
       <p2 x="660" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="-280" y="-20"/>
+      <p2 x="-180" y="-20"/>
     </wire>
     <wire>
       <p1 x="-160" y="340"/>
@@ -1661,10 +1714,6 @@ c000002c0,200bc,980b8</data>
       <p2 x="660" y="220"/>
     </wire>
     <wire>
-      <p1 x="-240" y="220"/>
-      <p2 x="-200" y="220"/>
-    </wire>
-    <wire>
       <p1 x="-420" y="480"/>
       <p2 x="-400" y="480"/>
     </wire>
@@ -1721,6 +1770,10 @@ c000002c0,200bc,980b8</data>
       <p2 x="220" y="740"/>
     </wire>
     <wire>
+      <p1 x="-360" y="-40"/>
+      <p2 x="-320" y="-40"/>
+    </wire>
+    <wire>
       <p1 x="180" y="680"/>
       <p2 x="220" y="680"/>
     </wire>
@@ -1774,11 +1827,11 @@ c000002c0,200bc,980b8</data>
     </wire>
     <wire>
       <p1 x="140" y="300"/>
-      <p2 x="240" y="300"/>
+      <p2 x="260" y="300"/>
     </wire>
     <wire>
-      <p1 x="240" y="300"/>
-      <p2 x="260" y="300"/>
+      <p1 x="260" y="300"/>
+      <p2 x="280" y="300"/>
     </wire>
     <wire>
       <p1 x="-340" y="560"/>
@@ -1841,10 +1894,6 @@ c000002c0,200bc,980b8</data>
       <p2 x="660" y="180"/>
     </wire>
     <wire>
-      <p1 x="-240" y="180"/>
-      <p2 x="-200" y="180"/>
-    </wire>
-    <wire>
       <p1 x="-340" y="440"/>
       <p2 x="-300" y="440"/>
     </wire>
@@ -1897,10 +1946,6 @@ c000002c0,200bc,980b8</data>
       <p2 x="160" y="820"/>
     </wire>
     <wire>
-      <p1 x="240" y="300"/>
-      <p2 x="240" y="320"/>
-    </wire>
-    <wire>
       <p1 x="740" y="620"/>
       <p2 x="740" y="640"/>
     </wire>
@@ -1913,24 +1958,12 @@ c000002c0,200bc,980b8</data>
       <p2 x="740" y="800"/>
     </wire>
     <wire>
-      <p1 x="-280" y="580"/>
-      <p2 x="-280" y="600"/>
-    </wire>
-    <wire>
-      <p1 x="-200" y="200"/>
-      <p2 x="-200" y="220"/>
-    </wire>
-    <wire>
-      <p1 x="600" y="260"/>
-      <p2 x="600" y="280"/>
+      <p1 x="260" y="300"/>
+      <p2 x="260" y="320"/>
     </wire>
     <wire>
       <p1 x="520" y="520"/>
       <p2 x="520" y="540"/>
-    </wire>
-    <wire>
-      <p1 x="-380" y="520"/>
-      <p2 x="-380" y="540"/>
     </wire>
     <wire>
       <p1 x="780" y="360"/>
@@ -1941,12 +1974,32 @@ c000002c0,200bc,980b8</data>
       <p2 x="780" y="620"/>
     </wire>
     <wire>
+      <p1 x="940" y="560"/>
+      <p2 x="940" y="620"/>
+    </wire>
+    <wire>
+      <p1 x="-240" y="260"/>
+      <p2 x="-240" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="-280" y="580"/>
+      <p2 x="-280" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="260"/>
+      <p2 x="600" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="-380" y="520"/>
+      <p2 x="-380" y="540"/>
+    </wire>
+    <wire>
       <p1 x="1020" y="220"/>
       <p2 x="1020" y="240"/>
     </wire>
     <wire>
-      <p1 x="940" y="560"/>
-      <p2 x="940" y="620"/>
+      <p1 x="-320" y="-20"/>
+      <p2 x="-320" y="0"/>
     </wire>
   </wires>
   <measurementOrdering/>
