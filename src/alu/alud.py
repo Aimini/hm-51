@@ -138,7 +138,7 @@ def generate_low_by_op(ci, f,  b, a):
     elif f == 0xF:  # Ri IR, PSW
         R = (a & 0x1) & (b & 0x80)
 
-    return R & 0xF
+    return R & 0xFF
 
 
 def generate_high_by_op(ci, f, b, a):
@@ -213,7 +213,7 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0xF:  # Ri IR, PSW
         R = b & 0x1 #RS1
 
-    return R & 0xF
+    return R & 0xFF
 
 
 def gen_to_file(lowfilepath,highfilepath):
@@ -221,8 +221,8 @@ def gen_to_file(lowfilepath,highfilepath):
     h = bytearray()
 
     def write_one_byte(ci, f, b, a):
-        l.append(generate_low_by_op(ci, f, b, a) & 0xF)
-        h.append(generate_high_by_op(ci, f, b, a) & 0xF)
+        l.append(generate_low_by_op(ci, f, b, a) & 0xFF)
+        h.append(generate_high_by_op(ci, f, b, a) & 0xFF)
     enum_input(write_one_byte)
 
     with open(lowfilepath, "wb") as f:
