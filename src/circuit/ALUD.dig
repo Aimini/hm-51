@@ -549,7 +549,7 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
         </entry>
         <entry>
           <string>Output Splitting</string>
-          <string>4,1,1,1</string>
+          <string>4,1,1,1,1</string>
         </entry>
       </elementAttributes>
       <pos x="1140" y="540"/>
@@ -563,7 +563,7 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
         </entry>
         <entry>
           <string>Output Splitting</string>
-          <string>4,1,1,1</string>
+          <string>4,1,1,1,1</string>
         </entry>
       </elementAttributes>
       <pos x="1140" y="720"/>
@@ -685,7 +685,7 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
           <string>CO</string>
         </entry>
       </elementAttributes>
-      <pos x="1360" y="780"/>
+      <pos x="1360" y="800"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -705,7 +705,7 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
           <string>OV</string>
         </entry>
       </elementAttributes>
-      <pos x="1360" y="740"/>
+      <pos x="1360" y="760"/>
     </visualElement>
     <visualElement>
       <elementName>Splitter</elementName>
@@ -724,12 +724,16 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
   </visualElements>
   <wires>
     <wire>
-      <p1 x="1000" y="740"/>
-      <p2 x="1020" y="740"/>
+      <p1 x="940" y="640"/>
+      <p2 x="1180" y="640"/>
     </wire>
     <wire>
-      <p1 x="1340" y="740"/>
-      <p2 x="1360" y="740"/>
+      <p1 x="1160" y="800"/>
+      <p2 x="1360" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="1000" y="740"/>
+      <p2 x="1020" y="740"/>
     </wire>
     <wire>
       <p1 x="940" y="740"/>
@@ -768,12 +772,12 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
       <p2 x="780" y="680"/>
     </wire>
     <wire>
-      <p1 x="940" y="620"/>
-      <p2 x="1180" y="620"/>
-    </wire>
-    <wire>
       <p1 x="820" y="620"/>
       <p2 x="860" y="620"/>
+    </wire>
+    <wire>
+      <p1 x="1160" y="620"/>
+      <p2 x="1180" y="620"/>
     </wire>
     <wire>
       <p1 x="1180" y="620"/>
@@ -781,7 +785,7 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
     </wire>
     <wire>
       <p1 x="1160" y="780"/>
-      <p2 x="1360" y="780"/>
+      <p2 x="1260" y="780"/>
     </wire>
     <wire>
       <p1 x="1000" y="560"/>
@@ -836,12 +840,8 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
       <p2 x="880" y="760"/>
     </wire>
     <wire>
-      <p1 x="1160" y="760"/>
-      <p2 x="1340" y="760"/>
-    </wire>
-    <wire>
-      <p1 x="1160" y="600"/>
-      <p2 x="1180" y="600"/>
+      <p1 x="1260" y="760"/>
+      <p2 x="1360" y="760"/>
     </wire>
     <wire>
       <p1 x="1000" y="700"/>
@@ -904,16 +904,16 @@ f,c,d,e,f,c,d,e,f,c,d,e,f,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
       <p2 x="860" y="680"/>
     </wire>
     <wire>
-      <p1 x="940" y="620"/>
+      <p1 x="940" y="640"/>
       <p2 x="940" y="740"/>
     </wire>
     <wire>
-      <p1 x="1180" y="600"/>
-      <p2 x="1180" y="620"/>
+      <p1 x="1180" y="620"/>
+      <p2 x="1180" y="640"/>
     </wire>
     <wire>
-      <p1 x="1340" y="740"/>
-      <p2 x="1340" y="760"/>
+      <p1 x="1260" y="760"/>
+      <p2 x="1260" y="780"/>
     </wire>
   </wires>
   <measurementOrdering/>
