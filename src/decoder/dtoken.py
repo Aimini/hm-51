@@ -8,13 +8,18 @@ class dtoken():
         self.type = t
         self.value = v
         self.parameters = []
+
+    def simple_str(self):
+        s = self.value
         
-    def __str__(self):
-        s = "(" + self.type + ": " + self.value
-        
-        if self.type == "PAR_CONTROL":
+        if self.type == PAR_CONTROL:
             s += '(' +  ','.join([str(x) for x in self.parameters]) + ')'
-        s += ")"
+        elif self.type == JUMP_MARK:
+            s += ':'
         return s
+
+    def __str__(self):
+        return  self.type  + ':' + self.simple_str()
+
     def __repr__(self):
         return self.__str__()
