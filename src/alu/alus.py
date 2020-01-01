@@ -35,8 +35,8 @@ def generate_by_op(ci, f, A):
         R = ci | ci << 2
         R = ci | ci << 4
         R = A & R
-    elif f == 0x3:  # ()
-        R
+    elif f == 0x3:  # SETPF A
+        R = ci | (A & 0xFE)
     elif f == 0x4:  # RR A
         R = ((A & 1) << 7) | (A >> 1)
     elif f == 0x5:  # RL A
@@ -55,7 +55,9 @@ def generate_by_op(ci, f, A):
         else:
             R = A & 0xF8
     elif f == 0xB:  # BIDX  A
+        # get bit index from address and store it in both of A[7:4] and A[3:0]
         R = A & 0x7
+        R = R | (R << 4)
     elif f == 0xC:  # SETCY A
         R = (A & 0x7F) | (ci << 7)
     elif f == 0xD:  # SETOVCLRCY A
