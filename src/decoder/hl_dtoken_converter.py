@@ -35,6 +35,7 @@ class alu_translator():
 
         if control_LUT.ALUD.have_encoding_name(p):
             return "ALUD"
+            
         return None
 
     def scan1(self,dt):
@@ -50,7 +51,7 @@ class alu_translator():
                 continue
             return
 
-        raise SyntaxError('unsupport ALU control "{}"'.format(dt))
+        raise SyntaxError('unsupport ALU control for "{}"'.format(dt.simple_str()))
     
     def scan2(self, dt):
         """
@@ -202,4 +203,5 @@ class hl_dtoken_converter:
                     hl_dtokens.append([lineno, a])
             except SyntaxError as e:
                 e.msg += " at line " + str(lineno)
+                raise e
         return hl_dtokens
