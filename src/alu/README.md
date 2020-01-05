@@ -1,5 +1,5 @@
 # Introduction
-This document is alus and alud function descrptiion.
+This document is alus and alud function descrption.
 
 # ALUS
 ## input and output
@@ -7,7 +7,7 @@ ALUS is a single operand ALU, it have 3 part inputs, a 8-bit operand `A`, a 1-bi
 It have one ouput `Q`.
 
 ## encoding
-The number in first column number high-nibble, the number in fisrt row is low-nibble.
+The number in first column are the upper nibble, the number in fisrt row  are the lower nibble.
 
 |name|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
@@ -17,21 +17,35 @@ The number in first column number high-nibble, the number in fisrt row is low-ni
 |3|SETCY|SETOVCLRCY|CHIRQ|SWAP|
 
 ## Description
-### 0. A
+### 0. ADJF
 
-`Q` equal to `A`.
+Swap `A[6]` and `A[3]`.
 
 |7-0|
 |:-:|
 |A|
 
+Usage:
+```
+# ADDC example
+RF(T0,WE), ALU(ADDCF), BUS(ALU)     # T0 + WR, store flag to T0, CY at A[7], OV at A[6], AC at A[3]
+RF(T0), ALU(ADJF), BUS(ALU), WR(WE) # now OV at A[3], AC at A[6]
+RF(PSW, WE), ALU(SETPSWF), BUS(ALU) 
+```
 
-### 1. NA
-`Q` equal to not `A`.
+```
+# DA example
+RF(PSW), ALU(ADJF), BUS(ALU), WR(WE) # now AC at A[3], CY still at A[7].
+RF(A, WE), ALU(DA), BUS(ALU) 
+```
+
+### 1. IVADDR
+get interrupt vector address from IRQ number.
 
 |7-0|
 |:-:|
-|~A|
+|((A & 3) << 3) + 3|
+
 
 ### 2. CCA
 
