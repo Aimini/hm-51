@@ -40,7 +40,8 @@ def generate_by_op(ci, f, A):
     if f == 0x0:  # ADJF
         R = (A & 0xB7) | ((A & 0x08) << 3) | ((A & 0x40) >>3)
     elif f == 0x1: #IVADDR
-        R = (A << 3) + 3
+        # don't forget remove useless flag
+        R = ((A&3) << 3) + 3
     elif f == 0x2:
         R = ci | ci << 1
         R = ci | ci << 2
