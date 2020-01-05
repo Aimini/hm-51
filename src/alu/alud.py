@@ -127,7 +127,7 @@ def generate_low_by_op(ci, f,  b, a):
     elif f == 0x9: # SETPSWF A (PSW),B
         # just replace A's OV AC CY from B
         # for lower part, set OV only
-        RH = (0xb & a) | ((~0xb) & b)
+        RL = (0xb & a) | ((~0xb) & b)
 
     elif f == 0xA:# ADDR11REPLACE A, B
         # asume A = PCH[3:0], B = IR[7:4]
@@ -143,7 +143,7 @@ def generate_low_by_op(ci, f,  b, a):
         # after unsing 8-3 encoder, we can treat Q[2] as IP flag, Q[1:0] as IRQ number.
         RL = a | ((a & b) << 4)
         valid = 1 if RL > 0 else 0
-        RH = 7 - '{:b}'.format(RL).find('1')
+        RL = 7 - '{:b}'.format(RL).find('1')
         RL = (valid << 3) | RL # INSB A,B (BIDX)
 
     elif f == 0xC:
