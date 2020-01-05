@@ -33,9 +33,12 @@ class alu_translator():
         if control_LUT.ALUS.have_encoding_name(p):
             return "ALUS"
 
-        if control_LUT.ALUD.have_encoding_name(p):
-            return "ALUD"
-            
+        if control_LUT.ALUDL.have_encoding_name(p):
+            return "ALUDL"
+
+        if control_LUT.ALUDH.have_encoding_name(p):
+            return "ALUDH"
+
         return None
 
     def scan1(self,dt):

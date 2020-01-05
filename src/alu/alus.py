@@ -9,7 +9,18 @@ import optparse
 ## 1 bit for ci, 8 bit for operand A, and 4bit for function select
 ## high -> low
 ## ci | f | a
+## document: src/alu/README.md
 
+SFR_MAP = {
+    0x81:[2,"SP"],
+    0x82:[4,"DPL"],
+    0x83:[5,"DPH"],
+    0xA8:[6,"IE"],
+    0xB8:[7,"IP"],
+    0xD0:[3,"PSW"],
+    0xE0:[0,"A"],
+    0xF0:[1,"B"],
+}
 
 def enum_input(callback):
     """
@@ -26,17 +37,21 @@ def enum_input(callback):
 
 def generate_by_op(ci, f, A):
     R = 0
-    if f == 0x0:  # A
-        R = A
-    elif f == 0x1:
-        R = ~A
+    if f == 0x0:  # ADJF
+        R = (A & 0xB7) | ((A & 0x08) << 3) | ((A & 0x40) >>3)
+    elif f == 0x1: #IVADDR
+        R = (A << 3) + 3
     elif f == 0x2:
         R = ci | ci << 1
         R = ci | ci << 2
         R = ci | ci << 4
         R = A & R
-    elif f == 0x3:  # SETPF A
-        R = ci | (A & 0xFE)
+    elif f == 0x3:  # SFR
+        R = SFR_MAP.get(A)
+        if R is None:
+            R = 0
+        else:   
+            R = R[0] | 0x10
     elif f == 0x4:  # RR A
         R = ((A & 1) << 7) | (A >> 1)
     elif f == 0x5:  # RL A

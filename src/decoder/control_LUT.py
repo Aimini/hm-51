@@ -53,9 +53,11 @@ class name_parameters_lut(abstract_parameters_lut):
     def get_info(self, parameter_name):
         '''
         get parameter's enum name ecoding and place info
-        return:
-            (place_info:Tuple,encoding:int)
-            place_info : (pos:int, len:int)
+            parameter_name: str
+            return: Tuple
+                (place_info:Tuple,encoding:int)
+                    place_info:
+                    (pos:int, len:int)
         '''
         idx, encoding = self.get_encoding(parameter_name)
         if idx is None:
@@ -135,7 +137,7 @@ BUS = name_parameters_lut([
         'sh': 'SRC',
         'name': 'bus ouput driver',
         'len': 3,
-        'enum': ['Z', 'ALUS', 'ALUD', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRQ']
+        'enum': ['ALUS', 'ALUDL', 'ALUDH', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRQ']
     }
 ])
 
@@ -177,16 +179,27 @@ RAM = name_parameters_lut([
     }
 ])
 
-ALUD = name_parameters_lut([
+ALUDL = name_parameters_lut([
     {
         'sh': 'FUNC',
-        'name': 'alud function',
+        'name': 'alud low part function',
         'len': 4,
         'enum': [
-            ['ORL', 'PF'], ['ANL', 'ZF'], 'XRL', 'B',
-            'ADD',  'ADDC', 'SUBB', 'DA',
-            'SHIRQN', 'IRQN2IRQ', 'EXTB', 'INSB',
-            'ADDR11REPLACE', 'SETPSWF', 'Ri', 'Rn']
+            'XOR', 'DA', 'ADDC', 'SUBB',
+            'A',  'B', 'OR', 'AND',
+            'IRQN2IRQ', 'SETPSWF', 'ADDR11REPLACE', 'SHIRQN',
+            'Ri', 'Rn', 'NA', '']
+    }
+])
+
+ALUDH = name_parameters_lut([
+    {
+        'sh': 'FUNC',
+        'name': 'alud high part function',
+        'len': 4,
+        'enum': [
+            '','DAF', 'ADDCF', 'SUBBF',
+            'PF',  'ZF', 'INSB', 'EXTB']
     }
 ])
 
@@ -195,10 +208,10 @@ ALUS = name_parameters_lut([
         'sh': 'FUNC',
         'name': 'alus function',
         'len': 4,
-        'enum':  ['A', 'NOTA', 'CAA', 'SETPF',
+        'enum':  ['ADJF', 'IVADDR', 'CAA', 'SFR',
                   'RR', 'RL', 'RRC', 'RLC',
                   'INC', 'DEC', 'BADDR', 'BIDX',
-                  'SSETCY', 'SETOVCLRCY', 'CHIRQ', 'SWAP']
+                  'SETCY', 'SETOVCLRCY', 'CHIRQ', 'SWAP']
     }
 ])
 
@@ -207,8 +220,9 @@ def copy_one_parameter(dest, src):
     dest_enum = dest["enum"]
     src_enum = src["enum"]
     for idx, value in enumerate(dest_enum):
-        if idx >= len(dest_enum):
+        if idx >= len(src_enum):
             break
+
         vr = dest_enum[idx]
         va = src_enum[idx]
 
@@ -225,9 +239,10 @@ def copy_one_parameter(dest, src):
         dest_enum[idx] = a
 
 
-ALUSD = name_parameters_lut(copy.deepcopy(ALUD.LUT))
+ALUSD = name_parameters_lut(copy.deepcopy(ALUS.LUT))
 for idx, one in enumerate(ALUSD.LUT):
-    copy_one_parameter(one, ALUS.LUT[idx])
+    copy_one_parameter(one, ALUDL.LUT[idx])
+    copy_one_parameter(one, ALUDH.LUT[idx])
 
 JUMPABS = name_parameters_lut([
     {
