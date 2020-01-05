@@ -12,14 +12,14 @@ import optparse
 ## document: src/alu/README.md
 
 SFR_MAP = {
-    0x81:[2,"SP"],
-    0x82:[4,"DPL"],
-    0x83:[5,"DPH"],
-    0xA8:[6,"IE"],
-    0xB8:[7,"IP"],
-    0xD0:[3,"PSW"],
-    0xE0:[0,"A"],
-    0xF0:[1,"B"],
+    0x81:0,#"SP"],
+    0x82:1,#"DPL"],
+    0x83:2,#"DPH"],
+    0xA8:3,#"IE"],
+    0xB8:4,#"IP"],
+    0xD0:5,#"PSW"],
+    0xE0:6,#"A"],
+    0xF0:7,#"B"],
 }
 
 def enum_input(callback):
@@ -42,17 +42,15 @@ def generate_by_op(ci, f, A):
     elif f == 0x1: #IVADDR
         # don't forget remove useless flag
         R = ((A&3) << 3) + 3
-    elif f == 0x2:
-        R = ci | ci << 1
-        R = ci | ci << 2
-        R = ci | ci << 4
-        R = A & R
+    elif f == 0x2: #CAA
+        if ci:
+            R = A
+
     elif f == 0x3:  # SFR
-        R = SFR_MAP.get(A)
-        if R is None:
-            R = 0
-        else:   
-            R = R[0] | 0x10
+        T = SFR_MAP.get(A)
+        if T is not None:
+            R = T | 0x10
+
     elif f == 0x4:  # RR A
         R = ((A & 1) << 7) | (A >> 1)
     elif f == 0x5:  # RL A
@@ -72,14 +70,14 @@ def generate_by_op(ci, f, A):
             R = A & 0xF8
     elif f == 0xB:  # BIDX  A
         # get bit index from address and store it in both of A[7:4] and A[3:0]
-        R = A & 0x7
-        R = R | (R << 4)
+        T = A & 0x7
+        R = T | (T << 4)
     elif f == 0xC:  # SETCY A
         R = (A & 0x7F) | (ci << 7)
     elif f == 0xD:  # SETOVCLRCY A
         # set OV, clear CY
-        R = A & 0x7F
-        R = (A & 0xFB) | (ci << 2)
+        T = A & 0x7F
+        R = (T & 0xFB) | (ci << 2)
     elif f == 0xE:  # CHIRQ A
         for i in reversed(range(8)):
             if (A >> i) > 0:

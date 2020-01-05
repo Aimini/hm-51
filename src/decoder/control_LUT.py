@@ -113,10 +113,10 @@ REGISTER_FILE = name_parameters_lut([
         'sh': 'SRC',
         'name': 'register selector',
         'len': 4,
-        'enum': ['A',   'B',  'SP', 'PSW',
-                 'DPL', 'DPH', 'IE', 'IP',
-                 'PCL', 'PCH', 'IR', 'ISR',
-                 'T0', 'T1',  'T2',  'T3']
+        'enum': ['SP',  'DPL', 'DPH', 'IE',
+                 'IP',  'PSW', 'A',   'B',
+                 'PCL', 'PCH', 'IR',  'ISR',
+                 'T0',  'T1',  'T2',  'T3']
     },
     {
         'sh': 'LWE',
@@ -129,6 +129,12 @@ REGISTER_FILE = name_parameters_lut([
         'name': 'write high nibble',
         'len': 1,
         'enum': ['', 'HWE']
+    },
+    {
+        'sh': 'SFR',
+        'name': 'let SFR mechanism control it',
+        'len': 1,
+        'enum': ['', 'SFR']
     }
 ])
 
@@ -159,7 +165,14 @@ SR = name_parameters_lut([
     }
 ])
 
-
+RFSRCR =  name_parameters_lut([
+    {
+        'sh': 'WE',
+        'name': 'write enable',
+        'len': 1,
+        'enum': ['',"WE"],
+    }
+])
 BR = name_parameters_lut([
     {
         'sh': 'SRC',
@@ -280,6 +293,7 @@ CTL_LUT = {
     'WR': WR,
     'SR': SR,
     'BR': BR,
+    'RFSRCR':RFSRCR,
     'RAM': RAM,
     'ALUSD': ALUSD,
     'JUMPABS': JUMPABS,
