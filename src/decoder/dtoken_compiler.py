@@ -84,9 +84,8 @@ class dtoken_compiler:
     def controls_parameters_position_info(self):
         """
         get all control's parameters info
-        return: list 
-            a list of tuple,
-            the tuple contain (pos:int, len:int, name:str)
+            return: list 
+                a list of tuple contain (pos:int, len:int, name:str)
 
         """
         pi = []
@@ -95,17 +94,6 @@ class dtoken_compiler:
                        for x in v.position_info()])
         return pi
 
-    def find_parameter_encoding_info(self, i, p, LUT):
-        """
-        find parameter's place info and encoding
-        return:
-            place_info:tuple, encoding:int
-                place_info:(pos:int, len:int)
-        """
-        if isinstance(LUT, control_LUT.name_parameters_lut):
-            return LUT.get_info(p)
-        elif isinstance(LUT, control_LUT.value_parameter_lut):
-            return LUT.get_place_info(i), p
 
     def convert_one_token(self, dt, mc):
         """
@@ -113,7 +101,7 @@ class dtoken_compiler:
         using machine_code object to convert one dtoken to int value
             parameters:
                 dt: dtoken
-                    dtoken object in current
+                    dtoken object in current line
                 mc: machine_code
                     machine_code object used to convert current line
             return: int
@@ -124,18 +112,21 @@ class dtoken_compiler:
             raise SyntaxError('unkonw control name "{}"'.format(dt.value))
 
         for i, p in enumerate(dt.parameters):
-            place_info, encoding = self.find_parameter_encoding_info(
-                i, p, control_parameter_LUTs)
+            if isinstance(control_parameter_LUTs, control_LUT.name_parameters_lut):
+                place_info, encoding = control_parameter_LUTs.get_info(p)
+            elif isinstance(control_parameter_LUTs, control_LUT.value_parameter_lut):
+                place_info = control_parameter_LUTs.get_place_info(i)
+                if isinstance(p,int):
+                    encoding = p
+                else:
+                    encoding = self.jump_table.get(p)
+                    #for dissasemble replace string mark to number
+                    dt.parameters[i] = encoding
 
             if place_info is None:
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
 
-            # jump mark in address, etc.
             if not isinstance(encoding, int):
-                encoding = self.jump_table.get(encoding)
-
-            if not isinstance(encoding, int):
-                print(dt)
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
             
             mc.insert(encoding,place_info[0],place_info[1], dt)
@@ -153,9 +144,18 @@ class dtoken_compiler:
 
     def split_jump_dtoken(self, dtoken_lines):
         """
-            generate pure control dtokens
-            1. remove jump mark(also build jump table)
-            2. move pure control dtokens to new list
+        generate pure control dtokens
+        1. remove jump mark(also build jump table)
+        2. move pure control dtokens to new list
+
+            dtoken_lines: list
+                a list return from hl_dtoken_converters.convert
+                [
+                    [lineno, [dtokens,dtokens...]],
+                    [lineno, [dtokens,dtokens...]],
+                    [lineno, [dtokens,dtokens...]],
+                    ...
+                ]
         """
         pure_control_tokens = []
         pc = 0
@@ -181,17 +181,23 @@ class dtoken_compiler:
         """
         convert dtokens lines to machine code list
             dtoken_lines: list
-            a list return from dtoken_converters.convert
+                a list return from hl_dtoken_converters.convert
                 [
                     [lineno, [dtokens,dtokens...]],
                     [lineno, [dtokens,dtokens...]],
                     [lineno, [dtokens,dtokens...]],
                     ...
-                ]        
+                ]
 
-            return: list[int]
-                a list of final machine code value
-                [v0:int, v1:int, ...]
+            return: list
+                a list of final machine code value and corresponding pure control dtokens.
+                [
+                    [lineno:int, code:int, [dtoken,dtoken,...]],
+                    [lineno:int, code:int, [dtoken,dtoken,...]],
+                    ...
+                ]
+                lineno is line number in source .ds file
+
 
         """
         self.reset()
@@ -200,8 +206,9 @@ class dtoken_compiler:
         machine_code_lines = []
         for lineno, one in pure_control_tokens:
             try:
-                machine_code_lines.append(self.convert_one_line(one))
+                code = self.convert_one_line(one)
+                machine_code_lines.append([lineno,code, one])
             except SyntaxError as e:
                 e.msg = e.msg + " at line " + str(lineno)
                 raise e
-        return machine_code_lines
+        return machine_code_lines,pure_control_tokens
