@@ -28,13 +28,14 @@ class cstate(enum.Enum):
 
     def next(self, token):
         """
-        according current state and t transfer to next state.
+        according current state and py token transfer to next state.
         see transfer diagram at directory
-        state:
-            current state
-        t:
-            token
+        token:
+            py token
+        ret:
+            next state
         """
+
         ttype = token.type
         tstr = token.string
         is_name = ttype == tokenize.NAME
@@ -129,11 +130,8 @@ class cstate(enum.Enum):
 
 class dtoken_converter:
     """
-    control accumulator pack tokens to a control label,
-    parameterized control label or jump label.
-    result store in memeber list self.dtoken_lines
-    dtoken_lines[n][0] is line number in source file
-    dtoken_lines[n][1] is a list of decoders' tokens at this line
+    Convert py tokens stream to dtoken list, include control label,
+    parameterized control label and jump label.
     """
 
     def __init__(self):
@@ -151,7 +149,6 @@ class dtoken_converter:
     def add(self, state, appendtokens):
         """
             according state and appendtokens to generate decoder token
-
         """
         t1 = appendtokens[-1]
         #find control mark
@@ -185,6 +182,22 @@ class dtoken_converter:
             self.marks_per_line = []
 
     def convert(self,pytokens_iter):
+        """
+        pytokens_iter:
+            iterable object that contains py tokens.
+
+        ret: tuple
+            A tuple of two elements: (list, list)
+            The first element is a list. It is organized as follows:
+            [
+                [lineno:int, [dtoken00_at_this_line(dtoken), dtoken01_at_this_line(dtoken), ..]]
+                [lineno:int, [dtoken10_at_this_line(dtoken), dtoken11_at_this_line(dtoken), ..]]
+                ...
+            ]
+            lineno is line number in source .ds file.
+            The second is also a list, you better not use it.
+
+        """
         pytoken_lines = [[]]
         scanned_tokens = []
         # clear

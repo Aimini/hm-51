@@ -17,6 +17,11 @@ class abstract_parameters_lut():
         self.LUT = LUT
 
     def auto_position(self, start):
+        """
+        Automatically assign the start position of each parameter
+            start:int
+                The position of the first bit to allocate
+        """
         pos = start
         for one in self.LUT:
             one['pos'] = pos
@@ -36,11 +41,38 @@ class abstract_parameters_lut():
 
 
 class name_parameters_lut(abstract_parameters_lut):
+    """
+    using string name to find encoding
+    """
     def __init__(self, LUT):
+        """
+        LUT:list
+            [
+                {
+                    'sh': 'short hand',
+                    'name': 'full name',
+                    'len' : 'bit length to encoding',
+                    'pos' : 'start position to encoding',
+                    'enum' : ['NAME0','NAME1',...]
+                },
+                {
+                    'sh': 'short hand',
+                    'name': 'full name',
+                    ...  # same as above map
+                },
+                ... # same as above map
+            ]
+        """
         super().__init__(LUT)
         self.LUT = LUT
 
     def try_enum_multiname_encoding(self, multiname_list, parameter_name):
+        """
+        treat current enum as a list contain multiple name, and try find
+        parameter_name in this list.
+            ret:bool
+                True is find name else return False
+        """
         if isinstance(multiname_list, (tuple, list)):
             try:
                 multiname_list.index(parameter_name)
@@ -85,7 +117,7 @@ class name_parameters_lut(abstract_parameters_lut):
         return None, None
 
     def have_encoding_name(self, name):
-        idx, encoding = self.get_encoding(name)
+        idx, _ = self.get_encoding(name)
         return idx != None
 
 

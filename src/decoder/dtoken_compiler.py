@@ -1,41 +1,46 @@
-##################################################
+##################################################################
 # 2019-12-22 12:44:23
 # AI
-# dtoken compiler, compile all dtoken in all lines to
-# machine code
-# in physical level, we can treat a part of circuit
-# to a component that have multiple input control.
+# dtoken compiler, compile all dtoken in all lines to physical-level
+# machine code, we can treat a part of circuit as a component that
+# have multiple input controls.
 # for example:
 # RF(Register File) have three function input:
 #   source select, write low and write high
-# so we can using mark "LWE" to meaing write low,
-# A meaing select reigiter 0 in RF.
+# then we can using mark "LWE" to meaing write low, "A" meaing select 
+# reigiter 0 in RF.
 #
-# for most of paramter control mark, it's only using
-# name parameter, we can just using a LUT to find encoding
-# parameter encoding.
+# for most of parameter control mark, it's only using name parameter,
+# we can just using a LUT to find encoding parameter encoding.
 # for another control mark, we using special logic to encode it.
-##################################################
+###############################################################
 import enum
 import dtoken
 import control_LUT
 
 class machine_code:
+    '''
+    provide mechanism to insert value to target bit index with excepted bit-len
+    it's provide protective measures to prevent accident mistake:
+    - Checks if the inserted value fits the length of the target bit (prevents truncate)
+    - Checks whether inserted value will overlaps with the bits than had encoded other values
+    '''
     def __init__(self):
+        self.value = 0
         # for index i,if self.users[i] is None,
         # it's meaing this bit not used,
         # otherwise it's this bit's user object(dtoken)
-        self.value = 0
         self.users = []
     
     def extend_users(self,size):
         """
-        ajust user list to target size,append None
+        ajust user list to target size, append None
             size: 
                 target size
         """
         while len(self.users) <= size:
             self.users.append(None)
+
 
     def insert(self,value,pos,size,user):
         """
@@ -61,11 +66,12 @@ class machine_code:
             self.users[x] = user
         self.value += (value << pos)
 
+
 class dtoken_compiler:
     def __init__(self, CTL_LUT=control_LUT.CTL_LUT):
         """
         parameter:
-            CTL_LUT: 
+            CTL_LUT: see control_LUT.CTL_LUT
         """
         self.CTL_LUT = CTL_LUT
 
@@ -73,13 +79,13 @@ class dtoken_compiler:
         self.jump_table = {}  # store jump label address, jump_label:string -> pc_address: int
         # hardware level dtokens, [[lineno,dtoken_list],[lineno,dtoken_list]...]
         self.hl_dtokens = []
-        self.rom = []        # store machine code
 
 
     def calcuate_LUT_parameters_position(self):
         pos = 0
         for k, v in self.CTL_LUT.items():  # v = RF LUT , WR LUT ...
             pos = v.auto_position(pos)
+
 
     def controls_parameters_position_info(self):
         """
@@ -89,6 +95,7 @@ class dtoken_compiler:
 
         """
         pi = []
+        # iterate each control's LUT
         for k, v in self.CTL_LUT.items():
             pi.extend([(x[0], x[1], k + '_' + x[2])
                        for x in v.position_info()])
@@ -97,7 +104,6 @@ class dtoken_compiler:
 
     def convert_one_token(self, dt, mc):
         """
-
         using machine_code object to convert one dtoken to int value
             parameters:
                 dt: dtoken
@@ -120,7 +126,7 @@ class dtoken_compiler:
                     encoding = p
                 else:
                     encoding = self.jump_table.get(p)
-                    #for dissasemble replace string mark to number
+                    #for dissasemble, replace string mark to number
                     dt.parameters[i] = encoding
 
             if place_info is None:
@@ -130,6 +136,7 @@ class dtoken_compiler:
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
             
             mc.insert(encoding,place_info[0],place_info[1], dt)
+
 
     def convert_one_line(self, dtokens):
         """
@@ -141,6 +148,7 @@ class dtoken_compiler:
         for one in dtokens:
             self.convert_one_token(one, mc)
         return mc.value
+
 
     def split_jump_dtoken(self, dtoken_lines):
         """
@@ -159,10 +167,12 @@ class dtoken_compiler:
         """
         pure_control_tokens = []
         pc = 0
+
         for lineno, one_line in dtoken_lines:
             a = []
             for one_dtoken in one_line:
                 v = one_dtoken.value
+
                 # check jump mark
                 if one_dtoken.type == dtoken.JUMP_MARK:
                     if self.jump_table.get(v) is not None:
@@ -171,11 +181,13 @@ class dtoken_compiler:
                     self.jump_table[v] = pc
                 else:
                     a.append(one_dtoken)
+
             # if this line contain control mark
             if len(a) > 0:
                 pure_control_tokens.append([lineno, a])
                 pc += 1
         return pure_control_tokens
+
 
     def compile(self, dtoken_lines):
         """
@@ -189,16 +201,22 @@ class dtoken_compiler:
                     ...
                 ]
 
-            return: list
-                a list of final machine code value and corresponding pure control dtokens.
+            ret: (list,list)
+                ret[0] is a list of final machine code value.
                 [
-                    [lineno:int, code:int, [dtoken,dtoken,...]],
-                    [lineno:int, code:int, [dtoken,dtoken,...]],
+                    [lineno:int, code:int],
+                    [lineno:int, code:int],
                     ...
                 ]
+
+                ret[1] is a list of pure control dtoken list.
+                [
+                    [lineno:int, [dtoken,dtoken,...]],
+                    [lineno:int, [dtoken,dtoken,...]],
+                    ...
+                ]
+
                 lineno is line number in source .ds file
-
-
         """
         self.reset()
         pure_control_tokens = self.split_jump_dtoken(dtoken_lines)
