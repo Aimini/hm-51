@@ -21,6 +21,7 @@ import copy
 
 
 class alu_translator():
+    '''translate ALU and BUS to ALUS/ALUDL/ALUDH operation.'''
     def prepare(self):
         self.type = None
 
@@ -45,7 +46,7 @@ class alu_translator():
 
     def scan1(self, dt):
         """
-        first dtokens scan, decide alu type
+        First dtokens scan, decide alu type.
         """
         if dt.value != "ALU":
             return
@@ -62,8 +63,10 @@ class alu_translator():
 
     def scan2(self, dt):
         """
-            second scan, if you decide to translate dtoken to another dtoken
-            return a not None object(dtoken or dtoken list).
+        Second scan, translate ALU(SOME_FUNTION), BUS(ALU)
+        to something lke ALUSD(..),BUS(ALUDH); ALUSD(..),BUS(ALUS); etc..
+        second scan, if you decide to translate dtoken to another dtoken
+        return a not None object(dtoken or dtoken list).
         """
         if dt.value == "ALU":
             r = copy.deepcopy(dt)
@@ -81,6 +84,9 @@ class alu_translator():
 
 
 class rf_translator():
+    """
+    translate RF(WE,...) to RF(HWE,LWE,...)
+    """
     def prepare(self):
         pass
 
@@ -199,18 +205,22 @@ class hl_dtoken_converter:
         for lineno, one_line in dtoken_lines:
             a = []
             try:
+                # prepare
                 for one_translator in self.dtokens_translator:
                     one_translator.prepare()
 
+                #first scan
                 for one_dtoken in one_line:
                     for one_translator in self.dtokens_translator:
                         one_translator.scan1(one_dtoken)
 
+                #second scan
                 for one_dtoken in one_line:
                     translated = False
                     for one_translator in self.dtokens_translator:
                         r = one_translator.scan2(one_dtoken)
 
+                        # translated
                         if r is not None:
                             translated = True
                             if isinstance(r, (tuple, list)):
@@ -219,10 +229,14 @@ class hl_dtoken_converter:
                                 a.append(r)
                             break
 
+                    # append raw dtoken
                     if not translated:
                         a.append(one_dtoken)
+
+                # not a empty line
                 if len(a) > 0:
                     hl_dtokens.append([lineno, a])
+
             except SyntaxError as e:
                 e.msg += " at line " + str(lineno)
                 raise e
