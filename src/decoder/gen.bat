@@ -1,1 +1,1 @@
-compile.py -i decoder.ds -o ../../eeprom-bin/decoder.bin
+compile.py -i decoder.ds -o ../../eeprom-bin/decoder.bin -d ../../temp/decoder.disa

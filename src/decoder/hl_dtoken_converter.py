@@ -18,11 +18,13 @@
 import dtoken
 import control_LUT
 import copy
+
+
 class alu_translator():
     def prepare(self):
         self.type = None
 
-    def get_type_from_parameter(self,p):
+    def get_type_from_parameter(self, p):
         """
         get ALU type according paramter name
         paramters:
@@ -41,7 +43,7 @@ class alu_translator():
 
         return None
 
-    def scan1(self,dt):
+    def scan1(self, dt):
         """
         first dtokens scan, decide alu type
         """
@@ -54,8 +56,10 @@ class alu_translator():
                 continue
             return
 
-        raise SyntaxError('unsupport ALU control for "{}"'.format(dt.simple_str()))
-    
+        # ALU control but have unknow parameter
+        raise SyntaxError(
+            'unsupport ALU control for "{}"'.format(dt.simple_str()))
+
     def scan2(self, dt):
         """
             second scan, if you decide to translate dtoken to another dtoken
@@ -69,20 +73,20 @@ class alu_translator():
         # "BUS(ALU) -> BUS(ALUS) or BUS(ALUD)"
         if dt.value == "BUS":
             r = copy.deepcopy(dt)
-            for idx,p in enumerate(r.parameters):
+            for idx, p in enumerate(r.parameters):
                 if p == "ALU":
                     r.parameters[idx] = self.type
             return r
         return None
 
+
 class rf_translator():
     def prepare(self):
         pass
 
-    def scan1(self,dt):
+    def scan1(self, dt):
        pass
 
-    
     def scan2(self, dt):
         """
             second scan, if you decide to translate dtoken to another dtoken
@@ -90,46 +94,47 @@ class rf_translator():
         """
         if dt.value == "RF":
             r = copy.deepcopy(dt)
-            for idx,p in enumerate(r.parameters):
+            for idx, p in enumerate(r.parameters):
                 if p == "WE":
                     r.parameters[idx] = "HWE"
-                    r.parameters.insert(idx,"LWE")
+                    r.parameters.insert(idx, "LWE")
             return r
         return None
+
 
 class jump_translator():
     def prepare(self):
         pass
-    
-    def create_jump(self,lineno, type):
-        r = dtoken.dtoken(lineno,dtoken.PAR_CONTROL,"JUMPABS")
+
+    def create_jump(self, lineno, type):
+        r = dtoken.dtoken(lineno, dtoken.PAR_CONTROL, "JUMPABS")
         r.parameters = [type]
         return r
 
-    def create_address(self,lineno, addr):
-        r = dtoken.dtoken(lineno,dtoken.PAR_CONTROL,"ADDRESS")
+    def create_address(self, lineno, addr):
+        r = dtoken.dtoken(lineno, dtoken.PAR_CONTROL, "ADDRESS")
         r.parameters = [addr]
         return r
 
-    def create_immed(self,lineno, value):
-        r = dtoken.dtoken(lineno,dtoken.PAR_CONTROL,"IMMED")
+    def create_immed(self, lineno, value):
+        r = dtoken.dtoken(lineno, dtoken.PAR_CONTROL, "IMMED")
         r.parameters = [value]
         return r
 
-    def scan1(self,dt):
+    def scan1(self, dt):
        pass
-    
+
     def scan2(self, dt):
         r = []
-        if dt.value in ("J","JLT","JGT","JBIT","JRST"):
+        if dt.value in ("J", "JLT", "JGT", "JBIT", "JRST"):
             lineno = dt.lineno
             jump_token = self.create_jump(lineno, dt.value)
             r.append(jump_token)
 
             p0 = "" if len(dt.parameters) < 1 else dt.parameters[0]
             p1 = "" if len(dt.parameters) < 2 else dt.parameters[1]
-            if dt.value in ("J","JBIT","JRST"):
-                
+            if dt.value in ("J", "JBIT", "JRST"):
+
                 addr_token = self.create_address(lineno, p0)
             else:
                 addr_token = self.create_address(lineno, p1)
@@ -139,23 +144,24 @@ class jump_translator():
             return r
         return None
 
+
 class load_immed_translator():
     def prepare(self):
         pass
-    
-    def create_immed(self,lineno, value):
-        r = dtoken.dtoken(lineno,dtoken.PAR_CONTROL,"IMMED")
+
+    def create_immed(self, lineno, value):
+        r = dtoken.dtoken(lineno, dtoken.PAR_CONTROL, "IMMED")
         r.parameters = [value]
         return r
 
-    def create_bus(self,lineno, sel):
-        r = dtoken.dtoken(lineno,dtoken.PAR_CONTROL,"BUS")
+    def create_bus(self, lineno, sel):
+        r = dtoken.dtoken(lineno, dtoken.PAR_CONTROL, "BUS")
         r.parameters = [sel]
         return r
 
-    def scan1(self,dt):
+    def scan1(self, dt):
        pass
-    
+
     def scan2(self, dt):
         r = []
         if dt.value == "LI":
@@ -164,18 +170,30 @@ class load_immed_translator():
             return r
         return None
 
-DEFAULT_TRANSLATOR = [alu_translator(),rf_translator(),jump_translator(),load_immed_translator()]
+
+DEFAULT_TRANSLATOR = (alu_translator(), rf_translator(),
+                      jump_translator(), load_immed_translator())
+
 
 class hl_dtoken_converter:
-    def __init__(self,dtoken_translators = DEFAULT_TRANSLATOR):
+    def __init__(self, dtoken_translators = DEFAULT_TRANSLATOR):
         self.dtokens_translator = dtoken_translators
-
 
     def convert(self, dtoken_lines):
         """
-            generate hardware level dtoken that will convert to machine code
-            1. remove jump mark(also add jump mark to jump table)
-            2. convert decoder script level mark to  hardware level control mark.
+            generate hardware level dtoken that will convert to machine code.
+
+            dtoken_lines: list
+                a list from dtoken_converter.convert
+                [
+                    [lineno:int, [dtoken00_at_this_line(dtoken), dtoken01_at_this_line(dtoken), ..]]
+                    [lineno:int, [dtoken10_at_this_line(dtoken), dtoken11_at_this_line(dtoken), ..]]
+                    ...
+                ]
+
+            ret: list
+                a list have same organization of input list
+
         """
         hl_dtokens = []
         for lineno, one_line in dtoken_lines:
@@ -187,14 +205,15 @@ class hl_dtoken_converter:
                 for one_dtoken in one_line:
                     for one_translator in self.dtokens_translator:
                         one_translator.scan1(one_dtoken)
-                
+
                 for one_dtoken in one_line:
                     translated = False
                     for one_translator in self.dtokens_translator:
                         r = one_translator.scan2(one_dtoken)
+
                         if r is not None:
                             translated = True
-                            if isinstance(r,(tuple,list)):
+                            if isinstance(r, (tuple, list)):
                                 a.extend(r)
                             else:
                                 a.append(r)
