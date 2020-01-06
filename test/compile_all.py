@@ -1,11 +1,13 @@
 import subprocess
 import sys
 import pathlib
-"""
+usage = """
 usage:
     compile_all <input_file> <output_dir>
-    input_file is 51 assembly file
-    ouput_dir is used to store ouput file,it's an intel hex format file, and it have the same name as input file.
+    input_file:
+        51 assembly file
+    ouput_dir:
+        directory to store output file,it's an intel hex format file, and it have the same name as input file.
 """
 def asmobj(filenamestr, tempdirstr):
     filename =  pathlib.Path(filenamestr)
@@ -19,7 +21,7 @@ def asmobj(filenamestr, tempdirstr):
     subprocess.run(f"OH51 {absfile}  HEXfile({hexfile})")
     
 
-if len(sys.argv) < 2:
-    print("[error] assembly filename missing")
+if len(sys.argv) < 3:
+    print(usage)
 else:
     asmobj(sys.argv[1], sys.argv[2])
