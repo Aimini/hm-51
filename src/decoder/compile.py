@@ -26,7 +26,7 @@ def dissassemble(write,bytes_len,source_lines, machine_code_lines, hl_dtoken_lin
 
         if hlidx < len(hl_dtoken_lines):
             if x == hl_dtoken_lines[hlidx][0]:
-                write(','.join([ _.simple_str() for _ in hl_dtoken_lines[hlidx][1]]))
+                write(', '.join([ _.simple_str() for _ in hl_dtoken_lines[hlidx][1]]))
                 hlidx += 1
                 write('\n')
 
@@ -83,7 +83,7 @@ def compile_ds(readline, write):
     hl_token_lines = hlc.convert(dtoken_lines)
     machine_code_lines,pure_control_tokens_line = c.compile(hl_token_lines)
     
-    [write(_[0].to_bytes(bytes_len, "little")) for _ in machine_code_lines]
+    [write(_[1].to_bytes(bytes_len, "little")) for _ in machine_code_lines]
 
     return bytes_len, pure_control_tokens_line, machine_code_lines
 
