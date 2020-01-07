@@ -14,11 +14,13 @@ class dtoken():
         
         if self.type == PAR_CONTROL:
             s += '('
+            sp = []
             for _ in self.parameters:
                 if isinstance(_,int):
-                    s += "0x{:X}".format(_)
+                    sp.append("0x{:X}".format(_))
                 else:
-                    s += str(_)
+                    sp.append(_)
+            s += ','.join(sp)
             s += ')'
         elif self.type == JUMP_MARK:
             s += ':'
