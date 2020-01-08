@@ -64,7 +64,12 @@ class empty_translator():
         return r
 
 class alu_translator(empty_translator):
-    '''translate ALU and BUS to ALUS/ALUDL/ALUDH operation.'''
+    '''
+    translate ALU and BUS to ALUS/ALUDL/ALUDH operation.
+    ALU meaing using ALU function and  BUS was driverd by ALU.
+    ALUO meaing uisng ALU function only, but you still need to check 
+    whether there is BUS(ALU) and translate it to BUS(ALUS), BUS(ALUDL) etc.
+    '''
     def prepare(self):
         self.type = None
 
@@ -90,7 +95,7 @@ class alu_translator(empty_translator):
 
     def scan(self, dt):
         """ decide alu type. """
-        if dt.value != "ALU":
+        if dt.value not in ("ALU","ALUO"):
             return
 
         for p in dt.parameters:
@@ -107,10 +112,16 @@ class alu_translator(empty_translator):
         """translate ALU(SOME_FUNTION), BUS(ALU)
         to something lke ALUSD(..),BUS(ALUDH); ALUSD(..),BUS(ALUS); etc..
         """
-        if dt.value == "ALU":
+        if dt.value == "ALUO":
             r = copy.deepcopy(dt)
             r.value = 'ALUSD'
             return r
+
+        if dt.value == "ALU":
+            r0 = copy.deepcopy(dt)
+            r0.value = 'ALUSD'
+            r1 = self.create_bus(dt.lineno, self.type)
+            return (r0,r1)
 
         # "BUS(ALU) -> BUS(ALUS) or BUS(ALUD)"
         if dt.value == "BUS":
