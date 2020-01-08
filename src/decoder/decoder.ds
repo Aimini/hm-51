@@ -2,25 +2,29 @@
 # fetch:
 # - IR <- opcode
 # - PC++
-# - J to excute stage segment according to opcode
+# - JUMP to excute stage segment according to opcode
 # execute:
 # -
 # IR might be changed after excute stage#
 ############################################################
 STAGE_FETCH:
-# set parity flag
-RF(A),       ALU(PF),   BR(ALUDF) ,BUS(ALU), JRST(STAGE_RESET_ALL)
-RF(PSW,WE),  ALU(SETPF),BUS(ALU)
-
-RF(PCL),  ALU(A), BUS(ALU),  WR(WE)
-RF(PCH),  ALU(A), BUS(ALU),  SR(WE)
+RF(PCL),  ALU(A),  WR(WE),  JRST(STAGE_RESET_ALL)
+RF(PCH),  ALU(A),  SR(WE)
 RF(IR,WE),BUS(ROM)
 
 #increase PC
-IMMED(0),  BUS(IMMED), WR(WE), BR(ONE)
-RF(PCL,WE),ALU(ADDC),BUS(ALU), BR(CY)           # PCL + 1,  STORE CARRY
-RF(PCH,WE),ALU(ADDC),BUS(ALU), BR(ZERO)         # PCH + CY, CLEAR BIT REG
+LI(0), WR(WE) # set WR to 0
+# we can use WR to insert A.PF(bit 0)
+# set parity flag
+RF(A),      ALU(PF),   BR(ALUDF)
+RF(PSW,WE), ALU(INSB), BR(ONE) # set BR to prepare increase PC
 
+RF(PCL,WE),ALU(ADDC), BR(CY)           # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(ADDC)                   # PCH + CY
+
+###
+# indstruction decode jump
+#####
 RF(IR), JLT(0x80,IRSEG_0_7F)
 ## IRSEG_80_FF
 RF(IR), JLT(0xC0,IRSEG_80_BF)
@@ -29,75 +33,19 @@ RF(IR), JLT(0xE0,IRSEG_C0_DF)
 ## IRSEG_E0_FF
 RF(IR), JLT(0xF0,IRSEG_E0_EF)
 ## IRSEG_F0_FF
-RF(IR), JLT(0xF8,IRSEG_F0_F7)
-## IRSEG_F8_FF
-RF(IR), JLT(0xFC,IRSEG_F8_FB)
-## IRSEG_FC_FF
-RF(IR), JLT(0xFE,IRSEG_FC_FD)
-## IRSEG_FE_FF
-RF(IR), JLT(0xFF,IRSEG_FE)
-IRSEG_FF: #---------------------
-
-#------------------------------
-
-
-IRSEG_FE: #--------------------
-
-#------------------------------
-
-
-IRSEG_FC_FD:
-RF(IR), JLT(0xFD,IRSEG_FC)
-IRSEG_FD: #--------------------
-
-#------------------------------
-
-
-IRSEG_FC: #--------------------
-
-#------------------------------
-
-
-IRSEG_F8_FB:
-RF(IR), JLT(0xFA,IRSEG_F8_F9)
-## IRSEG_FA_FB
-RF(IR), JLT(0xFB,IRSEG_FA)
-IRSEG_FB: #--------------------
-
-#------------------------------
-
-
-IRSEG_FA: #--------------------
-
-#------------------------------
-
-
-IRSEG_F8_F9:
-RF(IR), JLT(0xF9,IRSEG_F8)
-IRSEG_F9: #--------------------
-
-#------------------------------
-
-
-IRSEG_F8: #--------------------
-
-#------------------------------
-
+RF(IR), JLT(0xF8,IRSEG_F0_F7), WR(WE) # move IR to WR, why? see "MOV Rn, A"
+## IRSEG_F8_FF, MOV Rn, A
+## we had move IR to WR at JLT. WR -> T0
+RF(T0,WE), ALU(B)
+RF(PSW),ALU(A), WR(WE)
+RF(T0), ALU(Rn),SR(WE)
+RF(A,WE), BUS(RAM)
 
 IRSEG_F0_F7:
 RF(IR), JLT(0xF4,IRSEG_F0_F3)
 ## IRSEG_F4_F7
 RF(IR), JLT(0xF6,IRSEG_F4_F5)
 ## IRSEG_F6_F7
-RF(IR), JLT(0xF7,IRSEG_F6)
-IRSEG_F7: #--------------------
-
-#------------------------------
-
-
-IRSEG_F6: #--------------------
-
-#------------------------------
 
 
 IRSEG_F4_F5:
@@ -239,7 +187,7 @@ IRSEG_E2: #--------------------
 IRSEG_E0_E1:
 RF(IR), JLT(0xE1,IRSEG_E0)
 IRSEG_E1: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -461,7 +409,7 @@ IRSEG_C2: #--------------------
 IRSEG_C0_C1:
 RF(IR), JLT(0xC1,IRSEG_C0)
 IRSEG_C1: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -675,10 +623,9 @@ RF(IR), JLT(0xA2,IRSEG_A0_A1)
 RF(IR), JLT(0xA3,IRSEG_A2)
 IRSEG_A3: #--------------------
 #INC DPTR
-LI(0), BR(ZERO)
+LI(0), WR(WE), BR(ONE)
 RF(DPL,WE), ALU(ADDC),BR(CY)
-RF(DPH,WE), ALU(ADDC),BR(ZERO)
-J(STAGE_CHECK_INTERRUPT)
+RF(DPH,WE), ALU(ADDC),J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
@@ -691,7 +638,7 @@ IRSEG_A2: #--------------------
 IRSEG_A0_A1:
 RF(IR), JLT(0xA1,IRSEG_A0)
 IRSEG_A1: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -858,7 +805,7 @@ IRSEG_82: #--------------------
 IRSEG_80_81:
 RF(IR), JLT(0x81,IRSEG_80)
 IRSEG_81: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -942,24 +889,42 @@ IRSEG_77: #--------------------
 
 IRSEG_76: #--------------------
 
+
 #------------------------------
 
 
 IRSEG_74_75:
 RF(IR), JLT(0x75,IRSEG_74)
 IRSEG_75: #--------------------
+# MOV direct,#immed
+RF(PCL), ALU(A), WR(WE)
+RF(PCH), ALU(A), SR(WE)
+RF(T0,WE), BUS(ROM)              # T0 <- direct
 
+WR(WE),LI(0),BR(ONE)
+RF(PCL,WE), ALU(ADDC),  BR(CY)
+RF(PCH,WE), ALU(ADDC),  SR(WE)       # ++PC
+RF(PCL),    ALU(A),     WR(WE)
+BUS(ROM), WR(WE)         # WR <- immed
+
+RF(T0),   ALU(SFR), RFSRCR(WE)
+RF(T0),   ALU(A),   SR(WE)
+RF(SFR),  ALU(B),  RAM(WE) # RAM[direct] <- immed
+
+WR(WE),LI(0),BR(ONE)
+RF(PCL,WE),ALU(ADDC), BR(CY)
+RF(PCH,WE),ALU(ADDC), J(STAGE_CHECK_INTERRUPT) # ++PC
 #------------------------------
 
 
 IRSEG_74: #--------------------
 # MOV A, #IMMED
-WR(WE), RF(PCL), ALU(A), BUS(ALU)
-SR(WE), RF(PCH), ALU(A), BUS(ALU)
+WR(WE), RF(PCL), ALU(A)
+SR(WE), RF(PCH), ALU(A)
 RF(A,WE),BUS(ROM)
 WR(WE), LI(0), BR(ONE)
-RF(PCL,WE),ALU(ADDC), BUS(ALU), BR(CY)
-RF(PCH,WE),ALU(ADDC), BUS(ALU), BR(ZERO), J(STAGE_CHECK_INTERRUPT)
+RF(PCL,WE),ALU(ADDC),  BR(CY)
+RF(PCH,WE),ALU(ADDC),  J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
@@ -1090,7 +1055,7 @@ IRSEG_62: #--------------------
 IRSEG_60_61:
 RF(IR), JLT(0x61,IRSEG_60)
 IRSEG_61: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -1312,7 +1277,7 @@ IRSEG_42: #--------------------
 IRSEG_40_41:
 RF(IR), JLT(0x41,IRSEG_40)
 IRSEG_41: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -1522,7 +1487,7 @@ RF(IR), JLT(0x22,IRSEG_20_21)
 ## IRSEG_22_23
 RF(IR), JLT(0x23,IRSEG_22)
 IRSEG_23: #--------------------
-RF(PCL),ALU(A),BUS(ALU),WR(WE), J(IRSEG_AJMP_ADDR11_NEXT)
+
 #------------------------------
 
 
@@ -1736,7 +1701,7 @@ IRSEG_5: #--------------------
 
 IRSEG_4: #--------------------
 # INC A
-RF(A,WE),ALU(INC),BUS(ALU)
+RF(A,WE),ALU(INC)
 #------------------------------
 
 
@@ -1746,18 +1711,13 @@ RF(IR), JLT(0x2,IRSEG_0_1)
 RF(IR), JLT(0x3,IRSEG_2)
 IRSEG_3: #--------------------
 # RR A
-RF(A,WE),ALU(RR),BUS(ALU)
+RF(A,WE),ALU(RR)
 #------------------------------
 
 
 IRSEG_2: #--------------------
 #LJMP addr16
-RF(PCL,WE),ALU(A),BUS(ALU),WR(WE)
-RF(PCL,WE),ALU(A),BUS(ALU),SR(WE)
-RF(T0,WE),BUS(ROM)
-RF(PCL,WE),ALU(INCC),BUS(ALU),WR(WE)
-RF(PCL,WE),ALU(INCC),BUS(ALU),SR(WE)
-RF(T0,WE),BUS(ROM),J(STAGE_CHECK_INTERRUPT)
+
 #------------------------------
 
 
@@ -1767,94 +1727,80 @@ IRSEG_1: #--------------------
 IRSEG_AJMP_ADDR11:
 #AJMP addr11
 # load ADDR11[7:0]
-RF(PCL),ALU(A),BUS(ALU),WR(WE)
-IRSEG_AJMP_ADDR11_NEXT:
-RF(PCH),ALU(A),BUS(ALU),SR(WE)          # LOAD 16BIT ADDRESS
-RF(T0, WE),BUS(ROM)                     # LOAD ADDR11[7:0] TO T0
-
-# increase PC
-#  PREPARE TO INCREASE WITH CARRY BIT.
-WR(WE), ALU(ZERO), BR(ONE) 
-RF(PCL,WE),ALU(ADDC), BR(CY)           # PCL + 1# STORE CARRY
-RF(PCH,WE),ALU(ADDC), BR(CY)           # PCH + CY
-
-#LOAD ADDR11 TO PC
-RF(T0),    ALU(A),     BUS(ALU), WR(WE)       # WR = T0 = ADDR11[7:0] 
-RF(PCL,WE),ALU(B),     BUS(ALU)               # PCL = WR
-RF(IR),    ALU(A),     BUS(ALU), WR(WE)        
-RF(PCH,WE),ALU(ADDR11),BUS(ALU),J(STAGE_CHECK_INTERRUPT) #SET PCH
+J(STAGE_CHECK_INTERRUPT) #SET PCH
 
 #------------------------------
 
 IRSEG_0: #--------------------
 #------------------------------
 
-STAGE_CHECK_INTERRUPT:
+
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE
 # 2. select IRQ with IP
 # 3. J to interrupt vector
 ######################################################## 
+STAGE_CHECK_INTERRUPT:
 #------------- check EA
-RF(IE), JLT(0x80,STAGE_FETCH), ALU(A), BUS(IRQ), WR(WE) 
+RF(IE), JLT(0x80,STAGE_FETCH), ALU(A),  WR(WE)
 
 #------------- check IE
-RF(IE),    ALU(AND),    BUS(ALU), WR(WE)       # IE & IRQ, check IRQ enable bit
-RF(T0,WE), ALU(B)                              # store MIRQ(IRQ masked with IE) to T0
+RF(T0,WE),    BUS(IRQ)
+RF(T0,WE),    ALU(AND),     WR(WE)    # MIRQ(IE & IRQ), check IRQ enable bit
 RF(T0),    JLT(0x1, STAGE_FETCH)               # any valid interrupt?
 
 #------------- select highest priority number by using IP register. 
-RF(IP),    ALU(AND),    BUS(ALU), WR(WE)       # get  PMIRQ(MIRQ masked with IP)
-RF(T0,WE), ALU(SHIRQN), BUS(ALU)               
-#--------------------------
-### T0 <- (highest priority IRQ number)
+RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
+RF(T0,WE), ALU(SHIRQN)
+### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
 ### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
 #--------------------------
+
+
+
+RF(ISR),  ALU(A),  WR(WE)
+RF(T1,WE),ALU(B)          
+RF(T2,WE),ALU(B)          # T2,T1 <- ISR
+
 #------------- compare ISR and IRQ
 # wheather IRQ have higher priority than current interrupt.
-RF(ISR),  ALU(A), BUS(ALU), WR(WE)
-RF(T1,WE),ALU(B), BUS(ALU)          
-RF(T2,WE),ALU(B), BUS(ALU)          # T2,T1,WR <- ISR
+RF(IP),   ALU(A),    WR(WE) 
+RF(T1),ALU(SHIRQN),  WR(WE), BR(ONE) # WR <- (highest priority ISR number)
 
-RF(IP),   ALU(AND),    BUS(ALU) ,  WR(WE) #  W <- T1 & IP
-RF(T1,WE),ALU(SHIRQN), BUS(ALU),   WR(WE) # T1 <- (highest priority ISR number)
+RF(T0),   ALU(SUBB) ,  BR(CY)             #  CY meaing SHIRQN(IRQ) - SHIRQN(ISR) - 1 < 0
+JBIT(STAGE_FETCH)                         # meaing SHIRQN(IRQ) < SHIRQN(ISR) + 1, namely meaing SHIRQN(IRQ) <= SHIRQN(ISR) 
 
-RF(T0),   ALU(A) ,     BUS(ALU), WR(WE), BR(ZERO)  # W <- T0, BR -> 0
-RF(T1),   ALU(SUBB),   BR(CY)              # T1 - W(BR is 0)# BR <- CARRY
-JBIT(STAGET_INTERRUPT_ACCEPTED)             # SHIRQN(ISR) - SHIRQN(IRQ) < 0 ?
-J(STAGE_FETCH)
 
-#------------- accept interrupt, before append IRQ to ISR
-# we must check if there is an interrupt service number 
-# in the ISR same as the IRQ number
-STAGET_INTERRUPT_ACCEPTED:
-#remove IRQ valid and IP flag
-RF(T0,WE), ALU(IRQN2IRQ), BUS(ALU), WR(WE)# WR,T0 <- (IRQN TO IRQ, USING 2 - 4 DECODER)
+#------------- accept interrupt
+# Before append IRQ to ISR, we must check if there is an interrupt service number 
+# in the ISR same as the IRQ number.
+RF(T0), ALU(IRQN2IRQ),  WR(WE)    # WR <- (IRQN TO IRQ, USING 2 - 4 DECODER)
 
 ## check wheather IRQ with the IRQ number already append
-RF(T2, WE), ALU(AND), BUS(ALU) # T2 & T0 (ISR & IRQ)
-JGT(0, STAGE_FETCH)
+RF(T2, WE), ALU(AND)    #  (ISR & IRQ)
+RF(T2),     JGT(0, STAGE_FETCH)
 
-#append IRQ to ISR
-RF(ISR,WE), ALU(OR)     ,BUS(ALU)
-#save PC
-RF(SP,WE), ALU(INC), BUS(ALU), SR(WE)
-RF(PCL),   ALU(A),   BUS(ALU),RAM(WE)
-RF(SP,WE), ALU(INC), BUS(ALU), SR(WE)
-RF(PCH),   ALU(A),   BUS(ALU),RAM(WE)
+## append IRQ to ISR
+RF(ISR,WE), ALU(OR)
+
+## save PC
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCL),   ALU(A),   RAM(WE)
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCH),   ALU(A),   RAM(WE)
 
 
-#calculate vector address: addr = (irqn << 3) + 3
-RF(T0,WE), ALU(SL), BUS(ALU)
-RF(T0,WE), ALU(SL), BUS(ALU)
-RF(T0,WE), ALU(SL), BUS(ALU)
-WR(WE),IMMED(0x03), BUS(IMMED)
-RF(T0,WE), ALU(ADD),BUS(ALU)
+## load interrupt vector address to pc
+RF(T0,WE), ALU(IVADDR),  WR(WE)
 
-RF(PCH,WE),ALU(ZERO),BUS(ALU)
-RF(PCL,WE),ALU(B)   ,BUS(ALU), J(STAGE_FETCH)
+RF(PCH,WE), LI(0)
+RF(PCL,WE),ALU(B)   , J(STAGE_FETCH)
 
+
+######################################################## 
+# reset all register and PC to 0
+######################################################## 
 STAGE_RESET_ALL:
 RF(A,   WE), LI(0)
 RF(B,   WE), LI(0)
