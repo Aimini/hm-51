@@ -225,7 +225,7 @@ f,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f</data>
         </entry>
         <entry>
           <string>lastDataFile</string>
-          <string>C:\Users\abb\OneDrive\51cpu\eeprom-bin\alud-low.bin</string>
+          <string>..\eeprom-bin\alud-low.bin</string>
         </entry>
       </elementAttributes>
       <pos x="1040" y="500"/>
@@ -481,7 +481,7 @@ f,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f</data>
         </entry>
         <entry>
           <string>lastDataFile</string>
-          <string>C:\Users\abb\OneDrive\51cpu\eeprom-bin\alud-high.bin</string>
+          <string>..\eeprom-bin\alud-high.bin</string>
         </entry>
       </elementAttributes>
       <pos x="1040" y="680"/>

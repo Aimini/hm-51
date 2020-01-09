@@ -323,7 +323,7 @@ cf,df,ef,ff</data>
         </entry>
         <entry>
           <string>lastDataFile</string>
-          <string>C:\Users\abb\OneDrive\51cpu\eeprom-bin\alus.bin</string>
+          <string>..\eeprom-bin\alus.bin</string>
         </entry>
       </elementAttributes>
       <pos x="960" y="740"/>
