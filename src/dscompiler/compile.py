@@ -30,9 +30,6 @@ def dissassemble(write,bytes_len,source_lines, machine_code_lines, hl_dtoken_lin
                 hlidx += 1
                 write('\n')
 
-        # write(','.join([ _.simple_str() for _ in hl_dtokens_per_line[1]]))
-        # write('\n')
-        # lineno += 1
 
 
 def compile_ds(readline, write):
@@ -75,7 +72,7 @@ def compile_ds(readline, write):
     pos_fmt_str = "{:>8} {:>8} {:>16}"
     print(pos_fmt_str.format("pos","size","name"))
     for pos,size,name in controls_parameters_position_info:
-            bits_len = max(bits_len,pos + size)
+            bits_len = max(bits_len,pos + size) 
             print(pos_fmt_str.format(pos,size,name))
     bytes_len = int((bits_len + 7)/8) # how many bytes using to encoding, math.ceil(bits_len/8)
     
