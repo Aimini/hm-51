@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>Description</string>
+      <string>stop ouput clock if input S  is high. if go is 1, clock will ouput normally.</string>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>Data</elementName>
+      <elementAttributes/>
+      <pos x="300" y="1040"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Register</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>INTR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="820" y="760"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="780" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>C</string>
+        </entry>
+      </elementAttributes>
+      <pos x="140" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes/>
+      <pos x="720" y="920"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes/>
+      <pos x="1000" y="740"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="940" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>clock output</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>O</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1140" y="760"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes/>
+      <pos x="620" y="880"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>stop clock</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>S</string>
+        </entry>
+      </elementAttributes>
+      <pos x="160" y="920"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Register</elementName>
+      <elementAttributes/>
+      <pos x="520" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="500" y="1060"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes/>
+      <pos x="620" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="500" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Register</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>SYNC1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="380" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="360" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Register</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>SYNC0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="260" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="240" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="180" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>continue clock. enable CLKO when detected raise edge. sync with ~CLKI</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>G</string>
+        </entry>
+      </elementAttributes>
+      <pos x="160" y="980"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="780" y="800"/>
+      <p2 x="820" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="700" y="960"/>
+      <p2 x="720" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="960"/>
+      <p2 x="480" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="340" y="960"/>
+      <p2 x="380" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="960"/>
+      <p2 x="260" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="960"/>
+      <p2 x="520" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="160" y="740"/>
+      <p2 x="1000" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="900"/>
+      <p2 x="700" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="1060"/>
+      <p2 x="500" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="1060"/>
+      <p2 x="600" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="1000"/>
+      <p2 x="700" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="1000"/>
+      <p2 x="520" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="1000"/>
+      <p2 x="380" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="1000"/>
+      <p2 x="260" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="840"/>
+      <p2 x="900" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="940"/>
+      <p2 x="800" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="880" y="780"/>
+      <p2 x="900" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="780"/>
+      <p2 x="1000" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="140" y="780"/>
+      <p2 x="160" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="780"/>
+      <p2 x="240" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="780"/>
+      <p2 x="940" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="780"/>
+      <p2 x="820" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="780"/>
+      <p2 x="360" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="780"/>
+      <p2 x="500" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="160" y="780"/>
+      <p2 x="180" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="880"/>
+      <p2 x="620" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="980"/>
+      <p2 x="380" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="980"/>
+      <p2 x="260" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="980"/>
+      <p2 x="340" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="160" y="980"/>
+      <p2 x="220" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="980"/>
+      <p2 x="520" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="980"/>
+      <p2 x="620" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="980"/>
+      <p2 x="460" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="700" y="920"/>
+      <p2 x="720" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="160" y="920"/>
+      <p2 x="620" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="760"/>
+      <p2 x="1140" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="760"/>
+      <p2 x="820" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="1020"/>
+      <p2 x="620" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="780"/>
+      <p2 x="240" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="160" y="740"/>
+      <p2 x="160" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="960"/>
+      <p2 x="480" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="760"/>
+      <p2 x="800" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="340" y="960"/>
+      <p2 x="340" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="780"/>
+      <p2 x="500" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="780"/>
+      <p2 x="900" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="840"/>
+      <p2 x="600" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="1020"/>
+      <p2 x="600" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="780"/>
+      <p2 x="360" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="960"/>
+      <p2 x="220" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="960"/>
+      <p2 x="460" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="700" y="900"/>
+      <p2 x="700" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="700" y="960"/>
+      <p2 x="700" y="1000"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>

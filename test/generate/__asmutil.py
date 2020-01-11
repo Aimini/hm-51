@@ -93,9 +93,9 @@ def ast(a,b,func):
         b: str,int,D,I
             value1
         func: int
-            0x00 a > b
-            0x01 a = b
-            0x02 a < b
+            0x01 a > b
+            0x02 a = b
+            0x03 a < b
 
     """
     return """
@@ -109,19 +109,19 @@ def astl(a,b):
     """
     return string of instructions that assert a < b.
     """
-    return ast(a,b,I_00)
+    return ast(a,b,I_01)
 
 def aste(a,b):
     """
     return string of instructions that assert a = b.
     """
-    return ast(a,b,I_01)
+    return ast(a,b,I_02)
 
 def astg(a,b):
     """
     return string of instructions that assert a > b.
     """
-    return ast(a,b,I_02)
+    return ast(a,b,I_03)
 
 reg_A = "A"
 reg_B = "B"
