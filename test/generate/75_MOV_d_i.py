@@ -6,19 +6,18 @@
 #########################################################
 
 import __util as u
-ntl = u.numutil
+import __asmutil as atl
 
 def one(*vargs):
     addr = vargs[0]
     # set memory cells' value to it's address
-    return u.ins("MOV", ntl.direct(addr),ntl.immed(addr))
+    return atl.move(atl.D(addr),atl.I(addr))
 
     
-def do(fh,w):
+def do(w):
     def wone(*vargs):
         w(one(*vargs))
-        w('\n')
-
+    
     u.sdirect(wone)
 
 u.test(do)
