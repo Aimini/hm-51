@@ -12,15 +12,13 @@ RF(PCL),  ALU(A),  WR(WE),  JRST(STAGE_RESET_ALL)
 RF(PCH),  ALU(A),  SR(WE)
 RF(IR,WE),BUS(ROM)
 
-#increase PC
-LI(0), WR(WE) # set WR to 0
-# we can use WR to insert A.PF(bit 0)
+
 # set parity flag
 RF(A),      ALU(PF),   BR(ALUDF)
-RF(PSW,WE), ALU(INSB), BR(ONE) # set BR to prepare increase PC
-
-RF(PCL,WE),ALU(ADDC), BR(CY)           # PCL + 1,  STORE CARRY
-RF(PCH,WE),ALU(ADDC)                   # PCH + CY
+RF(PSW,WE), ALU(SETPF), BR(ONE) # set BR to prepare increase PC
+#increase PC
+RF(PCL,WE),ALU(INCC), WR(WE), BR(CY)           # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), SR(WE)                   # PCH + CY
 
 ###
 # indstruction decode jump
@@ -779,6 +777,7 @@ IRSEG_86: #--------------------
 IRSEG_84_85:
 RF(IR), JLT(0x85,IRSEG_84)
 IRSEG_85: #--------------------
+# MOV direct, direct
 
 #------------------------------
 
@@ -897,34 +896,30 @@ IRSEG_74_75:
 RF(IR), JLT(0x75,IRSEG_74)
 IRSEG_75: #--------------------
 # MOV direct,#immed
-RF(PCL), ALU(A), WR(WE)
-RF(PCH), ALU(A), SR(WE)
-RF(T0,WE), BUS(ROM)              # T0 <- direct
+RF(T0,WE), BUS(ROM),BR(ONE)              # T0 <- direct
 
-WR(WE),LI(0),BR(ONE)
-RF(PCL,WE), ALU(ADDC),  BR(CY)
-RF(PCH,WE), ALU(ADDC),  SR(WE)       # ++PC
-RF(PCL),    ALU(A),     WR(WE)
+# ++PC
+RF(PCL,WE), ALU(INCC),WR(WE),  BR(CY)
+RF(PCH,WE), ALU(INCC),SR(WE)       
 BUS(ROM), WR(WE)         # WR <- immed
 
 RF(T0),   ALU(SFR), RFSRCR(WE)
 RF(T0),   ALU(A),   SR(WE)
-RF(SFR),  ALU(B),  RAM(WE) # RAM[direct] <- immed
+RF(SFR),  ALU(B),  RAM(WE), BR(ONE) # RAM[direct] <- immed
 
-WR(WE),LI(0),BR(ONE)
-RF(PCL,WE),ALU(ADDC), BR(CY)
-RF(PCH,WE),ALU(ADDC), J(STAGE_CHECK_INTERRUPT) # ++PC
+RF(PCL,WE),ALU(INCC), BR(CY)
+RF(PCH,WE),ALU(INCC), J(STAGE_CHECK_INTERRUPT) # ++PC
 #------------------------------
 
 
 IRSEG_74: #--------------------
 # MOV A, #IMMED
-WR(WE), RF(PCL), ALU(A)
-SR(WE), RF(PCH), ALU(A)
-RF(A,WE),BUS(ROM)
-WR(WE), LI(0), BR(ONE)
-RF(PCL,WE),ALU(ADDC),  BR(CY)
-RF(PCH,WE),ALU(ADDC),  J(STAGE_CHECK_INTERRUPT)
+# WR(WE), RF(PCL), ALU(A)
+# SR(WE), RF(PCH), ALU(A)
+# RF(A,WE),BUS(ROM)
+# WR(WE), LI(0), BR(ONE)
+# RF(PCL,WE),ALU(ADDC),  BR(CY)
+# RF(PCH,WE),ALU(ADDC),  J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
