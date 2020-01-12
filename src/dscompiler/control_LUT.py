@@ -107,13 +107,14 @@ class name_parameters_lut(abstract_parameters_lut):
             self.LUT[index] is the parameter LUT that cantain the name in it's enum list
         """
         for idx, one in enumerate(self.LUT):
-            # find parameter name in one parameter LUST
+            # find parameter name in one parameter LUT
             for encoding, enum_name in enumerate(one['enum']):
+                if name == enum_name:
+                    return idx, encoding
+
                 if self.try_enum_multiname_encoding(enum_name, name):
                     return idx, encoding
 
-                if name == enum_name:
-                    return idx, encoding
         return None, None
 
     def have_encoding_name(self, name):
@@ -223,7 +224,9 @@ RAM = name_parameters_lut([
         'enum': ['', 'WE']
     }
 ])
-
+####################################################################
+# see /src/alu/README.md get more info about ALU function info
+####################################################################
 ALUDL = name_parameters_lut([
     {
         'sh': 'FUNC',
@@ -233,21 +236,24 @@ ALUDL = name_parameters_lut([
             'XOR', 'DA', 'ADDC', 'SUBB',
             'A',  'B', 'OR', 'AND',
             'IRQN2IRQ', 'SETPSWF', 'ADDR11REPLACE', 'SHIRQN',
-            'Ri', 'Rn', 'NA', '']
+            'Ri', 'Rn', 'NA', 'INCC']
     }
 ])
-
+# see /src/alu/README.md
 ALUDH = name_parameters_lut([
     {
         'sh': 'FUNC',
         'name': 'alud high part function',
         'len': 4,
         'enum': [
-            '','DAF', 'ADDCF', 'SUBBF',
-            'PF',  'ZF', 'INSB', 'EXTB']
+            '',   'DAF', 'ADDCF', 'SUBBF',
+            'PF', 'ZF',  'INSB',  'EXTB',
+            '',   '',    '',      '',
+            '',    '',   'SETPF', 'INCCF']
     }
 ])
 
+# see /src/alu/README.md
 ALUS = name_parameters_lut([
     {
         'sh': 'FUNC',

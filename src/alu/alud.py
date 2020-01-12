@@ -80,8 +80,8 @@ def generate_low_by_op(ci, f,  b, a):
 
     elif f == 0x4:  #A/PF
         RL = a
-        RH = '{:b}'.format(b).count('1')
-        RH = 8 if (RH & 1) else 0 # pass pf to high part
+        T = '{:b}'.format(a).count('1')
+        RH = 8 if (T & 1) else 0 # pass pf to high part
 
     elif f == 0x5: # B/ZF
         RL = b
@@ -152,13 +152,14 @@ def generate_low_by_op(ci, f,  b, a):
     elif f == 0xD: 
         RL = (a & 0x7) & (b & 0x8) # Rn IR, PSW
 
-    elif f == 0xE: # NA
+    elif f == 0xE: # NA/ SETPF
         RL = ~a
+        RH = (a & 0xE) | ci
+    elif f == 0xF: #INCC
+        RH,RL = get_flag_add(a,0,ci)
 
-    elif f == 0xF:
-        pass
-
-    return (RH << 4 | RL) & 0xFF
+    v =  ((RH & 0xF) << 4) | (RL& 0xF)
+    return v
 
 
 def generate_high_by_op(ci, f, b, a):
@@ -183,7 +184,7 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0x4:  # A/PF
         RL = a
         # PF A
-        T = '{:b}'.format(b).count('1')
+        T = '{:b}'.format(a).count('1')
         T = T % 2 == 1
         if (ci and not T) or (not ci and T):
             RH = 8
@@ -243,13 +244,13 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0xD:  # Ri IR, PSW
         RL = b & 0x1 #RS1
 
-    elif f == 0xE:  #NA
+    elif f == 0xE:  #NA / SETPF
         RL =  ~a
-
-    elif f == 0xF:
-        pass
-
-    return ((RH << 4) | RL) & 0xFF
+        RH = a
+    elif f == 0xF: #INCC
+        RH,RL = get_flag_add(a,0,ci)
+    v =  ((RH & 0xF) << 4) | (RL& 0xF)
+    return v
 
 
 def gen_to_file(lowfilepath,highfilepath):
@@ -262,7 +263,7 @@ def gen_to_file(lowfilepath,highfilepath):
     enum_input(write_one_byte)
 
     with open(lowfilepath, 'wb') as f:
-        f.write(h)
+        f.write(l)
 
     with open(highfilepath, 'wb') as f:
         f.write(h)
