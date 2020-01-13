@@ -1,5 +1,5 @@
 # Introduction
-This document is alus and alud function descrption.
+This document is [ALUS](#ALUS) and [ALUD](#ALUD) function descrption.
 
 # ALUS
 ## input and output
@@ -9,12 +9,12 @@ It have one ouput `Q`.
 ## encoding
 The number in first column are the upper nibble, the number in fisrt row  are the lower nibble.
 
-|name|0|1|2|3|
+|encode|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
-|0|A|NA|CAA|SFR|
-|1|RR|RL|RRC|RLC|
-|2|INC|DEC|BADDR|BIDX|
-|3|SETCY|SETOVCLRCY|CHIRQ|SWAP|
+|0|[ADJF](###0.-ADJF)|[IVADDR](###1.-IVADDR)|[CAA](###2.-CAA)|[SFR](###3.-SFR)|
+|1|[RR](###4.-RR)|[RL](###5.-RL)|[RRC](###6.-RRC)|[RLC](###7.-RLC)|
+|2|[INC](###8.-INC)|[DEC](###9.-DEC)|[BADDR](###10.-BADDR)|[BIDX](###11.-BIDX)|
+|3|[SETCY](###12.-SETCY)|[SETOVCLRCY](###13.-SETOVCLRCY)|[CHIRQ](###14.-CHIRQ)|[SWAP](###15.-SWAP)|
 
 ## Description
 ### 0. ADJF
@@ -42,14 +42,14 @@ RF(A, WE), ALU(DA), BUS(ALU)
 ```
 
 ### 1. IVADDR
-get interrupt vector address from IRQ number.
+Get interrupt vector address from IRQ number.
 
 |7-0|
 |:-:|
 |((A & 3) << 3) + 3|
 
 
-### 2. CCA
+### 2. CAA
 
 `C` logic and with each bit in `A`.
 
@@ -123,7 +123,7 @@ Get direct address from bit address.
  |:-:|:-:|
  |A & 0x7|A & 0x7|
 
- for 8051, it's always lower 3-bit of the bit address. it's usually work with BADDR. To facilitate the implementation of [INSB](####6.-INSB) and [EXTB](####7.-EXTB) functions in ALUD, the target index is in both low nibble and high nibble.
+ For 8051, it's always lower 3-bit of the bit address. it's usually work with BADDR. To facilitate the implementation of [INSB](####6.-INSB) and [EXTB](####7.-EXTB) functions in ALUD, the target index is in both low nibble and high nibble.
 
 
 ### 12. SETCY
@@ -211,7 +211,7 @@ C1 ─╢          ║
     ╚══════════╝
 ```
 
-But form function like `ADD`, `SUB`, the need carry signal from low part, we need some ouput to perform carry out ouput. In my design, HQ was used as carry out ouput(although carry out need only 1 bit), so one `S` can only encode one function for these case:
+But for function like `ADD`, `SUB`, the need carry signal from low part, we need some ouput to perform carry out ouput. In my design, HQ was used as carry out ouput(although carry out need only 1 bit), so one `S` can only encode one function for these case:
 ```python
       ╔══════════╗
     ┌ ╢A0        ║
@@ -255,7 +255,7 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 
  **QL:**
 
-| |0|1|2|3|
+|encode|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
 |0|[XOR](####0.-XOR)|[DA](####1.-DA)|[ADDC](####2.-[ADDC])|[SUBB](####3.-[SUBB])|
 |1|[A](####4.-A)|[B](####5.-B)|[OR](####6.-OR)|[AND](####7.-AND)|
@@ -264,7 +264,7 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 
 **QH:**
 
-| |0|1|2|3|
+|encode|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
 |0||[DAF](####1.-DAF)|[ADDCF](####2.-ADDCF)|[SUBBF](####3.-SUBBF)|
 |1|[PF](####4.-PF)|[ZF](####5.-ZF)|[INSB](####6.-INSB)|[EXTB](####7.-EXTB)|
@@ -378,7 +378,7 @@ This function was used to `AJMP` and `ACALL`, let's explain how it work. In ISA,
 |:-:     |:-:        |:-:|
 |value|A10-A8 xxxxx|A7-A0|
 
-and when excute `AJMP` and `ACALL` we have a step `PC[10:0]= A[10:0]`, note `PC[15:8]` as `PCH`, `PC[7:0]` as `PCL`, then we get `PCL = A[7:0] = byte1` it's simply move `byte1` to `PCL`. For `PCH`, we have `PCH[2:0] = A[10:8]`,  meaing we want `PCH[2:0]` = `byte0[7:5]`. That's seem can't work by this function, but if excute [SWAP](###15.-SWAP) to `byte0`, we have `_byte0[3:0] = byte0[7:4]`, it's meaing `_byte0[3:1] = byte0[7:5]`, and now, we can excute `ADDR11REPLACE`.
+And when excute `AJMP` and `ACALL` we have a step `PC[10:0]= A[10:0]`, note `PC[15:8]` as `PCH`, `PC[7:0]` as `PCL`, then we get `PCL = A[7:0] = byte1` it's simply move `byte1` to `PCL`. For `PCH`, we have `PCH[2:0] = A[10:8]`,  meaing we want `PCH[2:0]` = `byte0[7:5]`. That's seem can't work by this function, but if excute [SWAP](###15.-SWAP) to `byte0`, we have `_byte0[3:0] = byte0[7:4]`, it's meaing `_byte0[3:1] = byte0[7:5]`, and now, we can excute `ADDR11REPLACE`.
 
 ```  python
 # example
@@ -501,7 +501,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
  |:-:|:-:|
  |A\[7:1\] |C |
 
-use to set parity flag in `PSW`.
+Use to set parity flag in `PSW`.
 
 #### 15. INCCF
 If there a carry from low nibble, `AC` is 1, if there a carry from high nibble, `CY` is 1.
