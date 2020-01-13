@@ -165,78 +165,85 @@ ALUD is a double operands ALU, it have four part inputs, two 4-bit operand `A``B
 It have two  4-bit ouput `LQ` and `HQ`.
 
 ```python
-     ┏━━━━━━━━━━┓
-   ┌ ┫A0        ┃
-   │ ┫.         ┃
- A ┥ ┫.       D0┣ ┐
-   └ ┫.   A    .┣ │
-   ┌ ┫.   T    .┣ ├ LQ
-   │ ┫.   2    .┣ ┘
- B ┥ ┫.   8    .┣ ┐
-   └ ┫.   C    .┣ │
-   ┌ ┫.   6    .┣ ├ HQ
-   │ ┫.   4   D7┣ ┘
- S ┥ ┫.         ┃
-   └ ┫.         ┃
- C ─ ┫A12       ┃
-     ┗━━━━━━━━━━┛
+    ╔══════════╗
+  ┌ ╢A0        ║
+  │ ╢.         ║
+A ┥ ╢.       D0╠ ┐
+  └ ╢.   A    .╠ │
+  ┌ ╢.   T    .╠ ├ LQ
+  │ ╢.   2    .╠ ┘
+B ┥ ╢.   8    .╠ ┐
+  └ ╢.   C    .╠ │
+  ┌ ╢.   6    .╠ ├ HQ
+  │ ╢.   4   D7╠ ┘
+S ┥ ╢.         ║
+  └ ╢.         ║
+C ─ ╢A12       ║
+    ╚══════════╝
 ```
 
 Obviously,only one chip can't perform two 8-bit input one 8-bit output function, but we can combine two chip togther. For function like `AND` `OR`, they don't need info from low part, lower nibble and high nibble can calculate indvidually and combine the output to one 8-bit output. For one chip, one function only using 4-bit ouput, and we can using another 4-bit for another function, for example, we can encode `AND` and `OR` in one S input:
 
 ```python
-     ┏━━━━━━━━━━┓
-   A ┫   AT28   ┃
-   B ┫   C64    ┣ LQ: A or B
-   S ┫          ┣ HQ: A and B
-   C ┫          ┃
-     ┗━━━━━━━━━━┛
+   ╔══════════╗
+A ─╢   AT28   ║
+B ─╢   C64    ╟─ LQ: A or B
+S ─╢          ╟─ HQ: A and B
+C ─╢          ║
+   ╚══════════╝
+```
+So forth, combine two chip we can get:
+```python
+    ╔══════════╗
+AL ─╢   AT28   ║
+BL ─╢   C64  LQ╟─────┯━━━━━  LQ
+S  ─╢        HQ╟─────┼─┐
+C0 ─╢          ║     │ │
+    ╚══════════╝     │ │
+                     │ │ 
+    ╔══════════╗     │ │
+AH ─╢   AT28   ║     │ │
+BH ─╢   C64  LQ╟─────┘ │
+S  ─╢        HQ╟───────┷━━━  HQ
+C1 ─╢          ║
+    ╚══════════╝
 ```
 
 But form function like `ADD`, `SUB`, the need carry signal from low part, we need some ouput to perform carry out ouput. In my design, HQ was used as carry out ouput(although carry out need only 1 bit), so one `S` can only encode one function for these case:
 ```python
-      ┏━━━━━━━━━━┓
-    ┌ ┫A0        ┃
-    │ ┫.         ┃
- AL ┥ ┫.       D0┣ ┐
-    └ ┫.   A    .┣ │
-    ┌ ┫.   T    .┣ ├ AL + BL
-    │ ┫.   2    .┣ ┘
- BL ┥ ┫.   8    .┣ 
-    └ ┫.   C    .┣ 
-    ┌ ┫.   6    .┣        CY
-    │ ┫.   4   D7┣ ───────┴─────┐
-  S ┥ ┫.         ┃              │
-    └ ┫.         ┃              │
-  C ─ ┫A12       ┃              │
-      ┗━━━━━━━━━━┛              │
+      ╔══════════╗
+    ┌ ╢A0        ║
+    │ ╢.         ║
+ AL ┥ ╢.       D0╟ ┐
+    └ ╢.   A    .╟ │
+    ┌ ╢.   T    .╟ ├ AL + BL
+    │ ╢.   2    .╟ ┘
+ BL ┥ ╢.   8    .╟ 
+    └ ╢.   C    .╟ 
+    ┌ ╢.   6    .╟        CY
+    │ ╢.   4   D7╟────────┴─────┐
+  S ┥ ╢.         ║              │
+    └ ╢.         ║              │
+  C ─ ╢A12       ║              │
+      ╚══════════╝              │
                                 │
-      ┏━━━━━━━━━━┓              │
-    ┌ ┫A0        ┃              │
-    │ ┫.         ┃              │
- AH ┥ ┫.       D0┣ ┐            │
-    └ ┫.   A    .┣ │            │
-    ┌ ┫.   T    .┣ ├ AH + BH    │
-    │ ┫.   2    .┣ ┘            │
- BH ┥ ┫.   8    .┣              │
-    └ ┫.   C    .┣              │
-    ┌ ┫.   6    .┣              │
-    │ ┫.   4   D7┣ ─ CY         │
-  S ┥ ┫.         ┃              │
-    └ ┫.         ┃              │
-  C┌─ ┫A12       ┃              │
-   │  ┗━━━━━━━━━━┛              │
+      ╔══════════╗              │
+    ┌ ╢A0        ║              │
+    │ ╢.         ║              │
+ AH ┥ ╢.       D0╟ ┐            │
+    └ ╢.   A    .╟ │            │
+    ┌ ╢.   T    .╟ ├ AH + BH    │
+    │ ╢.   2    .╟ ┘            │
+ BH ┥ ╢.   8    .╟              │
+    └ ╢.   C    .╟              │
+    ┌ ╢.   6    .╟              │
+    │ ╢.   4   D7╟ ─ CY         │
+  S ┥ ╢.         ║              │
+    └ ╢.         ║              │
+  C┌──╢A12       ║              │
+   │  ╚══════════╝              │
    └────────────────────────────┘
 ```
 
-<!-- ## encoding
-The number in first column are the upper nibble, the number in fisrt row  are the lower nibble.
 
-|name|0|1|2|3|
-|:-:|:-:|:-:|:-:|:-:|
-|0|A|NA|CAA|SFR|
-|1|RR|RL|RRC|RLC|
-|2|INC|DEC|BADDR|BIDX|
-|3|SETCY|SETOVCLRCY|CHIRQ|SWAP|
 
-## Description -->
