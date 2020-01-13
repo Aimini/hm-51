@@ -3,6 +3,15 @@
   <version>1</version>
   <attributes>
     <entry>
+      <string>backgroundColor</string>
+      <awt-color>
+        <red>255</red>
+        <green>242</green>
+        <blue>242</blue>
+        <alpha>255</alpha>
+      </awt-color>
+    </entry>
+    <entry>
       <string>Description</string>
       <string>This cricuit provide assert function. you can write value to 
 special address to excute assert function.
