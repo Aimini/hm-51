@@ -3,6 +3,7 @@ import sys
 import pathlib
 import io
 import atexit
+import __asmutil as atl
 
 SFR_MAP = {
     0x81:2,#"SP"],
@@ -22,7 +23,10 @@ class asm_test:
         def store_file():
             with open(self.filename, "w") as fh:
                 fh.writelines(self.sio.getvalue())
-
+                fh.write(atl.exit())
+                fh.write('\n')
+                fh.write("END\n")
+                
         atexit.register(store_file)
 
     def __call__(self,* vargs, **kargs):
