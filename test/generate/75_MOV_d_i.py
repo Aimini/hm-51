@@ -8,16 +8,12 @@
 import __util as u
 import __asmutil as atl
 
+p = u.create_test()
+
 def one(*vargs):
     addr = vargs[0]
     # set memory cells' value to it's address
     return atl.move(atl.D(addr),atl.I(addr))
 
-    
-def do(w):
-    def wone(*vargs):
-        w(one(*vargs))
-    
-    u.sdirect(wone)
 
-u.test(do)
+p.iter_is(one)

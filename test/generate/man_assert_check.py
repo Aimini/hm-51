@@ -5,24 +5,23 @@
 #########################################################
 
 import __util as u
-import __asmutil as atl
+from __asmconst import *
 
 
-    
-def do(w):
-    #
-    # seq:
-    #  less than
-    #  equal
-    #  greater than
-    #
-    # who failed:
-    # 1. lt ,gt
-    # 2. eq, gt
-    # 3. lt, eq
-    for x in [[atl.I_00, atl.I_00], [atl.I_02, atl.I_40], [atl.I_DE,atl.I_A0]]:
-        w(atl.astl(x[0],x[1]) + '\n')
-        w(atl.aste(x[0],x[1]) + '\n')
-        w(atl.astg(x[0],x[1]) + '\n')
-        
-u.test(do)
+p = u.create_test()
+#
+# seq:
+#  less than
+#  equal
+#  greater than
+#
+# who failed:
+# 1. lt ,gt
+# 2. eq, gt
+# 3. lt, eq
+for x in [[I_00, I_00], [I_02, I_40], [I_DE, I_A0]]:
+    a = x[0]
+    b = x[1]
+    p(atl.astl(a,b))
+    p(atl.aste(a,b))
+    p(atl.astg(a,b))
