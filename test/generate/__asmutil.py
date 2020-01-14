@@ -104,7 +104,12 @@ MOV 0xFE, {}
 MOV 0xFD, {}
 """.format(a,b,func)
 
-
+def brk():
+    """
+    return string of instructions that make a break
+    """
+    return "MOV 0xFD, 0"
+    
 def astl(a,b):
     """
     return string of instructions that assert a < b.

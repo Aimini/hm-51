@@ -18,6 +18,7 @@ special address to excute assert function.
  0xFF: value0,
  0xFE: value1,
  0xFD: function select(
+  0: break
   1: assert v0 &gt; v1, 
   2: assert v0 = v1, 
   3: assert v0 &lt; v1)
@@ -84,12 +85,7 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Value</string>
-          <long>0</long>
-        </entry>
-      </elementAttributes>
+      <elementAttributes/>
       <pos x="1040" y="480"/>
     </visualElement>
     <visualElement>
