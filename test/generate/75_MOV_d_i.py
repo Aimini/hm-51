@@ -6,7 +6,7 @@
 #########################################################
 
 import __util as u
-import __asmutil as atl
+from __asmconst import *
 
 p = u.create_test()
 
