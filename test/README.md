@@ -1,4 +1,47 @@
-# introduction
+# Introduction
+# Hardware and simulator support
+I recommend that you implement these sfrs' function in your hardware design and simulator so that you can easily check that the test results are correct.
+
+|address| register|function|
+|:-: | :-:   |:-:|
+|0xFC| EXR   |[Exit](##exit)|
+|0xFD| PAR0  |[Assertion](##assertion)|
+|0xFE| PAR1  |[Assertion](##assertion)|
+|0xFF| AFUNC |[Assertion](##assertion)|
+
+
+## Assertion
+Assert function using 3 registers named `AFUNC`, `PAR1`, `PAR0`. `PAR0` and `PAR1` store the number you want to compare, AFUNC control comparison mode:
+
+|value   | 0   | 1     |2       | 3     |
+|:-:     |:-:  |:-:    |:-:     |:-:    |
+|function| None|p0 > p1|p0 == p1|p0 < p1|
+
+Assertions are the basic requirement for testing. It is used to check whether the results of certain instructions are correct. In the emulator, you can use assertions to verify that your .A51 is working as expected, making sure there are no human mistake in the .A51 file, so an assertion failure in the hardware design will tell you that there must be an error in hardware level.
+
+## Exit
+When you write a value greater than zero to `EXR`, it tells the simulator/hardware design tool that the program has exited.
+
+Some simulators check if the program exits based on the length of data loaded in ROM. However, I still recommend that you implement this feature.
+<!-- # Common testing process
+1. write a 
+
+When compare result not at expect, you'd better to check the soft
+# Create new test -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # manual test instructions
 We first implement the following two instructions:
