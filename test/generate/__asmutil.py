@@ -77,13 +77,13 @@ def ins(*args):
     '''
     return args[0] + ' ' + ', '.join([str(_) for _ in args[1:]])
 
-def exit(src = I_00):
+def exit():
     """
     return string of instructions that exit from Digitalc.exe.
         src: int, D, I
             exit code source, can be a immed(I) or direct address(int, D),default is exit with immediate 0.
     """
-    return '\n'.join([move(D_EF,src),move(D_EE,I_01)])
+    return move(D_EE,I_01)
 
 def ast(a,b,func):
     """
@@ -99,9 +99,9 @@ def ast(a,b,func):
 
     """
     return """
-MOV 0xFF, {}
-MOV 0xFE, {}
 MOV 0xFD, {}
+MOV 0xFE, {}
+MOV 0xFF, {}
 """.format(a,b,func)
 
 def brk():
