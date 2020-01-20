@@ -8,15 +8,20 @@ import sys
 parser = argparse.ArgumentParser(description="8051 simulator")
 parser.add_argument('-i', '--input-file',   dest='input_file', action='store', help='input intel hex file')
 parser.add_argument(
-    '-d', '--dump-file', dest='dump_file', action='store', default=None,
-    help="the text file to write ram and core register content. write hex number, 16 number each line, 8 lines total.")
+    '-d', '--dump-file-template', dest='dump_file_template', action='store', default=None,
+    help='The text file name to write ram and core register content, using C style format. '\
+        'for example you can write "dump-%d.txt", and the first dump will write to file "dump-0.txt, "'
+        'the second dump will write to file "dump-1.txt".  Sequence is - SP DPL DPH IE IP PSW A B, IRAM 0x00 - 0x7F.')
 
 dbgarg = ["-i", R"test\temp\75_MOV_d_i.hex"]
 
-args = parser.parse_args(dbgarg)
+args = parser.parse_args()
 
 
 run_flag = True
+dump_count = 0
+
+
 vm = core51.core51()
 core51_peripheral.install_default_peripherals(vm)
 
@@ -104,7 +109,12 @@ def install_my_sfr(core: core51.core51):
     }
 
     obj = core.sfr_extend(my_sfr)
-    obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core(core, open(args.dump_file)))
+    def dump_core_to_template_file():
+        global dump_count
+        with open(args.dump_file_template % dump_count,"w") as fh:
+            dump_core(core, fh)
+
+    obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
     obj["EXR"].set_listener.append(lambda mem_obj, new_value: normal_stop())
     obj["ASTREG"].set_listener.append(lambda mem_obj, new_value: assert_core(obj[p0], obj[p1], new_value))
 
@@ -112,8 +122,8 @@ def install_my_sfr(core: core51.core51):
 install_my_sfr(vm)
 
 
-for _ in range(3):
-    assert_and_dump_test(vm)
+# for _ in range(3):
+#     assert_and_dump_test(vm)
 
 
 with open(args.input_file) as fh:
