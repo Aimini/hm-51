@@ -24,8 +24,11 @@ class asm_test:
 
         def store_file():
             with open(self.filename, "w") as fh:
-                
                 fh.write(self.sio.getvalue())
+                
+                fh.write('\n')
+                fh.write(atl.dump())
+                fh.write('\n')
                 fh.write(atl.exit())
                 fh.write('\n')
                 fh.write("END\n")

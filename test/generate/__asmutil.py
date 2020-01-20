@@ -44,6 +44,9 @@ def ins(*args):
     '''
     return args[0] + ' ' + ', '.join([str(_) for _ in args[1:]])
 
+def dump():
+    return f";;;;;;;;;;;; dump \n" + move(D(0xFB),I(1))
+    
 def exit():
     """
     return string of instructions that exit from Digitalc.exe.
