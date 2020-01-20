@@ -29,10 +29,16 @@ def dump_core(core: core51.core51):
 
     ram_dump = list(core.IRAM)
     reg_dump = [core.SP, core.DPL, core.DPH, core.PSW, core.A, core.B]
-    ram_dump.extend(reg_dump)
+
     f = "0x{:0>2X}"
     with open(args.dump_file) as f:
-        f.write(' '.join([f.format(_) for _ in ram_dump]))
+        f.write(' '.join([f.format(_) for _ in reg_dump]))
+        i = 0
+        for x in ram_dump:
+            if i % 16 == 0:
+                f.write('\n')
+            f.write(f.format(x))
+            f.write(' ')
 
 
 def normal_stop():
@@ -87,7 +93,8 @@ def assert_test(core):
                 raise e
             if cmpcode == x[0] and (x[1](a,b)) and  take_exception: # passed  but  exception happend
                 raise e
-    
+            
+
 def install_my_sfr(core: core51.core51):
     p0 = "ASTPAR0"
     p1 = "ASTPAR1"
