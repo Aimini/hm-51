@@ -3,6 +3,7 @@ import core51_peripheral
 import hex_decoder
 import argparse
 import random
+import sys
 
 parser = argparse.ArgumentParser(description="8051 simulator")
 parser.add_argument('-i', '--input-file',   dest='input_file', action='store', help='input intel hex file')
@@ -10,9 +11,9 @@ parser.add_argument(
     '-d', '--dump-file', dest='dump_file', action='store', default=None,
     help="the text file to write ram and core register content. write hex number, 16 number each line, 8 lines total.")
 
-dbgarg = ["-i",R"test\temp\75_MOV_d_i.hex"]
+dbgarg = ["-i", R"test\temp\75_MOV_d_i.hex"]
 
-args = parser.parse_args()
+args = parser.parse_args(dbgarg)
 
 
 run_flag = True
@@ -20,25 +21,19 @@ vm = core51.core51()
 core51_peripheral.install_default_peripherals(vm)
 
 
-
-
-    
-def dump_core(core: core51.core51):
-    if not args.dump_file:
-        raise FileExistsError("No dump file configured.")
-
+def dump_core(core: core51.core51, fh):
     ram_dump = list(core.IRAM)
     reg_dump = [core.SP, core.DPL, core.DPH, core.PSW, core.A, core.B]
 
-    f = "0x{:0>2X}"
-    with open(args.dump_file) as f:
-        f.write(' '.join([f.format(_) for _ in reg_dump]))
-        i = 0
-        for x in ram_dump:
-            if i % 16 == 0:
-                f.write('\n')
-            f.write(f.format(x))
-            f.write(' ')
+    fh.write(' '.join(['{}'.format(_) for _ in reg_dump]))
+    fh.write('\n')
+    i = 0
+    for x in ram_dump:
+        fh.write('{}'.format(x))
+        fh.write(' ')
+        i += 1
+        if i % 16 == 0:
+            fh.write('\n')
 
 
 def normal_stop():
@@ -60,23 +55,24 @@ def assert_core(par0reg, par1reg, function_val):
         if not (p0 < p1):
             raise ArithmeticError("{} < {} assert failed".format(p0, p1))
 
-def assert_test(core):
+
+def assert_and_dump_test(core):
     a = random.getrandbits(8)
     b = random.getrandbits(8)
 
     t = bytearray([
-    # assert 0XFF == 0XFF
-    0x75,0xFD,a,#            3     MOV 0xFD, #0x00])
-    0x75,0xFE,b,#            4     MOV 0xFE, #0x00
-    0x75,0xFF, #            5     MOV 0xFF,  ?
+        # assert 0XFF == 0XFF
+        0x75, 0xFD, a,  # 3     MOV 0xFD, #0x00])
+        0x75, 0xFE, b,  # 4     MOV 0xFE, #0x00
+        0x75, 0xFF,  # 5     MOV 0xFF,  ?
     ])
     condition = [
-        [1, lambda a,b : a > b],
-        [2, lambda a,b : a == b],
-        [3, lambda a,b : a < b]
+        [1, lambda a, b: a > b],
+        [2, lambda a, b: a == b],
+        [3, lambda a, b: a < b]
     ]
 
-    for cmpcode in range(1,4):
+    for cmpcode in range(1, 4):
         c = bytearray(t)
         take_exception = False
         c.append(cmpcode)
@@ -86,14 +82,15 @@ def assert_test(core):
             core.step(3)
         except ArithmeticError as e:
             take_exception = True
-        
+
         for x in condition:
             e = Exception("assert function error.")
-            if cmpcode == x[0] and not (x[1](a,b)) and not take_exception: # assert failed but no exception
+            if cmpcode == x[0] and not (x[1](a, b)) and not take_exception:  # assert failed but no exception
                 raise e
-            if cmpcode == x[0] and (x[1](a,b)) and  take_exception: # passed  but  exception happend
+            if cmpcode == x[0] and (x[1](a, b)) and take_exception:  # passed  but  exception happend
                 raise e
-            
+    dump_core(core, sys.stdout)
+
 
 def install_my_sfr(core: core51.core51):
     p0 = "ASTPAR0"
@@ -107,7 +104,7 @@ def install_my_sfr(core: core51.core51):
     }
 
     obj = core.sfr_extend(my_sfr)
-    obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core(core))
+    obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core(core, open(args.dump_file)))
     obj["EXR"].set_listener.append(lambda mem_obj, new_value: normal_stop())
     obj["ASTREG"].set_listener.append(lambda mem_obj, new_value: assert_core(obj[p0], obj[p1], new_value))
 
@@ -115,8 +112,8 @@ def install_my_sfr(core: core51.core51):
 install_my_sfr(vm)
 
 
-# for _ in range(100):
-#     assert_test(vm)
+for _ in range(3):
+    assert_and_dump_test(vm)
 
 
 with open(args.input_file) as fh:
