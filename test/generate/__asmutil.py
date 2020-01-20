@@ -82,7 +82,11 @@ def astg(a,b):
     """
     return string of instructions that assert a > b.
     """
+<<<<<<< HEAD
     return f";;;;;;;;;;;; assert {a} > {b} \n" + ast(a,b,I(1))
+=======
+    return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a,b,I(3))
+>>>>>>> 51sim_dump
 
 def aste(a,b):
     """
@@ -94,7 +98,11 @@ def astl(a,b):
     """
     return string of instructions that assert a < b.
     """
+<<<<<<< HEAD
     return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a,b,I(3))
+=======
+    return f";;;;;;;;;;;; assert {a} > {b} \n" + ast(a,b,I(1))
+>>>>>>> 51sim_dump
 
 reg_A = "A"
 reg_B = "B"
