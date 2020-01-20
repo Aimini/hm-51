@@ -157,7 +157,7 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
       <elementAttributes>
         <entry>
           <string>Value</string>
-          <long>255</long>
+          <long>253</long>
         </entry>
         <entry>
           <string>Bits</string>
@@ -185,7 +185,7 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
       <elementAttributes>
         <entry>
           <string>Value</string>
-          <long>253</long>
+          <long>255</long>
         </entry>
         <entry>
           <string>Bits</string>

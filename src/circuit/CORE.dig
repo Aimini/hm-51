@@ -235,10 +235,6 @@ a506180000a,a206680000a,a306680000a,3580,450b1,1172400b2,a106780000a,9006f80000a
           <string>lastDataFile</string>
           <string>..\eeprom-bin\decoder.bin</string>
         </entry>
-        <entry>
-          <string>autoReload</string>
-          <boolean>true</boolean>
-        </entry>
       </elementAttributes>
       <pos x="-1520" y="-480"/>
     </visualElement>
@@ -559,10 +555,6 @@ ef,0,75,ee,1</data>
         <entry>
           <string>lastDataFile</string>
           <string>D:\OneDrive\51cpu\test\temp\85_MOV_d_d.hex</string>
-        </entry>
-        <entry>
-          <string>autoReload</string>
-          <boolean>true</boolean>
         </entry>
       </elementAttributes>
       <pos x="-340" y="-300"/>
@@ -1948,7 +1940,7 @@ ef,0,75,ee,1</data>
           <string>DBUS</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="80"/>
+      <pos x="-380" y="100"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1962,17 +1954,12 @@ ef,0,75,ee,1</data>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="100"/>
+      <pos x="-380" y="120"/>
     </visualElement>
     <visualElement>
       <elementName>Probe</elementName>
       <elementAttributes/>
-      <pos x="-280" y="40"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Probe</elementName>
-      <elementAttributes/>
-      <pos x="-280" y="60"/>
+      <pos x="-280" y="80"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -2351,6 +2338,77 @@ ef,0,75,ee,1</data>
       </elementAttributes>
       <pos x="-1620" y="420"/>
     </visualElement>
+    <visualElement>
+      <elementName>DUMP.dig</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>DUMP</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-360" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>RAM_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-380" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>DBUS</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-380" y="320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-380" y="340"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>RADDR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-380" y="280"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Probe</elementName>
+      <elementAttributes/>
+      <pos x="-280" y="300"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -2386,6 +2444,10 @@ ef,0,75,ee,1</data>
       <p2 x="-900" y="320"/>
     </wire>
     <wire>
+      <p1 x="-380" y="320"/>
+      <p2 x="-360" y="320"/>
+    </wire>
+    <wire>
       <p1 x="-1700" y="-260"/>
       <p2 x="-1580" y="-260"/>
     </wire>
@@ -2412,6 +2474,10 @@ ef,0,75,ee,1</data>
     <wire>
       <p1 x="-1420" y="260"/>
       <p2 x="-1360" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="-380" y="260"/>
+      <p2 x="-360" y="260"/>
     </wire>
     <wire>
       <p1 x="-680" y="-200"/>
@@ -2570,8 +2636,8 @@ ef,0,75,ee,1</data>
       <p2 x="-940" y="80"/>
     </wire>
     <wire>
-      <p1 x="-380" y="80"/>
-      <p2 x="-360" y="80"/>
+      <p1 x="-300" y="80"/>
+      <p2 x="-280" y="80"/>
     </wire>
     <wire>
       <p1 x="-1300" y="400"/>
@@ -2650,6 +2716,10 @@ ef,0,75,ee,1</data>
       <p2 x="-1040" y="340"/>
     </wire>
     <wire>
+      <p1 x="-380" y="340"/>
+      <p2 x="-360" y="340"/>
+    </wire>
+    <wire>
       <p1 x="-1700" y="-280"/>
       <p2 x="-1580" y="-280"/>
     </wire>
@@ -2680,6 +2750,10 @@ ef,0,75,ee,1</data>
     <wire>
       <p1 x="-1060" y="280"/>
       <p2 x="-1040" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="-380" y="280"/>
+      <p2 x="-360" y="280"/>
     </wire>
     <wire>
       <p1 x="-600" y="-220"/>
@@ -2778,16 +2852,16 @@ ef,0,75,ee,1</data>
       <p2 x="-1080" y="-420"/>
     </wire>
     <wire>
+      <p1 x="-380" y="100"/>
+      <p2 x="-360" y="100"/>
+    </wire>
+    <wire>
       <p1 x="-960" y="100"/>
       <p2 x="-940" y="100"/>
     </wire>
     <wire>
       <p1 x="-1340" y="100"/>
       <p2 x="-1280" y="100"/>
-    </wire>
-    <wire>
-      <p1 x="-380" y="100"/>
-      <p2 x="-360" y="100"/>
     </wire>
     <wire>
       <p1 x="-1220" y="420"/>
@@ -2850,10 +2924,6 @@ ef,0,75,ee,1</data>
       <p2 x="-360" y="40"/>
     </wire>
     <wire>
-      <p1 x="-300" y="40"/>
-      <p2 x="-280" y="40"/>
-    </wire>
-    <wire>
       <p1 x="-580" y="40"/>
       <p2 x="-560" y="40"/>
     </wire>
@@ -2912,6 +2982,10 @@ ef,0,75,ee,1</data>
     <wire>
       <p1 x="-1220" y="300"/>
       <p2 x="-1140" y="300"/>
+    </wire>
+    <wire>
+      <p1 x="-300" y="300"/>
+      <p2 x="-280" y="300"/>
     </wire>
     <wire>
       <p1 x="-1420" y="-240"/>
@@ -3014,12 +3088,8 @@ ef,0,75,ee,1</data>
       <p2 x="-540" y="-440"/>
     </wire>
     <wire>
-      <p1 x="-1420" y="440"/>
-      <p2 x="-1280" y="440"/>
-    </wire>
-    <wire>
-      <p1 x="-1620" y="440"/>
-      <p2 x="-1600" y="440"/>
+      <p1 x="-380" y="120"/>
+      <p2 x="-360" y="120"/>
     </wire>
     <wire>
       <p1 x="-1440" y="120"/>
@@ -3028,6 +3098,14 @@ ef,0,75,ee,1</data>
     <wire>
       <p1 x="-960" y="120"/>
       <p2 x="-940" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="-1420" y="440"/>
+      <p2 x="-1280" y="440"/>
+    </wire>
+    <wire>
+      <p1 x="-1620" y="440"/>
+      <p2 x="-1600" y="440"/>
     </wire>
     <wire>
       <p1 x="-460" y="-60"/>
@@ -3064,10 +3142,6 @@ ef,0,75,ee,1</data>
     <wire>
       <p1 x="-1120" y="-380"/>
       <p2 x="-1080" y="-380"/>
-    </wire>
-    <wire>
-      <p1 x="-300" y="60"/>
-      <p2 x="-280" y="60"/>
     </wire>
     <wire>
       <p1 x="-380" y="60"/>
