@@ -1509,7 +1509,8 @@ RF(IR), JLT(0x14,IRSEG_10_13)
 ## IRSEG_14_17
 RF(IR), JLT(0x16,IRSEG_14_15)
 ## IRSEG_16_17 --------------------
-@INC "instructions\16_17_DEC_ri.ds"
+# DEC @Ri
+@INC "instructions\INC_DEC_ri.ds", "DEC"
 #----------------------------------
 
 
@@ -1565,7 +1566,8 @@ RF(IR), JLT(0x4,IRSEG_0_3)
 ## IRSEG_4_7
 RF(IR), JLT(0x6,IRSEG_4_5)
 ## IRSEG_6_7 --------------------
-@INC "instructions\06_07_INC_Ri.ds"
+# INC @Ri
+@INC "instructions\INC_DEC_Ri.ds","INC"
 #------------------------------
 
 IRSEG_4_5:

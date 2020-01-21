@@ -1,7 +1,0 @@
-#0x06-0x07, INC direct
-RF(PSW), ALU(A), WR(WE)
-RF(IR), ALU(Ri), SR(WE)
-BUS(RAM), SR(WE)
-RF(T0, WE), BUS(RAM)
-RF(T0),  ALU(INC), WR(WE)
-RAM(WE), ALU(B),  BR(ONE) , J(STAGE_CHECK_INTERRUPT)     # T0 <- WR
