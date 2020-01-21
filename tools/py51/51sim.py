@@ -114,6 +114,7 @@ def install_my_sfr(core: core51.core51):
         global dump_count
         with open(args.dump_file_template % dump_count, "w") as fh:
             dump_core(core, fh)
+            dump_count += 1
 
     obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
     obj["EXR"].set_listener.append(lambda mem_obj, new_value: normal_stop())
