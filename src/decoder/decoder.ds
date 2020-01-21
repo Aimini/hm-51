@@ -1581,7 +1581,8 @@ RF(IR), JLT(0x12,IRSEG_10_11)
 ## IRSEG_12_13
 RF(IR), JLT(0x13,IRSEG_12)
 IRSEG_13: #--------------------
-
+# RRC A
+@INC "instructions\13_RRC_A.ds"
 #------------------------------
 
 
