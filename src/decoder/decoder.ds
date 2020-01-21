@@ -17,9 +17,7 @@ RF(IR,WE),BUS(ROM)
 RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE) # set BR to prepare increase PC
 #increase PC
-RF(PCL,WE),ALU(INCC), WR(WE), BR(CY)           # PCL + 1,  STORE CARRY
-RF(PCH,WE),ALU(INCC), SR(WE)                   # PCH + CY
-
+@INC "inc_pc.ds"
 ###
 # indstruction decode jump
 #####
@@ -778,28 +776,7 @@ IRSEG_84_85:
 RF(IR), JLT(0x85,IRSEG_84)
 IRSEG_85: #--------------------
 # MOV direct, direct
-# load src_direct value
-RF(T0,WE), BUS(ROM), SR(WE)
-# SR(WE), LI(0xFD)
-# RAM(WE)
-
-RF(T0), ALU(SFR), RFSRCR(WE)
-WR(WE), BUS(RAM), RF(SFR) # load with SFR
-RF(T1,WE), ALU(B), BR(ONE) # T1 <- RAM[src]
-
-# inc pc and get dest_direct
-RF(PCL,WE), ALU(INCC), WR(WE), BR(CY)
-RF(PCH,WE), ALU(INCC), SR(WE)
-RF(T0,WE), BUS(ROM), SR(WE)
-
-# store value to dest_direct
-RF(T1), ALU(A), WR(WE) # WR <- T1
-RF(T0), ALU(SFR), RFSRCR(WE)
-ALU(B), RAM(WE),  RF(SFR), BR(ONE) # RAM[dest] <- WR
-
-#inc pc
-RF(PCL,WE), ALU(INCC), WR(WE), BR(CY)
-RF(PCH,WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)
+@INC "85_MOV_d_d.ds"
 #------------------------------
 
 
@@ -917,19 +894,7 @@ IRSEG_74_75:
 RF(IR), JLT(0x75,IRSEG_74)
 IRSEG_75: #--------------------
 # MOV direct,#immed
-RF(T0,WE), BUS(ROM),BR(ONE)              # T0 <- direct
-
-# ++PC
-RF(PCL,WE), ALU(INCC),WR(WE),  BR(CY)
-RF(PCH,WE), ALU(INCC),SR(WE)       
-BUS(ROM), WR(WE)         # WR <- immed
-
-RF(T0),   ALU(SFR), RFSRCR(WE)
-RF(T0),   ALU(A),   SR(WE)
-RF(SFR),  ALU(B),  RAM(WE), BR(ONE) # RAM[direct] <- immed
-
-RF(PCL,WE),ALU(INCC), BR(CY)
-RF(PCH,WE),ALU(INCC), J(STAGE_CHECK_INTERRUPT) # ++PC
+@INC "75_MOV_d_i.ds"
 #------------------------------
 
 
