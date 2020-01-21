@@ -142,6 +142,18 @@ class asm_test:
             for ri in range(2):
                 self(rif(rs, ri))
 
+    def iter_rn(self, rsf, rnf):
+        """
+        iter rn, call function rsf(rs), rnf(rs, rn)
+            rsf,rnf: function
+                rs between 0 - 4, it's PSW.RS1 and PSW.RS0
+                ri between 0 - 8
+        """
+        for rs in range(4):
+            self(rsf(rs))
+            for rn in range(8):
+                self(rnf(rs, rn))
+
 
 def create_test():
     """

@@ -35,12 +35,12 @@ class RN():
     """
     1bit immed
     """
-    def __init__(self,rs, ri):
-        self.addr = (rs << 3) + ri
-        self.ri = ri
+    def __init__(self,rs, rn):
+        self.addr = (rs << 3) + rn
+        self.rn = rn
 
     def __str__(self):
-         return "R" + str(self.ri)
+         return "R" + str(self.rn)
 
 class D(HV):
     """
