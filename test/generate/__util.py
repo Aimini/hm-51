@@ -5,6 +5,7 @@ import io
 import atexit
 import itertools
 import __asmutil as atl
+import __asmconst as acst
 SFR_MAP = {
     0x81: 2,  # "SP"],
     0x82: 4,  # "DPL"],
@@ -128,6 +129,18 @@ class asm_test:
         cross iter iram and SFR, see iterx in asm_test
         """
         self.iterx(self.ris(), f)
+    
+    def iter_ri(self, rsf, rif):
+        """
+        iter ri, call function(rs, ri)
+            f: function
+                rs between 0 - 3, it's PSW.RS1 and PSW.RS0
+                ri between 0 - 1
+        """
+        for rs in range(4):
+            self(rsf(rs))
+            for ri in range(2):
+                self(rif(rs, ri))
 
 
 def create_test():

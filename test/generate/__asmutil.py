@@ -20,6 +20,27 @@ class I(HV):
     def __str__(self):
          return "#" + super().__str__()
 
+class RI():
+    """
+    1bit immed
+    """
+    def __init__(self,rs, ri):
+        self.addr = (rs << 3) + ri
+        self.ri = ri
+
+    def __str__(self):
+         return "@R" + str(self.ri)
+
+class RN():
+    """
+    1bit immed
+    """
+    def __init__(self,rs, ri):
+        self.addr = (rs << 3) + ri
+        self.ri = ri
+
+    def __str__(self):
+         return "R" + str(self.ri)
 
 class D(HV):
     """
