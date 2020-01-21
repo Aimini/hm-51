@@ -21,7 +21,6 @@ def get_ports():
         0xB0: "P3"
     }
 
- 
 
 def install_default_peripherals(core):
     """
@@ -53,8 +52,8 @@ def install_default_peripherals(core):
         **core.sfr_extend(get_serial()),
         **core.sfr_extend(get_interrupt()),
         **core.sfr_extend(get_ports())
-        }
-    
+    }
+
     def default_irq():
         vIE = int(ret["IE"])
         if vIE & 0x80 == 0:
@@ -64,22 +63,20 @@ def install_default_peripherals(core):
         vTCON = int(rTCON)
         vSCON = int(rSCON)
 
-        IRQ =   ((vTCON & 0x02) >> 1) #    IE0 external interrupt 0
-        IRQ |=  ((vTCON & 0x20) >> 4) #    TF0 Timer 0 over flow
-        IRQ |=  ((vTCON & 0x08) >> 1) #    IE1  external interrupt 1
-        IRQ |=  ((vTCON & 0x80) >> 4) #    TF0 Timer 1 over flow
-        IRQ |=  ((((vSCON >> 1) | vSCON) & 1) << 4) # serial
-
+        IRQ = ((vTCON & 0x02) >> 1)   # IE0 external interrupt 0
+        IRQ |= ((vTCON & 0x20) >> 4)  # TF0 Timer 0 over flow
+        IRQ |= ((vTCON & 0x08) >> 1)  # IE1  external interrupt 1
+        IRQ |= ((vTCON & 0x80) >> 4)  # TF0 Timer 1 over flow
+        IRQ |= ((((vSCON >> 1) | vSCON) & 1) << 4)  # serial
 
         MAXIRQN = 5
         IRQMASK = (1 << MAXIRQN) - 1
         vIRQEM = IRQMASK & IRQ & vIE
         if vIRQEM == 0:
             return -1
-        vIPM =   IRQMASK & int(ret["IP"])
+        vIPM = IRQMASK & int(ret["IP"])
 
-
-        sel = (vIRQEM << MAXIRQN) | (vIRQEM & vIPM) # priority have high priorty
+        sel = (vIRQEM << MAXIRQN) | (vIRQEM & vIPM)  # priority have high priorty
         IRQN = 0
         for i in range(2*MAXIRQN):
             if sel & (1 << i):
@@ -96,8 +93,7 @@ def install_default_peripherals(core):
             rTCON.set(rTCON.get() & 0xF7)
         elif IRQN == 3:
             rTCON.set(rTCON.get() & 0x7F)
-        
-        return IRQN
-    
-    core.irq.append(default_irq)
 
+        return IRQN
+
+    core.irq.append(default_irq)

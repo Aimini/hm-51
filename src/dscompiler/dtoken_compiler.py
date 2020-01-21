@@ -7,7 +7,7 @@
 # for example:
 # RF(Register File) have three function input:
 #   source select, write low and write high
-# then we can using mark "LWE" to meaing write low, "A" meaing select 
+# then we can using mark "LWE" to meaing write low, "A" meaing select
 # reigiter 0 in RF.
 #
 # for most of parameter control mark, it's only using name parameter,
@@ -18,6 +18,7 @@ import enum
 import dtoken
 import control_LUT
 
+
 class machine_code:
     '''
     provide mechanism to insert value to target bit index with excepted bit-len
@@ -25,14 +26,15 @@ class machine_code:
     - Checks if the inserted value fits the length of the target bit (prevents truncate)
     - Checks whether inserted value will overlaps with the bits than had encoded other values
     '''
+
     def __init__(self):
         self.value = 0
         # for index i,if self.users[i] is None,
         # it's meaing this bit not used,
         # otherwise it's this bit's user object(dtoken)
         self.users = []
-    
-    def extend_users(self,size):
+
+    def extend_users(self, size):
         """
         ajust user list to target size, append None
             size: 
@@ -41,8 +43,7 @@ class machine_code:
         while len(self.users) <= size:
             self.users.append(None)
 
-
-    def insert(self,value,pos,size,user):
+    def insert(self, value, pos, size, user):
         """
         insert the value to pos, using len of bits, user is used to 
         identify who using the bits.
@@ -57,7 +58,7 @@ class machine_code:
         """
         if value > 2**size:
                 raise SyntaxError("encoding value {} to bit to fit size {}".format(value, size))
-            
+
         self.extend_users(pos + size)
         for i in range(size):
             x = i + pos
@@ -80,12 +81,10 @@ class dtoken_compiler:
         # hardware level dtokens, [[lineno,dtoken_list],[lineno,dtoken_list]...]
         self.hl_dtokens = []
 
-
     def calcuate_LUT_parameters_position(self):
         pos = 0
         for k, v in self.CTL_LUT.items():  # v = RF LUT , WR LUT ...
             pos = v.auto_position(pos)
-
 
     def controls_parameters_position_info(self):
         """
@@ -100,7 +99,6 @@ class dtoken_compiler:
             pi.extend([(x[0], x[1], k + '_' + x[2])
                        for x in v.position_info()])
         return pi
-
 
     def convert_one_token(self, dt, mc):
         """
@@ -122,7 +120,7 @@ class dtoken_compiler:
                 place_info, encoding = control_parameter_LUTs.get_info(p)
             elif isinstance(control_parameter_LUTs, control_LUT.value_parameter_lut):
                 place_info = control_parameter_LUTs.get_place_info(i)
-                if isinstance(p,int):
+                if isinstance(p, int):
                     encoding = p
                 else:
                     encoding = self.jump_table.get(p)
@@ -134,9 +132,8 @@ class dtoken_compiler:
 
             if not isinstance(encoding, int):
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
-            
-            mc.insert(encoding,place_info[0],place_info[1], dt)
 
+            mc.insert(encoding, place_info[0], place_info[1], dt)
 
     def convert_one_line(self, dtokens):
         """
@@ -148,7 +145,6 @@ class dtoken_compiler:
         for one in dtokens:
             self.convert_one_token(one, mc)
         return mc.value
-
 
     def split_jump_dtoken(self, dtoken_lines):
         """
@@ -188,7 +184,6 @@ class dtoken_compiler:
                 pc += 1
         return pure_control_tokens
 
-
     def compile(self, dtoken_lines):
         """
         convert dtokens lines to machine code list
@@ -225,8 +220,8 @@ class dtoken_compiler:
         for lineno, one in pure_control_tokens:
             try:
                 code = self.convert_one_line(one)
-                machine_code_lines.append([lineno,code, one])
+                machine_code_lines.append([lineno, code, one])
             except SyntaxError as e:
                 e.msg = e.msg + " at line " + str(lineno)
                 raise e
-        return machine_code_lines,pure_control_tokens
+        return machine_code_lines, pure_control_tokens

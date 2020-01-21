@@ -2,6 +2,7 @@ CONTROL = "CONTROL"
 JUMP_MARK = "JUMP_MARK"
 PAR_CONTROL = "PAR_CONTROL"
 
+
 class dtoken():
     def __init__(self, lineno, t, v):
         self.lineno = lineno
@@ -11,12 +12,12 @@ class dtoken():
 
     def simple_str(self):
         s = self.value
-        
+
         if self.type == PAR_CONTROL:
             s += '('
             sp = []
             for _ in self.parameters:
-                if isinstance(_,int):
+                if isinstance(_, int):
                     sp.append("0x{:X}".format(_))
                 else:
                     sp.append(_)
@@ -27,12 +28,11 @@ class dtoken():
         return s
 
     def __str__(self):
-        s = self.type  + ':' + self.simple_str()
+        s = self.type + ':' + self.simple_str()
         if self.type == JUMP_MARK:
             s = s[0:-1]
 
         return s
-
 
     def __repr__(self):
         return self.__str__()

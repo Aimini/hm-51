@@ -44,6 +44,7 @@ class name_parameters_lut(abstract_parameters_lut):
     """
     using string name to find encoding
     """
+
     def __init__(self, LUT):
         """
         LUT:list
@@ -198,12 +199,12 @@ SR = name_parameters_lut([
     }
 ])
 
-RFSRCR =  name_parameters_lut([
+RFSRCR = name_parameters_lut([
     {
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'enum': ['',"WE"],
+        'enum': ['', "WE"],
     }
 ])
 BR = name_parameters_lut([
@@ -331,7 +332,7 @@ CTL_LUT = {
     'WR': WR,
     'SR': SR,
     'BR': BR,
-    'RFSRCR':RFSRCR,
+    'RFSRCR': RFSRCR,
     'RAM': RAM,
     'ALUSD': ALUSD,
     'JUMPABS': JUMPABS,
