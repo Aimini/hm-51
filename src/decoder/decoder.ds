@@ -1667,17 +1667,9 @@ IRSEG_0_7:
 RF(IR), JLT(0x4,IRSEG_0_3)
 ## IRSEG_4_7
 RF(IR), JLT(0x6,IRSEG_4_5)
-## IRSEG_6_7
-RF(IR), JLT(0x7,IRSEG_6)
-IRSEG_7: #--------------------
-
+## IRSEG_6_7 --------------------
+@INC "instructions\06_07_INC_Ri.ds"
 #------------------------------
-
-
-IRSEG_6: #--------------------
-
-#------------------------------
-
 
 IRSEG_4_5:
 RF(IR), JLT(0x5,IRSEG_4)
