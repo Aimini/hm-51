@@ -14,7 +14,7 @@ def init_rs(rs):
     return atl.move(SFR_PSW, atl.I(rs << 3))
 
 def iter_ri(rs,ri):
-    t = 20
+    t = 100
     while True:
         addr = random.getrandbits(7)
         if addr != ri:
