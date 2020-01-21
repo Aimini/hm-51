@@ -15,8 +15,12 @@ def init_rs(rs):
 
 def iter_ri(rs,ri):
     t = 20
+    while True:
+        addr = random.getrandbits(7)
+        if addr != ri:
+            break
+
     ri = atl.RI(rs, ri)
-    addr =random.getrandbits(7)
 
     p(atl.move(atl.D(ri.addr), atl.I(addr)))
     start =random.getrandbits(8)
