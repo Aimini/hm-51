@@ -1,0 +1,9 @@
+#0x05, INC direct
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0),  ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)  # WR <- RAM[direct]
+RF(T0, WE), ALU(B)        # T0 <- WR
+RF(T0), ALU(INC), WR(WE)  # WR <- T0 + 1
+RF(SFR), RAM(WE), ALU(B), BR(ONE)
+
+@INC "snippet\inc_pc_jchkint.ds"
