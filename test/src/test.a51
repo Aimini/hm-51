@@ -1,3 +1,0 @@
-CSEG AT 0
-MOV A,#0xFF
-END
