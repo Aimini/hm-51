@@ -1693,7 +1693,7 @@ RF(IR), JLT(0x2,IRSEG_0_1)
 RF(IR), JLT(0x3,IRSEG_2)
 IRSEG_3: #--------------------
 # RR A
-RF(A,WE),ALU(RR)
+@INC "instructions\03_RR_A.ds"
 #------------------------------
 
 
