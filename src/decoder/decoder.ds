@@ -1469,7 +1469,8 @@ RF(IR), JLT(0x22,IRSEG_20_21)
 ## IRSEG_22_23
 RF(IR), JLT(0x23,IRSEG_22)
 IRSEG_23: #--------------------
-
+# RL A
+@INC "instructions\23_RL_A.ds"
 #------------------------------
 
 
