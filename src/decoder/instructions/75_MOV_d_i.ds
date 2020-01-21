@@ -2,11 +2,11 @@
 
 RF(T0,WE), BUS(ROM),BR(ONE)              # T0 <- direct
 
-@INC "inc_pc.ds"
+@INC "snippet\inc_pc.ds"
 BUS(ROM), WR(WE)         # WR <- immed
 
 RF(T0),   ALU(SFR), RFSRCR(WE)
 RF(T0),   ALU(A),   SR(WE)
 RF(SFR),  ALU(B),  RAM(WE), BR(ONE) # RAM[direct] <- immed
 
-@INC "inc_pc_jchkint.ds"
+@INC "snippet\inc_pc_jchkint.ds"

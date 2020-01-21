@@ -17,7 +17,8 @@ RF(IR,WE),BUS(ROM)
 RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE) # set BR to prepare increase PC
 #increase PC
-@INC "inc_pc.ds"
+@INC "snippet\inc_pc.ds"
+
 ###
 # indstruction decode jump
 #####
@@ -776,7 +777,7 @@ IRSEG_84_85:
 RF(IR), JLT(0x85,IRSEG_84)
 IRSEG_85: #--------------------
 # MOV direct, direct
-@INC "85_MOV_d_d.ds"
+@INC "instructions\85_MOV_d_d.ds"
 #------------------------------
 
 
@@ -894,7 +895,7 @@ IRSEG_74_75:
 RF(IR), JLT(0x75,IRSEG_74)
 IRSEG_75: #--------------------
 # MOV direct,#immed
-@INC "75_MOV_d_i.ds"
+@INC "instructions\75_MOV_d_i.ds"
 #------------------------------
 
 
