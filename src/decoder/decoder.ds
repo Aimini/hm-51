@@ -1361,7 +1361,8 @@ RF(IR), JLT(0x32,IRSEG_30_31)
 ## IRSEG_32_33
 RF(IR), JLT(0x33,IRSEG_32)
 IRSEG_33: #--------------------
-
+# RLC A
+@INC "instructions\33_RLC_A.ds"
 #------------------------------
 
 
