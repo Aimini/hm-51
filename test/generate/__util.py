@@ -88,9 +88,17 @@ class asm_test:
         """
         iterate iram and SFR in RF.
         """
-        self.iter_iram(f)
         for k in self.ris():
             self(f(k))
+
+    def iter_is_no_psw(self, f):
+        """
+        iterate iram and SFR in RF.
+        """
+        self.iter_iram(f)
+        for x in self.rsfr():
+            if x != 0xD0:
+                self(f(x))
 
     def iterx(self, iter_obj, f):
         """
