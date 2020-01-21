@@ -98,7 +98,5 @@ def astl(a,b):
     """
     return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a,b,I(3))
 
-reg_A = "A"
-reg_B = "B"
-reg_IE = "IE"
-reg_IP = "IP"
+def clear_reg():
+    return '\n'.join([move(_, I(0)) for _ in ['SP','DPL','DPH','PSW','ACC','B']])

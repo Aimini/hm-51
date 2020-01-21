@@ -24,14 +24,13 @@ class asm_test:
 
         def store_file():
             with open(self.filename, "w") as fh:
-                fh.write(self.sio.getvalue())
-                
-                fh.write('\n')
-                fh.write(atl.dump())
-                fh.write('\n')
-                fh.write(atl.exit())
-                fh.write('\n')
-                fh.write("END\n")
+                fh.write('\n'.join([
+                    atl.clear_reg(),
+                    self.sio.getvalue(),
+                    atl.dump(),
+                    atl.exit(),
+                    'END']))
+
         atexit.register(store_file)
 
     def __call__(self, * vargs, **kargs):
