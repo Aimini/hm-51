@@ -131,7 +131,7 @@ We first implement the following two instructions:
 |0x82| ANL C, bit  | |
 |0x83| MOVC A, @A+PC    | |
 |0x84| DIV AB  | |
-|0x85| MOV direct, direct  | |
+|0x85| MOV direct, direct  |M|
 |0x86-0x87| MOV direct, @Ri | |
 |0x88-0x8F| MOV direct, Rn  | |
 |0x90| MOV DPTR, #immed    | |
