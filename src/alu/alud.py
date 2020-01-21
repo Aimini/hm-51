@@ -147,10 +147,10 @@ def generate_low_by_op(ci, f,  b, a):
         RL = (valid << 3) | RL # INSB A,B (BIDX)
 
     elif f == 0xC:
-        RL = (a & 0x1) & (b & 0x8) # Ri IR, PSW
+        RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
         
     elif f == 0xD: 
-        RL = (a & 0x7) & (b & 0x8) # Rn IR, PSW
+        RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
 
     elif f == 0xE: # NA/ SETPF
         RL = ~a
