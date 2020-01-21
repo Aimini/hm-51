@@ -1569,7 +1569,8 @@ IRSEG_16: #--------------------
 IRSEG_14_15:
 RF(IR), JLT(0x15,IRSEG_14)
 IRSEG_15: #--------------------
-
+#DEC direct
+@INC "instructions\15_DEC_d.ds"
 #------------------------------
 
 
