@@ -1,0 +1,22 @@
+########### 0x85,MOV direct, direct
+
+# load src_direct value
+RF(T0,WE), BUS(ROM), SR(WE)
+# SR(WE), LI(0xFD)
+# RAM(WE)
+
+RF(T0), ALU(SFR), RFSRCR(WE)
+WR(WE), BUS(RAM), RF(SFR) # load with SFR
+RF(T1,WE), ALU(B), BR(ONE) # T1 <- RAM[src]
+
+# inc pc and get dest_direct
+@INC "inc_pc.ds"
+RF(T0,WE), BUS(ROM), SR(WE)
+
+# store value to dest_direct
+RF(T1), ALU(A), WR(WE) # WR <- T1
+RF(T0), ALU(SFR), RFSRCR(WE)
+ALU(B), RAM(WE),  RF(SFR), BR(ONE) # RAM[dest] <- WR
+
+#inc pc
+@INC "inc_pc_jchkint.ds"
