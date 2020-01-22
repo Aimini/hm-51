@@ -127,7 +127,7 @@ def generate_low_by_op(ci, f,  b, a):
     elif f == 0x9: # SETPSWF A (PSW),B
         # just replace A's OV AC CY from B
         # for lower part, set OV only
-        RL = (0xb & a) | ((~0xb) & b)
+        RL = (0xb & a) | ((~0xb) & (b >> 1))
 
     elif f == 0xA:# ADDR11REPLACE A, B
         # asume A = PCH[3:0], B = IR[7:4]
