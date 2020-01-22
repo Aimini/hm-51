@@ -1237,7 +1237,8 @@ IRSEG_46: #--------------------
 IRSEG_44_45:
 RF(IR), JLT(0x45,IRSEG_44)
 IRSEG_45: #--------------------
-
+# OR A, direct
+@INC "instructions\OAL_A_d.ds","OR"
 #------------------------------
 
 
