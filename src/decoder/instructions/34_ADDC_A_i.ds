@@ -1,0 +1,13 @@
+#0x34 ADDC A, #immed
+RF(PSW), BR(A7)
+RF(T1, WE), BUS(ROM), WR(WE)
+
+RF(A), ALU(ADDCF), WR(WE)
+RF(T0,WE), ALU(B)
+RF(T0), ALU(ADJF), WR(WE)
+RF(PSW, WE), ALU(SETPSWF)
+
+RF(T1), ALU(A), WR(WE)
+RF(A, WE), ALU(ADDC), BR(ONE)
+
+@INC "snippet\inc_pc_jchkint.ds"
