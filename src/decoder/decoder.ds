@@ -1138,7 +1138,8 @@ RF(IR), JLT(0x52,IRSEG_50_51)
 ## IRSEG_52_53
 RF(IR), JLT(0x53,IRSEG_52)
 IRSEG_53: #--------------------
-
+# ANL direct, #immed
+@INC "instructions\OAL_d_i.ds","AND"
 #------------------------------
 
 
