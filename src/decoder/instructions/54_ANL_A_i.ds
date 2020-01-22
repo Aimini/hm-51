@@ -1,5 +1,0 @@
-#0x44 ORL A, #immed
-BUS(ROM), WR(WE)
-RF(A, WE), ALU(AND), BR(ONE)
-
-@INC "snippet\inc_pc_jchkint.ds"

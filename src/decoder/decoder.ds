@@ -1016,7 +1016,7 @@ IRSEG_65: #--------------------
 
 
 IRSEG_64: #--------------------
-@INC "instructions\64_XRL_A_i.ds"
+@INC "instructions\OAL_A_i.ds","XOR"
 #------------------------------
 
 
@@ -1128,7 +1128,8 @@ IRSEG_55: #--------------------
 
 
 IRSEG_54: #--------------------
-@INC "instructions\54_ANL_A_i.ds"
+# ANL A,#immed
+@INC "instructions\OAL_A_i.ds","AND"
 #------------------------------
 
 
@@ -1238,7 +1239,8 @@ IRSEG_45: #--------------------
 
 
 IRSEG_44: #--------------------
-@INC "instructions\44_ORL_A_i.ds"
+# OR A, #immed
+@INC "instructions\OAL_A_i.ds","OR"
 #------------------------------
 
 
