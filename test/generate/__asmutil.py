@@ -65,8 +65,8 @@ def ins(*args):
     '''
     return args[0] + ' ' + ', '.join([str(_) for _ in args[1:]])
 
-def dump():
-    return f";;;;;;;;;;;; dump \n" + move(D(0xFB),I(1))
+def dump(count = ""):
+    return f";;;;;;;;;;;; dump {count}\n" + move(D(0xFB),I(1))
     
 def exit():
     """
