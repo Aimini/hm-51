@@ -1,0 +1,6 @@
+RF(T0, WE), BUS(ROM),  SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)  
+RF(A), ALU(@0), WR(WE) # A @0 RAM[direect](WR)
+RF(SFR), ALU(B),  RAM(WE), BR(ONE)
+@INC "snippet\inc_pc_jchkint.ds"
