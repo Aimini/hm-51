@@ -1,0 +1,11 @@
+#0x44 ORL A, #immed
+RF(T0, WE), BUS(ROM), BR(ONE)
+@INC "snippet\inc_pc.ds"
+RF(T1,WE), BUS(ROM), BR(ONE)
+@INC "snippet\inc_pc.ds"
+
+RF(T0), ALU(A),  SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)       # now T0<-direct, WR <- RAM[direct]
+RF(T1),  ALU(@0),  WR(WE)       # WR <- RAM[direect](WR) @0 #immed(T1)
+RF(SFR), ALU(B),  RAM(WE), J(STAGE_CHECK_INTERRUPT)

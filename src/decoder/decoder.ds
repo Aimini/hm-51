@@ -1249,7 +1249,8 @@ RF(IR), JLT(0x42,IRSEG_40_41)
 ## IRSEG_42_43
 RF(IR), JLT(0x43,IRSEG_42)
 IRSEG_43: #--------------------
-
+# ORL direct, #immed
+@INC "instructions\OAL_d_i.ds","OR"
 #------------------------------
 
 
