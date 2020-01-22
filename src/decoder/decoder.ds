@@ -1025,6 +1025,8 @@ RF(IR), JLT(0x62,IRSEG_60_61)
 ## IRSEG_62_63
 RF(IR), JLT(0x63,IRSEG_62)
 IRSEG_63: #--------------------
+# XRL direct, #immed
+@INC "instructions\OAL_d_i.ds","XOR"
 
 #------------------------------
 
