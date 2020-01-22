@@ -1,0 +1,5 @@
+#0x64 XRL A, #immed
+BUS(ROM), WR(WE)
+RF(A, WE), ALU(XOR), BR(ONE)
+
+@INC "snippet\inc_pc_jchkint.ds"
