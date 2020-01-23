@@ -2,7 +2,7 @@
 # par 0: the BR function, ADD using ZERO. ADDC and SUBB using A7.
 # par 1: ALU function,  must ADDC or SUBB
 # par 2: FLAG of ADDC, of SUBB, must be ADDCF or SUBBF
-RF(PSW), ALU(A), WR(WE), BR(ZERO)
+RF(PSW), ALU(A), WR(WE), BR(@0)
 RF(IR), ALU(Ri), SR(WE)
 BUS(RAM),SR(WE)
 RF(T1,WE),BUS(RAM),WR(WE)
