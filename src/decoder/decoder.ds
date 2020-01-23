@@ -666,7 +666,8 @@ RF(IR), JLT(0x96,IRSEG_94_95)
 IRSEG_94_95:
 RF(IR), JLT(0x95,IRSEG_94)
 IRSEG_95: #--------------------
-
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_d.ds","Q","SUBB","SUBBF"
 #------------------------------
 
 
