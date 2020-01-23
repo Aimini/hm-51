@@ -1,7 +1,7 @@
 #This file fits the function "ADD A + #immed + BR" or "A- # immed-BR"
 # par 0: the BR function, ZERO is suite for ADD. Q is suite for ADDC and SUBB,
 # but you should load CY to BR before include this file.
-# par 1: ALU function, must ADDCF or SUBBF
+# par 1: ALU function, must ADDC or SUBB
 # par 2: FLAG of ADDC, of SUBB, must be ADDCF or SUBBF
 RF(T1, WE), BUS(ROM), WR(WE), BR(@0)
 
