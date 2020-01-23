@@ -6,6 +6,7 @@ import atexit
 import itertools
 import __asmutil as atl
 import __asmconst as acst
+import inspect
 SFR_MAP = {
     0x81: 2,  # "SP"],
     0x82: 4,  # "DPL"],
@@ -40,6 +41,13 @@ class asm_test:
         """
         print(*vargs, file=self.sio, **kargs)
 
+    def __iadd__(self, s):
+        """
+        using as print, but write string to test file.
+        """
+        self(s)
+        return self
+
     @staticmethod
     def rdirect():
         """
@@ -68,29 +76,38 @@ class asm_test:
         """
         return itertools.chain(asm_test.riram(), asm_test.rsfr())
 
+
+    def pass_by_len(self, f, *args):
+        if len(inspect.signature(f).parameters) == len(args):
+            self(f(*args))
+        else:
+            self(f(*args, self))
+        
     def iter_direct(self, f):
         """
         iterate direct address  0 - 255
             f: function
                 call f(x), x is direct address
         """
+      
         for x in self.rdirect():
-            self(f(x))
+            self.pass_by_len(f, x)
 
     def iter_iram(self, f):
         """
         iram address
         0 - 127
         """
+
         for x in self.riram():
-            self(f(x))
+            self.pass_by_len(f, x)
 
     def iter_is(self, f):
         """
         iterate iram and SFR in RF.
         """
-        for k in self.ris():
-            self(f(k))
+        for x in self.ris():
+            self.pass_by_len(f, x)
 
     def iter_is_no_psw(self, f):
         """
@@ -99,7 +116,7 @@ class asm_test:
         self.iter_iram(f)
         for x in self.rsfr():
             if x != 0xD0:
-                self(f(x))
+                self.pass_by_len(f, x)
 
     def iterx(self, iter_obj, f):
         """
@@ -110,7 +127,7 @@ class asm_test:
         l = len(iter_obj)
         a = list(iter_obj)
         for i, v in enumerate(a):
-            self(f(v, a[l - i - 1]))
+            self.pass_by_len(f, v, a[l - i - 1])
 
     def iterx_iram(self, f):
         """
@@ -138,9 +155,9 @@ class asm_test:
                 ri between 0 - 1
         """
         for rs in range(4):
-            self(rsf(rs))
+            self.pass_by_len(rsf, rs)
             for ri in range(2):
-                self(rif(rs, ri))
+                self.pass_by_len(rif, rs, ri)
 
     def iter_rn(self, rsf, rnf):
         """
@@ -150,9 +167,9 @@ class asm_test:
                 ri between 0 - 8
         """
         for rs in range(4):
-            self(rsf(rs))
+            self.pass_by_len(rsf, rs)
             for rn in range(8):
-                self(rnf(rs, rn))
+                self.pass_by_len(rnf, rn)
 
 
 def create_test():
