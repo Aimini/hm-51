@@ -1195,7 +1195,9 @@ IRSEG_35: #--------------------
 
 
 IRSEG_34: #--------------------
-@INC "instructions\34_ADDC_A_i.ds"
+# ADDC A,#immed
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","ADDC"
 #------------------------------
 
 
@@ -1304,7 +1306,7 @@ IRSEG_25: #--------------------
 
 
 IRSEG_24: #--------------------
-@INC "instructions\24_ADD_A_i.ds"
+@INC "instructions\SUB_ADD_A_i.ds","ZERO","ADDC"
 #------------------------------
 
 
