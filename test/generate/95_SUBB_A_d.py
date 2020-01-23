@@ -53,7 +53,7 @@ for addr in p.ris():
 for x in range(16):
     # load random data
     for addr in p.ris():
-        value = addr
+        value = random.getrandbits(8)
         p += atl.move(atl.D(addr), atl.I(value))
         ram[addr] = value
 
