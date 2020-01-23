@@ -671,7 +671,8 @@ IRSEG_95: #--------------------
 
 
 IRSEG_94: #--------------------
-
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","SUBB","SUBBF"
 #------------------------------
 
 
@@ -1197,7 +1198,7 @@ IRSEG_35: #--------------------
 IRSEG_34: #--------------------
 # ADDC A,#immed
 RF(PSW), BR(A7) # BR <- CY
-@INC "instructions\SUB_ADD_A_i.ds","Q","ADDC"
+@INC "instructions\SUB_ADD_A_i.ds","Q","ADDC","ADDCF"
 #------------------------------
 
 
@@ -1306,7 +1307,7 @@ IRSEG_25: #--------------------
 
 
 IRSEG_24: #--------------------
-@INC "instructions\SUB_ADD_A_i.ds","ZERO","ADDC"
+@INC "instructions\SUB_ADD_A_i.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
