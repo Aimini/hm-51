@@ -1289,15 +1289,8 @@ IRSEG_20_27:
 RF(IR), JLT(0x24,IRSEG_20_23)
 ## IRSEG_24_27
 RF(IR), JLT(0x26,IRSEG_24_25)
-## IRSEG_26_27
-RF(IR), JLT(0x27,IRSEG_26)
-IRSEG_27: #--------------------
-
-#------------------------------
-
-
-IRSEG_26: #--------------------
-
+## IRSEG_26_27 ----------------
+@INC "instructions\SUB_ADD_A_Ri.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
