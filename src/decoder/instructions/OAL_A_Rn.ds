@@ -1,0 +1,4 @@
+RF(PSW), ALU(A), WR(WE)
+RF(IR), ALU(Rn), SR(WE)
+BUS(RAM),WR(WE)
+RF(A,WE), ALU(@0), J(STAGE_CHECK_INTERRUPT) # A @0 RAM[direect](WR)
