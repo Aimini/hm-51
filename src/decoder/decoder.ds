@@ -661,17 +661,21 @@ RF(IR), JLT(0x94,IRSEG_90_93)
 RF(IR), JLT(0x96,IRSEG_94_95)
 ## IRSEG_96_97-----------------
 # SUBB A,@Ri
+@INC "instructions\SUB_ADD_A_Ri.ds","A7","SUBB","SUBBF"
+#------------------------------
 
 
 IRSEG_94_95:
 RF(IR), JLT(0x95,IRSEG_94)
 IRSEG_95: #--------------------
+# SUBB A,direct
 RF(PSW), BR(A7) # BR <- CY
 @INC "instructions\SUB_ADD_A_d.ds","Q","SUBB","SUBBF"
 #------------------------------
 
 
 IRSEG_94: #--------------------
+# SUBB A,#immed
 RF(PSW), BR(A7) # BR <- CY
 @INC "instructions\SUB_ADD_A_i.ds","Q","SUBB","SUBBF"
 #------------------------------
