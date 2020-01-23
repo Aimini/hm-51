@@ -155,9 +155,10 @@ class asm_test:
                 ri between 0 - 1
         """
         for rs in range(4):
-            self.pass_by_len(rsf, rs)
+            psw_rs = rs << 3
+            self.pass_by_len(rsf, rs, psw_rs)
             for ri in range(2):
-                self.pass_by_len(rif, rs, ri)
+                self.pass_by_len(rif, atl.RI(rs,ri))
 
     def iter_rn(self, rsf, rnf):
         """
@@ -167,9 +168,11 @@ class asm_test:
                 ri between 0 - 8
         """
         for rs in range(4):
-            self.pass_by_len(rsf, rs)
+            psw_rs = rs << 3
+            self.pass_by_len(rsf, rs, psw_rs)
+            
             for rn in range(8):
-                self.pass_by_len(rnf, rn)
+                self.pass_by_len(rnf, atl.RN(rs,rn))
 
 
 def create_test():
