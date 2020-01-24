@@ -1,0 +1,4 @@
+# 0x70 JNZ offset
+RF(A), ALUO(ZF), BR(ZF)
+JBIT(INC_PC_BEFORE_CHECK_INTERRUPT),  BR(ONE)  #JUMP to SJMP if ZF
+@INC "instructions\80_SJMP_o.ds"
