@@ -11,6 +11,4 @@ RF(T0), ALU(ADJF), WR(WE)
 RF(PSW, WE), ALU(SETPSWF)
 
 RF(T1), ALU(A), WR(WE)
-RF(A, WE), ALU(@1), BR(ONE)
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(A, WE), ALU(@1), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

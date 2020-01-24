@@ -1353,7 +1353,8 @@ J(STAGE_CHECK_INTERRUPT) #SET PCH
 IRSEG_0: #--------------------
 #------------------------------
 
-
+INC_PC_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc.ds"
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE

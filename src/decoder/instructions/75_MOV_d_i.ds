@@ -7,6 +7,4 @@ BUS(ROM), WR(WE)         # WR <- immed
 
 RF(T0),   ALU(SFR), RFSRCR(WE)
 RF(T0),   ALU(A),   SR(WE)
-RF(SFR),  ALU(B),  RAM(WE), BR(ONE) # RAM[direct] <- immed
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(SFR),  ALU(B),  RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT) # RAM[direct] <- immed

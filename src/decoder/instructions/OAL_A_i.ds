@@ -1,5 +1,3 @@
 #0x44 ORL A, #immed
 BUS(ROM), WR(WE)
-RF(A, WE), ALU(@0), BR(ONE)
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(A, WE), ALU(@0), BR(ONE),J(INC_PC_BEFORE_CHECK_INTERRUPT)

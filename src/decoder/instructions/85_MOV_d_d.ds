@@ -16,7 +16,4 @@ RF(T0,WE), BUS(ROM), SR(WE)
 # store value to dest_direct
 RF(T1), ALU(A), WR(WE) # WR <- T1
 RF(T0), ALU(SFR), RFSRCR(WE)
-ALU(B), RAM(WE),  RF(SFR), BR(ONE) # RAM[dest] <- WR
-
-#inc pc
-@INC "snippet\inc_pc_jchkint.ds"
+ALU(B), RAM(WE),  RF(SFR), BR(ONE),J(INC_PC_BEFORE_CHECK_INTERRUPT) # RAM[dest] <- WR
