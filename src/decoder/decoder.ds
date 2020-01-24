@@ -17,7 +17,7 @@ RF(IR,WE),BUS(ROM)
 RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE) # set BR to prepare increase PC
 #increase PC
-@INC "snippet\inc_pc.ds"
+@INC "snippet\inc_pc_wrsr.ds"
 
 ###
 # indstruction decode jump

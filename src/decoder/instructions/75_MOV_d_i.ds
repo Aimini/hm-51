@@ -2,7 +2,7 @@
 
 RF(T0,WE), BUS(ROM),BR(ONE)              # T0 <- direct
 
-@INC "snippet\inc_pc.ds"
+@INC "snippet\inc_pc_wrsr.ds"
 BUS(ROM), WR(WE)         # WR <- immed
 
 RF(T0),   ALU(SFR), RFSRCR(WE)
