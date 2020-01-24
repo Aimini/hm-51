@@ -194,7 +194,7 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0x5:  # B/ZF
         RL = b
         T = ci == 1 and a == 0
-        RH = 1 if T else 0
+        RH = 8 if T else 0
 
     elif f == 0x6:  #OR/INSB
         RL = a | b
