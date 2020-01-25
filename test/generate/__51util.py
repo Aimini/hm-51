@@ -25,5 +25,5 @@ class SIMRAM():
 
     def set_bit(self, addr, idx, value):
         mask = ~(1 << idx)
-        self[addr] = (self[addr] & mask) | (value << idx)
+        self[addr] = (self[addr] & mask) | ((value&1) << idx)
         
