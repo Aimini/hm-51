@@ -42,6 +42,21 @@ class RN():
     def __str__(self):
          return "R" + str(self.rn)
 
+class BIT():
+    def __init__(self, direct, idx = None):
+        if idx is not None:
+            self.direct = direct
+            self.idx = idx
+        else:
+            self.idx = direct & 0x7
+            if direct < 0x80:
+                self.direct = (direct >> 3) + 0x20
+            else:
+                self.direct = direct & 0xF8
+            
+
+    def __str__(self):
+        return str(HV(self.direct)) + '.' + str(self.idx) 
 class D(HV):
     """
     direct address

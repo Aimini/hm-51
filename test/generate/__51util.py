@@ -19,3 +19,11 @@ class SIMRAM():
             pf = bin(self.RAM[SFR_A.x]).count('1') & 1
             self.RAM[SFR_PSW.x] &= 0xFE
             self.RAM[SFR_PSW.x] |= pf
+
+    def bit(self, addr, idx):
+        return (self[addr] >> idx) & 1
+
+    def set_bit(self, addr, idx, value):
+        mask = ~(1 << idx)
+        self[addr] = (self[addr] & mask) | (value << idx)
+        

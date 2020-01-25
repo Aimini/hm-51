@@ -174,6 +174,18 @@ class asm_test:
             for rn in range(8):
                 self.pass_by_len(rnf, atl.RN(rs,rn))
 
+    def iter_bit(self, f):
+         
+        for direct in range(0x20, 0x30):
+            for idx in range(8):
+                self.pass_by_len(f, direct, idx)
+                
+        for direct in self.rsfr():
+            if direct % 8 != 0:
+                continue
+
+            for idx in range(8):
+                self.pass_by_len(f, direct, idx)
 
 def create_test():
     """
