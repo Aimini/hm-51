@@ -94,10 +94,13 @@ def generate_low_by_op(ci, f,  b, a):
         # insert ci to A[B]
         # in low part we just care of A in range [3:0],
         # and don't for get transport ci to high part(copy ci to co)
-        if b < 4:
-            RH = (a & (~(0x1 << b))) | (ci << b)
+        bidx = a
+        value = b
+        shift = bidx & 0x7
+        if bidx < 4:
+            RH = (value & (~(0x1 << shift))) | (ci << shift)
         else:
-            RH = a
+            RH = value
     elif f == 0x7: # AND/EXTB
         RL = a & b
         # EXTB A,B(BIDX)
@@ -110,11 +113,14 @@ def generate_low_by_op(ci, f,  b, a):
         # in low part we just care of A in range [3:0],
         # and beacause of ouput bit is in Q[7], we must send extracted bit
         # to high part by using co.
-        if b < 4:
-            co = (a >> b) & 1
+        bidx = a
+        value = b
+        shift = bidx & 0x7
+        if shift  < 4:
+            co = (value >> shift) & 1
         else:
             co = 0
-        RH = co << 7
+        RH = co << 3
 
     elif f == 0x8: # IRQN2IRQ
         # IRQN2IRQ A
@@ -144,7 +150,7 @@ def generate_low_by_op(ci, f,  b, a):
         RL = a | ((a & b) << 4)
         valid = 1 if RL > 0 else 0
         RL = 7 - '{:b}'.format(RL).find('1')
-        RL = (valid << 3) | RL # INSB A,B (BIDX)
+        RL = (valid << 3) | RL  
 
     elif f == 0xC:
         RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
@@ -202,22 +208,28 @@ def generate_high_by_op(ci, f, b, a):
         # insert ci to A[B]
         # in low part we just care of A in range [3:0],
         # and don't forget transport ci to high part(copy ci to co)
-        if ci < 4:
-            RH = a
+        bidx = a
+        value = b
+        shift = bidx & 0x7
+        if shift < 4:
+            RH = value
         else:
-            T = b & 0x3
-            RH = (a & (~(0x1 << T))) | (ci << T)
+            T = shift & 0x3
+            RH = (value & (~(0x1 << T))) | (ci << T)
 
     elif f == 0x7:  #AND/EXTB
         RL = a & b
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7] and co
-        if b < 4:
-            T = ci
+        bidx = a
+        value = b
+        shift = bidx & 0x7
+        if shift < 4:
+            co = ci
         else:
-            T = a >> (b & 0x3)
-        T &= 1
-        RH = (T << 4)
+            co = value >> (shift & 0x3)
+        co &= 1
+        RH = (co << 3)
     
     elif f == 0x8:  # IRQN2IRQ
         # all ouput are in low part
