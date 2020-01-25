@@ -87,8 +87,7 @@ def generate_low_by_op(ci, f,  b, a):
         RL = b
         RH = 8 if a == 0 else 0 # send ZF to high part
 
-    elif f == 0x6: #OR/INSB
-        RL = a | b
+    elif f == 0x6: #0/INSB
 
         # INSB A,B (BIDX)
         # insert ci to A[B]
@@ -154,9 +153,10 @@ def generate_low_by_op(ci, f,  b, a):
 
     elif f == 0xC:
         RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
-        
+        RH = a | b #OR
     elif f == 0xD: 
         RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
+        RH = a & b #AND
 
     elif f == 0xE: # NA/ SETPF
         RL = ~a
@@ -217,8 +217,7 @@ def generate_high_by_op(ci, f, b, a):
             T = shift & 0x3
             RH = (value & (~(0x1 << T))) | (ci << T)
 
-    elif f == 0x7:  #AND/EXTB
-        RL = a & b
+    elif f == 0x7:  #0/EXTB
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7] and co
         bidx = a
@@ -250,12 +249,12 @@ def generate_high_by_op(ci, f, b, a):
         # all Louput are in low part
         RL = 0
 
-    elif f == 0xC: # Rn IR, PSW
+    elif f == 0xC: # Rn IR, PSW/OR
         RL = b & 0x1 # RS1
-
-    elif f == 0xD:  # Ri IR, PSW
+        RH = a | b
+    elif f == 0xD:  # Ri IR, PSW/AND
         RL = b & 0x1 #RS1
-
+        RH = a & b
     elif f == 0xE:  #NA / SETPF
         RL =  ~a
         RH = a
