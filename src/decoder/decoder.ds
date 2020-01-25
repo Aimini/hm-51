@@ -631,8 +631,8 @@ RF(DPH,WE), ALU(ADDC),J(STAGE_CHECK_INTERRUPT)
 
 
 IRSEG_A2: #--------------------
-#MOV C, bit
-
+#MOV bit, C
+@INC "instructions\A2_MOV_C_b.ds"
 #------------------------------
 
 
