@@ -235,7 +235,7 @@ ALUDL = name_parameters_lut([
         'len': 4,
         'enum': [
             'XOR', 'DA', 'ADDC', 'SUBB',
-            'A',  'B', '', '',
+            'A',  'B', 'INSB', '',
             'IRQN2IRQ', 'SETPSWF', 'ADDR11REPLACE', 'SHIRQN',
             'Ri', 'Rn', 'NA', 'INCC']
     }
@@ -248,7 +248,7 @@ ALUDH = name_parameters_lut([
         'len': 4,
         'enum': [
             '',   'DAF', 'ADDCF', 'SUBBF',
-            'PF', 'ZF',  'INSB',  'EXTB',
+            'PF', 'ZF',  'INSBF',  'EXTB',
             '',   '',    '',      '',
             'OR',    'AND',   'SETPF', 'INCCF']
     }
