@@ -87,7 +87,7 @@ def generate_low_by_op(ci, f,  b, a):
         RL = b
         RH = 8 if a == 0 else 0 # send ZF to high part
 
-    elif f == 0x6: #0/INSB
+    elif f == 0x6: #INSB/INSBF
 
         # INSB A,B (BIDX)
         # insert ci to A[B]
@@ -97,9 +97,10 @@ def generate_low_by_op(ci, f,  b, a):
         value = b
         shift = bidx & 0x7
         if bidx < 4:
-            RH = (value & (~(0x1 << shift))) | (ci << shift)
+            RL = (value & (~(0x1 << shift))) | (ci << shift)
         else:
-            RH = value
+            RL = value
+        RH = ci << 3
     elif f == 0x7: # AND/EXTB
         RL = a & b
         # EXTB A,B(BIDX)
@@ -202,7 +203,7 @@ def generate_high_by_op(ci, f, b, a):
         T = ci == 1 and a == 0
         RH = 8 if T else 0
 
-    elif f == 0x6:  #OR/INSB
+    elif f == 0x6:  #INSB/INSBF
         RL = a | b
         # INSB A,B (BIDX)
         # insert ci to A[B]
@@ -212,11 +213,11 @@ def generate_high_by_op(ci, f, b, a):
         value = b
         shift = bidx & 0x7
         if shift < 4:
-            RH = value
+            RL = value
         else:
             T = shift & 0x3
-            RH = (value & (~(0x1 << T))) | (ci << T)
-
+            RL = (value & (~(0x1 << T))) | (ci << T)
+        RH = ci << 3
     elif f == 0x7:  #0/EXTB
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7] and co
