@@ -1,0 +1,10 @@
+@INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
+
+
+RF(T1), ALU(EXTB), BR(CY)  # EXTB(T1, WR)
+BR(NQ)
+RF(T1), ALU(INSB), WR(WE)
+RF(SFR), ALU(B), RAM(WE), BR(ONE)
+
+
+@INC "snippet\inc_pc_jchkint.ds"
