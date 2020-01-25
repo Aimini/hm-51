@@ -1181,7 +1181,8 @@ RF(IR), JLT(0x31,IRSEG_30)
 
 
 IRSEG_30: #--------------------
-
+# JNB bit, offset
+@INC "instructions\30_JNB_b_o.ds"
 #------------------------------
 
 
@@ -1359,7 +1360,9 @@ J(STAGE_CHECK_INTERRUPT) #SET PCH
 
 IRSEG_0: #--------------------
 #------------------------------
-
+ADDC_PC_BEFORE_CHECK_INTERRUPT:
+RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
+RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
 INC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc.ds"
 ######################################################## 
