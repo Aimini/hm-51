@@ -76,6 +76,10 @@ class asm_test:
         """
         return itertools.chain(asm_test.riram(), asm_test.rsfr())
 
+    @staticmethod
+    def rbit():
+        rsfrbit = [ _ for _ in asm_test.rsfr() if _ % 8 == 0]
+        return itertools.chain(range(0x20,0x30), rsfrbit)
 
     def pass_by_len(self, f, *args):
         if len(inspect.signature(f).parameters) == len(args):
@@ -176,14 +180,7 @@ class asm_test:
 
     def iter_bit(self, f):
          
-        for direct in range(0x20, 0x30):
-            for idx in range(8):
-                self.pass_by_len(f, direct, idx)
-                
-        for direct in self.rsfr():
-            if direct % 8 != 0:
-                continue
-
+        for direct in self.rbit():
             for idx in range(8):
                 self.pass_by_len(f, direct, idx)
 
