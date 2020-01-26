@@ -178,12 +178,7 @@ IRSEG_E2: #--------------------
 
 
 IRSEG_E0_E1:
-RF(IR), JLT(0xE1,IRSEG_E0)
-IRSEG_E1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xE0,CSEG_AJMP_ADDR11)
 IRSEG_E0: #--------------------
 
 #------------------------------
@@ -397,12 +392,7 @@ IRSEG_C2: #--------------------
 
 
 IRSEG_C0_C1:
-RF(IR), JLT(0xC1,IRSEG_C0)
-IRSEG_C1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xC0,CSEG_AJMP_ADDR11)
 IRSEG_C0: #--------------------
 
 #------------------------------
@@ -622,12 +612,7 @@ IRSEG_A2: #--------------------
 
 
 IRSEG_A0_A1:
-RF(IR), JLT(0xA1,IRSEG_A0)
-IRSEG_A1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xA0,CSEG_AJMP_ADDR11)
 IRSEG_A0: #--------------------
 #ORL C, /bit
 @INC "instructions\A0_ORL_C_nb.ds"
@@ -793,12 +778,7 @@ IRSEG_82: #--------------------
 
 
 IRSEG_80_81:
-RF(IR), JLT(0x81,IRSEG_80)
-IRSEG_81: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x80,CSEG_AJMP_ADDR11)
 IRSEG_80: #--------------------
 @INC "instructions\80_SJMP_o.ds"
 #------------------------------
@@ -971,12 +951,7 @@ IRSEG_62: #--------------------
 
 
 IRSEG_60_61:
-RF(IR), JLT(0x61,IRSEG_60)
-IRSEG_61: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x60,CSEG_AJMP_ADDR11)
 IRSEG_60: #--------------------
 @INC "instructions\60_JZ_o.ds"
 #------------------------------
@@ -1084,12 +1059,7 @@ IRSEG_42: #--------------------
 
 
 IRSEG_40_41:
-RF(IR), JLT(0x41,IRSEG_40)
-IRSEG_41: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x40,CSEG_AJMP_ADDR11)
 IRSEG_40: #--------------------
 @INC "instructions\40_JC_o.ds"
 #------------------------------
@@ -1197,12 +1167,7 @@ IRSEG_22: #--------------------
 
 
 IRSEG_20_21:
-RF(IR), JLT(0x21,IRSEG_20)
-IRSEG_21: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x20,CSEG_AJMP_ADDR11)
 IRSEG_20: #--------------------
 @INC "instructions\20_JB_b_o.ds"
 #------------------------------
@@ -1311,17 +1276,14 @@ IRSEG_2: #--------------------
 
 
 IRSEG_0_1:
-RF(IR), JLT(0x1,IRSEG_0)
-IRSEG_1: #--------------------
-IRSEG_AJMP_ADDR11:
-#AJMP addr11
-# load ADDR11[7:0]
-J(STAGE_CHECK_INTERRUPT) #SET PCH
-
-#------------------------------
-
+RF(IR), JGT(0x00,CSEG_AJMP_ADDR11)
 IRSEG_0: #--------------------
+J(STAGE_CHECK_INTERRUPT)
 #------------------------------
+
+CSEG_AJMP_ADDR11:
+@INC "instructions\x01_AJMP_a11.ds"
+
 CSEG_ACALL_ADDR11:
 @INC "instructions\x11_ACALL_a11.ds"
 
