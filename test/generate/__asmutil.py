@@ -134,5 +134,11 @@ def astl(a,b):
     """
     return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a,b,I(3))
 
+def crash(info = ""):
+    """
+    return string of instructions that assert a < b.
+    """
+    return f";;;;;;;;;;;; crash: {info} \n" + move(0xFF,I(4))
+
 def clear_reg():
     return '\n'.join([move(_, I(0)) for _ in ['SP','DPL','DPH','PSW','ACC','B']])
