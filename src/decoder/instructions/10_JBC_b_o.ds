@@ -1,0 +1,25 @@
+# 0x10 JBC bit, offset
+@INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
+
+RF(T1), ALU(EXTB), BR(CY)
+JBIT(JBC_CLEAR_BIT), BR(ZERO)
+
+#  jump to check interrupt
+LI(2), WR(WE), BR(ZERO), J(ADDC_PC_BEFORE_CHECK_INTERRUPT)
+
+
+JBC_CLEAR_BIT:
+RF(T1), ALU(INSB), WR(WE)
+RF(SFR), ALU(B), RAM(WE), BR(ONE)
+
+
+@INC "snippet\inc_pc_wrsr.ds"
+# SJMP offset
+# fetch offset and add it to PC, then jump to check interrupt.
+# PC + 1 + offset
+RF(T0, WE), WR(WE), BUS(ROM), BR(ONE)
+RF(PCL, WE), ALU(ADDC), BR(CY)
+RF(PCH, WE), ALU(INCC), BR(ZERO)
+# PC - offset[7]*2^8
+RF(T0), BR(A7), LI(0), WR(WE)
+RF(PCH, WE), ALU(SUBB), J(STAGE_CHECK_INTERRUPT)
