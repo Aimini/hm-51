@@ -30,7 +30,7 @@ RF(IR), JLT(0xE0,IRSEG_C0_DF)
 ## IRSEG_E0_FF
 RF(IR), JLT(0xF0,IRSEG_E0_EF)
 ## IRSEG_F0_FF
-RF(IR), JLT(0xF8,IRSEG_F0_F7), WR(WE) # move IR to WR, why? see "MOV Rn, A"
+RF(IR), JLT(0xF8,IRSEG_F0_F7)
 ## IRSEG_F8_FF, MOV Rn, A
 ## we had move IR to WR at JLT. WR -> T0
 RF(T0,WE), ALU(B)
@@ -73,12 +73,7 @@ IRSEG_F2: #--------------------
 
 
 IRSEG_F0_F1:
-RF(IR), JLT(0xF1,IRSEG_F0)
-IRSEG_F1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xF0,CSEG_ACALL_ADDR11)
 IRSEG_F0: #--------------------
 
 #------------------------------
@@ -296,12 +291,7 @@ IRSEG_D2: #--------------------
 
 
 IRSEG_D0_D1:
-RF(IR), JLT(0xD1,IRSEG_D0)
-IRSEG_D1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xD0,CSEG_ACALL_ADDR11)
 IRSEG_D0: #--------------------
 
 #------------------------------
@@ -522,12 +512,7 @@ IRSEG_B2: #--------------------
 
 
 IRSEG_B0_B1:
-RF(IR), JLT(0xB1,IRSEG_B0)
-IRSEG_B1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xB0,CSEG_ACALL_ADDR11)
 IRSEG_B0: #--------------------
 @INC "instructions\B0_ANL_C_nb.ds"
 #------------------------------
@@ -701,12 +686,7 @@ IRSEG_92: #--------------------
 
 
 IRSEG_90_91:
-RF(IR), JLT(0x91,IRSEG_90)
-IRSEG_91: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x90,CSEG_ACALL_ADDR11)
 IRSEG_90: #--------------------
 @INC "instructions\90_MOV_dptr_i.ds"
 #------------------------------
@@ -938,12 +918,7 @@ IRSEG_72: #--------------------
 
 
 IRSEG_70_71:
-RF(IR), JLT(0x71,IRSEG_70)
-IRSEG_71: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x70,CSEG_ACALL_ADDR11)
 IRSEG_70: #--------------------
 @INC "instructions\70_JNZ_o.ds"
 #------------------------------
@@ -1055,12 +1030,7 @@ IRSEG_52: #--------------------
 
 
 IRSEG_50_51:
-RF(IR), JLT(0x51,IRSEG_50)
-IRSEG_51: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x50,CSEG_ACALL_ADDR11)
 IRSEG_50: #--------------------
 # JNC offset
 @INC "instructions\50_JNC_o.ds"
@@ -1176,10 +1146,7 @@ IRSEG_32: #--------------------
 
 
 IRSEG_30_31:
-RF(IR), JLT(0x31,IRSEG_30)
-
-
-
+RF(IR), JGT(0x30,CSEG_ACALL_ADDR11)
 IRSEG_30: #--------------------
 # JNB bit, offset
 @INC "instructions\30_JNB_b_o.ds"
@@ -1293,12 +1260,7 @@ IRSEG_12: #--------------------
 
 
 IRSEG_10_11:
-RF(IR), JLT(0x11,IRSEG_10)
-IRSEG_11: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x10,CSEG_ACALL_ADDR11)
 IRSEG_10: #--------------------
 @INC "instructions\10_JBC_b_o.ds"
 #------------------------------
@@ -1360,9 +1322,13 @@ J(STAGE_CHECK_INTERRUPT) #SET PCH
 
 IRSEG_0: #--------------------
 #------------------------------
+CSEG_ACALL_ADDR11:
+@INC "instructions\x11_ACALL_a11.ds"
+
 ADDC_PC_BEFORE_CHECK_INTERRUPT:
 RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
 RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
+
 INC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc.ds"
 ######################################################## 
