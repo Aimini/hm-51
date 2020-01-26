@@ -139,7 +139,7 @@ def generate_low_by_op(ci, f,  b, a):
         # asume A = PCH[3:0], B = IR[7:4]
         # according to instruction set manual, we have PC[10:8] = IR[7:5]
         # namely, A[2:0] = B[3:1]
-        RL = (a & 0xE) | ((b) >> 1)
+        RL = (a & 0x8) | ((b) >> 1)
 
     elif f == 0xB:  # SHIRQN A(ISR or IRQ),B(IP)
         # from interrupt aspect, A is IRQ, B = IP,
