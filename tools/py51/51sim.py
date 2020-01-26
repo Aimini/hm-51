@@ -59,6 +59,9 @@ def assert_core(par0reg, par1reg, function_val):
     if function_val == 3:
         if not (p0 < p1):
             raise ArithmeticError("{} < {} assert failed".format(p0, p1))
+    if function_val == 4:
+            raise Exception("user actively requested a crash.")
+
 
 
 def assert_and_dump_test(core):
@@ -74,7 +77,8 @@ def assert_and_dump_test(core):
     condition = [
         [1, lambda a, b: a > b],
         [2, lambda a, b: a == b],
-        [3, lambda a, b: a < b]
+        [3, lambda a, b: a < b],
+        [4, lambda a, b: False]
     ]
 
     for cmpcode in range(1, 4):
