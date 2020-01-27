@@ -1,0 +1,8 @@
+#0xC0 PUSH direct
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+
+RF(SP, WE), ALU(INC), SR(WE)
+ALU(B), RAM(WE), BR(ONE)
+@INC "snippet\inc_pc_jchkint.ds"

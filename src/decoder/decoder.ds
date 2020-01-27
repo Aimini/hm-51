@@ -395,7 +395,8 @@ IRSEG_C2: #--------------------
 IRSEG_C0_C1:
 RF(IR), JGT(0xC0,CSEG_AJMP_ADDR11)
 IRSEG_C0: #--------------------
-
+# PUSH direct
+@INC "instructions\C0_PUSH_d.ds"
 #------------------------------
 
 
