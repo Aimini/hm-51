@@ -660,7 +660,8 @@ RF(IR), JLT(0x92,IRSEG_90_91)
 ## IRSEG_92_93
 RF(IR), JLT(0x93,IRSEG_92)
 IRSEG_93: #--------------------
-
+#MOV A,@A+DPTR
+@INC "instructions\93_MOVC_A_A_DPTR.ds"
 #------------------------------
 
 
