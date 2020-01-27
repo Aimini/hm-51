@@ -887,7 +887,7 @@ RF(IR), JLT(0x72,IRSEG_70_71)
 ## IRSEG_72_73
 RF(IR), JLT(0x73,IRSEG_72)
 IRSEG_73: #--------------------
-
+@INC "instructions\73_JMP_A_DPTR.ds"
 #------------------------------
 
 
