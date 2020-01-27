@@ -599,9 +599,7 @@ RF(IR), JLT(0xA2,IRSEG_A0_A1)
 RF(IR), JLT(0xA3,IRSEG_A2)
 IRSEG_A3: #--------------------
 #INC DPTR
-LI(0), WR(WE), BR(ONE)
-RF(DPL,WE), ALU(ADDC),BR(CY)
-RF(DPH,WE), ALU(ADDC),J(STAGE_CHECK_INTERRUPT)
+@INC "instructions\A3_INC_DPTR.ds"
 #------------------------------
 
 
