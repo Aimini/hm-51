@@ -181,7 +181,9 @@ def generate_high_by_op(ci, f, b, a):
         T = a + ci
         if (b & 0x8) or T > 9:
             RH,RL = get_flag_add(T, 6, 0)
-
+        else:
+            RH,RL = get_flag_add(T, 0, 0)
+            
     elif f == 0x2:  #ADDC/ADDCF
         RH,RL = get_flag_add(a, b, ci)
 
