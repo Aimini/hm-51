@@ -160,8 +160,8 @@ def generate_low_by_op(ci, f,  b, a):
         RH = a & b #AND
 
     elif f == 0xE: # NA/ SETPF
-        RL = ~a
-        RH = (a & 0xE) | ci
+        RL = (a & 0xE) | ci
+        RH = ~a
     elif f == 0xF: #INCC
         RH,RL = get_flag_add(a,0,ci)
 
@@ -257,8 +257,8 @@ def generate_high_by_op(ci, f, b, a):
         RL = b & 0x1 #RS1
         RH = a & b
     elif f == 0xE:  #NA / SETPF
-        RL =  ~a
-        RH = a
+        RL = a
+        RH =  ~a
     elif f == 0xF: #INCC
         RH,RL = get_flag_add(a,0,ci)
     v =  ((RH & 0xF) << 4) | (RL& 0xF)
