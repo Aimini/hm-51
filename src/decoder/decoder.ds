@@ -275,7 +275,8 @@ RF(IR), JLT(0xD2,IRSEG_D0_D1)
 ## IRSEG_D2_D3
 RF(IR), JLT(0xD3,IRSEG_D2)
 IRSEG_D3: #--------------------
-
+# SETB C
+@INC "instructions\D3_SETB_C.ds"
 #------------------------------
 
 
