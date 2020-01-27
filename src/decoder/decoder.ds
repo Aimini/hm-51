@@ -381,7 +381,7 @@ RF(IR), JLT(0xC2,IRSEG_C0_C1)
 ## IRSEG_C2_C3
 RF(IR), JLT(0xC3,IRSEG_C2)
 IRSEG_C3: #--------------------
-
+@INC "instructions\C3_CLR_C.ds"
 #------------------------------
 
 
