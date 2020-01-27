@@ -1,0 +1,12 @@
+#0xD0 POP direct
+RF(T0, WE), BUS(ROM)
+
+RF(SP), ALU(A), SR(WE)
+WR(WE), BUS(RAM)
+
+RF(T0), ALU(A), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR),ALU(B), RAM(WE)
+
+RF(SP, WE), ALU(DEC), BR(ONE)
+@INC "snippet\inc_pc_jchkint.ds"

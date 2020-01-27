@@ -289,7 +289,7 @@ IRSEG_D2: #--------------------
 IRSEG_D0_D1:
 RF(IR), JGT(0xD0,CSEG_ACALL_ADDR11)
 IRSEG_D0: #--------------------
-
+@INC "instructions\D0_POP_d.ds"
 #------------------------------
 
 
