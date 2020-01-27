@@ -491,7 +491,8 @@ RF(IR), JLT(0xB2,IRSEG_B0_B1)
 ## IRSEG_B2_B3
 RF(IR), JLT(0xB3,IRSEG_B2)
 IRSEG_B3: #--------------------
-
+#CLP C
+@INC "instructions\B3_CPL_C.ds"
 #------------------------------
 
 
