@@ -7,6 +7,8 @@ import itertools
 import __asmutil as atl
 import __asmconst as acst
 import inspect
+import random
+
 SFR_MAP = {
     0x81: 2,  # "SP"],
     0x82: 4,  # "DPL"],
@@ -23,18 +25,25 @@ class asm_test:
     def __init__(self, filename):
         self.filename = filename
         self.sio = io.StringIO()
-
+        self.is_prepend_clear_reg = True
+        self.is_append_dump = True
+        self.is_append_exit = True
         def store_file():
             with open(self.filename, "w") as fh:
-                fh.write('\n'.join([
-                    atl.clear_reg(),
-                    self.sio.getvalue(),
-                    atl.dump(),
-                    atl.exit(),
-                    'END']))
+                fh.write(self.get_content_str())
 
         atexit.register(store_file)
 
+    def get_content_str(self):
+        content = [self.sio.getvalue()]
+        if self.is_prepend_clear_reg:
+            content.insert(0, atl.clear_reg())
+        if self.is_append_dump:
+            content.append(atl.dump())
+        if self.is_append_exit:
+            content.append(atl.exit())
+        content.append('END')
+        return '\n'.join(content)
     def __call__(self, * vargs, **kargs):
         """
         using as print, but write string to test file.
@@ -183,6 +192,20 @@ class asm_test:
         for direct in self.rbit():
             for idx in range(8):
                 self.pass_by_len(f, direct, idx)
+
+class gaped_addr():
+    def __init__(self, start, end, min_gap, count):
+        self.start = start
+        self.end = end
+        self.min_gap = min_gap
+        self.count = count
+
+    def __next__(self):
+        addr_high_limit = self.end - self.count * self.min_gap
+        addr = random.randint(self.start, addr_high_limit)
+        self.start = addr + self.min_gap
+        self.count -= 1
+        return addr
 
 def create_test():
     """
