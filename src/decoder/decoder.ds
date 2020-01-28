@@ -406,57 +406,8 @@ IRSEG_B0: #--------------------
 
 IRSEG_A0_AF:
 RF(IR), JLT(0xA8,IRSEG_A0_A7)
-## IRSEG_A8_AF
-RF(IR), JLT(0xAC,IRSEG_A8_AB)
-## IRSEG_AC_AF
-RF(IR), JLT(0xAE,IRSEG_AC_AD)
-## IRSEG_AE_AF
-RF(IR), JLT(0xAF,IRSEG_AE)
-IRSEG_AF: #--------------------
-
-#------------------------------
-
-
-IRSEG_AE: #--------------------
-
-#------------------------------
-
-
-IRSEG_AC_AD:
-RF(IR), JLT(0xAD,IRSEG_AC)
-IRSEG_AD: #--------------------
-
-#------------------------------
-
-
-IRSEG_AC: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8_AB:
-RF(IR), JLT(0xAA,IRSEG_A8_A9)
-## IRSEG_AA_AB
-RF(IR), JLT(0xAB,IRSEG_AA)
-IRSEG_AB: #--------------------
-
-#------------------------------
-
-
-IRSEG_AA: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8_A9:
-RF(IR), JLT(0xA9,IRSEG_A8)
-IRSEG_A9: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8: #--------------------
-
+# IRSEG_A8_AF -----------------
+@INC "instructions\A8_AF_MOV_Rn_d.ds"
 #------------------------------
 
 
