@@ -42,7 +42,10 @@ IRSEG_F0_F7:
 RF(IR), JLT(0xF4,IRSEG_F0_F3)
 ## IRSEG_F4_F7
 RF(IR), JLT(0xF6,IRSEG_F4_F5)
-## IRSEG_F6_F7
+# IRSEG_F6_F7 ------------------
+# MOV @Ri, A
+@INC "instructions\F6_F7_MOV_Ri_A.ds"
+#------------------------------
 
 
 IRSEG_F4_F5:
