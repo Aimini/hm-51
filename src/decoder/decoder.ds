@@ -369,7 +369,8 @@ IRSEG_C6: #--------------------
 IRSEG_C4_C5:
 RF(IR), JLT(0xC5,IRSEG_C4)
 IRSEG_C5: #--------------------
-
+# XCH A, direct
+@INC "instructions\C5_XCH_A_d.ds"
 #------------------------------
 
 
