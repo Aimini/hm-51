@@ -1,0 +1,4 @@
+# 0xF6-0XF7, MOV Rn, A
+@INC "snippet\load_rn_to_sr.ds"
+RF(A,WE), BUS(RAM), J(STAGE_CHECK_INTERRUPT)  # A @0 RAM[direect](WR)
+

@@ -84,57 +84,8 @@ IRSEG_F0: #--------------------
 
 IRSEG_E0_EF:
 RF(IR), JLT(0xE8,IRSEG_E0_E7)
-## IRSEG_E8_EF
-RF(IR), JLT(0xEC,IRSEG_E8_EB)
-## IRSEG_EC_EF
-RF(IR), JLT(0xEE,IRSEG_EC_ED)
-## IRSEG_EE_EF
-RF(IR), JLT(0xEF,IRSEG_EE)
-IRSEG_EF: #--------------------
-
-#------------------------------
-
-
-IRSEG_EE: #--------------------
-
-#------------------------------
-
-
-IRSEG_EC_ED:
-RF(IR), JLT(0xED,IRSEG_EC)
-IRSEG_ED: #--------------------
-
-#------------------------------
-
-
-IRSEG_EC: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8_EB:
-RF(IR), JLT(0xEA,IRSEG_E8_E9)
-## IRSEG_EA_EB
-RF(IR), JLT(0xEB,IRSEG_EA)
-IRSEG_EB: #--------------------
-
-#------------------------------
-
-
-IRSEG_EA: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8_E9:
-RF(IR), JLT(0xE9,IRSEG_E8)
-IRSEG_E9: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8: #--------------------
-
+## IRSEG_E8_EF ----------------
+@INC "instructions\E8_EF_MOV_A_Rn.ds"
 #------------------------------
 
 
