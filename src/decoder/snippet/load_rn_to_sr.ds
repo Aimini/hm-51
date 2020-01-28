@@ -1,0 +1,12 @@
+####################################################
+# load Rn address to WR
+# require: 
+#   - NONE
+# used:
+#    WR, SR
+# leave:
+#   WR: PSW
+#   SR: Rn address
+####################################################
+RF(PSW), ALU(A), WR(WE)
+RF(IR), ALU(Rn), SR(WE)
