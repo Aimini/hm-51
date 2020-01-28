@@ -562,15 +562,8 @@ IRSEG_A0_A7:
 RF(IR), JLT(0xA4,IRSEG_A0_A3)
 ## IRSEG_A4_A7
 RF(IR), JLT(0xA6,IRSEG_A4_A5)
-## IRSEG_A6_A7
-RF(IR), JLT(0xA7,IRSEG_A6)
-IRSEG_A7: #--------------------
-
-#------------------------------
-
-
-IRSEG_A6: #--------------------
-
+## IRSEG_A6_A7 ----------------
+@INC "instructions\A6_A7_MOV_Ri_d.ds"
 #------------------------------
 
 
