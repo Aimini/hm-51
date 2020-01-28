@@ -350,15 +350,8 @@ IRSEG_C0_C7:
 RF(IR), JLT(0xC4,IRSEG_C0_C3)
 ## IRSEG_C4_C7
 RF(IR), JLT(0xC6,IRSEG_C4_C5)
-## IRSEG_C6_C7
-RF(IR), JLT(0xC7,IRSEG_C6)
-IRSEG_C7: #--------------------
-
-#------------------------------
-
-
-IRSEG_C6: #--------------------
-
+# IRSEG_C6_C7 -----------------
+@INC "instructions\C6_C7_XCH_A_Ri.ds"
 #------------------------------
 
 
