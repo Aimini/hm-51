@@ -649,13 +649,8 @@ IRSEG_75: #--------------------
 
 
 IRSEG_74: #--------------------
-# MOV A, #IMMED
-# WR(WE), RF(PCL), ALU(A)
-# SR(WE), RF(PCH), ALU(A)
-# RF(A,WE),BUS(ROM)
-# WR(WE), LI(0), BR(ONE)
-# RF(PCL,WE),ALU(ADDC),  BR(CY)
-# RF(PCH,WE),ALU(ADDC),  J(STAGE_CHECK_INTERRUPT)
+# MOV A, #immed
+@INC "instructions\74_MOV_A_i.ds"
 #------------------------------
 
 
