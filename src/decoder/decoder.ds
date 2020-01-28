@@ -143,15 +143,8 @@ IRSEG_E0_E7:
 RF(IR), JLT(0xE4,IRSEG_E0_E3)
 ## IRSEG_E4_E7
 RF(IR), JLT(0xE6,IRSEG_E4_E5)
-## IRSEG_E6_E7
-RF(IR), JLT(0xE7,IRSEG_E6)
-IRSEG_E7: #--------------------
-
-#------------------------------
-
-
-IRSEG_E6: #--------------------
-
+# IRSEG_E6_E7 ----------------
+@INC "instructions\E6_E7_MOV_A_Ri.ds"
 #------------------------------
 
 
