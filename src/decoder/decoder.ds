@@ -208,7 +208,7 @@ IRSEG_D6: #--------------------
 IRSEG_D4_D5:
 RF(IR), JLT(0xD5,IRSEG_D4)
 IRSEG_D5: #--------------------
-
+@INC "instructions\D5_DJNZ_d_o.ds"
 #------------------------------
 
 

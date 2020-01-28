@@ -1,0 +1,14 @@
+# 0xD5 DJNZ direct, offset
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)    # WR <- RAM[direct]
+RF(T1, WE), ALU(B)           # T1 <- WR
+RF(T1, WE), ALU(DEC), WR(WE)
+RF(SFR), RAM(WE), ALU(B)     # RAM[direct],T1, WR <- T1 - 1
+
+# check T1 == 0
+# if T1 == 0, jump to segment that execute PC + 1(BR) + 1(WR),
+RF(T1), BR(ONE), WR(WE), BUS(IMMED), JLT(0x01, ADDC_PC_BEFORE_CHECK_INTERRUPT)
+# else excute PC + 1(BR) and execute a SJMP.
+RF(PCL, WE), ALU(INCC), WR(WE), BR(CY)
+RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)
