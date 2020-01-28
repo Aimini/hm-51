@@ -135,57 +135,8 @@ IRSEG_C0_DF:
 RF(IR), JLT(0xD0,IRSEG_C0_CF)
 ## IRSEG_D0_DF
 RF(IR), JLT(0xD8,IRSEG_D0_D7)
-## IRSEG_D8_DF
-RF(IR), JLT(0xDC,IRSEG_D8_DB)
-## IRSEG_DC_DF
-RF(IR), JLT(0xDE,IRSEG_DC_DD)
-## IRSEG_DE_DF
-RF(IR), JLT(0xDF,IRSEG_DE)
-IRSEG_DF: #--------------------
-
-#------------------------------
-
-
-IRSEG_DE: #--------------------
-
-#------------------------------
-
-
-IRSEG_DC_DD:
-RF(IR), JLT(0xDD,IRSEG_DC)
-IRSEG_DD: #--------------------
-
-#------------------------------
-
-
-IRSEG_DC: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8_DB:
-RF(IR), JLT(0xDA,IRSEG_D8_D9)
-## IRSEG_DA_DB
-RF(IR), JLT(0xDB,IRSEG_DA)
-IRSEG_DB: #--------------------
-
-#------------------------------
-
-
-IRSEG_DA: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8_D9:
-RF(IR), JLT(0xD9,IRSEG_D8)
-IRSEG_D9: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8: #--------------------
-
+## IRSEG_D8_DF -----------------
+@INC "instructions\D8_DF_DJNZ_Rn_o.ds"
 #------------------------------
 
 
