@@ -9,6 +9,7 @@ class SIMRAM():
         return self.RAM[k]
 
     def __setitem__(self, k: int, v):
+        v &= 0xFF
         if k == SFR_PSW.x:
             pf = self.RAM[SFR_PSW.x] & 1
             self.RAM[SFR_PSW.x] = (v & 0xFE) | pf
