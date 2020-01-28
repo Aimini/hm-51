@@ -323,7 +323,8 @@ IRSEG_B6: #--------------------
 IRSEG_B4_B5:
 RF(IR), JLT(0xB5,IRSEG_B4)
 IRSEG_B5: #--------------------
-
+# CJNE A, direct, offset
+@INC "instructions\B5_CJNE_A_d_o.ds"
 #------------------------------
 
 
