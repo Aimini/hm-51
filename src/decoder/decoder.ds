@@ -242,57 +242,9 @@ IRSEG_D0: #--------------------
 
 IRSEG_C0_CF:
 RF(IR), JLT(0xC8,IRSEG_C0_C7)
-## IRSEG_C8_CF
-RF(IR), JLT(0xCC,IRSEG_C8_CB)
-## IRSEG_CC_CF
-RF(IR), JLT(0xCE,IRSEG_CC_CD)
-## IRSEG_CE_CF
-RF(IR), JLT(0xCF,IRSEG_CE)
-IRSEG_CF: #--------------------
-
-#------------------------------
-
-
-IRSEG_CE: #--------------------
-
-#------------------------------
-
-
-IRSEG_CC_CD:
-RF(IR), JLT(0xCD,IRSEG_CC)
-IRSEG_CD: #--------------------
-
-#------------------------------
-
-
-IRSEG_CC: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8_CB:
-RF(IR), JLT(0xCA,IRSEG_C8_C9)
-## IRSEG_CA_CB
-RF(IR), JLT(0xCB,IRSEG_CA)
-IRSEG_CB: #--------------------
-
-#------------------------------
-
-
-IRSEG_CA: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8_C9:
-RF(IR), JLT(0xC9,IRSEG_C8)
-IRSEG_C9: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8: #--------------------
-
+# IRSEG_C8_CF -----------------
+# XCH A, Rn
+@INC "instructions\C8_CF_XCH_A_Rn.ds"
 #------------------------------
 
 
