@@ -48,7 +48,8 @@ RF(IR), JLT(0xF6,IRSEG_F4_F5)
 IRSEG_F4_F5:
 RF(IR), JLT(0xF5,IRSEG_F4)
 IRSEG_F5: #--------------------
-
+# MOV direct, A
+@INC "instructions\F5_MOV_d_A.ds"
 #------------------------------
 
 
