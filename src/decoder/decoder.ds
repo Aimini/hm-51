@@ -78,7 +78,7 @@ IRSEG_F2: #--------------------
 IRSEG_F0_F1:
 RF(IR), JGT(0xF0,CSEG_ACALL_ADDR11)
 IRSEG_F0: #--------------------
-
+@INC "instructions\F0_MOVX_DPTR_A.ds"
 #------------------------------
 
 
@@ -127,7 +127,7 @@ IRSEG_E2: #--------------------
 IRSEG_E0_E1:
 RF(IR), JGT(0xE0,CSEG_AJMP_ADDR11)
 IRSEG_E0: #--------------------
-
+@INC "instructions\E0_MOVX_A_DPTR.ds"
 #------------------------------
 
 
