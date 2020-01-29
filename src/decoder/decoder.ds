@@ -144,15 +144,8 @@ IRSEG_D0_D7:
 RF(IR), JLT(0xD4,IRSEG_D0_D3)
 ## IRSEG_D4_D7
 RF(IR), JLT(0xD6,IRSEG_D4_D5)
-## IRSEG_D6_D7
-RF(IR), JLT(0xD7,IRSEG_D6)
-IRSEG_D7: #--------------------
-
-#------------------------------
-
-
-IRSEG_D6: #--------------------
-
+# IRSEG_D6_D7 -----------------
+@INC "instructions\D6_D7_XCHD_A_Ri.ds"
 #------------------------------
 
 
