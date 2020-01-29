@@ -101,8 +101,8 @@ def generate_low_by_op(ci, f,  b, a):
         else:
             RL = value
         RH = ci << 3
-    elif f == 0x7: # AND/EXTB
-        RL = a & b
+    elif f == 0x7: # XCHD/EXTB
+        RL = b
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7]
         #
@@ -220,7 +220,9 @@ def generate_high_by_op(ci, f, b, a):
             T = shift & 0x3
             RL = (value & (~(0x1 << T))) | (ci << T)
         RH = ci << 3
-    elif f == 0x7:  #0/EXTB
+    elif f == 0x7:  #XCHD/EXTB
+        #XCHD
+        RL = a
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7] and co
         bidx = a
