@@ -250,57 +250,8 @@ RF(IR), JLT(0xA0,IRSEG_80_9F)
 RF(IR), JLT(0xB0,IRSEG_A0_AF)
 ## IRSEG_B0_BF
 RF(IR), JLT(0xB8,IRSEG_B0_B7)
-## IRSEG_B8_BF
-RF(IR), JLT(0xBC,IRSEG_B8_BB)
-## IRSEG_BC_BF
-RF(IR), JLT(0xBE,IRSEG_BC_BD)
-## IRSEG_BE_BF
-RF(IR), JLT(0xBF,IRSEG_BE)
-IRSEG_BF: #--------------------
-
-#------------------------------
-
-
-IRSEG_BE: #--------------------
-
-#------------------------------
-
-
-IRSEG_BC_BD:
-RF(IR), JLT(0xBD,IRSEG_BC)
-IRSEG_BD: #--------------------
-
-#------------------------------
-
-
-IRSEG_BC: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8_BB:
-RF(IR), JLT(0xBA,IRSEG_B8_B9)
-## IRSEG_BA_BB
-RF(IR), JLT(0xBB,IRSEG_BA)
-IRSEG_BB: #--------------------
-
-#------------------------------
-
-
-IRSEG_BA: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8_B9:
-RF(IR), JLT(0xB9,IRSEG_B8)
-IRSEG_B9: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8: #--------------------
-
+# IRSEG_B8_BF -----------------
+@INC "instructions\B8_BF_CJNE_Rn_i_o.ds"
 #------------------------------
 
 
