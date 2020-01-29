@@ -1,0 +1,116 @@
+########### 0xA4, MUL AB
+RF(T0, WE), LI(0), BR(ZERO)  # reuslt low, T0
+
+##############################################################################
+# calculate
+##############################################################################
+############# 0
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_8)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 1
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_7)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 2
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_6)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 3
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_5)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 5
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_4)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 6
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_3)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 7
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_2)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+############# 8
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_RRC_RESULT_1)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0), WR(WE)
+RF(T1, WE), ALU(RRC), BR(ZERO), J(MUL_MOV_RESULT_SET_FLAG)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+
+##############################################################################
+# because A is 0 zero now, jump to here rotate the result
+##############################################################################
+MUL_RRC_RESULT_8:  # A is 0 at begin!
+RF(A, WE), LI(0)
+RF(B, WE), LI(0), BR(ZERO)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+
+MUL_RRC_RESULT_7:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_6:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_5:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_4:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_3:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_2:
+RF(T0, WE), ALU(RRC), BR(A0)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+MUL_RRC_RESULT_1:
+RF(T0, WE), ALU(RRC), BR(A0), WR(WE)
+RF(T1, WE), ALU(RRC), BR(ZERO)  # T0 <= {CY, T0[7:1]}, T1 <= {T0[0], T1[7:1]}
+
+##############################################################################
+# MOV result
+##############################################################################
+MUL_MOV_RESULT_SET_FLAG:
+RF(B, WE), ALU(B)
+RF(B), ALU(ZF), BR(ZF)  # load ZF to BR, because B and ZF have same encoding.
+RF(T1), ALU(A), WR(WE), BR(NQ)
+RF(A, WE), ALU(B)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
