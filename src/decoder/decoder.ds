@@ -308,15 +308,9 @@ IRSEG_B0_B7:
 RF(IR), JLT(0xB4,IRSEG_B0_B3)
 ## IRSEG_B4_B7
 RF(IR), JLT(0xB6,IRSEG_B4_B5)
-## IRSEG_B6_B7
-RF(IR), JLT(0xB7,IRSEG_B6)
-IRSEG_B7: #--------------------
-
-#------------------------------
-
-
-IRSEG_B6: #--------------------
-
+## IRSEG_B6_B7 -----------------
+# CJNE @Ri, #immed, offset
+@INC "instructions\B6_B7_CJNE_Ri_i_o.ds"
 #------------------------------
 
 

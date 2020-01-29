@@ -1,0 +1,14 @@
+# 0xB6-0xB7 CJNE @Ri, #immed, offset
+RF(T1, WE), BUS(ROM)              # WR <- RAM[direct]
+@INC "snippet\load_ri_to_sr.ds"
+RF(T0, WE), BUS(RAM)
+RF(T1), ALU(A), WR(WE), BR(ZERO)
+RF(T0,WE), ALU(SUBB), WR(WE), BR(CY)        # WR <- A - direct
+RF(PSW, WE), ALU(SETCY)
+
+RF(T0), ALU(ZF), BR(ZF)
+
+BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_BEFORE_CHECK_INTERRUPT)
+# else excute PC + 1(BR) and execute a SJMP.
+RF(PCL, WE), ALU(INCC), WR(WE), BR(CY)
+RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)
