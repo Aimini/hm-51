@@ -225,6 +225,15 @@ RAM = name_parameters_lut([
         'enum': ['', 'WE']
     }
 ])
+
+XRAM = name_parameters_lut([
+    {
+        'sh': 'WE',
+        'name': 'write enable',
+        'len': 1,
+        'enum': ['', 'WE']
+    }
+])
 ####################################################################
 # see /src/alu/README.md get more info about ALU function info
 ####################################################################
@@ -334,6 +343,7 @@ CTL_LUT = {
     'BR': BR,
     'RFSRCR': RFSRCR,
     'RAM': RAM,
+    'XRAM': XRAM,
     'ALUSD': ALUSD,
     'JUMPABS': JUMPABS,
     'ADDRESS': ADDRESS,
