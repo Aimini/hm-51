@@ -1,0 +1,102 @@
+########### 0x84, DIV AB
+RF(T0, WE), LI(0)     # T0 <- 0, prepare shift A into T0
+
+RF(B), ALU(A), WR(WE), BR(ZERO), JLT(0x01, DIV_ZERO_DIVISOR)
+##############################################################################
+# calculate
+##############################################################################
+############# 0
+RF(A, WE), ALU(RLC), BR(A7), JLT(0x01, DIV_ZERO_A)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 1, then jum   p to avoid load reuslt, we also need shift zero to quotient
+BR(ZERO), JBIT(DIV_CALCULATE_S1) 
+# if CY = 0, load result, need shift one to quotient
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 1
+DIV_CALCULATE_S1:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S2) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 2
+DIV_CALCULATE_S2:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S3) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 3
+DIV_CALCULATE_S3:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S4) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 4
+DIV_CALCULATE_S4:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S5) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 5
+DIV_CALCULATE_S5:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S6) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 6
+DIV_CALCULATE_S6:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_CALCULATE_S7) 
+RF(T0, WE), ALU(SUBB), BR(ONE)
+
+############# 7
+DIV_CALCULATE_S7:
+RF(A, WE), ALU(RLC), BR(A7)
+RF(T0, WE), ALU(RLC), BR(ZERO)
+RF(T0), ALU(SUBB),  BR(CY)
+
+BR(ZERO), JBIT(DIV_MOV_RESULT_SET_FLAG) 
+RF(T0, WE), ALU(SUBB), BR(ONE), WR(WE)
+RF(B, WE), ALU(B)
+RF(A, WE), ALU(RLC), BR(ZERO)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+
+##############################################################################
+# MOV result
+##############################################################################
+DIV_MOV_RESULT_SET_FLAG:
+RF(T0), ALU(A), WR(WE)
+RF(B, WE), ALU(B)
+RF(A, WE), ALU(RLC), BR(ZERO)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+##############################################################################
+# A is zero
+##############################################################################
+DIV_ZERO_A:
+RF(B, WE), LI(0), BR(ZERO)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+##############################################################################
+# divided by zero
+##############################################################################
+DIV_ZERO_DIVISOR:
+BR(ONE)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
