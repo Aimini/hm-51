@@ -21,7 +21,7 @@ for x in range(32):
         p(atl.move(atl.D(addr), atl.I(value)))
 
     for addr in p.ris():
-        p(f"AND A, {atl.D(addr)}")
+        p(f"ANL A, {atl.D(addr)}")
         ram[SFR_A.x] &= ram[addr]
 
         p(atl.aste(SFR_A, atl.I(ram[SFR_A.x])))
