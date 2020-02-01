@@ -29,7 +29,7 @@ def init_ri(RI, p):
     
     indirect = random.getrandbits(7)
 
-    p += atl.move(atl.D(RI.adr),atl.I(indirect))
+    p += atl.move(atl.D(RI.addr),atl.I(indirect))
     ram[RI.addr] = indirect
     return ""
 

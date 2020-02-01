@@ -1,7 +1,7 @@
 #########################################################
 # 2020-01-22 00:09:24
 # AI
-# ins: DEC Rn
+# ins: DEC RN
 #########################################################
 
 import __util as u
@@ -9,18 +9,17 @@ import random
 from __asmconst import *
 
 p = u.create_test()
-def init_rs(rs):
-    return atl.move(SFR_PSW, atl.I(rs << 3))
+def init_rs(rs, psw_rs, p):
+    return atl.move(SFR_PSW, atl.I(psw_rs))
 
-def iter_rn(rs,rn):
+def iter_rn(RN, p):
     t = 100
-    rn = atl.RN(rs, rn)
     start =random.getrandbits(8)
 
-    p(atl.move(atl.D(rn.addr), atl.I(start)))
+    p(atl.move(atl.D(RN.addr), atl.I(start)))
     for x in range(t):
-        p("DEC {}".format(rn))
-        p(atl.aste(atl.D(rn.addr), atl.I((start - x - 1)%256)))
+        p("DEC {}".format(RN))
+        p(atl.aste(atl.D(RN.addr), atl.I((start - x - 1)%256)))
     return ""
 
 

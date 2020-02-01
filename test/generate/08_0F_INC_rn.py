@@ -10,20 +10,20 @@ import random
 from __asmconst import *
 
 p = u.create_test()
-def init_rs(rs):
-    return atl.move(SFR_PSW, atl.I(rs << 3))
+def init_rs(rs, psw_rs, p):
+    p += atl.move(SFR_PSW, atl.I(psw_rs))
+    return ""
 
-def iter_rn(rs,rn):
+def init_rn(RN, p):
     t = 100
-    rn = atl.RN(rs, rn)
     start =random.getrandbits(8)
 
-    p(atl.move(atl.D(rn.addr), atl.I(start)))
+    p += atl.move(atl.D(RN.addr), atl.I(start))
     for x in range(t):
-        p("INC {}".format(rn))
-        p(atl.aste(atl.D(rn.addr), atl.I((start + x + 1)%256)))
+        p += "INC {}".format(RN)
+        p += atl.aste(atl.D(RN.addr), atl.I((start + x + 1)%256))
     return ""
 
 
 
-p.iter_rn(init_rs, iter_rn)
+p.iter_rn(init_rs, init_rn)

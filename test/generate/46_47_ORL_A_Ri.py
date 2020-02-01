@@ -13,14 +13,14 @@ from __51util import SIMRAM
 p = u.create_test()
 ram = SIMRAM()
 
-def init_ram(addr):
+def init_ram(addr, p):
     
     p(";; init ram with random data.")
     v = random.getrandbits(8)
     ram[addr] = v
     return atl.move(atl.D(addr),atl.I(v))
 
-def init_rs(rs):
+def init_rs(rs, psw_rs, p):
     
     p(";; load random indirect address to ri")
     a = 0
@@ -39,10 +39,9 @@ def init_rs(rs):
     return ""
 
 
-def init_ri(rs, ri):
-    p(f"ORL A, {atl.RI(rs, ri)}")
-    ri_addr = (rs << 3) + ri
-    indirect = ram[ri_addr]
+def init_ri(RI,p):
+    p(f"ORL A, {RI}")
+    indirect = ram[RI.addr]
     ram[SFR_A.x] |= ram[indirect]
 
     p(atl.aste(SFR_A, atl.I(ram[SFR_A.x])))
