@@ -4,27 +4,6 @@
 # ins: MOV A, direct
 #########################################################
 
-import random
-import __util as u
-from __asmconst import *
-from __51util import SIMRAM
+from INS_XXX_A_d import INS_XXX_A_D
 
-p = u.create_test()
-ram = SIMRAM()
-
-def fill_one(addr, p):
-    value = random.getrandbits(8)
-    p += f'''
-    MOV {atl.D(addr)}, {atl.I(value)}
-    MOV A, {atl.D(addr)}
-    '''
-    ram[addr] = value
-    ram[SFR_A.x] = ram[addr]
-    p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
-    
-
-def one():
-    p.iter_is(fill_one)
-
-for _ in range(32):
-    one()
+INS_XXX_A_D("MOV").gen(18)
