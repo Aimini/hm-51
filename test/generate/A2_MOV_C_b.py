@@ -18,7 +18,7 @@ def init(addr, p):
     v = random.getrandbits(8)
     p += atl.move(atl.D(addr),atl.I(v))
     ram[addr] = v
-    return ""
+    
 
 def test(addr, idx, p):
     ram.set_bit(SFR_PSW.x, 7, ram.bit(addr,idx))
@@ -26,7 +26,7 @@ def test(addr, idx, p):
     p += f"MOV C, {atl.BIT(addr, idx)}"
 
     p += atl.aste(SFR_PSW, atl.I(ram[SFR_PSW.x]))
-    return ""
+    
 
 for x in range(29):
     p.iter_is(init)

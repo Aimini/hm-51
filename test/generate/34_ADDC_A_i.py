@@ -29,19 +29,19 @@ d = do_s_op()
 operation = "ADDC"
 
 for x in range(256):
-    p("{} A,{}".format(operation, atl.I(x)))
+    p += "{} A,{}".format(operation, atl.I(x))
     d(x)
-    p(atl.aste(SFR_A, atl.I(d.A)))
+    p += atl.aste(SFR_A, atl.I(d.A))
 
 
 for idx,x in enumerate(ntl.bound(8)):
-    p("{} A,{}".format(operation, atl.I(x)))
+    p += "{} A,{}".format(operation, atl.I(x))
     d(x)
-    p(atl.aste(SFR_A, atl.I(d.A)))
-    p(atl.dump(idx))
+    p += atl.aste(SFR_A, atl.I(d.A))
+    p += atl.dump(idx)
 
 for _ in range(1024):
     i = random.getrandbits(8)
-    p("{} A,{}".format(operation, atl.I(i)))
+    p += "{} A,{}".format(operation, atl.I(i))
     d(i)
-    p(atl.aste(SFR_A, atl.I(d.A)))
+    p += atl.aste(SFR_A, atl.I(d.A))

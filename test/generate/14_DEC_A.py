@@ -12,5 +12,5 @@ p = u.create_test()
 
 
 for x in range(256):
-    p("DEC A")
-    p(atl.aste(SFR_A, atl.I((-1-x) % 256)))
+    p += 'DEC A'
+    p += atl.aste(SFR_A, atl.I((-1-x) % 256))

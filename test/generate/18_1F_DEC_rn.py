@@ -16,11 +16,11 @@ def iter_rn(RN, p):
     t = 100
     start =random.getrandbits(8)
 
-    p(atl.move(atl.D(RN.addr), atl.I(start)))
+    p += atl.move(atl.D(RN.addr), atl.I(start))
     for x in range(t):
-        p("DEC {}".format(RN))
-        p(atl.aste(atl.D(RN.addr), atl.I((start - x - 1)%256)))
-    return ""
+        p += "DEC {}".format(RN)
+        p += atl.aste(atl.D(RN.addr), atl.I((start - x - 1)%256))
+    
 
 
 

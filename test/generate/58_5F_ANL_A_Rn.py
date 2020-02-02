@@ -26,7 +26,7 @@ def init_rs(rs, psw_rs, p):
     p += atl.move(SFR_PSW, atl.I(psw_rs))
     ram[SFR_PSW.x] = psw_rs
 
-    return ""
+    
 
 
 def init_rn(RN, p):
@@ -37,7 +37,7 @@ def init_rn(RN, p):
     p += atl.move(atl.D(RN.addr), atl.I(value))
     ram[RN.addr] = value
 
-    return ""
+    
 
 
 def test_rs(rs, psw_rs, p):    
@@ -47,14 +47,14 @@ def test_rs(rs, psw_rs, p):
 
     ram[SFR_PSW.x] = psw_rs
     ram[SFR_A.x] = a
-    return ""
+    
 
 def test_rn(RN, p):
     p += f"{op_name} A, {RN}"
     ram[SFR_A.x] = op(ram[SFR_A.x], ram[RN.addr])
 
     p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
-    return ""
+    
 
 
 def test_bound(RN, p):
@@ -67,7 +67,7 @@ def test_bound(RN, p):
 
         ram[SFR_A.x] = op(ram[SFR_A.x], ram[RN.addr])
         ram[RN.addr] = value
-    return ""
+    
 
 
 for x in range(128):

@@ -17,7 +17,7 @@ def init_ram(addr, p):
     value = random.randrange(8)
     p += atl.move(atl.D(addr), atl.I(value))
     ram[addr] = value
-    return ""
+    
 
 def creat_jump_link(p, jump_count, order):
     jmpords = list(range(jump_count))

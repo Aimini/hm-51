@@ -44,21 +44,21 @@ def init_ram(addr, p):
     v = random.getrandbits(8)
     p += atl.move(atl.D(addr), atl.I(v))
     ram[addr] = v
-    return ""
+    
 
 
 def init_rs(rs, psw_rs, p):
     p += ";; load random indirect address to ri" 
     p += atl.move(SFR_PSW, atl.I(psw_rs))
     ram[SFR_PSW.x] = psw_rs
-    return ""
+    
 
 
 def init_ri(RI, p):
     indirect = random.getrandbits(7)
     p += atl.move(atl.D(RI.addr), atl.I(indirect))
     ram[RI.addr] = indirect
-    return ""
+    
 
 
 def test_rs(rs, psw_rs, p):    
@@ -68,7 +68,7 @@ def test_rs(rs, psw_rs, p):
 
     ram[SFR_PSW.x] = psw_rs
     ram[SFR_A.x] = a
-    return ""
+    
 
 def test_ri(RI, p):
 
@@ -76,7 +76,7 @@ def test_ri(RI, p):
     do(ram[ram[RI.addr]])
 
     p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
-    return ""
+    
 
 
 def test_bound(RI, p):
@@ -92,7 +92,7 @@ def test_bound(RI, p):
             do(ram[indirect])
             ram[indirect] = value
             ram[RI.addr] = indirect
-    return ""
+    
 
 
 for x in range(64):

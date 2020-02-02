@@ -18,7 +18,7 @@ def test_rs(rs, psw_rs, p):
     p += ";; set rs"
     p += atl.move(SFR_PSW, atl.I(psw_rs))
     ram[SFR_PSW.x] = psw_rs
-    return ""
+    
 
 
 def test_rn(RN, p):
@@ -36,7 +36,7 @@ def test_rn(RN, p):
     ram[RN.addr] = ram[addr]
 
     p += atl.aste(atl.D(RN.addr), atl.I(ram[RN.addr]))
-    return ""
+    
 
 
 for _ in range(128):

@@ -16,8 +16,8 @@ for x in range(3000):
     rv = (CY << 7) | (value >> 1)
     CY = value & 1
 
-    p(atl.move(SFR_A, atl.I(value)))
-    p("RRC A")
-    p(atl.aste(SFR_A, atl.I(rv)))
+    p += atl.move(SFR_A, atl.I(value))
+    p += "RRC A"
+    p += atl.aste(SFR_A, atl.I(rv))
     if x % 50 == 0:
-        p(atl.dump())
+        p += atl.dump()

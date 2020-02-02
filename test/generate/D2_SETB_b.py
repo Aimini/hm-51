@@ -18,14 +18,14 @@ def init(addr, p):
     v = random.getrandbits(8)
     p += atl.move(atl.D(addr),atl.I(v))
     ram[addr] = v
-    return ""
+    
 
 def test(addr, idx, p):
     ram.set_bit(addr,idx,1)
     p += f"SETB {atl.BIT(addr, idx)}"
 
     p += atl.aste(atl.D(addr), atl.I(ram[addr]))
-    return ""
+    
 
 for x in range(29):
     p.iter_is(init)

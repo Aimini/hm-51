@@ -14,7 +14,7 @@ p = u.create_test()
 def test_rs(rs, psw_rs, p):
     p += ";; set rs" 
     p += atl.move(SFR_PSW, atl.I(psw_rs))
-    return ""
+    
 
 def test_ri(RI, p):
     indirect = random.getrandbits(7)
@@ -24,7 +24,7 @@ def test_ri(RI, p):
     p += f'MOV {RI}, {atl.I(value)}'
 
     p += atl.aste(atl.D(indirect), atl.I(value))
-    return ""
+    
 
 
 

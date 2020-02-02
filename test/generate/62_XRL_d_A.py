@@ -19,13 +19,13 @@ for x in range(24):
     for addr in p.ris():
         value = random.getrandbits(8)
         ram[addr] = value
-        p(atl.move(atl.D(addr), atl.I(value)))
+        p += atl.move(atl.D(addr), atl.I(value))
 
     for addr in p.ris():
         value = random.getrandbits(8)
-        p(f"MOV {SFR_A}, {atl.I(value)}")
-        p(f"XRL {atl.D(addr)}, A")
+        p += f"MOV {SFR_A}, {atl.I(value)}"
+        p += f"XRL {atl.D(addr)}, A"
         ram[SFR_A.x] = value
         ram[addr] ^= ram[SFR_A.x]
-        p(atl.aste(atl.D(addr), atl.I(ram[addr])))
+        p += atl.aste(atl.D(addr), atl.I(ram[addr]))
 

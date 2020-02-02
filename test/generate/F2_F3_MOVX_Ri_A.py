@@ -18,7 +18,7 @@ used_xaddress = []
 count = 256
 def test_rs(rs, psw_rs, p):
     p += f'MOV  PSW, #{psw_rs}'
-    return ''
+    
 
 def test_ri(RI, p):
     a = random.getrandbits(8)
@@ -31,7 +31,7 @@ def test_ri(RI, p):
     MOVX {RI}, A
     '''
     XRAM[xaddr] = a
-    return ''
+    
 
 for x in range(count):
     p.iter_ri(test_rs, test_ri)

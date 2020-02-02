@@ -13,6 +13,7 @@ p = u.create_test()
 
 for x in range(5000):
     value = random.getrandbits(8)
-    p(atl.move(SFR_A, atl.I(value)))
-    p("RL A")
-    p(atl.aste(SFR_A, atl.I(((value >> 7) & 1) | ((value & 0x7F) << 1))))
+    r = ((value >> 7) & 1) | ((value & 0x7F) << 1)
+    p += atl.move(SFR_A, atl.I(value))
+    p += 'RL A'
+    p += atl.aste(SFR_A, atl.I(r))

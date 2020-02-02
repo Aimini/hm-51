@@ -20,7 +20,7 @@ def fill_one(addr, p):
     '''
     ram[SFR_A.x] = value
     ram[addr] = ram[SFR_A.x]
-    return ""
+    
 
 def one():
     p.iter_is(fill_one)

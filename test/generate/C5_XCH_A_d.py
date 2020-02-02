@@ -29,7 +29,7 @@ def fill_one(addr, p):
 
     p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
     p += atl.aste(addr, atl.I(ram[addr]))
-    return ""
+    
 
 def one():
     p.iter_is(fill_one)

@@ -13,7 +13,7 @@ p = u.create_test()
 ram = SIMRAM()
 def test_rs(rs,psw_rs,p):
     p += f'MOV PSW, {atl.I(psw_rs)}'
-    return ""
+    
 
 def test_ri(RI, p):
     indirect = random.getrandbits(7)
@@ -31,13 +31,13 @@ def test_ri(RI, p):
 
     p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
     p += atl.aste(atl.D(indirect), atl.I(ram[indirect]))
-    return ""
+    
     
 def init_ram(addr, p):
     value = random.getrandbits(8)
     p += atl.move(atl.D(addr), atl.I(value))
     ram[addr] = value
-    return ""
+    
 
 def one():
     p.iter_is(init_ram)

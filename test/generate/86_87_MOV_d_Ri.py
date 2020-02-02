@@ -17,14 +17,14 @@ ram = SIMRAM()
 def init_ram(addr, p):
     value = random.getrandbits(8)
     p += atl.move(atl.D(addr),atl.I(value))
-    ram[addr] = value
-    return ""
+    ram.set_direct(addr, value)
+    
 
 def test_rs(rs, psw_rs, p):    
     p += ";; set rs" 
     p += atl.move(SFR_PSW, atl.I(psw_rs))
-    ram[SFR_PSW.x] = psw_rs
-    return ""
+    ram.set_direct(SFR_PSW.x, psw_rs)
+    
 
 def test_ri(RI, p):
     indirect = random.getrandbits(7)
@@ -46,7 +46,7 @@ def test_ri(RI, p):
     ram[addr] = ram[ram[RI.addr]]
 
     p += atl.aste(atl.D(addr), atl.I(ram[indirect]))
-    return ""
+    
 
 
 

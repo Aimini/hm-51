@@ -15,14 +15,14 @@ ram = SIMRAM()
 
 
 def init_rs(rs, psw_rs, p):
-    return ""
+    
 
 
 def init_rn(RN, p):
     value = random.getrandbits(8)
     p += atl.move(atl.D(RN.addr), atl.I(value))
     ram[RN.addr] = value
-    return ""
+    
 
 def creat_jump_link(p, jump_count, order):
     jmpords = list(range(jump_count))

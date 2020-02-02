@@ -10,17 +10,17 @@ import random
 from __asmconst import *
 
 p = u.create_test()
-A = 0
-def one(d):
+
+def one(d, p):
     t = 20
     start =random.getrandbits(8)
 
-    p(atl.move(d, atl.I(start)))
+    p += atl.move(d, atl.I(start))
     for x in range(t):
-        p("DEC {}".format(d))
+        p += "DEC {}".format(d)
         if x == SFR_PSW:
-            p(atl.aste(d, atl.I((start - (x - 1))%256)))
-            p(atl.aste(d, atl.I((start - 2*(x + 1))%256)))
-    return ""
+            p += atl.aste(d, atl.I((start - (x - 1))%256))
+            p += atl.aste(d, atl.I((start - 2*(x + 1))%256))
+    
 
 p.iter_is(one)

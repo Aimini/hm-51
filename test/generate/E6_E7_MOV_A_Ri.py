@@ -21,7 +21,7 @@ def init_ram(addr,p):
     return atl.move(atl.D(addr),atl.I(v))
 
 def init_rs(rs,psw_rs,p):
-    return ""
+    
 
 
 def init_ri(RI, p):
@@ -31,20 +31,20 @@ def init_ri(RI, p):
 
     p += atl.move(atl.D(RI.addr),atl.I(indirect))
     ram[RI.addr] = indirect
-    return ""
+    
 
 def test_rs(rs,psw_rs,p):
     p += atl.move(SFR_PSW, atl.I(psw_rs))
     ram[SFR_PSW.x] = psw_rs
 
-    return ""
+    
 
 
 def test_ri(RI, p):
     p += f"MOV A, {RI}"
     ram[SFR_A.x] = ram[ram[RI.addr]]
     p += atl.aste(SFR_A, atl.I(ram[ram[RI.addr]]))
-    return ""
+    
 
 
 for x in range(100):

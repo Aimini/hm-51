@@ -44,17 +44,14 @@ class asm_test:
             content.append(atl.exit())
         content.append('END')
         return '\n'.join(content)
-    def __call__(self, * vargs, **kargs):
-        """
-        using as print, but write string to test file.
-        """
-        print(*vargs, file=self.sio, **kargs)
+
 
     def __iadd__(self, s):
         """
         using as print, but write string to test file.
         """
-        self(s)
+        self.sio.write(s)
+        self.sio.write('\n')
         return self
 
     @staticmethod
@@ -90,21 +87,16 @@ class asm_test:
         rsfrbit = [ _ for _ in asm_test.rsfr() if _ % 8 == 0]
         return itertools.chain(range(0x20,0x30), rsfrbit)
 
-    def pass_by_len(self, f, *args):
-        if len(inspect.signature(f).parameters) == len(args):
-            self(f(*args))
-        else:
-            self(f(*args, self))
         
     def iter_direct(self, f):
         """
         iterate direct address  0 - 255
             f: function
-                call f(x), x is direct address
+                call f(x, self), x is direct address
         """
       
         for x in self.rdirect():
-            self.pass_by_len(f, x)
+            f(x, self)
 
     def iter_iram(self, f):
         """
@@ -113,14 +105,14 @@ class asm_test:
         """
 
         for x in self.riram():
-            self.pass_by_len(f, x)
+            f(x, self)
 
     def iter_is(self, f):
         """
         iterate iram and SFR in RF.
         """
         for x in self.ris():
-            self.pass_by_len(f, x)
+            f(x, self)
 
     def iter_is_no_psw(self, f):
         """
@@ -129,7 +121,7 @@ class asm_test:
         self.iter_iram(f)
         for x in self.rsfr():
             if x != 0xD0:
-                self.pass_by_len(f, x)
+                f(x, self)
 
     def iterx(self, iter_obj, f):
         """
@@ -140,7 +132,7 @@ class asm_test:
         l = len(iter_obj)
         a = list(iter_obj)
         for i, v in enumerate(a):
-            self.pass_by_len(f, v, a[l - i - 1])
+            f(v, a[l - i - 1], self)
 
     def iterx_iram(self, f):
         """
@@ -169,9 +161,9 @@ class asm_test:
         """
         for rs in range(4):
             psw_rs = rs << 3
-            self.pass_by_len(rsf, rs, psw_rs)
+            rsf(rs, psw_rs, self)
             for ri in range(2):
-                self.pass_by_len(rif, atl.RI(rs,ri))
+                rif(atl.RI(rs,ri),self)
 
     def iter_rn(self, rsf, rnf):
         """
@@ -182,16 +174,15 @@ class asm_test:
         """
         for rs in range(4):
             psw_rs = rs << 3
-            self.pass_by_len(rsf, rs, psw_rs)
+            rsf(rs, psw_rs, self)
             
             for rn in range(8):
-                self.pass_by_len(rnf, atl.RN(rs,rn))
+                rnf(atl.RN(rs,rn),self)
 
     def iter_bit(self, f):
-         
         for direct in self.rbit():
             for idx in range(8):
-                self.pass_by_len(f, direct, idx)
+                f(direct,idx, self)
 
 class gaped_addr():
     def __init__(self, start, end, min_gap, count):

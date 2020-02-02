@@ -1,8 +1,7 @@
 #########################################################
 # 2020-01-08 19:45:35
 # AI
-# ins: MOV direct, #immed.
-# how: write address of the iram and SFR into itself.
+# ins: INC direct
 #########################################################
 
 import __util as u
@@ -11,13 +10,12 @@ from __asmconst import *
 
 p = u.create_test()
 
-def one(d):
+def one(d, p):
     d = atl.D(d)
     start =random.getrandbits(8)
-    p(atl.move(d, atl.I(start)))
+    p += atl.move(d, atl.I(start))
     for x in range(20):
-        p("INC {}".format(d))
-        p(atl.aste(d, atl.I((x + start + 1)%256)))
-    return ""
+        p += f'INC {d}'
+        p += atl.aste(d, atl.I((x + start + 1)%256))
 
 p.iter_is_no_psw(one)

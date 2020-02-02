@@ -17,12 +17,12 @@ ram = SIMRAM()
 for addr in p.ris():
     value = random.getrandbits(8)
     ram[addr] = value
-    p(atl.move(atl.D(addr), atl.I(value)))
+    p += atl.move(atl.D(addr), atl.I(value))
 
 
 for x in range(32):
     for addr in p.ris():
         value = random.getrandbits(8)
-        p(f"ANL {atl.D(addr)}, {atl.I(value)}")
+        p += f"ANL {atl.D(addr)}, {atl.I(value)}"
         ram[addr] &= value
-        p(atl.aste(atl.D(addr), atl.I(ram[addr])))
+        p += atl.aste(atl.D(addr), atl.I(ram[addr]))

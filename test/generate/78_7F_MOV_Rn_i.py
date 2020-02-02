@@ -14,13 +14,13 @@ p = u.create_test()
 def test_rs(rs, psw_rs, p):
     p += ";; set rs" 
     p += atl.move(SFR_PSW, atl.I(psw_rs))
-    return ""
+    
 
 def test_rn(RN, p):
     value = random.getrandbits(8)
     p += f'MOV {RN}, {atl.I(value)}'
     p += atl.aste(atl.D(RN.addr), atl.I(value))
-    return ""
+    
 
 
 
