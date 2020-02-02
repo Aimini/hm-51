@@ -18,14 +18,14 @@ def fill_one(addr, p):
     MOV ACC, {atl.I(value)}
     MOV {atl.D(addr)}, A
     '''
-    ram[SFR_A.x] = value
-    ram[addr] = ram[SFR_A.x]
+    ram.set_direct(SFR_A.x, value)
+    ram.set_direct(addr, ram.get_direct(SFR_A.x))
     
 
 def one():
     p.iter_is(fill_one)
     for addr in p.ris():
-        atl.aste(atl.D(addr), atl.I(ram[addr]))
+        atl.aste(atl.D(addr), atl.I(ram.get_direct(addr)))
 
 for _ in range(64):
     one()

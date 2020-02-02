@@ -17,7 +17,7 @@ ram = SIMRAM()
 def test_rs(rs, psw_rs, p):    
     p += ";; set rs" 
     p += atl.move(SFR_PSW, atl.I(psw_rs))
-    ram[SFR_PSW.x] = psw_rs
+    ram.set_direct(SFR_PSW.x, psw_rs)
     
 
 def test_ri(RI, p):
@@ -31,12 +31,11 @@ def test_ri(RI, p):
     p += atl.move(atl.D(addr), atl.I(value))
     p += atl.move(atl.D(RI.addr), atl.I(indirect))
     p += f'MOV {RI}, {atl.D(addr)}'
-    
-    ram[addr] = value
-    ram[RI.addr] = indirect
-    ram[ram[RI.addr]] = ram[addr]
 
-    p += atl.aste(atl.D(indirect), atl.I(ram[indirect]))
+    ram.set_direct(addr, value)
+    ram.set_iram(RI.addr, indirect)
+    ram.set_iram(indirect, ram.get_direct(addr))
+    p += atl.aste(atl.D(indirect), atl.I(ram.get_iram(indirect)))
     
 
 

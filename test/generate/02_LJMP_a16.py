@@ -28,5 +28,5 @@ def creat_jump_link(p, jump_count, order):
 
     p += f'JMP_SEG_END_{order}:'
 
-creat_jump_link(p, 5459, 0)
+creat_jump_link(p, 10240, 0)
 

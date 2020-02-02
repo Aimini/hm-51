@@ -17,7 +17,7 @@ for x in range(3000):
     CY = (value >> 7) & 1
 
     p += atl.move(SFR_A, atl.I(value))
-    p += "RLC A"
+    p += 'RLC A'
     p += atl.aste(SFR_A, atl.I(rv))
     if x % 50 == 0:
         p += atl.dump()

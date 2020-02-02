@@ -37,8 +37,8 @@ def creat_jump_link(p, jump_count, order):
         MOV PSW, {atl.I(psw_rs)}
         MOV {atl.D(RN.addr)}, {atl.I(value)}
         '''
-        ram[SFR_PSW.x] = psw_rs
-        ram[RN.addr] = value
+        ram.set_direct(SFR_PSW.x, psw_rs)
+        ram.set_iram(RN.addr, value)
         
         if i == len(jmpords) - 1:
             target = f"JMP_SEG_END_{order}"

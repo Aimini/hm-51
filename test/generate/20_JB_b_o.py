@@ -67,7 +67,7 @@ def creat_jump_link(p, jump_count, order):
         else:
             target = f"JMP_SEG_{order}_{next_seg_no}"
 
-        if ram.bit(addr, bit_idx) > 0:
+        if ram.get_bit(addr, bit_idx) > 0:
             seg_str_list.append(f"JB {B}, {target}")
             seg_str_list.append(atl.astl(I_00, I_00))
         else:
@@ -86,8 +86,8 @@ def creat_jump_link(p, jump_count, order):
 
 for x in range(400):
     for addr in p.rbit():
-        ram[addr] = random.getrandbits(8)
-        p += atl.move(atl.D(addr), atl.I(ram[addr]))
+        ram.set_direct(addr, random.getrandbits(8))
+        p += atl.move(atl.D(addr), atl.I(ram.get_direct(addr)))
 
     creat_jump_link(p, 7, x)
     if x % 16 == 0:

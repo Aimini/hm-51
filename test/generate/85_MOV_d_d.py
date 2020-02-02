@@ -10,14 +10,16 @@ from __asmconst import *
 
 p = u.create_test()
 
-
-p.iter_is(lambda  addr: atl.move(atl.D(addr), atl.I(addr)))
+def init_direct(addr,p):
+    p += atl.move(atl.D(addr), atl.I(addr))
+p.iter_is(init_direct)
 
 # move to self
 #### IRAM 0,1,2,3...0x7E, 0x7F
 #### SFR  0x81, 0x82, 0x83, 0xA8, 0xB8, 0xD1(PF in PSW, not 0xD0), 0xE0, 0xF0,
 p += ";;;;;;;;;;;;;;;;;;;;;; move to self"
-p.iter_is(lambda  addr: atl.move(atl.D(addr), atl.D(addr)))
+def move_self(addr, p):
+    p += atl.move(atl.D(addr), atl.D(addr))
 
 
 
@@ -25,7 +27,9 @@ p.iter_is(lambda  addr: atl.move(atl.D(addr), atl.D(addr)))
 #### IRAM 0x7F, 0x7E, 0x7D ... 0x7D,0x7E,0x7F
 #### SFR  0x81, 0x82, 0x83, 0xA8, 0xB8, 0xD1, 0xE0, 0xF0,
 p += ";;;;;;;;;;;;;;;;;;;;;; mirror iram"
-p.iterx_iram(lambda a,b: atl.move(atl.D(a), atl.D(b)))
+def mirror_ram(addr,raddr,p):
+    p += atl.move(atl.D(addr), atl.D(raddr))
+p.iterx_iram(mirror_ram)
 
 # some complicate
 #### IRAM 0x81, 0x82, 0x83, 0xA8, 0xB8, 0xD1, 0xE0, 0xF0,    0x77 ... 3,2,1,0
@@ -41,4 +45,4 @@ for i, v in enumerate(p.rsfr()):
 #### IRAM 0x81, 0x82, 0x83, 0xA8, 0xB8, 0xD1(PSW ops), 0xE0, 0xF0, 0x77 ... 3,2,1,0
 #### SFR  0x47, 0x46, 0x45, 0x44, 0x44, 0x45, 0x46, 0x47, 
 p += ";;;;;;;;;;;;;;;;;;;;;; swap sfr"
-p.iterx_sfr(lambda a,b: atl.move(atl.D(a), atl.D(b)))
+p.iterx_sfr(mirror_ram)

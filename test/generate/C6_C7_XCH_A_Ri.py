@@ -22,21 +22,22 @@ def test_ri(RI, p):
     MOV {atl.D(RI.addr)}, {atl.I(indirect)}
     XCH A, {RI}
     '''
-    ram[RI.addr] = indirect
+    ram.set_iram(RI.addr, indirect)
     
     # swap
-    temp = ram[SFR_A.x]
-    ram[SFR_A.x] = ram[ram[RI.addr]]
-    ram[ram[RI.addr]] = temp
+    temp = ram.get_direct(SFR_A.x)
 
-    p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
-    p += atl.aste(atl.D(indirect), atl.I(ram[indirect]))
+    ram.set_direct(SFR_A.x, ram.get_iram(indirect))
+    ram.set_iram(indirect, temp)
+
+    p += atl.aste(SFR_A, atl.I(ram.get_direct(SFR_A.x)))
+    p += atl.aste(atl.D(indirect), atl.I(ram.get_iram(indirect)))
     
     
 def init_ram(addr, p):
     value = random.getrandbits(8)
     p += atl.move(atl.D(addr), atl.I(value))
-    ram[addr] = value
+    ram.set_direct(addr, value)
     
 
 def one():

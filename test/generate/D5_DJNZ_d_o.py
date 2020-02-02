@@ -18,7 +18,7 @@ def init_ram(p):
     for addr in p.ris():
         value = random.getrandbits(8)
         p += atl.move(atl.D(addr),atl.I(value))
-        ram[addr] = value
+        ram.set_direct(addr, value)
 
 def creat_jump_link(p, jump_count, order):
     init_ram(p)
@@ -34,8 +34,8 @@ def creat_jump_link(p, jump_count, order):
         p += f"JMP_SEG_{order}_{idx}:"
         
         addr = random.choice(ris)
-        value = ram[addr] - 1
-        ram[addr] = value
+        value = (ram.get_direct(addr) - 1) & 0xFF
+        ram.set_direct(addr, value)
 
         if next_idx == start:
             target = f"JMP_SEG_END_{order}"

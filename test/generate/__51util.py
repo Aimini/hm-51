@@ -13,6 +13,7 @@ class SIMRAM():
             return self.SFRAM[addr]
 
     def set_direct(self, addr:int, value:int):
+        value &= 0xFF
         if addr < 0x80:
             self.IRAM[addr] = value
         else:
@@ -27,6 +28,7 @@ class SIMRAM():
         return self.IRAM[addr]
     
     def set_iram(self, addr:int, value:int):
+        value &= 0xFF
         self.IRAM[addr] = value
 
     def get_bit(self, addr:int , idx:int):

@@ -40,9 +40,8 @@ def creat_jump_link(p, jump_count, order):
         MOV {atl.D(indirect)}, {atl.I(value)}
         MOV {atl.D(RI.addr)}, {atl.I(indirect)}
         '''
-        ram[SFR_PSW.x] = psw_rs
-        ram[indirect] = value
-        ram[RI.addr] = indirect
+        ram.set_direct(SFR_PSW.x, psw_rs)
+        ram.bulid_indirect(RI.addr, indirect, value)
         
         if i == len(jmpords) - 1:
             target = f"JMP_SEG_END_{order}"
@@ -51,7 +50,7 @@ def creat_jump_link(p, jump_count, order):
 
         
         
-        if ram[indirect] != immed:
+        if ram.get_iram(indirect) != immed:
             s += f'''
             CJNE {RI},{atl.I(immed)}, {target}
             {atl.crash()}

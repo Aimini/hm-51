@@ -1,7 +1,7 @@
 #########################################################
 # 2020-01-22 00:09:24
 # AI
-# ins: DEC RN
+# ins: DEC Rn
 #########################################################
 
 import __util as u
@@ -10,7 +10,7 @@ from __asmconst import *
 
 p = u.create_test()
 def init_rs(rs, psw_rs, p):
-    return atl.move(SFR_PSW, atl.I(psw_rs))
+    p += atl.move(SFR_PSW, atl.I(psw_rs))
 
 def iter_rn(RN, p):
     t = 100

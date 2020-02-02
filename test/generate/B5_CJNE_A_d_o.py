@@ -16,7 +16,7 @@ ram = SIMRAM()
 def init_ram(addr, p):
     value = random.randrange(8)
     p += atl.move(atl.D(addr), atl.I(value))
-    ram[addr] = value
+    ram.set_direct(addr, value)
     
 
 def creat_jump_link(p, jump_count, order):
@@ -38,7 +38,7 @@ def creat_jump_link(p, jump_count, order):
         JMP_SEG_{order}_{seg_no}:
         MOV ACC, {atl.I(a)}
         '''
-        ram[SFR_A.x] = a
+        ram.set_direct(SFR_A.x, a)
         
         if i == len(jmpords) - 1:
             target = f"JMP_SEG_END_{order}"
@@ -47,7 +47,7 @@ def creat_jump_link(p, jump_count, order):
 
         
         
-        if a != ram[addr]:
+        if a != ram.get_direct(addr):
             s += f'''
             CJNE A, {atl.D(addr)}, {target}
             {atl.crash()}

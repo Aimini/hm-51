@@ -40,12 +40,8 @@ def test_ri(RI, p):
     p += atl.move(atl.D(RI.addr), atl.I(indirect))
     p += f'MOV {atl.D(addr)}, {RI}'
     
-    
-    ram[indirect] = value
-    ram[RI.addr] = indirect
-    ram[addr] = ram[ram[RI.addr]]
-
-    p += atl.aste(atl.D(addr), atl.I(ram[indirect]))
+    ram.bulid_indirect(RI.addr, indirect, value)
+    p += atl.aste(atl.D(addr), atl.I(ram.get_iram(indirect)))
     
 
 

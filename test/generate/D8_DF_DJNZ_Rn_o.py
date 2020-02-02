@@ -15,13 +15,13 @@ ram = SIMRAM()
 
 
 def init_rs(rs, psw_rs, p):
-    
+    pass
 
 
 def init_rn(RN, p):
     value = random.getrandbits(8)
     p += atl.move(atl.D(RN.addr), atl.I(value))
-    ram[RN.addr] = value
+    ram.set_iram(RN.addr, value)
     
 
 def creat_jump_link(p, jump_count, order):
@@ -38,8 +38,8 @@ def creat_jump_link(p, jump_count, order):
         rn = random.randrange(8)
         RN = atl.RN(rs, rn)
 
-        value = ram[RN.addr] - 1
-        ram[RN.addr] = value
+        value = ram.get_iram(RN.addr) - 1
+        ram.set_iram(RN.addr, value)
         
         seg_no = jmpords[i]
         s = f'''

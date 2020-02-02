@@ -5,4 +5,4 @@
 #########################################################
 from INS_XXX_A_d import INS_XXX_A_D
 
-INS_XXX_A_D("ORL").gen(18)
+INS_XXX_A_D("ORL").gen(0xFF, 18)

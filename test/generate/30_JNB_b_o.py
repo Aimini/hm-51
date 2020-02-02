@@ -34,8 +34,8 @@ JMP_SEG_START:
 p += jump_limit
 
 for addr in p.rbit():
-    ram[addr] = random.getrandbits(8)
-    p += atl.move(atl.D(addr), atl.I(ram[addr]))
+    ram.set_direct(addr,random.getrandbits(8))
+    p += atl.move(atl.D(addr), atl.I(ram.get_direct(addr)))
 
 def random_bit(x):
     yield random.choice(list(p.rbit()))
@@ -57,7 +57,7 @@ def creat_jump_link(p, jump_count, order):
         addr = next(valueiter)
         
         p += atl.move(atl.D(addr),atl.I(value))
-        ram[addr] = value
+        ram.set_direct(addr, value)
 
         bit_addr =atl.BIT(addr, bit_idx)
 
@@ -66,7 +66,7 @@ def creat_jump_link(p, jump_count, order):
         else:
             target = f"JMP_SEG_{order}_{next_idx}"
 
-        if ram.bit(addr, bit_idx) == 0:
+        if ram.get_bit(addr, bit_idx) == 0:
             p += f"JNB {bit_addr}, {target}"
             p += atl.astl(I_00, I_00)
         else:

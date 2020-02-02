@@ -17,16 +17,16 @@ ram = SIMRAM()
 def init(addr, p):
     v = random.getrandbits(8)
     p += atl.move(atl.D(addr),atl.I(v))
-    ram[addr] = v
+    ram.set_direct(addr, v)
     
 
 def test(addr, idx, p):
-    B = ram.bit(addr, idx)
-    C = ram.bit(SFR_PSW.x, 7)
+    B = ram.get_bit(addr, idx)
+    C = ram.get_bit(SFR_PSW.x, 7)
     ram.set_bit(SFR_PSW.x, 7, C & ~B)
     p += f"ANL C, /{atl.BIT(addr, idx)}"
 
-    p += atl.aste(SFR_PSW, atl.I(ram[SFR_PSW.x]))
+    p += atl.aste(SFR_PSW, atl.I(ram.get_direct(SFR_PSW.x)))
     
 
 for x in range(29):

@@ -14,13 +14,11 @@ p = u.create_test()
 ram = SIMRAM()
 
 
-
-
 for x in range(24):
     a = random.getrandbits(8)
-    psw =  random.getrandbits(8)
-    ram[SFR_A.x] = a
-    ram[SFR_PSW.x] = psw
+    psw = random.getrandbits(8)
+    ram.set_direct(SFR_PSW.x, a)
+    ram.set_direct(SFR_PSW.x, psw)
     CY = psw & 0x80
     AC = psw & 0x40
     p += f'''
@@ -29,13 +27,13 @@ for x in range(24):
     DA  A
     '''
 
-    if AC or ((a &0xF) > 0x9):
+    if AC or ((a & 0xF) > 0x9):
         a += 0x6
-    if CY  or ((a &0x1F0) > 0x90):
+    if CY or ((a & 0x1F0) > 0x90):
         a += 0x60
 
     if a > 0xFF:
-        ram[SFR_PSW.x] |= 0x80
-    ram[SFR_A.x] = a & 0xFF
-    p += atl.aste(SFR_A, atl.I(ram[SFR_A.x]))
-    p += atl.aste(SFR_PSW, atl.I(ram[SFR_PSW.x]))
+        ram.set_direct(SFR_PSW.x, ram.get_direct(SFR_PSW.x) | 0x80)
+    ram.set_direct(SFR_A.x, a & 0xFF)
+    p += atl.aste(SFR_A, atl.I(ram.get_direct(SFR_A.x)))
+    p += atl.aste(SFR_PSW, atl.I(ram.get_direct(SFR_PSW.x)))
