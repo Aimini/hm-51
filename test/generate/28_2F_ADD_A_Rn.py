@@ -4,7 +4,16 @@
 # ins: ADDC A, Rn
 #########################################################
 
-from INS_ADD_SUBB_A_Rn import ADD_A_Rn
-    
-tt = ADD_A_Rn("ADD", False)
-tt.gen(128, 1)
+from INS_XXX_A_Rn import XXX_A_RN
+import INS_OPERATION
+
+
+class ADD_A_Rn(XXX_A_RN):
+    def __init__(self):
+        super().__init__("ADD")
+
+    def op_func(self, B):
+        INS_OPERATION.op_a_addc_xx(self.ram, B, False)
+
+
+ADD_A_Rn().gen(0, 128, 1)

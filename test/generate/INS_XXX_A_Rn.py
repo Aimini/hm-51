@@ -1,5 +1,19 @@
 #########################################################
 # 
+# for(int i = 0;i  < iter_test_time; ++i )
+# {
+#   fill ram to all rn;
+#   for(int rs = 0;rs < 4; ++rs)
+#   {
+#       set rs in PSW;
+#       set A to A_inital_value;
+#       for(int rn = 0; rn < 8; ++ rn)
+#       {
+#           do opeartion with A and RN;
+#           check result in A;
+#       }
+#   }
+# }
 #########################################################
 
 import __util as u
@@ -18,7 +32,7 @@ class XXX_A_RN:
     def op_func(self, B):
         pass
 
-    def gen(self, iter_test_time, random_test_time):
+    def gen(self,A_initial_value, iter_test_time, random_test_time):
         ram = self.ram
         p = self.p
         op_func = self.op_func
@@ -35,7 +49,7 @@ class XXX_A_RN:
             ram.set_iram(RN.addr, value)
 
         def test_rs(rs, psw_rs, p):
-            a = 0x00
+            a = A_initial_value
             p += atl.move(SFR_PSW, atl.I(psw_rs))
             p += atl.move(SFR_A, atl.I(a))
 

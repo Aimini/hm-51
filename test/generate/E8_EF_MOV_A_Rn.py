@@ -3,32 +3,14 @@
 # AI
 # ins: MOV A, Rn
 #########################################################
-
-import __util as u
-import random
 from __asmconst import *
-from __numutil import numutil as ntl
+from INS_XXX_A_Rn import XXX_A_RN
+class MOVD_A_Rn(XXX_A_RN):
+    def __init__(self):
+        super().__init__("MOV")
 
-p = u.create_test()
-
-
-
-def test_rs(rs, psw_rs, p):    
-    p += ";; set rs" 
-    p += atl.move(SFR_PSW, atl.I(psw_rs))
-    
-
-def test_rn(RN, p):
-    value = random.getrandbits(8)
-    p += atl.move(atl.D(RN.addr), atl.I(value))
-    p += f'MOV A, {RN}'
+    def op_func(self, B):
+        self.ram.set_direct(SFR_A.x ,B)
 
 
-    p += atl.aste(SFR_A, atl.I(value))
-    
-
-
-
-
-for x in range(128):
-    p.iter_rn(test_rs, test_rn)
+MOVD_A_Rn().gen(0, 128, 1)
