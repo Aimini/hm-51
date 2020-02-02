@@ -1,8 +1,11 @@
 from __numutil import numutil
+import random
+
 
 class HV():
     """"hex value class"""
-    def __init__(self,x, l = 2):
+
+    def __init__(self, x, l=2):
         self.x = x
         self.l = l
 
@@ -14,36 +17,42 @@ class I(HV):
     """
     8bit immed
     """
-    def __init__(self,x,l = 2):
-        super().__init__(x,l)
+
+    def __init__(self, x, l=2):
+        super().__init__(x, l)
 
     def __str__(self):
          return "#" + super().__str__()
+
 
 class RI():
     """
     1bit immed
     """
-    def __init__(self,rs, ri):
+
+    def __init__(self, rs, ri):
         self.addr = (rs << 3) + ri
         self.ri = ri
 
     def __str__(self):
          return "@R" + str(self.ri)
 
+
 class RN():
     """
     1bit immed
     """
-    def __init__(self,rs, rn):
+
+    def __init__(self, rs, rn):
         self.addr = (rs << 3) + rn
         self.rn = rn
 
     def __str__(self):
          return "R" + str(self.rn)
 
+
 class BIT():
-    def __init__(self, direct, idx = None):
+    def __init__(self, direct, idx=None):
         if idx is not None:
             self.direct = direct
             self.idx = idx
@@ -53,19 +62,23 @@ class BIT():
                 self.direct = (direct >> 3) + 0x20
             else:
                 self.direct = direct & 0xF8
-            
 
     def __str__(self):
-        return str(HV(self.direct)) + '.' + str(self.idx) 
+        return str(HV(self.direct)) + '.' + str(self.idx)
+
+
 class D(HV):
     """
     direct address
     """
-    def __init__(self,x):
-        super().__init__(x,2)
 
-def move(dest,src):
+    def __init__(self, x):
+        super().__init__(x, 2)
+
+
+def move(dest, src):
     return f"MOV {dest},{src}"
+
 
 def ins(*args):
     '''
@@ -80,9 +93,11 @@ def ins(*args):
     '''
     return args[0] + ' ' + ', '.join([str(_) for _ in args[1:]])
 
-def dump(count = ""):
-    return f";;;;;;;;;;;; dump {count}\n" + move(D(0xFB),I(1))
-    
+
+def dump(count=""):
+    return f";;;;;;;;;;;; dump {count}\n" + move(D(0xFB), I(1))
+
+
 def exit():
     """
     return string of instructions that exit from Digitalc.exe.
@@ -92,7 +107,7 @@ def exit():
     return move(D(0xFC), I(1))
 
 
-def ast(a,b,func):
+def ast(a, b, func):
     """
     return string of instructions that excute assert function.
         a: str,int,D,I
@@ -109,36 +124,43 @@ def ast(a,b,func):
 MOV 0xFD, {}
 MOV 0xFE, {}
 MOV 0xFF, {}
-""".format(a,b,func)
+""".format(a, b, func)
+
 
 def brk():
     """
     return string of instructions that make a break
     """
     return "MOV 0xFD, 0"
-def astg(a,b):
+
+
+def astg(a, b):
     """
     return string of instructions that assert a > b.
     """
-    return f";;;;;;;;;;;; assert {a} > {b} \n" + ast(a,b,I(1))
+    return f";;;;;;;;;;;; assert {a} > {b} \n" + ast(a, b, I(1))
 
-def aste(a,b):
+
+def aste(a, b):
     """
     return string of instructions that assert a = b.
     """
-    return f";;;;;;;;;;;; assert {a} == {b} \n" + ast(a,b,I(2))
+    return f";;;;;;;;;;;; assert {a} == {b} \n" + ast(a, b, I(2))
 
-def astl(a,b):
+
+def astl(a, b):
     """
     return string of instructions that assert a < b.
     """
-    return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a,b,I(3))
+    return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a, b, I(3))
 
-def crash(info = ""):
+
+def crash(info=""):
     """
     return string of instructions that assert a < b.
     """
-    return f";;;;;;;;;;;; crash: {info} \n" + move(0xFF,I(4))
+    return f";;;;;;;;;;;; crash: {info} \n" + move(0xFF, I(4))
+
 
 def clear_reg():
-    return '\n'.join([move(_, I(0)) for _ in ['SP','DPL','DPH','PSW','ACC','B']])
+    return '\n'.join([move(_, I(0)) for _ in ['SP', 'DPL', 'DPH', 'PSW', 'ACC', 'B']])
