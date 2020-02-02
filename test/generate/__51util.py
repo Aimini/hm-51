@@ -3,28 +3,47 @@ from __asmconst import SFR_A, SFR_PSW
 
 class SIMRAM():
     def __init__(self):
-        self.RAM = [0 for _ in range(0x100)]
+        self.IRAM = [0 for _ in range(0x100)]
+        self.SFRAM = [0 for _ in range(0x100)]
 
-    def __getitem__(self, k: int):
-        return self.RAM[k]
-
-    def __setitem__(self, k: int, v):
-        v &= 0xFF
-        if k == SFR_PSW.x:
-            pf = self.RAM[SFR_PSW.x] & 1
-            self.RAM[SFR_PSW.x] = (v & 0xFE) | pf
+    def get_direct(self, addr:int):
+        if addr < 0x80:
+            return self.IRAM[addr]
         else:
-            self.RAM[k] = v
-            
-        if k == SFR_A.x:
-            pf = bin(self.RAM[SFR_A.x]).count('1') & 1
-            self.RAM[SFR_PSW.x] &= 0xFE
-            self.RAM[SFR_PSW.x] |= pf
+            return self.SFRAM[addr]
 
-    def bit(self, addr, idx):
-        return (self[addr] >> idx) & 1
+    def set_direct(self, addr:int, value:int):
+        if addr < 0x80:
+            self.IRAM[addr] = value
+        else:
+            self.SFRAM[addr] = value
+                
+            if addr in (SFR_A.x, SFR_PSW.x):
+                pf = bin(self.SFRAM[SFR_A.x]).count('1') & 1
+                self.SFRAM[SFR_PSW.x] &= 0xFE
+                self.SFRAM[SFR_PSW.x] |= pf
 
-    def set_bit(self, addr, idx, value):
-        mask = ~(1 << idx)
-        self[addr] = (self[addr] & mask) | ((value&1) << idx)
+    def get_iram(self, addr:int):
+        return self.IRAM[addr]
+    
+    def set_iram(self, addr:int, value:int):
+        self.IRAM[addr] = value
+
+    def get_bit(self, addr:int , idx:int):
+        value = self.get_direct(addr)
+        return (value >> idx) & 1
         
+    def set_bit(self, addr:int, idx:int, value:int):
+        mask = ~(1 << idx)
+        raw = self.get_direct(addr)
+        target = (raw & mask) | ((value&1) << idx)
+        self.set_direct(addr, target)
+
+
+    def bulid_indirect(self, ri_addr:int , indirect_addr:int, value:int):
+        self.set_iram(indirect_addr, value)    
+        self.set_iram(ri_addr, indirect_addr)
+    
+    def get_indirect(self, ri_addr:int):
+        return self.get_iram(self.get_iram(ri_addr))
+    
