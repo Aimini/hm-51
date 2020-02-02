@@ -4,49 +4,16 @@
 # ins: MOV A, @Ri
 #########################################################
 
-import __util as u
-import random
 from __asmconst import *
-from __numutil import numutil as ntl
-from __51util import SIMRAM
+from INS_XXX_A_Ri import XXX_A_Ri
+import INS_OPERATION
 
-p = u.create_test()
-ram = SIMRAM()
+class MOV_A_Ri(XXX_A_Ri):
+    def __init__(self):
+        super().__init__("MOV")
 
-def init_ram(addr,p):
-    
-    p += ";; init ram with random data."
-    v = random.getrandbits(8)
-    ram[addr] = v
-    return atl.move(atl.D(addr),atl.I(v))
+    def op_func(self, B):
+        self.ram.set_direct(SFR_A.x, B)
+        
 
-def init_rs(rs,psw_rs,p):
-    
-
-
-def init_ri(RI, p):
-    p += ";; load random indirect address to ri"
-    
-    indirect = random.getrandbits(7)
-
-    p += atl.move(atl.D(RI.addr),atl.I(indirect))
-    ram[RI.addr] = indirect
-    
-
-def test_rs(rs,psw_rs,p):
-    p += atl.move(SFR_PSW, atl.I(psw_rs))
-    ram[SFR_PSW.x] = psw_rs
-
-    
-
-
-def test_ri(RI, p):
-    p += f"MOV A, {RI}"
-    ram[SFR_A.x] = ram[ram[RI.addr]]
-    p += atl.aste(SFR_A, atl.I(ram[ram[RI.addr]]))
-    
-
-
-for x in range(100):
-    p.iter_is(init_ram)
-    p.iter_ri(init_rs, init_ri)
+MOV_A_Ri().gen(0, 61, 1)
