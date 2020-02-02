@@ -33,7 +33,9 @@ class RI():
     def __init__(self, rs, ri):
         self.addr = (rs << 3) + ri
         self.ri = ri
-
+        self.rs = rs
+        self.psw_rs = rs << 3
+        
     def __str__(self):
          return "@R" + str(self.ri)
 
@@ -46,7 +48,8 @@ class RN():
     def __init__(self, rs, rn):
         self.addr = (rs << 3) + rn
         self.rn = rn
-
+        self.rs = rs
+        self.psw_rs = rs << 3
     def __str__(self):
          return "R" + str(self.rn)
 
