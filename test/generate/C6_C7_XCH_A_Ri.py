@@ -16,33 +16,40 @@ def test_rs(rs,psw_rs,p):
     
 
 def test_ri(RI, p):
-    indirect = random.getrandbits(7)
+    indirect = random.getrandbits(8)
 
     p += f'''
     MOV {atl.D(RI.addr)}, {atl.I(indirect)}
     XCH A, {RI}
     '''
-    ram.set_iram(RI.addr, indirect)
+    ram.set_direct(RI.addr, indirect)
     
     # swap
     temp = ram.get_direct(SFR_A.x)
-
     ram.set_direct(SFR_A.x, ram.get_iram(indirect))
     ram.set_iram(indirect, temp)
 
+    RRI = atl.RI(RI.rs, (RI.ri + 1) % 2)
+    p += f'MOV {atl.D(RRI.addr)}, {atl.I(indirect)}'
+    ram.set_direct(RRI.addr, indirect)
+
     p += atl.aste(SFR_A, atl.I(ram.get_direct(SFR_A.x)))
-    p += atl.aste(atl.D(indirect), atl.I(ram.get_iram(indirect)))
-    
-    
-def init_ram(addr, p):
-    value = random.getrandbits(8)
-    p += atl.move(atl.D(addr), atl.I(value))
-    ram.set_direct(addr, value)
+    p += atl.aste(RRI, atl.I(ram.get_iram(indirect)))
     
 
-def one():
-    p.iter_is(init_ram)
+
+def one(p):
+    # inital iram by using @R0
+    p += 'MOV PSW, #0'
+    ram.set_direct(SFR_PSW.x, 0)
+    for iaddr in p.riram():
+        value = random.getrandbits(8)
+        p += f'MOV 0x00, #{hex(iaddr)}'
+        p += f'MOV @R0, #{hex(value)}'
+        ram.set_direct(0, iaddr)
+        ram.set_iram(iaddr,value)
+
     p.iter_ri(test_rs, test_ri)
 
-for _ in range(16):
-    one()
+for _ in range(44):
+    one(p)
