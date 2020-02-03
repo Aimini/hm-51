@@ -17,4 +17,4 @@ class ORL_A_Ri(XXX_A_Ri):
         self.ram.set_direct(SFR_A.x, A | B)
         
 
-ORL_A_Ri().gen(0, 61, 1)
+ORL_A_Ri().gen(0, 15, 1)
