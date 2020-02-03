@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>backgroundColor</string>
+      <awt-color>
+        <red>255</red>
+        <green>242</green>
+        <blue>242</blue>
+        <alpha>255</alpha>
+      </awt-color>
+    </entry>
+    <entry>
+      <string>Description</string>
+      <string>stop ouput clock if input S  is high. if go is 1, clock will ouput normally.</string>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>RAMSinglePortSel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>AddrBits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>isProgramMemory</string>
+          <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>RAM</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>CS</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
+      <pos x="700" y="860"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>8</string>
+        </entry>
+        <entry>
+          <string>Output Splitting</string>
+          <string>7,1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="420" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="480" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Inputs</string>
+          <int>3</int>
+        </entry>
+      </elementAttributes>
+      <pos x="540" y="900"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>address</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>A</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="900"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>O</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="820" y="900"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>Direct address mode flag, it&apos;s will disable RAM when address is in
+0x80-0xFF.</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>Dt</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="860"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes/>
+      <pos x="460" y="820"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="400" y="800"/>
+      <p2 x="420" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="880"/>
+      <p2 x="680" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="900"/>
+      <p2 x="540" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="760" y="900"/>
+      <p2 x="820" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="820"/>
+      <p2 x="460" y="820"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="920"/>
+      <p2 x="700" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="920"/>
+      <p2 x="540" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="1000"/>
+      <p2 x="640" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="520" y="840"/>
+      <p2 x="640" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="780"/>
+      <p2 x="400" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="780"/>
+      <p2 x="680" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="860"/>
+      <p2 x="460" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="860"/>
+      <p2 x="700" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="520" y="940"/>
+      <p2 x="540" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="940"/>
+      <p2 x="460" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="940"/>
+      <p2 x="700" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="940"/>
+      <p2 x="480" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="940"/>
+      <p2 x="640" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="840"/>
+      <p2 x="640" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="780"/>
+      <p2 x="400" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="780"/>
+      <p2 x="680" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="920"/>
+      <p2 x="460" y="940"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
