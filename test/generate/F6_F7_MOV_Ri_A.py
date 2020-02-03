@@ -22,7 +22,7 @@ def test_rs(rs, psw_rs, p):
     
 
 def test_ri(RI, p):
-    indirect = random.getrandbits(7)
+    indirect = random.getrandbits(8)
     a = random.getrandbits(8)
 
     p += atl.move(atl.D(RI.addr), atl.I(indirect))
@@ -33,11 +33,11 @@ def test_ri(RI, p):
     ram.set_direct(SFR_A.x, a)
     ram.set_iram(indirect, ram.get_direct(SFR_A.x))
 
-    p += atl.aste(atl.D(indirect), atl.I(ram.get_iram(indirect)))
+    p += atl.aste(RI, atl.I(ram.get_iram(ram.get_direct(RI.addr))))
     
 
 
 
 
-for x in range(256):
+for x in range(496):
     p.iter_ri(test_rs, test_ri)
