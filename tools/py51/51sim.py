@@ -52,13 +52,13 @@ def assert_core(par0reg, par1reg, function_val):
     p1 = int(par1reg)
     if function_val == 1:
         if not (p0 > p1):
-            raise ArithmeticError("{} > {} assert failed".format(p0, p1))
+            raise ArithmeticError("{} > {} assert failed".format(hex(p0), hex(p1)))
     elif function_val == 2:
         if not (p0 == p1):
-            raise ArithmeticError("{} == {} assert failed".format(p0, p1))
+            raise ArithmeticError("{} == {} assert failed".format(hex(p0), hex(p1)))
     if function_val == 3:
         if not (p0 < p1):
-            raise ArithmeticError("{} < {} assert failed".format(p0, p1))
+            raise ArithmeticError("{} < {} assert failed".format(hex(p0), hex(p1)))
     if function_val == 4:
             raise Exception("user actively requested a crash.")
 

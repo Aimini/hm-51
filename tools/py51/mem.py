@@ -1,8 +1,7 @@
 import types
 
-
 class mem:
-    def __init__(self, value=0, bitlen=8):
+    def __init__(self, value = 0, bitlen = 8):
         self.value = value
         self.bitlen = bitlen
         self.max = 2**bitlen - 1
@@ -14,15 +13,15 @@ class mem:
     def _get_no_listened(self):
         return self.value
 
-    def _set_no_listened(self, value):
+    def _set_no_listened(self,value):
         self.value = value & self.max
 
     def get(self):
         for l in self.get_listener:
-            l(self)
+            l(self) 
         return self._get_no_listened()
 
-    def set(self, value):
+    def set(self,value):
         value = int(value) & self.max
         for l in self.set_listener:
             l(self, value)
@@ -30,7 +29,7 @@ class mem:
         if value != self._get_no_listened():
             for l in self.change_listener:
                 l(self, value)
-
+        
         self._set_no_listened(value)
         return self
 
@@ -66,6 +65,7 @@ class mem:
         self.set(self._get_no_listened() + int(other))
         return self
 
+
     def __isub__(self, other):
         self.set(self._get_no_listened() - int(other))
         return self
@@ -82,11 +82,11 @@ class mem:
         self.set(self._get_no_listened() | int(other))
         return self
 
-    def __invert__(self):
+    def  __invert__(self):
         return ~self.get()
-
+    
     def __str__(self):
         return "0x{:0>2X}".format(self._get_no_listened())
-
+    
     def __repr__(self):
         return "mem({})".format(str(self))

@@ -1,6 +1,4 @@
 import mem
-
-
 class mem_dptr(mem.mem):
     def __init__(self, dpl_obj, dph_obj):
         super().__init__(0, 16)
@@ -8,29 +6,28 @@ class mem_dptr(mem.mem):
         self.DPH = dph_obj
 
     def _get_no_listened(self):
-        return (int(self.DPH) << 8) | (int(self.DPL))
-
+        return (int(self.DPH) << 8) |(int(self.DPL))
+    
     def _set_no_listened(self, value):
         v_dpl = value & 0xFF
         v_dph = (value >> 8) & 0xFF
-
+        
         self.DPL.set(v_dpl)
         self.DPH.set(v_dph)
         super()._set_no_listened(value)
 
-
 class mem_psw(mem.mem):
-    def __init__(self, value=0):
+    def __init__(self, value = 0):
         super().__init__(value, 8)
-
+    
     def _set_no_listened(self, v):
         v = (self.value & 0x01) | (v & 0xFE)
         super()._set_no_listened(v)
-
+    
     def set_pf(self, v):
         val = self._get_no_listened()
-        val = (val & 0xFE) | (v & 1)
-        # set value
+        val = (val & 0xFE) | (v  & 1)
+        # set value 
         super()._set_no_listened(val)
         # notifaction
         super().set(val)
@@ -40,22 +37,24 @@ class _core51_base:
     def __init__(self):
         ############################
         #  core register
-        self.A = mem.mem()
-        self.B = mem.mem()
+        self.A =  mem.mem()
+        self.B =  mem.mem()
         self.PSW = mem_psw()
-        self.SP = mem.mem(7)
-        self.PC = mem.mem(0, 16)
+        self.SP =  mem.mem(7)
+        self.PC =  mem.mem(0, 16)
 
-        self.DPL = mem.mem()
-        self.DPH = mem.mem()
-        self.DPTR = mem_dptr(self.DPL, self.DPH)
+        self.DPL =  mem.mem()
+        self.DPH =  mem.mem()
+        self.DPTR =  mem_dptr(self.DPL, self.DPH)
         ############################
         # IRAM, XRAM, ROM
         self.XRAM = [mem.mem() for _ in range(0x10000)]
-        self.IRAM = [mem.mem() for _ in range(0x80)]
+        self.IRAM = [mem.mem() for _ in range(0x100)]
 
-        self.ROM = []
+        
+        self.ROM  = []
 
+        
         ############################
         # SFR MAP
         CORE_SFR = {
@@ -75,11 +74,12 @@ class _core51_base:
             "A":    0xE0,
             "B":    0xF0,
         }
-
+        
         #None meaning no SFR mapped
         self.SFRRAM = [None for _ in range(0x100)]
         for addr, s in CORE_SFR.items():
             self.SFRRAM[addr] = s
+
 
         self.A.change_listener.append(lambda mem_obj, new_val: self.PSW.set_pf(self.parity(new_val)))
 
@@ -96,9 +96,9 @@ class _core51_base:
         return a & 1
 
     def sfr_extend(self, ext_package):
-        ret = {}
+        ret =  {}
 
-        for addr, name in ext_package.items():
+        for addr, name in  ext_package.items():
             if addr < 0x80:
                 raise IndexError("SFR overwrite IRAM address 0x{:0>2X}.".format(addr))
 
@@ -113,16 +113,35 @@ class _core51_base:
 
             ret[name] = new_mem
 
-        return ret
 
-    def get_ram(self, addr):
+        return ret
+    def get_iram(self,addr):
+        if addr < len(self.IRAM):
+            return self.IRAM[addr]
+
+        raise IndexError("access invalid direct address 0x{:0>2X}".format(addr))
+        
+
+    def get_ram(self,addr):
         if addr < 0x80:
             return self.IRAM[addr]
+        elif addr < 0x100:
+            return self.get_sfr_by_addr(addr)
         else:
-            return self.SFRRAM[addr]
+            raise IndexError("access invalid direct address 0x{:0>2X}".format(addr))
 
-    def get_sfr(self, name):
-        return self.SFRRAM[self.sfr_name[name]]
+    def get_sfr_by_name(self, name: str):
+        addr = self.sfr_name.get(name)
+        if addr is not None:
+            return self.SFRRAM[self.sfr_name[name]]
+        else:
+            raise NameError("no sfr named \"{}\"".format(name))
+
+    def get_sfr_by_addr(self, addr: int):
+        s = self.SFRRAM[addr]
+        if s is None:
+            raise IndexError("none SFR mapped at address 0x{:0>2X}".format(addr))
+        return s
 
     def reset(self):
         """reset all core register.(doesn't include sfr and ram)"""
@@ -135,7 +154,7 @@ class _core51_base:
         self.DPH.set(0)
 
     def text_snapshot(self):
-        t = f"{self.PC.get()} {self.A.get()} {self.B.get()} "
+        t =  f"{self.PC.get()} {self.A.get()} {self.B.get()} "
         t += f"{self.SP.get()} {self.PSW.get()} {self.DPTR.get()} {self.SFRRAM[0x99].get()} | "
         for x in self.IRAM:
             t += f'{x.get()} '

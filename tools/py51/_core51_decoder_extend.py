@@ -1,7 +1,5 @@
 import _core51_operation_extend
 import mem_bit_ref
-
-
 class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
     def __init__(self):
         super().__init__()
@@ -13,7 +11,7 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         if opcode.test(0x01, 0x1F):
             #AJMP addr11
             addr11 = ((opcode.value << 3) & 0x700) | int(self.fetch_const())
-            addr11 = (self.PC.get() & 0xF800) | addr11
+            addr11 = (self.PC.get() & 0xF800) |  addr11
             self.PC.set(addr11)
         elif opcode.test(0x11, 0x1F):
             #ACALL 0x11
@@ -24,45 +22,54 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
             #0x00 - 0x7F
             if opcode.value < 0x40:
                 self.__execute_decode_00_3F(opcode)
-            else:
+            else :
                 self.__execute_decode_40_7F(opcode)
-
-        else:
+            
+        else :
             #0x80 - 0xFF
             if opcode.value < 0xC0:
                 self.__execute_decode_80_BF(opcode)
-            else:
+            else :
                 self.__execute_decode_C0_FF(opcode)
+            
+        
 
         for i in self.irq:
             irqn = i()
             if irqn >= 0:
                 self.op_call((irqn << 3) + 3)
 
-    def __execute_decode_00_3F(self, opcode):
+        
+
+
+
+    def __execute_decode_00_3F (self, opcode):
         if opcode.value < 0x20:
             # 0x00 - 0x1F
             if opcode.value < 0x10:
                 self.__execute_decode_00_0F(opcode)
-            else:
+            else :
                 self.__execute_decode_10_1F(opcode)
-
-        else:
+            
+        
+        else :
             # 0x20 - 0x3F
             if opcode.value < 0x30:
                 self.__execute_decode_20_2F(opcode)
-            else:
+            else :
                 self.__execute_decode_30_3F(opcode)
+            
+        
+
 
     def __execute_decode_00_0F(self, opcode):
         if opcode.test(0x00):
             #NOP
             pass
-        
         elif opcode.test(0x02):
             #LJMP addr16
             self.PC.set(self.fetch_const16())
-
+        
         elif opcode.test(0x03):
             #RR A
             self.op_rr(self.A)
@@ -78,6 +85,8 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x08, 0xF8):
             #INC Rn
             self.op_inc(opcode.rn())
+        
+
 
     def __execute_decode_10_1F(self, opcode):
         if opcode.test(0x10):
@@ -104,6 +113,8 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x18, 0xF8):
             #DEC Rn
             self.op_dec(opcode.rn())
+        
+
 
     def __execute_decode_20_2F(self, opcode):
         if opcode.test(0x20):
@@ -129,6 +140,8 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x28, 0xF8):
             #ADD A, Rn
             self.op_add(self.A, opcode.rn())
+        
+
 
     def __execute_decode_30_3F(self, opcode):
         if opcode.test(0x30):
@@ -142,7 +155,7 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
             self.op_ret()
             for l in self.interrupt_end_linstener:
                 l()
-
+            
         elif opcode.test(0x33):
             # RLC A
             self.op_rlc(self.A)
@@ -158,25 +171,33 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x38, 0xF8):
             #ADDC A,Rn
             self.op_addc(self.A, opcode.rn())
+        
 
-    def __execute_decode_40_7F(self, opcode):
+
+
+    def __execute_decode_40_7F (self, opcode):
         if opcode.value < 0x60:
             # 0x40 - 0x5F
             if opcode.value < 0x50:
                 self.__execute_decode_40_4F(opcode)
-            else:
+            else :
                 self.__execute_decode_50_5F(opcode)
-        else:
+        else :
             # 0x60 - 0x7F
             if opcode.value < 0x70:
                 self.__execute_decode_60_6F(opcode)
-            else:
+            else :
                 self.__execute_decode_70_7F(opcode)
+            
+        
 
-    def __execute_decode_40_4F(self, opcode):
+
+
+
+    def __execute_decode_40_4F (self, opcode):
         if opcode.test(0x40):
             #JC offset
-            CY = mem_bit_ref.mem_bit_ref(self.PSW, 7)
+            CY = mem_bit_ref.mem_bit_ref(self.PSW,7)
             self.op_condition_jump(CY, self.fetch_const())
         elif opcode.test(0x42):
             #ORL direct,A
@@ -199,8 +220,11 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x48, 0xF8):
             #ORL A,Rn
             self.op_orl(self.A, opcode.rn())
+        
 
-    def __execute_decode_50_5F(self, opcode):
+
+
+    def __execute_decode_50_5F (self, opcode):
         if opcode.test(0x50):
             #JNC offset
             CY = mem_bit_ref.mem_bit_ref(self.PSW, 7)
@@ -225,8 +249,10 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x58, 0xF8):
             #ANL A,Rn
             self.op_anl(self.A, opcode.rn())
+        
 
-    def __execute_decode_60_6F(self, opcode):
+
+    def __execute_decode_60_6F (self, opcode):
         if opcode.test(0x60):
             #JZ offset
             offset_raw = self.fetch_const()
@@ -252,8 +278,11 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x68, 0xF8):
             #XRL A,Rn
             self.op_xrl(self.A, opcode.rn())
+        
 
-    def __execute_decode_70_7F(self, opcode):
+
+
+    def __execute_decode_70_7F (self, opcode):
         if opcode.test(0x70):
             #JNZ offset
             offset_raw = self.fetch_const()
@@ -272,7 +301,7 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x75):
             #MOV direct,#immed
             direct = self.fetch_direct()
-            immed = self.fetch_const()
+            immed =  self.fetch_const()
             self.op_move(direct, immed)
         elif opcode.test(0x76, 0xFE):
             #  MOV   @Ri,#immed
@@ -280,20 +309,27 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x78, 0xF8):
             #  MOV   Rn,#immed
             self.op_move(opcode.rn(), self.fetch_const())
+        
 
-    def __execute_decode_80_BF(self, opcode):
+
+
+    def __execute_decode_80_BF (self, opcode):
 
         if opcode.value < 0xA0:
             if opcode.value < 0x90:
                 self.__execute_decode_80_8F(opcode)
-            else:
+            else :
                 self.__execute_decode_90_9F(opcode)
-
-        else:
+            
+        else :
             if opcode.value < 0xB0:
                 self.__execute_decode_A0_AF(opcode)
-            else:
+            else :
                 self.__execute_decode_B0_BF(opcode)
+            
+        
+
+
 
     def __execute_decode_80_8F(self, opcode):
         if opcode.test(0x80):
@@ -320,6 +356,9 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x88, 0xF8):
             # MOV direct,Rn
             self.op_move(self.fetch_direct(), opcode.rn())
+        
+
+
 
     def __execute_decode_90_9F(self, opcode):
         if opcode.test(0x90):
@@ -344,6 +383,9 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0x98, 0xF8):
             #SUBB A,Rn
             self.op_subb(self.A, opcode.rn())
+        
+
+
 
     def __execute_decode_A0_AF(self, opcode):
         if opcode.test(0xA0):
@@ -361,14 +403,17 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
             # MUL AB
             self.op_mul()
         elif opcode.test(0xA5):
-            # USER DEFINED
+            # USER DEFINED 
             return 0
         elif opcode.test(0xA6, 0xFE):
-            # MOV @Ri,direct
+            # MOV @Ri,direct 
             self.op_move(opcode.ri(), self.fetch_direct())
         elif opcode.test(0xA8, 0xF8):
-            # MOV Rn,direct
+            # MOV Rn,direct 
             self.op_move(opcode.rn(), self.fetch_direct())
+        
+
+
 
     def __execute_decode_B0_BF(self, opcode):
         if opcode.test(0xB0):
@@ -402,21 +447,28 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
             immed = self.fetch_const()
             offset_raw = self.fetch_const()
             self.op_cjne(opcode.rn(), immed, offset_raw)
+        
 
-    def __execute_decode_C0_FF(self, opcode):
+
+
+    def __execute_decode_C0_FF (self, opcode):
         if opcode.value < 0xE0:
             if opcode.value < 0xD0:
                 self.__execute_decode_C0_CF(opcode)
-            else:
+            else :
                 self.__execute_decode_D0_DF(opcode)
-
-        else:
+            
+        else :
             if opcode.value < 0xF0:
                 self.__execute_decode_E0_EF(opcode)
-            else:
+            else :
                 self.__execute_decode_F0_FF(opcode)
+            
+        
 
-    def __execute_decode_C0_CF(self, opcode):
+
+
+    def __execute_decode_C0_CF (self, opcode):
         if opcode.test(0xC0):
             #PUSH direct
             self.op_push(self.fetch_direct())
@@ -440,8 +492,12 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0xC8, 0xF8):
             #XCH A,Rn
             self.op_xch(self.A, opcode.rn())
+        
 
-    def __execute_decode_D0_DF(self, opcode):
+
+
+
+    def __execute_decode_D0_DF (self, opcode):
         if opcode.test(0xD0):
             #POP direct
             self.op_pop(self.fetch_direct())
@@ -477,8 +533,11 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
             self.op_dec(Rn)
             if Rn.get() != 0:
                 self.op_sjump(offset_raw)
+        
 
-    def __execute_decode_E0_EF(self, opcode):
+
+
+    def __execute_decode_E0_EF (self, opcode):
 
         if opcode.test(0xE0):
             #MOVX A,@DPTR
@@ -498,8 +557,11 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0xE8, 0xF8):
             #MOV A,Rn
             self.op_move(self.A, opcode.rn())
+        
 
-    def __execute_decode_F0_FF(self, opcode):
+
+
+    def __execute_decode_F0_FF (self, opcode):
         if opcode.test(0xF0):
             #MOVX @DPTR,A
             self.XRAM[self.DPTR.get()] = self.A.get()
@@ -518,3 +580,4 @@ class _core51_decoder_extend(_core51_operation_extend._core51_operation_extend):
         elif opcode.test(0xF8, 0xF8):
             #MOV Rn,A
             self.op_move(opcode.rn(), self.A)
+        

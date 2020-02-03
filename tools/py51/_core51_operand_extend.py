@@ -1,7 +1,5 @@
 import _core51_base
 import mem_bit_ref
-
-
 class opcode:
     def __init__(self, value, _core51_obj):
         self.value = value
@@ -11,16 +9,16 @@ class opcode:
         self.Rn_addr = rs | (0x07 & self.value)
 
     def ri(self):
-
-        return self._core51_obj.get_ram(int(self.riaddr()))
+        
+        return self._core51_obj.get_iram(int(self.riaddr()))
 
     def riaddr(self):
-        return self._core51_obj.get_ram(self.Ri_addr)
-
+        return self._core51_obj.get_iram(self.Ri_addr)
+    
     def rn(self):
         return self._core51_obj.get_ram(self.Rn_addr)
-
-    def test(self, target, mask=0xFF):
+    
+    def test(self, target, mask = 0xFF):
         return (self.value & mask) == target
     # opcode.fetch_addr11():
     #     let comb = ((self.value & 0xE0) << 3) + cpu_ref.ROM[cpu_ref.PC.get()]
@@ -28,7 +26,6 @@ class opcode:
     #     comb += (next_PC & 0xF800)
     #     return comb
     # }
-
 
 class _core51_operand_extend(_core51_base._core51_base):
     def __init__(self):
@@ -39,10 +36,11 @@ class _core51_operand_extend(_core51_base._core51_base):
         self.PC += 1
         return o
 
+
     def fetch_const16(self):
         pt = int(self.PC)
         high8bit = self.ROM[pt]
-        low8bit = self.ROM[pt + 1]
+        low8bit =  self.ROM[pt + 1]
         self.PC += 2
         return (high8bit << 8) + low8bit
 
@@ -51,10 +49,12 @@ class _core51_operand_extend(_core51_base._core51_base):
         self.PC += 1
         return value
 
+
     def fetch_direct(self):
         addr = self.ROM[int(self.PC)]
         self.PC += 1
         return self.get_ram(addr)
+
 
     def fetch_bit(self):
         bit_addr = self.ROM[int(self.PC)]
