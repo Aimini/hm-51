@@ -22,7 +22,7 @@ class INS_XXX_A_D():
         op_name = self.op_name
         op_func = INS_OPERATION.OP_LUT[op_name]
         
-        for addr in p.ris():
+        for addr in p.rdirect():
             for value in ntl.bound(8):
                 p += atl.move(atl.D(addr), atl.I(value))
                 ram.set_direct(addr, value)
@@ -41,12 +41,12 @@ class INS_XXX_A_D():
                 ram.set_direct(SFR_A.x, A_inital_value)
                 
             # load_random_data
-            for addr in p.ris():
+            for addr in p.rdirect():
                 value = random.getrandbits(8)
                 p += atl.move(atl.D(addr), atl.I(value))
                 ram.set_direct(addr, value)
             # execute and check
-            for addr in p.ris():
+            for addr in p.rdirect():
                 p += f'{op_name} A, {atl.D(addr)}'
                 A = op_func(ram.get_direct(SFR_A.x), ram.get_direct(addr),ram)
                 ram.set_direct(SFR_A.x, A)
