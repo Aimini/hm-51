@@ -17,4 +17,4 @@ class ANL_A_Ri(XXX_A_Ri):
         self.ram.set_direct(SFR_A.x, A & B)
         
 
-ANL_A_Ri().gen(0xFF, 61, 1)
+ANL_A_Ri().gen(0xFF, 15, 1)
