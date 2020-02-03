@@ -2,6 +2,9 @@
 # 2020-01-28 16:42:04
 # AI
 # ins: MOV @Ri, #immed
+#
+# this is manual test file!
+# it's copy the address to IRAM cell itself
 #########################################################
 
 import __util as u
@@ -10,24 +13,25 @@ from __asmconst import *
 from __numutil import numutil as ntl
 
 p = u.create_test()
+p.is_prepend_clear_reg = False
+p.is_append_dump = False
 
-def test_rs(rs, psw_rs, p):
-    p += ";; set rs" 
-    p += atl.move(SFR_PSW, atl.I(psw_rs))
-    
+ri = 0
+rs = 0
 
-def test_ri(RI, p):
-    indirect = random.getrandbits(7)
-    value = random.getrandbits(8)
+for i in range(0x20, 256):
+    ri = ri + 1
+    if ri == 2:
+        rs = rs + 1
+    rs %= 4
+    ri %= 2
+    RI = atl.RI(rs, ri)
+    p += f'MOV PSW, {atl.I(rs << 3)}'
+    p += f'MOV {atl.D(RI.addr)}, {atl.I(i)}'
+    p += f'MOV {RI}, {atl.I(i)}'
 
-    p += atl.move(atl.D(RI.addr), atl.I(indirect))
-    p += f'MOV {RI}, {atl.I(value)}'
-
-    p += atl.aste(atl.D(indirect), atl.I(value))
-    
-
-
-
-
-for _ in range(256):
-    p.iter_ri(test_rs, test_ri)
+p += 'MOV PSW, #0'
+for i in reversed(range(0x20)):
+    p += f'''
+        MOV 0x00, {atl.I(i)}
+        MOV @R0,  {atl.I(i)}'''
