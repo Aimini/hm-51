@@ -14,4 +14,4 @@ class ADDC_A_Ri(XXX_A_Ri):
     def op_func(self, B):
         INS_OPERATION.op_a_addc_xx(self.ram, B, True)
 
-ADDC_A_Ri().gen(0, 61, 1)
+ADDC_A_Ri().gen(0, 15, 1)
