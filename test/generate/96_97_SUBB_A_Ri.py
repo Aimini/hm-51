@@ -15,4 +15,4 @@ class SUBB_A_Ri(XXX_A_Ri):
         INS_OPERATION.op_a_subb_xx(self.ram, B)
         
 
-SUBB_A_Ri().gen(0, 61, 1)
+SUBB_A_Ri().gen(0, 15, 1)
