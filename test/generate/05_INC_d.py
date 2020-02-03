@@ -18,4 +18,4 @@ def one(d, p):
         p += f'INC {d}'
         p += atl.aste(d, atl.I((x + start + 1)%256))
 
-p.iter_is_no_psw(one)
+p.iter_direct_no_psw(one)

@@ -23,4 +23,4 @@ def one(d, p):
             p += atl.aste(d, atl.I((start - 2*(x + 1))%256))
     
 
-p.iter_is(one)
+p.iter_direct(one)

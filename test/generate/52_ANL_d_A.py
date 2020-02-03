@@ -15,12 +15,12 @@ ram = SIMRAM()
 
 for x in range(24):
     # load_random_data
-    for addr in p.ris():
+    for addr in p.rdirect():
         value = random.getrandbits(8)
         ram.set_direct(addr, value)
         p += atl.move(atl.D(addr), atl.I(value))
 
-    for addr in p.ris():
+    for addr in p.rdirect():
         value = random.getrandbits(8)
         p += f"MOV {SFR_A}, {atl.I(value)}"
         ram.set_direct(SFR_A.x, value)

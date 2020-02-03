@@ -24,7 +24,7 @@ def one(p, count):
     ram.set_direct(SFR_SP.x, 0xFF)
     for _ in range(count):
         while True:
-            addr = random.choice(list(p.ris()))
+            addr = random.choice(list(p.rdirect()))
             if addr != SFR_SP.x:
                 break
 

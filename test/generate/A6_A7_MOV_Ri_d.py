@@ -23,7 +23,7 @@ def rs_set_psw(rs, psw_rs, p):
 
 def ri_write_iram(RI, p):
     indirect = random.getrandbits(8)
-    ris = list(p.ris())
+    ris = list(p.rdirect())
 
     addr = random.choice(ris)
     while addr == SFR_PSW.x: # don't touch PSW, may cause rs change.
@@ -44,7 +44,7 @@ def ri_write_iram(RI, p):
 
 def ri_retrive_from_iram(RI, p):
     indirect = random.getrandbits(8)
-    ris = list(p.ris())
+    ris = list(p.rdirect())
     addr = random.choice(ris)
     while addr == SFR_PSW.x: # don't touch PSW, may cause rs change.
         addr = random.choice(ris)

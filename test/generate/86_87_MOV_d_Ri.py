@@ -44,7 +44,7 @@ def test_ri(RI, p):
     indirect = random.getrandbits(8)
     value = random.getrandbits(8)
 
-    ris = list(p.ris())
+    ris = list(p.rdirect())
     addr = random.choice(ris)
     while addr == SFR_PSW.x:  # don't touch PSW, may cause rs change.
         addr = random.choice(ris)

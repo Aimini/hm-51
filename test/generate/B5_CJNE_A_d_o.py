@@ -27,7 +27,7 @@ def creat_jump_link(p, jump_count, order):
     SJMP JMP_SEG_{order}_{jmpords[0]}
     """
     seg_str_list = list(range(jump_count))
-    ris = list(p.ris())
+    ris = list(p.rdirect())
 
     for i in range(len(jmpords)):
         a = random.getrandbits(8)
@@ -68,7 +68,7 @@ def creat_jump_link(p, jump_count, order):
     p += f"JMP_SEG_END_{order}:"
 
 for x in range(128):
-    p.iter_is(init_ram)
+    p.iter_direct(init_ram)
     creat_jump_link(p, 8, x)
     p += atl.dump()
 

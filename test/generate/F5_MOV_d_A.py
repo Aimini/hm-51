@@ -23,8 +23,8 @@ def fill_one(addr, p):
     
 
 def one():
-    p.iter_is(fill_one)
-    for addr in p.ris():
+    p.iter_direct(fill_one)
+    for addr in p.rdirect():
         atl.aste(atl.D(addr), atl.I(ram.get_direct(addr)))
 
 for _ in range(64):

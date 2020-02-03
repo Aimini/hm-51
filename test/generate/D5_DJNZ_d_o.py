@@ -15,7 +15,7 @@ ram = SIMRAM()
 
 
 def init_ram(p):
-    for addr in p.ris():
+    for addr in p.rdirect():
         value = random.getrandbits(8)
         p += atl.move(atl.D(addr),atl.I(value))
         ram.set_direct(addr, value)
@@ -29,7 +29,7 @@ def creat_jump_link(p, jump_count, order):
     p += f"""
     SJMP JMP_SEG_{order}_{start}
     """
-    ris = list(p.ris())
+    ris = list(p.rdirect())
     for idx,next_idx in enumerate(jmpords):
         p += f"JMP_SEG_{order}_{idx}:"
         

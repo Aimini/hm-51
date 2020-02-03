@@ -27,6 +27,6 @@ def test(addr, idx, p):
     p += atl.aste(atl.D(addr), atl.I(ram.get_direct(addr)))
     
 for x in range(29):
-    p.iter_is(init)
+    p.iter_direct(init)
     p.iter_bit(test)
 

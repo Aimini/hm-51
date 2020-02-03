@@ -103,7 +103,7 @@ class asm_test:
         for x in self.riram():
             f(x, self)
 
-    def iter_is_no_psw(self, f):
+    def iter_direct_no_psw(self, f):
         """
         iterate iram and SFR in RF.
         """

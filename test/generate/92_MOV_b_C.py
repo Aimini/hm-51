@@ -29,6 +29,6 @@ def test(addr, idx, p):
     
 
 for x in range(29):
-    p.iter_is(init)
+    p.iter_direct(init)
     p.iter_bit(test)
 

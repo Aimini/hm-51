@@ -10,10 +10,9 @@ from __asmconst import *
 
 p = u.create_test()
 
-def one(*vargs):
-    addr = vargs[0]
+def one(addr, p):
     # set memory cells' value to it's address
-    return atl.move(atl.D(addr),atl.I(addr))
+    p += atl.move(atl.D(addr),atl.I(addr))
 
 
-p.iter_is(one)
+p.iter_direct(one)

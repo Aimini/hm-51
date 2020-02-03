@@ -33,4 +33,4 @@ def fill_one(addr, p):
 
 
 for _ in range(16):
-    p.iter_is(fill_one)
+    p.iter_direct(fill_one)

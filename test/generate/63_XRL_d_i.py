@@ -14,14 +14,14 @@ p = u.create_test()
 ram = SIMRAM()
 
 # load_random_data
-for addr in p.ris():
+for addr in p.rdirect():
     value = random.getrandbits(8)
     ram.set_direct(addr, value)
     p += atl.move(atl.D(addr), atl.I(value))
 
 
 for x in range(32):
-    for addr in p.ris():
+    for addr in p.rdirect():
         value = random.getrandbits(8)
         p += f'XRL {atl.D(addr)}, {atl.I(value)}'
         ram.set_direct(addr, ram.get_direct(addr) ^ value)

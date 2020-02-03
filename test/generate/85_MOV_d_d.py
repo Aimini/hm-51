@@ -12,7 +12,7 @@ p = u.create_test()
 
 def init_direct(addr,p):
     p += atl.move(atl.D(addr), atl.I(addr))
-p.iter_is(init_direct)
+p.iter_direct(init_direct)
 
 # move to self
 #### IRAM 0,1,2,3...0x7E, 0x7F
@@ -29,7 +29,7 @@ def move_self(addr, p):
 p += ";;;;;;;;;;;;;;;;;;;;;; mirror iram"
 def mirror_ram(addr,raddr,p):
     p += atl.move(atl.D(addr), atl.D(raddr))
-p.iterx_iram(mirror_ram)
+p.iterx(range(0x80), mirror_ram)
 
 # some complicate
 #### IRAM 0x81, 0x82, 0x83, 0xA8, 0xB8, 0xD1, 0xE0, 0xF0,    0x77 ... 3,2,1,0

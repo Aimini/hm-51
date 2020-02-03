@@ -29,7 +29,7 @@ def one(p, count):
         
     for _ in range(count):
         while True:
-            addr = random.choice(list(p.ris()))
+            addr = random.choice(list(p.rdirect()))
             if addr != SFR_SP.x:
                 break
         SP =  ram.get_direct(SFR_SP.x)
