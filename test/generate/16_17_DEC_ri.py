@@ -18,17 +18,17 @@ def init_rs(rs, psw_rs, p):
 def iter_ri(RI, p):
     t = 100
     while True:
-        addr = random.getrandbits(7)
-        if addr != RI.addr:
+        indirect = random.getrandbits(8)
+        if indirect != RI.addr:
             break
 
-    p += atl.move(atl.D(RI.addr), atl.I(addr))
+    p += atl.move(atl.D(RI.addr), atl.I(indirect))
     start = random.getrandbits(8)
 
-    p += atl.move(atl.D(addr), atl.I(start))
+    p += atl.move(RI, atl.I(start))
     for x in range(t):
         p += 'DEC {}'.format(RI)
-        p += atl.aste(atl.D(addr), atl.I((start - x - 1) % 256))
+        p += atl.aste(RI, atl.I((start - x - 1) % 256))
 
-for x in range(5):
+for x in range(9):
     p.iter_ri(init_rs, iter_ri)
