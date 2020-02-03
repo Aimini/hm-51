@@ -22,14 +22,14 @@ def creat_jump_link(p, jump_count, order):
     SJMP JMP_SEG_{order}_{jmpords[0]}
     """
     seg_str_list = list(range(jump_count))
-    ris = list(p.ris())
+    ris = list(p.rdirect())
 
     for i in range(len(jmpords)):
         rs = random.randrange(4)
         ri = random.randrange(2)
         psw_rs = rs << 3
         RI = atl.RI(rs, ri)
-        indirect = random.getrandbits(7)
+        indirect = random.getrandbits(8)
         value = random.getrandbits(8)
         immed = random.getrandbits(8)
         
@@ -37,11 +37,13 @@ def creat_jump_link(p, jump_count, order):
         s = f'''
         JMP_SEG_{order}_{seg_no}:
         MOV PSW, {atl.I(psw_rs)}
-        MOV {atl.D(indirect)}, {atl.I(value)}
         MOV {atl.D(RI.addr)}, {atl.I(indirect)}
+        MOV {RI}, {atl.I(value)}
         '''
         ram.set_direct(SFR_PSW.x, psw_rs)
-        ram.bulid_indirect(RI.addr, indirect, value)
+        ram.set_direct(RI.addr, indirect)
+        ram.set_iram(indirect, value)
+        
         
         if i == len(jmpords) - 1:
             target = f"JMP_SEG_END_{order}"
@@ -50,7 +52,7 @@ def creat_jump_link(p, jump_count, order):
 
         
         
-        if ram.get_iram(indirect) != immed:
+        if ram.get_iram(ram.get_iram(RI.addr)) != immed:
             s += f'''
             CJNE {RI},{atl.I(immed)}, {target}
             {atl.crash()}
@@ -70,7 +72,7 @@ def creat_jump_link(p, jump_count, order):
     p += '\n'.join(seg_str_list)
     p += f"JMP_SEG_END_{order}:"
 
-for x in range(512):
+for x in range(635):
     creat_jump_link(p, 7, x)
     p += atl.dump()
 
