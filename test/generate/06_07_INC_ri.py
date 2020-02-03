@@ -10,24 +10,26 @@ from __asmconst import *
 
 p = u.create_test()
 
-t = 100
+t = 512
+
+
 def init_rs(rs, psw_rs, p):
     p += atl.move(SFR_PSW, atl.I(psw_rs))
 
 
 def iter_ri(RI, p):
     while True:
-        addr = random.getrandbits(7)
-        if addr != RI.addr:
+        indirect = random.getrandbits(8)
+        if indirect != RI.addr:
             break
 
-    p += atl.move(atl.D(RI.addr), atl.I(addr))
+    p += atl.move(atl.D(RI.addr), atl.I(indirect))
     start = random.getrandbits(8)
 
-    p += atl.move(atl.D(addr), atl.I(start))
+    p += atl.move(RI, atl.I(start))
     for x in range(t):
         p += f'INC {RI}'
-        p += atl.aste(atl.D(addr), atl.I((start + x + 1) % 256))
+        p += atl.aste(RI, atl.I((start + x + 1) % 256))
 
 
 p.iter_ri(init_rs, iter_ri)
