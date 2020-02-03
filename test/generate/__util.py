@@ -54,19 +54,14 @@ class asm_test:
         self.sio.write('\n')
         return self
 
-    @staticmethod
-    def rdirect():
-        """
-        get range or direct
-        """
-        return range(0, 0x100)
+
 
     @staticmethod
     def riram():
         """
         get range or iram
         """
-        return range(0, 0x80)
+        return range(0, 0x100)
 
     @staticmethod
     def rsfr():
@@ -75,12 +70,13 @@ class asm_test:
         """
         return sorted(SFR_MAP.keys())
 
+
     @staticmethod
-    def ris():
+    def rdirect():
         """
         get range of iram and SFR
         """
-        return itertools.chain(asm_test.riram(), asm_test.rsfr())
+        return itertools.chain(range(0x80), asm_test.rsfr())
 
     @staticmethod
     def rbit():
@@ -101,25 +97,17 @@ class asm_test:
     def iter_iram(self, f):
         """
         iram address
-        0 - 127
+        0 - 256
         """
 
         for x in self.riram():
-            f(x, self)
-
-    def iter_is(self, f):
-        """
-        iterate iram and SFR in RF.
-        """
-        for x in self.ris():
             f(x, self)
 
     def iter_is_no_psw(self, f):
         """
         iterate iram and SFR in RF.
         """
-        self.iter_iram(f)
-        for x in self.rsfr():
+        for x in self.rdirect():
             if x != 0xD0:
                 f(x, self)
 
