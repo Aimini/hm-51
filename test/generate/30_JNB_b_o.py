@@ -13,7 +13,7 @@ from __51util import SIMRAM
 p = u.create_test()
 ram = SIMRAM()
 
-jump_limit =f"""
+jump_limit =f'''
 ; PC = 0
 MOV 0xE0, #0      ; SET A TO 0x80
 JNB 0xE0.0, JMP_LIMIT_127 ; JUMP TO  2 + 0x7F = 0x81
@@ -30,7 +30,7 @@ JNB 0xE0.0,JMP_LIMIT_256 ; JUMP TO 0x83 - 0x80 = 0x03
 ; PC = 0x83
 
 JMP_SEG_START:
-"""
+'''
 p += jump_limit
 
 for addr in p.rbit():
@@ -42,43 +42,53 @@ def random_bit(x):
     
 valueiter = itertools.chain(p.rbit(), itertools.cycle(random_bit(8)))
 
-def creat_jump_link(p, jump_count, order):
-    jmpords = ntl.jl(jump_count)
-    start =random.choice(jmpords)
-    p += f"""
-    SJMP JMP_SEG_{order}_{start}
-    """
+def creat_one_test_seg(order, seg_no, target, addr, bit_idx, value):
+    seg_str_list = []
+
+    seg_str_list.append(f'JMP_SEG_{order}_{seg_no}:')
+    seg_str_list.append(atl.move(atl.D(addr),atl.I(value)))
+    ram.set_direct(addr, value)
+
+    bit_addr =atl.BIT(addr, bit_idx)
+
+
+    if ram.get_bit(addr, bit_idx) == 0:
+        seg_str_list.append(f'JNB {bit_addr}, {target}')
+        seg_str_list.append(atl.crash())
+    else:
+        wrong_seg = f'SEG_WRONG_{order}_{seg_no}'
+        seg_str_list.append(f'JNB {bit_addr}, {wrong_seg}')
+        seg_str_list.append(f'SJMP {target}')
+        seg_str_list.append(f'{wrong_seg}:')
+        seg_str_list.append(atl.crash())
     
-    for idx,next_idx in enumerate(jmpords):
-        p += f"JMP_SEG_{order}_{idx}:"
+    return '\n'.join(seg_str_list)
+
+def creat_jump_link( jump_count, order):
+    jmpords = list(range(jump_count))
+    random.shuffle(jmpords)
+    start =random.choice(jmpords)
+
+    all_seg_str_list = list(range(jump_count))
+    for idx, seg_no in enumerate(jmpords):
         
         value = random.getrandbits(8)
         bit_idx = random.getrandbits(3)
         addr = next(valueiter)
         
-        p += atl.move(atl.D(addr),atl.I(value))
-        ram.set_direct(addr, value)
-
-        bit_addr =atl.BIT(addr, bit_idx)
-
-        if next_idx == start:
-            target = f"JMP_SEG_END_{order}"
+        if idx < len(jmpords) - 1:
+            next_seg_no = jmpords[idx + 1]
+            target = f'JMP_SEG_{order}_{next_seg_no}'
         else:
-            target = f"JMP_SEG_{order}_{next_idx}"
+            target = f'JMP_SEG_END_{order}'
+        
+        r = creat_one_test_seg(order, seg_no, target, addr, bit_idx, value)
+        all_seg_str_list[idx] = r
 
-        if ram.get_bit(addr, bit_idx) == 0:
-            p += f"JNB {bit_addr}, {target}"
-            p += atl.astl(I_00, I_00)
-        else:
-            jump_wrong = f"SEG_WRONG_{order}_{idx}"
+    all_seg_str_list.insert(0,f'SJMP JMP_SEG_{order}_{start}')
+    all_seg_str_list.append(f'JMP_SEG_END_{order}:')
+    return '\n'.join(all_seg_str_list) 
 
-            p += f"JNB {bit_addr}, {jump_wrong}"
-            p += f"SJMP {target}"
-            p += f"{jump_wrong}:"
-            p += atl.astl(I_00, I_00)
-
-    p += f"JMP_SEG_END_{order}:"
-
-for x in range(500):
-    creat_jump_link(p, 7,x)
+for x in range(900):
+    p += creat_jump_link(7, x)
 
