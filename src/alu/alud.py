@@ -57,6 +57,16 @@ def get_flag_sub(a, b, ci):
     ov = (((a ^ b) & (a ^ R)) >> 1) & 0x4
     return cy | ov , R
 
+def get_irqn(IRQ, IP):
+    IRQIP =  (IRQ << 4) | (IRQ & IP)
+    IRQN = bin(IRQIP)[::-1].find('1')
+    RL = 0
+    if IRQN != -1:
+        RL |= 8
+        if IRQN < 4:
+            RL |= 4
+        RL |= (IRQN % 4)
+    return RL
 
 def generate_low_by_op(ci, f,  b, a):
     RL = 0
@@ -122,14 +132,10 @@ def generate_low_by_op(ci, f,  b, a):
             co = 0
         RH = co << 3
 
-    elif f == 0x8: # IRQN2IRQ
+    elif f == 0x8: # GENIRQN/ ISRAPPIRQ
         # IRQN2IRQ A
-        # 2-4 line decoder, if A[3](valid flag) is 0, the ouput is 0
-        if a & 0x8:
-            RL = 1 << (a & 0x3)
-        else:
-            RL = 0
-
+        RL = get_irqn(a,b)
+        RH = a
     elif f == 0x9: # SETPSWF A (PSW),B
         # just replace A's OV AC CY from B
         # for lower part, set OV only
@@ -141,16 +147,9 @@ def generate_low_by_op(ci, f,  b, a):
         # namely, A[2:0] = B[3:1]
         RL = (a & 0x8) | ((b) >> 1)
 
-    elif f == 0xB:  # SHIRQN A(ISR or IRQ),B(IP)
-        # from interrupt aspect, A is IRQ, B = IP,
-        # to get IRQ then have IP mask, we get PIRQ = A & B
-        # the IRQ with IP also have higher priority than IRQ without IP,
-        # if we make 0 - 3 to encode IRQ0-3, 4-7 to enocode IRQ0-3 with IP
-        # after unsing 8-3 encoder, we can treat Q[2] as IP flag, Q[1:0] as IRQ number.
-        RL = a | ((a & b) << 4)
-        valid = 1 if RL > 0 else 0
-        RL = 7 - '{:b}'.format(RL).find('1')
-        RL = (valid << 3) | RL  
+    elif f == 0xB: # SETOVCLRCY
+        #clear cy now
+        RL = a & 0x7
 
     elif f == 0xC:
         RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
@@ -235,10 +234,25 @@ def generate_high_by_op(ci, f, b, a):
         co &= 1
         RH = (co << 3)
     
-    elif f == 0x8:  # IRQN2IRQ
-        # all ouput are in low part
-        RL = 0
+    elif f == 0x8:  # GENIRQN/ISRAPPIRQ
+        # generate low nibble IRQN
+        RL = get_irqn(a, b)
 
+        # ISRAPPIRQN
+        ISR = a
+        IRQ = b
+        ISRIP1 = (ISR & 0x4) >> 2
+        ISRIP0 = (ISR & 0x2) >> 1
+        IRQIP = (IRQ & 0x8) >> 3
+        if ISRIP1 or ISRIP0 and not IRQIP:
+            ISR |= 0x8
+        else:
+            ISR &= 0x7
+            if IRQIP:
+                ISR |= 0x4
+            else:
+                ISR |= 0x2
+        RH = ISR
     elif f == 0x9: # SETPSWF
         # SETPSWF A (PSW),B
         # just replace A's OV AC CY from B
@@ -250,9 +264,9 @@ def generate_high_by_op(ci, f, b, a):
         # don't care in high part
         RL = a
 
-    elif f == 0xB:  # SHIRQN A(ISR or IRQ),B(IP)
-        # all Louput are in low part
-        RL = 0
+    elif f == 0xB:  # SETOVCLRCY
+        # SET OV now
+        RL = (a & 0xB) | (ci << 2)
 
     elif f == 0xC: # Rn IR, PSW/OR
         RL = b & 0x1 # RS1
