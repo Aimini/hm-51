@@ -149,7 +149,7 @@ def generate_low_by_op(ci, f,  b, a):
 
     elif f == 0xB: # SETOVCLRCY
         #clear cy now
-        RL = a & 0x7
+        RL = (a & 0xB) | (ci << 2)
 
     elif f == 0xC:
         RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
@@ -266,8 +266,8 @@ def generate_high_by_op(ci, f, b, a):
 
     elif f == 0xB:  # SETOVCLRCY
         # SET OV now
-        RL = (a & 0xB) | (ci << 2)
-
+        RL = a & 0x7
+        
     elif f == 0xC: # Rn IR, PSW/OR
         RL = b & 0x1 # RS1
         RH = a | b
