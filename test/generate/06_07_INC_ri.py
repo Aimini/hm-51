@@ -10,7 +10,7 @@ from __asmconst import *
 
 p = u.create_test()
 
-t = 512
+t = 4
 
 
 def init_rs(rs, psw_rs, p):
@@ -31,5 +31,5 @@ def iter_ri(RI, p):
         p += f'INC {RI}'
         p += atl.aste(RI, atl.I((start + x + 1) % 256))
 
-
-p.iter_ri(init_rs, iter_ri)
+for x in range(192):
+    p.iter_ri(init_rs, iter_ri)

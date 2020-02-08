@@ -16,7 +16,7 @@ def init_rs(rs, psw_rs, p):
 
 
 def iter_ri(RI, p):
-    t = 100
+    t = 5
     while True:
         indirect = random.getrandbits(8)
         if indirect != RI.addr:
@@ -30,5 +30,5 @@ def iter_ri(RI, p):
         p += 'DEC {}'.format(RI)
         p += atl.aste(RI, atl.I((start - x - 1) % 256))
 
-for x in range(9):
+for x in range(159):
     p.iter_ri(init_rs, iter_ri)
