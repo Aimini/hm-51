@@ -709,7 +709,7 @@ IRSEG_33: #--------------------
 
 
 IRSEG_32: #--------------------
-
+@INC "instructions\32_RETI.ds"
 #------------------------------
 
 
@@ -899,46 +899,29 @@ INC_PC_BEFORE_CHECK_INTERRUPT:
 ######################################################## 
 STAGE_CHECK_INTERRUPT:
 #------------- check EA
-RF(IE), JLT(0x80,STAGE_FETCH), ALU(A),  WR(WE)
+# 1. WR <- IE
+# 2. jump_if(IE < 0x80)
+RF(IE), ALU(A),  WR(WE), JLT(0x81, STAGE_FETCH)
 
 #------------- check IE
 RF(T0,WE),    BUS(IRQ)
-RF(T0,WE),    ALU(AND),     WR(WE)    # MIRQ(IE & IRQ), check IRQ enable bit
-RF(T0),    JLT(0x1, STAGE_FETCH)               # any valid interrupt?
+# 1. T0 <- IE & IRQ
+# 2. jump_if(IIRQ < 0x80)
+RF(T0,WE),    ALU(AND),   WR(WE), JLT(0x1, STAGE_FETCH)    
 
-#------------- select highest priority number by using IP register. 
+#------------- 
 RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
-RF(T0,WE), ALU(SHIRQN)
+# 1. T0, WR <- GENIRQN(IE & IRQ, IP)
+# 2. jump_if(IE & IRQ == 0)
+RF(T0), ALU(GENIRQN), WR(WE), JLT(0x1, STAGE_FETCH)
+RF(ISR, WE), ALU(ISRAPPIRQ)
+RF(ISR), JGT(0x7F, STAGE_FETCH)
+
+RF(T0),  ALU(A), IRQ(CLR)
 ### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
 ### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
 #--------------------------
 
-
-
-RF(ISR),  ALU(A),  WR(WE)
-RF(T1,WE),ALU(B)          
-RF(T2,WE),ALU(B)          # T2,T1 <- ISR
-
-#------------- compare ISR and IRQ
-# wheather IRQ have higher priority than current interrupt.
-RF(IP),   ALU(A),    WR(WE) 
-RF(T1),ALU(SHIRQN),  WR(WE), BR(ONE) # WR <- (highest priority ISR number)
-
-RF(T0),   ALU(SUBB) ,  BR(CY)             #  CY meaing SHIRQN(IRQ) - SHIRQN(ISR) - 1 < 0
-JBIT(STAGE_FETCH)                         # meaing SHIRQN(IRQ) < SHIRQN(ISR) + 1, namely meaing SHIRQN(IRQ) <= SHIRQN(ISR) 
-
-
-#------------- accept interrupt
-# Before append IRQ to ISR, we must check if there is an interrupt service number 
-# in the ISR same as the IRQ number.
-RF(T0), ALU(IRQN2IRQ),  WR(WE)    # WR <- (IRQN TO IRQ, USING 2 - 4 DECODER)
-
-## check wheather IRQ with the IRQ number already append
-RF(T2, WE), ALU(AND)    #  (ISR & IRQ)
-RF(T2),     JGT(0, STAGE_FETCH)
-
-## append IRQ to ISR
-RF(ISR,WE), ALU(OR)
 
 ## save PC
 RF(SP,WE), ALU(INC),  SR(WE)
