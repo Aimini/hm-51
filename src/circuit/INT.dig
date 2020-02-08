@@ -20,7 +20,12 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
   <visualElements>
     <visualElement>
       <elementName>INT_TCON.dig</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>TCON</string>
+        </entry>
+      </elementAttributes>
       <pos x="1140" y="580"/>
     </visualElement>
     <visualElement>
@@ -28,7 +33,7 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>TCON</string>
+          <string>SCON</string>
         </entry>
         <entry>
           <string>generic</string>
@@ -82,6 +87,10 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
           <string>Bits</string>
           <int>8</int>
         </entry>
+        <entry>
+          <string>isHighZ</string>
+          <boolean>true</boolean>
+        </entry>
       </elementAttributes>
       <pos x="680" y="780"/>
     </visualElement>
@@ -120,7 +129,7 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <elementAttributes>
         <entry>
           <string>Value</string>
-          <long>136</long>
+          <long>152</long>
         </entry>
         <entry>
           <string>Bits</string>
@@ -134,7 +143,7 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <elementAttributes>
         <entry>
           <string>Value</string>
-          <long>152</long>
+          <long>136</long>
         </entry>
         <entry>
           <string>Bits</string>
