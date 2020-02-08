@@ -51,14 +51,14 @@ def creat_jump_link(p, jump_count, order):
 
         if psw & 0x80 == 0:
             p += f"JNC {target}"
-            p += atl.astl(I_00, I_00)
+            p += atl.crash()
         else:
             jump_wrong = f"SEG_WRONG_{order}_{idx}"
 
             p += f"JNC {jump_wrong}"
             p += f"SJMP {target}"
             p += f"{jump_wrong}:"
-            p += atl.astl(I_00, I_00)
+            p += atl.crash()
 
     p += f"JMP_SEG_END_{order}:"
 

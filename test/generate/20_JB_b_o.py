@@ -69,14 +69,14 @@ def creat_jump_link(p, jump_count, order):
 
         if ram.get_bit(addr, bit_idx) > 0:
             seg_str_list.append(f"JB {B}, {target}")
-            seg_str_list.append(atl.astl(I_00, I_00))
+            seg_str_list.append(atl.crash())
         else:
             jump_wrong = f"SEG_WRONG_{order}_{idx}"
 
             seg_str_list.append(f"JB {B}, {jump_wrong}")
             seg_str_list.append(f"SJMP {target}")
             seg_str_list.append(f"{jump_wrong}:")
-            seg_str_list.append(atl.astl(I_00, I_00))
+            seg_str_list.append(atl.crash())
 
         jump_seg_str[current_seg_no] = '\n'.join(seg_str_list)
 
