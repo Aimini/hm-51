@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>backgroundColor</string>
+      <awt-color>
+        <red>255</red>
+        <green>242</green>
+        <blue>242</blue>
+        <alpha>255</alpha>
+      </awt-color>
+    </entry>
+    <entry>
+      <string>Description</string>
+      <string>PC external, for debug purpose, laod PC from RF to this register.
+select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
+    </entry>
+    <entry>
+      <string>isGeneric</string>
+      <boolean>true</boolean>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>CLR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1140"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>reg, sync clear.dig</elementName>
+      <elementAttributes>
+        <entry>
+          <string>generic</string>
+          <string>Bits := int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1160" y="1080"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>CII</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>II</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1000" y="1060"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>D</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1060"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Multiplexer</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="920" y="1020"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="1120" y="1160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>NAnd</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="880" y="1180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>BitExtender</elementName>
+      <elementAttributes>
+        <entry>
+          <string>inputBits</string>
+          <int>1</int>
+        </entry>
+        <entry>
+          <string>outputBits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.outputBits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="780" y="1220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>Clock</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>C</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>Q</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>this.Bits = int(args.Bits);</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1320" y="1120"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="1220" y="1120"/>
+      <p2 x="1280" y="1120"/>
+    </wire>
+    <wire>
+      <p1 x="1280" y="1120"/>
+      <p2 x="1320" y="1120"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1060"/>
+      <p2 x="920" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="1060"/>
+      <p2 x="1000" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1220"/>
+      <p2 x="780" y="1220"/>
+    </wire>
+    <wire>
+      <p1 x="840" y="1220"/>
+      <p2 x="880" y="1220"/>
+    </wire>
+    <wire>
+      <p1 x="1120" y="1160"/>
+      <p2 x="1160" y="1160"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1000"/>
+      <p2 x="1120" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1100"/>
+      <p2 x="940" y="1100"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="1100"/>
+      <p2 x="1000" y="1100"/>
+    </wire>
+    <wire>
+      <p1 x="1120" y="1100"/>
+      <p2 x="1160" y="1100"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="1040"/>
+      <p2 x="980" y="1040"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="1200"/>
+      <p2 x="980" y="1200"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1140"/>
+      <p2 x="1160" y="1140"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="980"/>
+      <p2 x="1280" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="1080"/>
+      <p2 x="1160" y="1080"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="1180"/>
+      <p2 x="880" y="1180"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="1020"/>
+      <p2 x="920" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="1280" y="980"/>
+      <p2 x="1280" y="1120"/>
+    </wire>
+    <wire>
+      <p1 x="1120" y="1000"/>
+      <p2 x="1120" y="1100"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="980"/>
+      <p2 x="900" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="1040"/>
+      <p2 x="980" y="1060"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="1100"/>
+      <p2 x="980" y="1200"/>
+    </wire>
+    <wire>
+      <p1 x="940" y="1060"/>
+      <p2 x="940" y="1100"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>

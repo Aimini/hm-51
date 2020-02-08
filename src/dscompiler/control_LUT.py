@@ -305,6 +305,15 @@ for idx, one in enumerate(ALUSD.LUT):
     copy_one_parameter(one, ALUDL.LUT[idx])
     copy_one_parameter(one, ALUDH.LUT[idx])
 
+IRQ = name_parameters_lut([
+    {
+        'sh': '',
+        'name': 'write enable',
+        'len': 1,
+        'enum': ['', 'CLR']
+    }
+])
+
 JUMPABS = name_parameters_lut([
     {
         'sh': 'TYPE',
@@ -345,6 +354,7 @@ CTL_LUT = {
     'RAM': RAM,
     'XRAM': XRAM,
     'ALUSD': ALUSD,
+    'IRQ': IRQ,
     'JUMPABS': JUMPABS,
     'ADDRESS': ADDRESS,
     'IMMED': IMMED,
