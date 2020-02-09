@@ -14,13 +14,13 @@ from __51util import SIMRAM
 p = u.create_test()
 
 
-def one(count, p):
+def one(start_addr,count, p):
     """
     create a return list.
     IRAM have 128 byte, so you can fill most 64 PC value to IRAM.
     """
 
-    gaddr = u.gaped_addr(0,0xFFD0, 27, count)
+    gaddr = u.gaped_addr(start_addr,0xFFD0, 27, count)
 
     jl = ntl.jl(count)
     start_seg_no = random.choice(jl)
@@ -57,7 +57,6 @@ def one(count, p):
                 '''
     p += f'RET_SEG_END:'
 
-
-p.is_prepend_clear_reg = False
-one(2000, p)
+# init 6 reg,set PSW, init 256 iram
+one(6*3 +    3 +      256*(3 + 2), 2000, p)
 p += atl.clear_reg()
