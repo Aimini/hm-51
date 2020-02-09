@@ -72,7 +72,7 @@ def creat_jump_link(p, jump_count, order):
     p += '\n'.join(seg_str_list)
     p += f"JMP_SEG_END_{order}:"
 
-for x in range(635):
+for x in range(622):
     creat_jump_link(p, 7, x)
     p += atl.dump()
 

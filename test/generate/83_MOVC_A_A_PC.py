@@ -41,7 +41,7 @@ def one(seg_no):
         
         
 
-total_len = 0x20 # reserve for clear reg code
+total_len = 0x20 + 1280 # reserve for clear reg and clear iram code
 p.is_prepend_clear_reg = False
 i = 0
 while True:

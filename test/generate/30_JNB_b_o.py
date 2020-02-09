@@ -11,6 +11,8 @@ from __asmconst import *
 from __numutil import numutil as ntl
 from __51util import SIMRAM
 p = u.create_test()
+p.is_prepend_clear_reg = False
+p.is_prepend_clear_iram = False
 ram = SIMRAM()
 
 jump_limit =f'''
@@ -32,6 +34,9 @@ JNB 0xE0.0,JMP_LIMIT_256 ; JUMP TO 0x83 - 0x80 = 0x03
 JMP_SEG_START:
 '''
 p += jump_limit
+p += atl.clear_iram()
+p += atl.clear_reg()
+
 
 for addr in p.rbit():
     ram.set_direct(addr,random.getrandbits(8))
@@ -89,6 +94,6 @@ def creat_jump_link( jump_count, order):
     all_seg_str_list.append(f'JMP_SEG_END_{order}:')
     return '\n'.join(all_seg_str_list) 
 
-for x in range(900):
+for x in range(887):
     p += creat_jump_link(7, x)
 

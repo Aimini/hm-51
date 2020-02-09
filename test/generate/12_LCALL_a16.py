@@ -40,7 +40,7 @@ def sample_random(a, l):
         start += 1
     return a[0:l],a[l:]
 
-total_time = 9290
+total_time = 9113
 call_per_time = 64
 a = list(range(total_time))
 seg_str_list = list(range(total_time))

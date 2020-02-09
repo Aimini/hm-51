@@ -51,5 +51,5 @@ def test_ri(RI, p):
     p += atl.aste(RI, atl.I(ram.get_iram(ram.get_direct(RI.addr))))
     
 
-for x in range(297):
+for x in range(291):
     p.iter_ri(test_rs, test_ri)

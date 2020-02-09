@@ -26,6 +26,7 @@ class asm_test:
         self.filename = filename
         self.sio = io.StringIO()
         self.is_prepend_clear_reg = True
+        self.is_prepend_clear_iram = True
         self.is_append_dump = True
         self.is_append_exit = True
         def store_file():
@@ -38,6 +39,8 @@ class asm_test:
         content = [self.sio.getvalue()]
         if self.is_prepend_clear_reg:
             content.insert(0, atl.clear_reg())
+        if self.is_prepend_clear_iram:
+            content.insert(0, atl.clear_iram())
         if self.is_append_dump:
             content.append(atl.dump())
         if self.is_append_exit:

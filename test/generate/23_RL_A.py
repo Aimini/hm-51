@@ -11,7 +11,7 @@ from __asmconst import *
 p = u.create_test()
 
 
-for x in range(5000):
+for x in range(4900):
     value = random.getrandbits(8)
     r = ((value >> 7) & 1) | ((value & 0x7F) << 1)
     p += atl.move(SFR_A, atl.I(value))

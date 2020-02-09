@@ -167,3 +167,10 @@ def crash(info=""):
 
 def clear_reg():
     return '\n'.join([move(_, I(0)) for _ in ['SP', 'DPL', 'DPH', 'PSW', 'ACC', 'B']])
+
+def clear_iram():
+    s = 'MOV PSW , #0\n'
+    for iaddr in reversed(range(0x100)):
+        s += f'MOV 0, #{iaddr}\n'
+        s += f'MOV @R0, #0\n'
+    return s

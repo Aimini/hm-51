@@ -10,6 +10,8 @@ from __asmconst import *
 from __numutil import numutil as ntl
 
 p = u.create_test()
+p.is_prepend_clear_reg = False
+p.is_prepend_clear_iram = False
 
 jump_limit =f"""
 ; PC = 0
@@ -30,6 +32,8 @@ JNC JMP_LIMIT_256 ; JUMP TO 0x83 - 0x80 = 0x03
 JMP_SEG_START:
 """
 p += jump_limit
+p += atl.clear_iram()
+p += atl.clear_reg()
 
 
 def creat_jump_link(p, jump_count, order):

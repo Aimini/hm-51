@@ -11,6 +11,8 @@ from __asmconst import *
 from __numutil import numutil as ntl
 from __51util import SIMRAM
 p = u.create_test()
+p.is_prepend_clear_reg = False
+p.is_prepend_clear_iram = False
 ram = SIMRAM()
 
 jump_limit = f"""
@@ -32,7 +34,8 @@ JB 0xE0.1,JMP_LIMIT_256 ; JUMP TO 0x83 - 0x80 = 0x03
 JMP_SEG_START:
 """
 p += jump_limit
-
+p += atl.clear_iram()
+p += atl.clear_reg()
 
 def random_bit(x):
     yield random.choice(list(p.rbit()))

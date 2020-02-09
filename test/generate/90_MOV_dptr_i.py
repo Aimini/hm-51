@@ -24,5 +24,5 @@ def test_one(v,p):
 for x in ntl.bound(16):
     test_one(x, p)
 
-for _ in range(3100):
+for _ in range(3000):
     test_one(random.getrandbits(16), p)

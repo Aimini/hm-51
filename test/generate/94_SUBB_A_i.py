@@ -7,4 +7,4 @@
 
 from INS_XXX_A_i import INS_XXX_A_I
 
-INS_XXX_A_I("SUBB").gen(0xFF, 5663)
+INS_XXX_A_I("SUBB").gen(0xFF, 5503)

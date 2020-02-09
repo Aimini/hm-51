@@ -38,7 +38,7 @@ def one(p, count):
         p += f'PUSH {addr}'
 
 
-for x in range(100):
+for x in range(99):
     one(p,128)
 
     

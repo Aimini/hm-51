@@ -31,5 +31,5 @@ def iter_ri(RI, p):
         p += f'INC {RI}'
         p += atl.aste(RI, atl.I((start + x + 1) % 256))
 
-for x in range(192):
+for x in range(186):
     p.iter_ri(init_rs, iter_ri)

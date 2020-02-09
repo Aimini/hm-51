@@ -28,7 +28,7 @@ def test(addr, idx, p):
     p += atl.aste(SFR_PSW, atl.I(ram.get_direct(SFR_PSW.x)))
     
 
-for x in range(29):
+for x in range(28):
     p.iter_direct(init)
     p.iter_bit(test)
 

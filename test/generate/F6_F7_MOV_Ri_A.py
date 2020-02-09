@@ -39,5 +39,5 @@ def test_ri(RI, p):
 
 
 
-for x in range(496):
+for x in range(486):
     p.iter_ri(test_rs, test_ri)

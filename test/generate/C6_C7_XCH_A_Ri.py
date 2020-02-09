@@ -51,5 +51,5 @@ def one(p):
 
     p.iter_ri(test_rs, test_ri)
 
-for _ in range(44):
+for _ in range(43):
     one(p)

@@ -6,4 +6,4 @@
 
 from INS_XXX_A_d import INS_XXX_A_D
 
-INS_XXX_A_D("MOV").gen(0, 18)
+INS_XXX_A_D("MOV").gen(0, 17)

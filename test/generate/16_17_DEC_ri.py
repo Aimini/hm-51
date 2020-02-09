@@ -30,5 +30,5 @@ def iter_ri(RI, p):
         p += 'DEC {}'.format(RI)
         p += atl.aste(RI, atl.I((start - x - 1) % 256))
 
-for x in range(159):
+for x in range(155):
     p.iter_ri(init_rs, iter_ri)
