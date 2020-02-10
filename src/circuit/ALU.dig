@@ -466,6 +466,10 @@ ae,be,ce,de,ee,fe,f,1f,2f,3f,4f,5f,6f,7f,8f,9f,af,bf,cf,df,ef,ff</data>
       <p2 x="960" y="640"/>
     </wire>
     <wire>
+      <p1 x="920" y="800"/>
+      <p2 x="940" y="800"/>
+    </wire>
+    <wire>
       <p1 x="900" y="740"/>
       <p2 x="960" y="740"/>
     </wire>
