@@ -727,7 +727,7 @@ c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>LOE</string>
+          <string>~LOE</string>
         </entry>
       </elementAttributes>
       <pos x="760" y="860"/>
@@ -784,7 +784,7 @@ c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>HOE</string>
+          <string>~HOE</string>
         </entry>
       </elementAttributes>
       <pos x="760" y="900"/>
@@ -810,26 +810,6 @@ c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1
       <pos x="1000" y="580"/>
     </visualElement>
     <visualElement>
-      <elementName>Driver</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="1480" y="720"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Driver</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="1480" y="540"/>
-    </visualElement>
-    <visualElement>
       <elementName>Splitter</elementName>
       <elementAttributes>
         <entry>
@@ -852,6 +832,26 @@ c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80,1
         </entry>
       </elementAttributes>
       <pos x="1580" y="820"/>
+    </visualElement>
+    <visualElement>
+      <elementName>DriverInvSel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="1480" y="720"/>
+    </visualElement>
+    <visualElement>
+      <elementName>DriverInvSel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="1480" y="540"/>
     </visualElement>
   </visualElements>
   <wires>
