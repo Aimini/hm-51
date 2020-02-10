@@ -3465,16 +3465,6 @@ fc,1</data>
       <pos x="-1200" y="-120"/>
     </visualElement>
     <visualElement>
-      <elementName>Driver</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="-1680" y="260"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -3497,7 +3487,7 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>SFR_OE</string>
+          <string>~SFR_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1720" y="220"/>
@@ -3664,12 +3654,7 @@ fc,1</data>
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Value</string>
-          <long>0</long>
-        </entry>
-      </elementAttributes>
+      <elementAttributes/>
       <pos x="-1280" y="-60"/>
     </visualElement>
     <visualElement>
@@ -3762,11 +3747,6 @@ fc,1</data>
       <pos x="-1400" y="80"/>
     </visualElement>
     <visualElement>
-      <elementName>And</elementName>
-      <elementAttributes/>
-      <pos x="-1400" y="160"/>
-    </visualElement>
-    <visualElement>
       <elementName>Splitter</elementName>
       <elementAttributes>
         <entry>
@@ -3785,7 +3765,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>SFR_OE</string>
+          <string>~SFR_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1060" y="-20"/>
@@ -5142,6 +5122,21 @@ fc,1</data>
       </elementAttributes>
       <pos x="-1680" y="160"/>
     </visualElement>
+    <visualElement>
+      <elementName>NAnd</elementName>
+      <elementAttributes/>
+      <pos x="-1400" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>DriverInvSel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="-1680" y="260"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -5885,7 +5880,7 @@ fc,1</data>
       <p2 x="-1620" y="-500"/>
     </wire>
     <wire>
-      <p1 x="-1340" y="180"/>
+      <p1 x="-1320" y="180"/>
       <p2 x="-1260" y="180"/>
     </wire>
     <wire>
