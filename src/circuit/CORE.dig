@@ -2732,7 +2732,7 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>ALUDH_OE</string>
+          <string>~ALUDH_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-400" y="-400"/>
@@ -2746,7 +2746,7 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>ALUDL_OE</string>
+          <string>~ALUDL_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-400" y="-420"/>
@@ -2760,7 +2760,7 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>ALUS_OE</string>
+          <string>~ALUS_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-400" y="-440"/>
@@ -2770,7 +2770,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>ALUS_OE</string>
+          <string>~ALUS_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1620" y="-100"/>
@@ -2780,7 +2780,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>ALUDH_OE</string>
+          <string>~ALUDH_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1620" y="-60"/>
@@ -2790,7 +2790,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>ALUDL_OE</string>
+          <string>~ALUDL_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1620" y="-80"/>
@@ -5134,7 +5134,12 @@ fc,1</data>
     </visualElement>
     <visualElement>
       <elementName>DriverInvSel</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
       <pos x="-1680" y="160"/>
     </visualElement>
   </visualElements>
