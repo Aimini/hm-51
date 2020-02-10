@@ -208,8 +208,15 @@ BR = name_parameters_lut([
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
                  'ALUSF', ['ALUDF', 'CY', 'ZF', 'PF'], 'A7', 'A0'],
+    },
+    {
+        'sh': 'CPLQ',
+        'name': 'invert output',
+        'len': 1,
+        'enum': ['', 'CPLQ'],
     }
 ])
+
 
 RAM = name_parameters_lut([
     {
