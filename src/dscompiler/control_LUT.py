@@ -153,16 +153,10 @@ REGISTER_FILE = name_parameters_lut([
                  'T0',  'T1',  'T2',  'T3']
     },
     {
-        'sh': 'LWE',
+        'sh': 'WE',
         'name': 'write low nibble',
         'len': 1,
-        'enum': ['', 'LWE']
-    },
-    {
-        'sh': 'HWE',
-        'name': 'write high nibble',
-        'len': 1,
-        'enum': ['', 'HWE']
+        'enum': ['', 'WE']
     },
     {
         'sh': 'SFR',

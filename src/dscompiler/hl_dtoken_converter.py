@@ -194,7 +194,7 @@ class load_immed_translator(empty_translator):
         return r
 
 
-DEFAULT_TRANSLATOR = (alu_translator(), rf_translator(),
+DEFAULT_TRANSLATOR = (alu_translator(), 
                       jump_translator(), load_immed_translator())
 
 
