@@ -2,8 +2,7 @@
 
 
 RF(T1), ALU(EXTB), BR(CY)  # EXTB(T1, WR)
-BR(NQ)
-RF(T1), ALU(INSB), WR(WE)
+RF(T1), ALU(INSB), WR(WE), BR(CPLQ)
 RF(SFR), ALU(B), RAM(WE), BR(ONE)
 
 

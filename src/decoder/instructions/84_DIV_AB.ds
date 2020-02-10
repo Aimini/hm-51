@@ -98,5 +98,4 @@ RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
 # divided by zero
 ##############################################################################
 DIV_ZERO_DIVISOR:
-BR(ONE)
-RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
