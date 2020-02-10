@@ -11,6 +11,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import io
 import threading
+import signal
+
 
 args = sys.argv[1:]
 #args = ['gen_test', 'temp']
@@ -47,6 +49,7 @@ def create_subprocess(name):
 
 if __name__ == '__main__':
     pool = ThreadPoolExecutor(max_workers=5)
+
     tasks = []
     find_debug = False
     for filename in os.listdir(script_dir):
@@ -70,6 +73,16 @@ if __name__ == '__main__':
         r = pool.submit(create_subprocess, cmd)
         tasks.append(r)
 
+    def cancel_all():
+        for one in tasks:
+            if not one.running() and not one.cancelled():
+                one.cancel()
+
+    def int_cacel(signum, frame):
+        cancel_all()
+
+    signal.signal(signal.SIGINT, int_cacel)                                
+
     for future in as_completed(tasks):
         ret, name, stdout, stderr = future.result()
         if ret.returncode != 0:
@@ -77,9 +90,7 @@ if __name__ == '__main__':
                 print('error:', name)
                 print(stdout.decode('utf-8'))
                 print(stderr.decode('utf-8'))
-            for one in tasks:
-                if not one.cancelled():
-                    one.cancel()
+            cancel_all()
             exit(-1)
     print('total test:', len(tasks))
     exit(0)
