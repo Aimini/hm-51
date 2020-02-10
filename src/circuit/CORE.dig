@@ -78,10 +78,10 @@
         </entry>
         <entry>
           <string>NetName</string>
-          <string>ROM_OE</string>
+          <string>~ROM_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="-220"/>
+      <pos x="-460" y="-220"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2868,10 +2868,10 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>ROM_OE</string>
+          <string>~ROM_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1580" y="20"/>
+      <pos x="-1620" y="20"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -4959,11 +4959,6 @@ fc,1</data>
       <pos x="-1640" y="-40"/>
     </visualElement>
     <visualElement>
-      <elementName>Not</elementName>
-      <elementAttributes/>
-      <pos x="-1640" y="40"/>
-    </visualElement>
-    <visualElement>
       <elementName>Rectangle</elementName>
       <elementAttributes>
         <entry>
@@ -4980,11 +4975,6 @@ fc,1</data>
         </entry>
       </elementAttributes>
       <pos x="-380" y="-160"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Not</elementName>
-      <elementAttributes/>
-      <pos x="-1640" y="20"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -5124,6 +5114,38 @@ fc,1</data>
         </entry>
       </elementAttributes>
       <pos x="-380" y="220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="-420" y="-220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Rectangle</elementName>
+      <elementAttributes>
+        <entry>
+          <string>RectHeight</string>
+          <int>5</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>at28c64</string>
+        </entry>
+        <entry>
+          <string>RectWidth</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>RectRight</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="-440" y="-300"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="-1640" y="40"/>
     </visualElement>
   </visualElements>
   <wires>
@@ -5469,11 +5491,7 @@ fc,1</data>
     </wire>
     <wire>
       <p1 x="-1660" y="20"/>
-      <p2 x="-1640" y="20"/>
-    </wire>
-    <wire>
-      <p1 x="-1600" y="20"/>
-      <p2 x="-1580" y="20"/>
+      <p2 x="-1620" y="20"/>
     </wire>
     <wire>
       <p1 x="-400" y="340"/>
@@ -5540,10 +5558,6 @@ fc,1</data>
       <p2 x="-1020" y="280"/>
     </wire>
     <wire>
-      <p1 x="-380" y="-220"/>
-      <p2 x="-360" y="-220"/>
-    </wire>
-    <wire>
       <p1 x="-1380" y="-220"/>
       <p2 x="-1340" y="-220"/>
     </wire>
@@ -5554,6 +5568,14 @@ fc,1</data>
     <wire>
       <p1 x="-1660" y="-220"/>
       <p2 x="-1620" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-460" y="-220"/>
+      <p2 x="-420" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-380" y="-220"/>
+      <p2 x="-360" y="-220"/>
     </wire>
     <wire>
       <p1 x="-1720" y="220"/>
