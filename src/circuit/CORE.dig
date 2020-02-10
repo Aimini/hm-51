@@ -3562,7 +3562,7 @@ fc,1</data>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="260"/>
+      <pos x="-400" y="260"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -3573,10 +3573,10 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>CLR</string>
+          <string>~CLR</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="280"/>
+      <pos x="-400" y="280"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -3590,7 +3590,7 @@ fc,1</data>
           <string>BR_SRC</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="300"/>
+      <pos x="-400" y="300"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -3642,7 +3642,7 @@ fc,1</data>
           <string>ALUD_CO</string>
         </entry>
       </elementAttributes>
-      <pos x="-380" y="320"/>
+      <pos x="-400" y="320"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -5093,12 +5093,12 @@ fc,1</data>
           <boolean>true</boolean>
         </entry>
         <entry>
-          <string>Label</string>
-          <string>core is at28c64</string>
-        </entry>
-        <entry>
           <string>RectHeight</string>
           <int>10</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>core is at28c64</string>
         </entry>
         <entry>
           <string>RectWidth</string>
@@ -5106,6 +5106,24 @@ fc,1</data>
         </entry>
       </elementAttributes>
       <pos x="-380" y="-560"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Rectangle</elementName>
+      <elementAttributes>
+        <entry>
+          <string>RectHeight</string>
+          <int>10</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>L74+LS252</string>
+        </entry>
+        <entry>
+          <string>RectWidth</string>
+          <int>5</int>
+        </entry>
+      </elementAttributes>
+      <pos x="-380" y="220"/>
     </visualElement>
   </visualElements>
   <wires>
@@ -5142,7 +5160,7 @@ fc,1</data>
       <p2 x="-260" y="320"/>
     </wire>
     <wire>
-      <p1 x="-380" y="320"/>
+      <p1 x="-400" y="320"/>
       <p2 x="-360" y="320"/>
     </wire>
     <wire>
@@ -5186,7 +5204,7 @@ fc,1</data>
       <p2 x="-1360" y="260"/>
     </wire>
     <wire>
-      <p1 x="-380" y="260"/>
+      <p1 x="-400" y="260"/>
       <p2 x="-360" y="260"/>
     </wire>
     <wire>
@@ -5458,7 +5476,7 @@ fc,1</data>
       <p2 x="-1580" y="20"/>
     </wire>
     <wire>
-      <p1 x="-380" y="340"/>
+      <p1 x="-400" y="340"/>
       <p2 x="-360" y="340"/>
     </wire>
     <wire>
@@ -5506,7 +5524,7 @@ fc,1</data>
       <p2 x="-1520" y="-280"/>
     </wire>
     <wire>
-      <p1 x="-380" y="280"/>
+      <p1 x="-400" y="280"/>
       <p2 x="-360" y="280"/>
     </wire>
     <wire>
@@ -5798,7 +5816,7 @@ fc,1</data>
       <p2 x="-1620" y="-300"/>
     </wire>
     <wire>
-      <p1 x="-380" y="300"/>
+      <p1 x="-400" y="300"/>
       <p2 x="-360" y="300"/>
     </wire>
     <wire>
@@ -6110,6 +6128,10 @@ fc,1</data>
       <p2 x="-880" y="-80"/>
     </wire>
     <wire>
+      <p1 x="-400" y="320"/>
+      <p2 x="-400" y="340"/>
+    </wire>
+    <wire>
       <p1 x="-1620" y="160"/>
       <p2 x="-1620" y="200"/>
     </wire>
@@ -6140,10 +6162,6 @@ fc,1</data>
     <wire>
       <p1 x="-1080" y="-60"/>
       <p2 x="-1080" y="-40"/>
-    </wire>
-    <wire>
-      <p1 x="-380" y="320"/>
-      <p2 x="-380" y="340"/>
     </wire>
     <wire>
       <p1 x="-380" y="380"/>
