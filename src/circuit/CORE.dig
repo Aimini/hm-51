@@ -2806,16 +2806,6 @@ fc,1</data>
       <pos x="-260" y="-520"/>
     </visualElement>
     <visualElement>
-      <elementName>Driver</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="-1680" y="160"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -2834,10 +2824,10 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>IMMED_OE</string>
+          <string>~IMMED_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1580" y="-40"/>
+      <pos x="-1620" y="-40"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2848,7 +2838,7 @@ fc,1</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>IMMED_OE</string>
+          <string>~IMMED_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1720" y="120"/>
@@ -3133,7 +3123,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3147,7 +3137,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3161,7 +3151,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3175,7 +3165,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3189,7 +3179,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3203,7 +3193,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3217,7 +3207,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3231,7 +3221,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3245,7 +3235,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3259,7 +3249,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3273,7 +3263,7 @@ fc,1</data>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[74]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[73]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -4954,11 +4944,6 @@ fc,1</data>
       <pos x="-1700" y="40"/>
     </visualElement>
     <visualElement>
-      <elementName>Not</elementName>
-      <elementAttributes/>
-      <pos x="-1640" y="-40"/>
-    </visualElement>
-    <visualElement>
       <elementName>Rectangle</elementName>
       <elementAttributes>
         <entry>
@@ -5146,6 +5131,11 @@ fc,1</data>
       <elementName>Not</elementName>
       <elementAttributes/>
       <pos x="-1640" y="40"/>
+    </visualElement>
+    <visualElement>
+      <elementName>DriverInvSel</elementName>
+      <elementAttributes/>
+      <pos x="-1680" y="160"/>
     </visualElement>
   </visualElements>
   <wires>
@@ -5747,11 +5737,7 @@ fc,1</data>
     </wire>
     <wire>
       <p1 x="-1660" y="-40"/>
-      <p2 x="-1640" y="-40"/>
-    </wire>
-    <wire>
-      <p1 x="-1600" y="-40"/>
-      <p2 x="-1580" y="-40"/>
+      <p2 x="-1620" y="-40"/>
     </wire>
     <wire>
       <p1 x="-1380" y="-360"/>
