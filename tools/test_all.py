@@ -75,8 +75,9 @@ if __name__ == '__main__':
 
     def cancel_all():
         for one in tasks:
-            if not one.running() and not one.cancelled():
+            if not one.cancelled():
                 one.cancel()
+        pool.shutdown(wait = False)
 
     def int_cacel(signum, frame):
         cancel_all()
@@ -90,7 +91,9 @@ if __name__ == '__main__':
                 print('error:', name)
                 print(stdout.decode('utf-8'))
                 print(stderr.decode('utf-8'))
+            
             cancel_all()
             exit(-1)
+            break
     print('total test:', len(tasks))
     exit(0)
