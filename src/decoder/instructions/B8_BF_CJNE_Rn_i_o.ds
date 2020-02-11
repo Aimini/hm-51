@@ -4,9 +4,7 @@ RF(T1, WE), BUS(ROM)              # WR <- immed
 RF(T0, WE), BUS(RAM)
 RF(T1), ALU(A), WR(WE), BR(ZERO)
 RF(T0, WE), ALU(SUBB), WR(WE), BR(CY)        # WR <- A - immed
-RF(PSW, WE), ALU(SETCY)
-
-RF(T0), ALU(ZF), BR(ZF)
+RF(PSW, WE), ALU(SETCY), BR(ZF) # SETCY and ZF_B have same encoding
 
 BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_BEFORE_CHECK_INTERRUPT)
 # else excute PC + 1(BR) and execute a SJMP.

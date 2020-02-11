@@ -1,10 +1,7 @@
 # 0xB4 CJNE A, #immed, offset
-BUS(ROM), WR(WE), BR(ZERO)    # WR <- RAM[direct]
-RF(A), ALU(SUBB), WR(WE), BR(CY)      # WR <- A - direct
-RF(PSW, WE), ALU(SETCY)
-
-RF(T0, WE), ALU(B)
-RF(T0), ALU(ZF), BR(ZF)
+BUS(ROM), WR(WE), BR(ZERO)          # WR <- #immed
+RF(A), ALU(SUBB), WR(WE), BR(CY)    # WR <- A - #immed
+RF(PSW, WE), ALU(SETCY), BR(ZF)     # SETCY and ZF_B have same o
 
 
 BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_BEFORE_CHECK_INTERRUPT)

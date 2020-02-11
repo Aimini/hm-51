@@ -152,8 +152,9 @@ def generate_low_by_op(ci, f,  b, a):
         #clear cy now
         RL = (a & 0xB) | (ci << 2)
 
-    elif f == 0xC: # B/0
+    elif f == 0xC: # B/ZF_B
         RL = b
+        RH = 8 if b == 0 else 0 # send ZF to high part
 
     elif f == 0xD: 
         RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
@@ -271,8 +272,10 @@ def generate_high_by_op(ci, f, b, a):
         # SET OV now
         RL = a & 0x7
 
-    elif f == 0xC: # B/0
+    elif f == 0xC: # B/ZF_B
         RL = b
+        T = ci == 1 and b == 0
+        RH = 8 if T else 0
 
     elif f == 0xD:  # Ri IR, PSW/AND
         RL = b & 0x1 #RS1

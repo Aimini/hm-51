@@ -260,7 +260,7 @@ ALUDH = name_parameters_lut([
             '',   'DAF', 'ADDCF', 'SUBBF',
             'PF', 'OR',  'INSBF',  'EXTB',
             'ISRAPPIRQ',   'ZF',    '',      '',
-            '',    'AND',   'NA', 'INCCF']
+            'ZF_B',    'AND',   'NA', 'INCCF']
     }
 ])
 
