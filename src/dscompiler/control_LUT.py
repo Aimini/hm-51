@@ -245,9 +245,9 @@ ALUDL = name_parameters_lut([
         'len': 4,
         'enum': [
             'XOR', 'DA', 'ADDC', 'SUBB',
-            'A',  'B', 'INSB', 'XCHD',
+            'A',  'Ri', 'INSB', 'XCHD',
             'GENIRQN', 'SETPSWF', 'ADDR11REPLACE', 'SETOVCLRCY',
-            'Ri', 'Rn', 'SETPF', 'INCC']
+            'B', 'Rn', 'SETPF', 'INCC']
     }
 ])
 # see /src/alu/README.md
@@ -258,9 +258,9 @@ ALUDH = name_parameters_lut([
         'len': 4,
         'enum': [
             '',   'DAF', 'ADDCF', 'SUBBF',
-            'PF', 'ZF',  'INSBF',  'EXTB',
-            'ISRAPPIRQ',   '',    '',      '',
-            'OR',    'AND',   'NA', 'INCCF']
+            'PF', 'OR',  'INSBF',  'EXTB',
+            'ISRAPPIRQ',   'ZF',    '',      '',
+            '',    'AND',   'NA', 'INCCF']
     }
 ])
 

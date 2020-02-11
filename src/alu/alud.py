@@ -93,9 +93,9 @@ def generate_low_by_op(ci, f,  b, a):
         T = '{:b}'.format(a).count('1')
         RH = 8 if (T & 1) else 0 # pass pf to high part
 
-    elif f == 0x5: # B/ZF
-        RL = b
-        RH = 8 if a == 0 else 0 # send ZF to high part
+    elif f == 0x5: # Ri/ OR
+        RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
+        RH = a | b #OR
 
     elif f == 0x6: #INSB/INSBF
 
@@ -136,10 +136,11 @@ def generate_low_by_op(ci, f,  b, a):
         # IRQN2IRQ A
         RL = get_irqn(a,b)
         RH = a
-    elif f == 0x9: # SETPSWF A (PSW),B
+    elif f == 0x9: # SETPSWF A (PSW),B/ ZF
         # just replace A's OV AC CY from B
         # for lower part, set OV only
         RL = (0xb & a) | ((~0xb) & (b >> 1))
+        RH = 8 if a == 0 else 0 # send ZF to high part
 
     elif f == 0xA:# ADDR11REPLACE A, B
         # asume A = PCH[3:0], B = IR[7:4]
@@ -151,9 +152,9 @@ def generate_low_by_op(ci, f,  b, a):
         #clear cy now
         RL = (a & 0xB) | (ci << 2)
 
-    elif f == 0xC:
-        RL = (a & 0x1) | (b & 0x8) # Ri IR, PSW
-        RH = a | b #OR
+    elif f == 0xC: # B/0
+        RL = b
+
     elif f == 0xD: 
         RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
         RH = a & b #AND
@@ -199,10 +200,9 @@ def generate_high_by_op(ci, f, b, a):
         else:
             RH = 0
 
-    elif f == 0x5:  # B/ZF
-        RL = b
-        T = ci == 1 and a == 0
-        RH = 8 if T else 0
+    elif f == 0x5: # Ri IR, PSW/OR
+        RL = b & 0x1 # RS1
+        RH = a | b
 
     elif f == 0x6:  #INSB/INSBF
         RL = a | b
@@ -253,11 +253,14 @@ def generate_high_by_op(ci, f, b, a):
             else:
                 ISR |= 0x2
         RH = ISR
-    elif f == 0x9: # SETPSWF
+    elif f == 0x9: # SETPSWF/ ZF
         # SETPSWF A (PSW),B
         # just replace A's OV AC CY from B
         # for high part, set AC and CY
         RL = (0x3 & a) | (0xC & b)
+        # ZF
+        T = ci == 1 and a == 0
+        RH = 8 if T else 0
 
     elif f == 0xA: # ADDR11REPLACE
         # ADDR11REPLACE A (PCH), B(SWAPED IR)
@@ -267,13 +270,14 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0xB:  # SETOVCLRCY
         # SET OV now
         RL = a & 0x7
-        
-    elif f == 0xC: # Rn IR, PSW/OR
-        RL = b & 0x1 # RS1
-        RH = a | b
+
+    elif f == 0xC: # B/0
+        RL = b
+
     elif f == 0xD:  # Ri IR, PSW/AND
         RL = b & 0x1 #RS1
         RH = a & b
+
     elif f == 0xE:  #NA / SETPF
         RL = a
         RH =  ~a
