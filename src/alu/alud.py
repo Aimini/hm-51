@@ -237,7 +237,7 @@ def generate_high_by_op(ci, f, b, a):
     
     elif f == 0x8:  # GENIRQN/ISRAPPIRQ
         # generate low nibble IRQN
-        RL = get_irqn(a, b)
+        RL = get_irqn(a & 7, b) # only need a[2:0]
 
         # ISRAPPIRQN
         ISR = a
