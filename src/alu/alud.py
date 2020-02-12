@@ -68,6 +68,12 @@ def get_irqn(IRQ, IP):
         RL |= (IRQN % 4)
     return RL
 
+def set_bit(value, idx, bit):
+    return  (value & (~(0x1 << idx))) | (bit << idx)
+
+def get_bit(value, idx):
+    return (value >> idx) & 1
+
 def generate_low_by_op(ci, f,  b, a):
     RL = 0
     RH = 0
@@ -103,13 +109,7 @@ def generate_low_by_op(ci, f,  b, a):
         # insert ci to A[B]
         # in low part we just care of A in range [3:0],
         # and don't for get transport ci to high part(copy ci to co)
-        bidx = a
-        value = b
-        shift = bidx & 0x7
-        if bidx < 4:
-            RL = (value & (~(0x1 << shift))) | (ci << shift)
-        else:
-            RL = value
+        RL = set_bit(b, a & 7, ci) & 0xF
         RH = ci << 3
     elif f == 0x7: # XCHD/EXTB
         RL = b
@@ -123,13 +123,7 @@ def generate_low_by_op(ci, f,  b, a):
         # in low part we just care of A in range [3:0],
         # and beacause of ouput bit is in Q[7], we must send extracted bit
         # to high part by using co.
-        bidx = a
-        value = b
-        shift = bidx & 0x7
-        if shift  < 4:
-            co = (value >> shift) & 1
-        else:
-            co = 0
+        co = get_bit(b, a & 7)
         RH = co << 3
 
     elif f == 0x8: # GENIRQN/ ISRAPPIRQ
@@ -211,27 +205,19 @@ def generate_high_by_op(ci, f, b, a):
         # insert ci to A[B]
         # in low part we just care of A in range [3:0],
         # and don't forget transport ci to high part(copy ci to co)
-        bidx = a
-        value = b
-        shift = bidx & 0x7
-        if shift < 4:
-            RL = value
-        else:
-            T = shift & 0x3
-            RL = (value & (~(0x1 << T))) | (ci << T)
+
+        RL = set_bit(b << 4, a & 7, ci) >> 4
         RH = ci << 3
     elif f == 0x7:  #XCHD/EXTB
         #XCHD
         RL = a
         # EXTB A,B(BIDX)
         # extract BIT ,BIT =  A[B], BIT at Q[7] and co
-        bidx = a
-        value = b
-        shift = bidx & 0x7
-        if shift < 4:
+        bidx = a & 7
+        if bidx < 4:
             co = ci
         else:
-            co = value >> (shift & 0x3)
+            co = get_bit(b, bidx & 3)
         co &= 1
         RH = (co << 3)
     
