@@ -69,7 +69,7 @@ def get_irqn(IRQ, IP):
     return RL
 
 def set_bit(value, idx, bit):
-    return  (value & (~(0x1 << idx))) | (bit << idx)
+    return  (value & (~(0x1 << idx))) | ((bit&1) << idx)
 
 def get_bit(value, idx):
     return (value >> idx) & 1
@@ -78,8 +78,10 @@ def generate_low_by_op(ci, f,  b, a):
     RL = 0
     RH = 0
 
-    if f == 0x0:# XOR
+    if f == 0x0:# XOR/ CPLB
         RL = a ^ b
+        bit = get_bit(b, a & 7)
+        RH =  set_bit(b, a & 7, ~bit) & 0xF
 
     elif f == 0x1:# DA/DAF
         # DA low part, assume AC flag in B[3], if B[3] == 1 ,then add 6 to A[3:0]
@@ -167,9 +169,10 @@ def generate_low_by_op(ci, f,  b, a):
 def generate_high_by_op(ci, f, b, a):
     RL = 0
     RH = 0
-    if f == 0x0:  #XOR
+    if f == 0x0:  #XOR / CPLB
         RL = a^b
-
+        bit = get_bit(b << 4, a & 7)
+        RH =  set_bit(b << 4, a & 7, ~bit) >> 4
     elif f == 0x1:  # DA/DAF
         # DA low part, assume CY flag in B[3], if B[3] == 1 ,then add 6 to A
         # don't forget cy from low part

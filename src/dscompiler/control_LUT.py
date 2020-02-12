@@ -257,7 +257,7 @@ ALUDH = name_parameters_lut([
         'name': 'alud high part function',
         'len': 4,
         'enum': [
-            '',   'DAF', 'ADDCF', 'SUBBF',
+            'CPLB', 'DAF', 'ADDCF', 'SUBBF',
             'PF', 'OR',  'INSBF',  'EXTB',
             'ISRAPPIRQ',   'ZF',    '',      '',
             'ZF_B',    'AND',   'NA', 'INCCF']
