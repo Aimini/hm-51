@@ -1,0 +1,12 @@
+# 0xB5 CJNE A, direct, offset
+RF(T0, WE), BUS(ROM), SR(WE)          
+RF(T0), ALU(SFR), RFSRCR(WE)          
+RF(SFR), BUS(RAM), WR(WE),BR(ZERO)    # WR <- RAM[direct]
+
+RF(A), ALU(SUBB), WR(WE), BR(CY)      # WR <- A - direct
+RF(PSW, WE), ALU(SETCY), BR(ZF)  # SETCY and ZF_B have same o
+
+BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_BEFORE_CHECK_INTERRUPT)
+# else excute PC + 1(BR) and execute a SJMP.
+RF(PCL, WE), ALU(INCC), WR(WE), BR(CY)
+RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)

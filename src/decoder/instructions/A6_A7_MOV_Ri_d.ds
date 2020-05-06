@@ -1,0 +1,13 @@
+# 0xA6-0xA7, MOV @Ri, direct
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+RF(T0, WE), ALU(B)  # T0 <- RAM[direct]
+
+RF(PSW), ALU(A), WR(WE)
+RF(IR), ALU(Ri), SR(WE)
+BUS(RAM), SR(WE)
+RF(T0), ALU(A), RAM(WE), BR(ONE)
+
+
+@INC "snippet\inc_pc_jchkint.ds"

@@ -1,0 +1,2 @@
+# increase PC, you should set BR(ONE) before include this file
+@INC "snippet\inc_pc_endswith.ds","J(STAGE_CHECK_INTERRUPT)"

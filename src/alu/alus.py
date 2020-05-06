@@ -41,7 +41,8 @@ def generate_by_op(ci, f, A):
         R = (A & 0xB7) | ((A & 0x08) << 3) | ((A & 0x40) >>3)
     elif f == 0x1: #IVADDR
         # don't forget remove useless flag
-        R = ((A&3) << 3) + 3
+        IRNQ = bin(A & 0x7F)[::-1].find('1')
+        R = (IRNQ << 3) + 3
     elif f == 0x2: #CAA
         if ci:
             R = A
@@ -74,15 +75,28 @@ def generate_by_op(ci, f, A):
         R = T | (T << 4)
     elif f == 0xC:  # SETCY A
         R = (A & 0x7F) | (ci << 7)
-    elif f == 0xD:  # SETOVCLRCY A
-        # set OV, clear CY
-        T = A & 0x7F
-        R = (T & 0xFB) | (ci << 2)
-    elif f == 0xE:  # CHIRQ A
-        for i in reversed(range(8)):
-            if (A >> i) > 0:
-                R = A & (0xFF >> (8 - i))
-                break
+    elif f == 0xD:  # SELHIRQ
+        IP_L = (A & 4) >> 2
+        IV_L = (A & 8) >> 3
+        IR_L = (A & 3)
+
+        IP_H = ((A >> 4) & 4) >> 2
+        IV_H = ((A >> 4) & 8) >> 3
+        IR_H = ((A >> 4) & 3)
+        if IV_L:
+            if IV_H and IP_H and not IP_L:
+                R = ((IR_H + 4) << 1) | (IP_H << 7)
+            else:
+                R = (IR_L << 1) | (IP_L << 7)
+        else:
+            if IV_H:
+                R = ((IR_H + 4) << 1) | (IP_H << 7)
+
+    elif f == 0xE:  # ISRRET ISR
+        if A & 0x40:
+            R = A & 0xBF
+        else:
+            R = A & 0xDF
     elif f == 0xF:  # SWAP
         R = (A >> 4) | (A << 4)
 

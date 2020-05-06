@@ -1,0 +1,13 @@
+# 0x86-0x87, MOV direct, @Ri
+RF(T0, WE), BUS(ROM)
+
+RF(PSW), ALU(A), WR(WE)
+RF(IR), ALU(Ri), SR(WE)
+BUS(RAM), SR(WE)
+BUS(RAM), WR(WE)
+
+RF(T0),  ALU(SFR), RFSRCR(WE)
+RF(T0),  ALU(A), SR(WE)
+RF(SFR), ALU(B), RAM(WE), BR(ONE)
+
+@INC "snippet\inc_pc_jchkint.ds"

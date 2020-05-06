@@ -1,0 +1,9 @@
+# 0x88-0x8F, MOV direct, Rn 
+RF(T0, WE), BUS(ROM)
+
+@INC "snippet\load_rn_to_sr.ds"
+WR(WE), BUS(RAM)
+
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(T0), ALU(A), SR(WE)
+RF(SFR), RAM(WE), ALU(B), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

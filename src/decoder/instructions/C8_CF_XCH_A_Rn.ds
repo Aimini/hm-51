@@ -1,0 +1,5 @@
+# 0xC8-0xCF, XCH A, Rn
+@INC "snippet\load_rn_to_sr.ds"
+BUS(RAM), WR(WE)
+RF(A), ALU(A), RAM(WE)
+RF(A, WE), ALU(B), J(STAGE_CHECK_INTERRUPT)  # A @0 RAM[direect](WR)

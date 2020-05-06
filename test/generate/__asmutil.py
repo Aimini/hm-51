@@ -1,8 +1,11 @@
 from __numutil import numutil
+import random
+
 
 class HV():
     """"hex value class"""
-    def __init__(self,x, l = 2):
+
+    def __init__(self, x, l=2):
         self.x = x
         self.l = l
 
@@ -14,55 +17,71 @@ class I(HV):
     """
     8bit immed
     """
-    def __init__(self,x,l = 2):
-        super().__init__(x,l)
+
+    def __init__(self, x, l=2):
+        super().__init__(x, l)
 
     def __str__(self):
          return "#" + super().__str__()
+
+
+class RI():
+    """
+    1bit immed
+    """
+
+    def __init__(self, rs, ri):
+        self.addr = (rs << 3) + ri
+        self.ri = ri
+        self.rs = rs
+        self.psw_rs = rs << 3
+        
+    def __str__(self):
+         return "@R" + str(self.ri)
+
+
+class RN():
+    """
+    1bit immed
+    """
+
+    def __init__(self, rs, rn):
+        self.addr = (rs << 3) + rn
+        self.rn = rn
+        self.rs = rs
+        self.psw_rs = rs << 3
+    def __str__(self):
+         return "R" + str(self.rn)
+
+
+class BIT():
+    def __init__(self, direct, idx=None):
+        if idx is not None:
+            self.direct = direct
+            self.idx = idx
+        else:
+            self.idx = direct & 0x7
+            if direct < 0x80:
+                self.direct = (direct >> 3) + 0x20
+            else:
+                self.direct = direct & 0xF8
+
+    def __str__(self):
+        return str(HV(self.direct)) + '.' + str(self.idx)
 
 
 class D(HV):
     """
     direct address
     """
-    def __init__(self,x):
-        super().__init__(x,2)
 
-I_00 = I(0x00); I_01 = I(0x01); I_02 = I(0x02); I_03 = I(0x03); I_04 = I(0x04); I_05 = I(0x05); I_06 = I(0x06); I_07 = I(0x07); I_08 = I(0x08); I_09 = I(0x09); I_0A = I(0x0A); I_0B = I(0x0B); I_0C = I(0x0C); I_0D = I(0x0D); I_0E = I(0x0E); I_0F = I(0x0F); 
-I_10 = I(0x10); I_11 = I(0x11); I_12 = I(0x12); I_13 = I(0x13); I_14 = I(0x14); I_15 = I(0x15); I_16 = I(0x16); I_17 = I(0x17); I_18 = I(0x18); I_19 = I(0x19); I_1A = I(0x1A); I_1B = I(0x1B); I_1C = I(0x1C); I_1D = I(0x1D); I_1E = I(0x1E); I_1F = I(0x1F); 
-I_20 = I(0x20); I_21 = I(0x21); I_22 = I(0x22); I_23 = I(0x23); I_24 = I(0x24); I_25 = I(0x25); I_26 = I(0x26); I_27 = I(0x27); I_28 = I(0x28); I_29 = I(0x29); I_2A = I(0x2A); I_2B = I(0x2B); I_2C = I(0x2C); I_2D = I(0x2D); I_2E = I(0x2E); I_2F = I(0x2F); 
-I_30 = I(0x30); I_31 = I(0x31); I_32 = I(0x32); I_33 = I(0x33); I_34 = I(0x34); I_35 = I(0x35); I_36 = I(0x36); I_37 = I(0x37); I_38 = I(0x38); I_39 = I(0x39); I_3A = I(0x3A); I_3B = I(0x3B); I_3C = I(0x3C); I_3D = I(0x3D); I_3E = I(0x3E); I_3F = I(0x3F); 
-I_40 = I(0x40); I_41 = I(0x41); I_42 = I(0x42); I_43 = I(0x43); I_44 = I(0x44); I_45 = I(0x45); I_46 = I(0x46); I_47 = I(0x47); I_48 = I(0x48); I_49 = I(0x49); I_4A = I(0x4A); I_4B = I(0x4B); I_4C = I(0x4C); I_4D = I(0x4D); I_4E = I(0x4E); I_4F = I(0x4F); 
-I_50 = I(0x50); I_51 = I(0x51); I_52 = I(0x52); I_53 = I(0x53); I_54 = I(0x54); I_55 = I(0x55); I_56 = I(0x56); I_57 = I(0x57); I_58 = I(0x58); I_59 = I(0x59); I_5A = I(0x5A); I_5B = I(0x5B); I_5C = I(0x5C); I_5D = I(0x5D); I_5E = I(0x5E); I_5F = I(0x5F); 
-I_60 = I(0x60); I_61 = I(0x61); I_62 = I(0x62); I_63 = I(0x63); I_64 = I(0x64); I_65 = I(0x65); I_66 = I(0x66); I_67 = I(0x67); I_68 = I(0x68); I_69 = I(0x69); I_6A = I(0x6A); I_6B = I(0x6B); I_6C = I(0x6C); I_6D = I(0x6D); I_6E = I(0x6E); I_6F = I(0x6F); 
-I_70 = I(0x70); I_71 = I(0x71); I_72 = I(0x72); I_73 = I(0x73); I_74 = I(0x74); I_75 = I(0x75); I_76 = I(0x76); I_77 = I(0x77); I_78 = I(0x78); I_79 = I(0x79); I_7A = I(0x7A); I_7B = I(0x7B); I_7C = I(0x7C); I_7D = I(0x7D); I_7E = I(0x7E); I_7F = I(0x7F); 
-I_80 = I(0x80); I_81 = I(0x81); I_82 = I(0x82); I_83 = I(0x83); I_84 = I(0x84); I_85 = I(0x85); I_86 = I(0x86); I_87 = I(0x87); I_88 = I(0x88); I_89 = I(0x89); I_8A = I(0x8A); I_8B = I(0x8B); I_8C = I(0x8C); I_8D = I(0x8D); I_8E = I(0x8E); I_8F = I(0x8F); 
-I_90 = I(0x90); I_91 = I(0x91); I_92 = I(0x92); I_93 = I(0x93); I_94 = I(0x94); I_95 = I(0x95); I_96 = I(0x96); I_97 = I(0x97); I_98 = I(0x98); I_99 = I(0x99); I_9A = I(0x9A); I_9B = I(0x9B); I_9C = I(0x9C); I_9D = I(0x9D); I_9E = I(0x9E); I_9F = I(0x9F); 
-I_A0 = I(0xA0); I_A1 = I(0xA1); I_A2 = I(0xA2); I_A3 = I(0xA3); I_A4 = I(0xA4); I_A5 = I(0xA5); I_A6 = I(0xA6); I_A7 = I(0xA7); I_A8 = I(0xA8); I_A9 = I(0xA9); I_AA = I(0xAA); I_AB = I(0xAB); I_AC = I(0xAC); I_AD = I(0xAD); I_AE = I(0xAE); I_AF = I(0xAF); 
-I_B0 = I(0xB0); I_B1 = I(0xB1); I_B2 = I(0xB2); I_B3 = I(0xB3); I_B4 = I(0xB4); I_B5 = I(0xB5); I_B6 = I(0xB6); I_B7 = I(0xB7); I_B8 = I(0xB8); I_B9 = I(0xB9); I_BA = I(0xBA); I_BB = I(0xBB); I_BC = I(0xBC); I_BD = I(0xBD); I_BE = I(0xBE); I_BF = I(0xBF); 
-I_C0 = I(0xC0); I_C1 = I(0xC1); I_C2 = I(0xC2); I_C3 = I(0xC3); I_C4 = I(0xC4); I_C5 = I(0xC5); I_C6 = I(0xC6); I_C7 = I(0xC7); I_C8 = I(0xC8); I_C9 = I(0xC9); I_CA = I(0xCA); I_CB = I(0xCB); I_CC = I(0xCC); I_CD = I(0xCD); I_CE = I(0xCE); I_CF = I(0xCF); 
-I_D0 = I(0xD0); I_D1 = I(0xD1); I_D2 = I(0xD2); I_D3 = I(0xD3); I_D4 = I(0xD4); I_D5 = I(0xD5); I_D6 = I(0xD6); I_D7 = I(0xD7); I_D8 = I(0xD8); I_D9 = I(0xD9); I_DA = I(0xDA); I_DB = I(0xDB); I_DC = I(0xDC); I_DD = I(0xDD); I_DE = I(0xDE); I_DF = I(0xDF); 
-I_E0 = I(0xE0); I_E1 = I(0xE1); I_E2 = I(0xE2); I_E3 = I(0xE3); I_E4 = I(0xE4); I_E5 = I(0xE5); I_E6 = I(0xE6); I_E7 = I(0xE7); I_E8 = I(0xE8); I_E9 = I(0xE9); I_EA = I(0xEA); I_EB = I(0xEB); I_EC = I(0xEC); I_ED = I(0xED); I_EE = I(0xEE); I_EF = I(0xEF); 
-I_F0 = I(0xF0); I_F1 = I(0xF1); I_F2 = I(0xF2); I_F3 = I(0xF3); I_F4 = I(0xF4); I_F5 = I(0xF5); I_F6 = I(0xF6); I_F7 = I(0xF7); I_F8 = I(0xF8); I_F9 = I(0xF9); I_FA = I(0xFA); I_FB = I(0xFB); I_FC = I(0xFC); I_FD = I(0xFD); I_FE = I(0xFE); I_FF = I(0xFF); 
+    def __init__(self, x):
+        super().__init__(x, 2)
 
-D_00 = D(0x00); D_01 = D(0x01); D_02 = D(0x02); D_03 = D(0x03); D_04 = D(0x04); D_05 = D(0x05); D_06 = D(0x06); D_07 = D(0x07); D_08 = D(0x08); D_09 = D(0x09); D_0A = D(0x0A); D_0B = D(0x0B); D_0C = D(0x0C); D_0D = D(0x0D); D_0E = D(0x0E); D_0F = D(0x0F); 
-D_10 = D(0x10); D_11 = D(0x11); D_12 = D(0x12); D_13 = D(0x13); D_14 = D(0x14); D_15 = D(0x15); D_16 = D(0x16); D_17 = D(0x17); D_18 = D(0x18); D_19 = D(0x19); D_1A = D(0x1A); D_1B = D(0x1B); D_1C = D(0x1C); D_1D = D(0x1D); D_1E = D(0x1E); D_1F = D(0x1F); 
-D_20 = D(0x20); D_21 = D(0x21); D_22 = D(0x22); D_23 = D(0x23); D_24 = D(0x24); D_25 = D(0x25); D_26 = D(0x26); D_27 = D(0x27); D_28 = D(0x28); D_29 = D(0x29); D_2A = D(0x2A); D_2B = D(0x2B); D_2C = D(0x2C); D_2D = D(0x2D); D_2E = D(0x2E); D_2F = D(0x2F); 
-D_30 = D(0x30); D_31 = D(0x31); D_32 = D(0x32); D_33 = D(0x33); D_34 = D(0x34); D_35 = D(0x35); D_36 = D(0x36); D_37 = D(0x37); D_38 = D(0x38); D_39 = D(0x39); D_3A = D(0x3A); D_3B = D(0x3B); D_3C = D(0x3C); D_3D = D(0x3D); D_3E = D(0x3E); D_3F = D(0x3F); 
-D_40 = D(0x40); D_41 = D(0x41); D_42 = D(0x42); D_43 = D(0x43); D_44 = D(0x44); D_45 = D(0x45); D_46 = D(0x46); D_47 = D(0x47); D_48 = D(0x48); D_49 = D(0x49); D_4A = D(0x4A); D_4B = D(0x4B); D_4C = D(0x4C); D_4D = D(0x4D); D_4E = D(0x4E); D_4F = D(0x4F); 
-D_50 = D(0x50); D_51 = D(0x51); D_52 = D(0x52); D_53 = D(0x53); D_54 = D(0x54); D_55 = D(0x55); D_56 = D(0x56); D_57 = D(0x57); D_58 = D(0x58); D_59 = D(0x59); D_5A = D(0x5A); D_5B = D(0x5B); D_5C = D(0x5C); D_5D = D(0x5D); D_5E = D(0x5E); D_5F = D(0x5F); 
-D_60 = D(0x60); D_61 = D(0x61); D_62 = D(0x62); D_63 = D(0x63); D_64 = D(0x64); D_65 = D(0x65); D_66 = D(0x66); D_67 = D(0x67); D_68 = D(0x68); D_69 = D(0x69); D_6A = D(0x6A); D_6B = D(0x6B); D_6C = D(0x6C); D_6D = D(0x6D); D_6E = D(0x6E); D_6F = D(0x6F); 
-D_70 = D(0x70); D_71 = D(0x71); D_72 = D(0x72); D_73 = D(0x73); D_74 = D(0x74); D_75 = D(0x75); D_76 = D(0x76); D_77 = D(0x77); D_78 = D(0x78); D_79 = D(0x79); D_7A = D(0x7A); D_7B = D(0x7B); D_7C = D(0x7C); D_7D = D(0x7D); D_7E = D(0x7E); D_7F = D(0x7F); 
-D_80 = D(0x80); D_81 = D(0x81); D_82 = D(0x82); D_83 = D(0x83); D_84 = D(0x84); D_85 = D(0x85); D_86 = D(0x86); D_87 = D(0x87); D_88 = D(0x88); D_89 = D(0x89); D_8A = D(0x8A); D_8B = D(0x8B); D_8C = D(0x8C); D_8D = D(0x8D); D_8E = D(0x8E); D_8F = D(0x8F); 
-D_90 = D(0x90); D_91 = D(0x91); D_92 = D(0x92); D_93 = D(0x93); D_94 = D(0x94); D_95 = D(0x95); D_96 = D(0x96); D_97 = D(0x97); D_98 = D(0x98); D_99 = D(0x99); D_9A = D(0x9A); D_9B = D(0x9B); D_9C = D(0x9C); D_9D = D(0x9D); D_9E = D(0x9E); D_9F = D(0x9F); 
-D_A0 = D(0xA0); D_A1 = D(0xA1); D_A2 = D(0xA2); D_A3 = D(0xA3); D_A4 = D(0xA4); D_A5 = D(0xA5); D_A6 = D(0xA6); D_A7 = D(0xA7); D_A8 = D(0xA8); D_A9 = D(0xA9); D_AA = D(0xAA); D_AB = D(0xAB); D_AC = D(0xAC); D_AD = D(0xAD); D_AE = D(0xAE); D_AF = D(0xAF); 
-D_B0 = D(0xB0); D_B1 = D(0xB1); D_B2 = D(0xB2); D_B3 = D(0xB3); D_B4 = D(0xB4); D_B5 = D(0xB5); D_B6 = D(0xB6); D_B7 = D(0xB7); D_B8 = D(0xB8); D_B9 = D(0xB9); D_BA = D(0xBA); D_BB = D(0xBB); D_BC = D(0xBC); D_BD = D(0xBD); D_BE = D(0xBE); D_BF = D(0xBF); 
-D_C0 = D(0xC0); D_C1 = D(0xC1); D_C2 = D(0xC2); D_C3 = D(0xC3); D_C4 = D(0xC4); D_C5 = D(0xC5); D_C6 = D(0xC6); D_C7 = D(0xC7); D_C8 = D(0xC8); D_C9 = D(0xC9); D_CA = D(0xCA); D_CB = D(0xCB); D_CC = D(0xCC); D_CD = D(0xCD); D_CE = D(0xCE); D_CF = D(0xCF); 
-D_D0 = D(0xD0); D_D1 = D(0xD1); D_D2 = D(0xD2); D_D3 = D(0xD3); D_D4 = D(0xD4); D_D5 = D(0xD5); D_D6 = D(0xD6); D_D7 = D(0xD7); D_D8 = D(0xD8); D_D9 = D(0xD9); D_DA = D(0xDA); D_DB = D(0xDB); D_DC = D(0xDC); D_DD = D(0xDD); D_DE = D(0xDE); D_DF = D(0xDF); 
-D_E0 = D(0xE0); D_E1 = D(0xE1); D_E2 = D(0xE2); D_E3 = D(0xE3); D_E4 = D(0xE4); D_E5 = D(0xE5); D_E6 = D(0xE6); D_E7 = D(0xE7); D_E8 = D(0xE8); D_E9 = D(0xE9); D_EA = D(0xEA); D_EB = D(0xEB); D_EC = D(0xEC); D_ED = D(0xED); D_EE = D(0xEE); D_EF = D(0xEF); 
-D_F0 = D(0xF0); D_F1 = D(0xF1); D_F2 = D(0xF2); D_F3 = D(0xF3); D_F4 = D(0xF4); D_F5 = D(0xF5); D_F6 = D(0xF6); D_F7 = D(0xF7); D_F8 = D(0xF8); D_F9 = D(0xF9); D_FA = D(0xFA); D_FB = D(0xFB); D_FC = D(0xFC); D_FD = D(0xFD); D_FE = D(0xFE); D_FF = D(0xFF); 
-def move(dest,src):
+
+def move(dest, src):
     return f"MOV {dest},{src}"
+
 
 def ins(*args):
     '''
@@ -77,15 +96,21 @@ def ins(*args):
     '''
     return args[0] + ' ' + ', '.join([str(_) for _ in args[1:]])
 
-def exit(src = I_00):
+
+def dump(count=""):
+    return f";;;;;;;;;;;; dump {count}\n" + move(D(0xFB), I(1))
+
+
+def exit():
     """
     return string of instructions that exit from Digitalc.exe.
         src: int, D, I
             exit code source, can be a immed(I) or direct address(int, D),default is exit with immediate 0.
     """
-    return '\n'.join([move(D_EF,src),move(D_EE,I_01)])
+    return move(D(0xFC), I(1))
 
-def ast(a,b,func):
+
+def ast(a, b, func):
     """
     return string of instructions that excute assert function.
         a: str,int,D,I
@@ -99,31 +124,53 @@ def ast(a,b,func):
 
     """
     return """
-MOV 0xFF, {}
-MOV 0xFE, {}
 MOV 0xFD, {}
-""".format(a,b,func)
+MOV 0xFE, {}
+MOV 0xFF, {}
+""".format(a, b, func)
 
 
-def astl(a,b):
+def brk():
     """
-    return string of instructions that assert a < b.
+    return string of instructions that make a break
     """
-    return ast(a,b,I_01)
+    return "MOV 0xFD, 0"
 
-def aste(a,b):
-    """
-    return string of instructions that assert a = b.
-    """
-    return ast(a,b,I_02)
 
-def astg(a,b):
+def astg(a, b):
     """
     return string of instructions that assert a > b.
     """
-    return ast(a,b,I_03)
+    return f";;;;;;;;;;;; assert {a} > {b} \n" + ast(a, b, I(1))
 
-reg_A = "A"
-reg_B = "B"
-reg_IE = "IE"
-reg_IP = "IP"
+
+def aste(a, b):
+    """
+    return string of instructions that assert a = b.
+    """
+    return f";;;;;;;;;;;; assert {a} == {b} \n" + ast(a, b, I(2))
+
+
+def astl(a, b):
+    """
+    return string of instructions that assert a < b.
+    """
+    return f";;;;;;;;;;;; assert {a} < {b} \n" + ast(a, b, I(3))
+
+
+def crash(info=""):
+    """
+    return string of instructions that assert a < b.
+    """
+    return f";;;;;;;;;;;; crash: {info} \n" + move(0xFF, I(4))
+
+
+def clear_reg():
+    return '\n'.join([move(_, I(0)) for _ in ['SP', 'DPL', 'DPH', 'PSW', 'ACC', 'B']])
+
+def clear_iram():
+    s = 'MOV PSW , #0\n'
+    for iaddr in reversed(range(0x100)):
+        s += f'MOV 0, #{iaddr}\n'
+        s += f'MOV @R0, #0\n'
+    return s

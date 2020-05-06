@@ -6,18 +6,13 @@
 #########################################################
 
 import __util as u
-import __asmutil as atl
+from __asmconst import *
 
-def one(*vargs):
-    addr = vargs[0]
+p = u.create_test()
+
+def one(addr, p):
     # set memory cells' value to it's address
-    return atl.move(atl.D(addr),atl.I(addr))
+    p += atl.move(atl.D(addr),atl.I(addr))
 
-    
-def do(w):
-    def wone(*vargs):
-        w(one(*vargs))
-    
-    u.sdirect(wone)
 
-u.test(do)
+p.iter_direct(one)

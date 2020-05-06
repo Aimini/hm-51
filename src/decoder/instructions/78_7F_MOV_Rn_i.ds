@@ -1,0 +1,4 @@
+# 0x78-0X7F, MOV Rn, #immed
+RF(T0, WE), BUS(ROM)  # T0 <- immed
+@INC "snippet\load_rn_to_sr.ds"
+RF(T0), ALU(A), RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

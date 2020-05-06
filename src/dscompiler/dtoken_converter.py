@@ -1,13 +1,14 @@
 ##########################################
 # 2019-12-22 12:44:23
 # AI
-# dtoken compiler, compile all dtoken in all lines to 
+# dtoken compiler, compile all dtoken in all lines to
 # machine code
 ##########################################
 import enum
 import tokenize
 import dtoken
 import json
+
 
 class cstate(enum.Enum):
     ERROR = enum.auto()
@@ -24,7 +25,6 @@ class cstate(enum.Enum):
     PAR_SEPERATE = enum.auto()
     GET_ONE_PARAMETER = enum.auto()
     PARAMETER_LIST_END = enum.auto()
-
 
     def next(self, token):
         """
@@ -43,7 +43,6 @@ class cstate(enum.Enum):
         is_lineend = ttype in (tokenize.ENDMARKER, tokenize.NEWLINE) or ttype == tokenize.NL
         is_op = ttype == tokenize.OP
 
-        
         scls = type(self)
         def check_op(s): return is_op and tstr == s
 
@@ -136,16 +135,15 @@ class dtoken_converter:
 
     def __init__(self):
         self.parameters_owner = None
-        self.parameters = [] #store control's parameters
+        self.parameters = []  # store control's parameters
 
-        self.dtoken_lines = [] 
-        self.marks_per_line = [] # all marks in one(current) line
-
+        self.dtoken_lines = []
+        self.marks_per_line = []  # all marks in one(current) line
 
     def dtoken_from_pytoken(self, pytoken, dtype):
         # line, type, name
         return dtoken.dtoken(pytoken.start[0], dtype, pytoken.string)
-        
+
     def add(self, state, appendtokens):
         """
             according state and appendtokens to generate decoder token
@@ -155,13 +153,13 @@ class dtoken_converter:
         if state in (cstate.CONTROL_LINEEND, cstate.CONTROL):
             # name, ','
             # name, '\n\r'
-            dt2 = self.dtoken_from_pytoken(appendtokens[-2],None)
+            dt2 = self.dtoken_from_pytoken(appendtokens[-2], None)
             dt2.type = dtoken.CONTROL
             self.marks_per_line.append(dt2)
         #find jump mark
         elif state == cstate.JUMP_MARK:
             # name , ':'
-            dt2 = self.dtoken_from_pytoken(appendtokens[-2],None)
+            dt2 = self.dtoken_from_pytoken(appendtokens[-2], None)
             dt2.type = dtoken.JUMP_MARK
             self.marks_per_line.append(dt2)
         elif state == cstate.PARAMETER_LIST_BEGIN:
@@ -169,7 +167,7 @@ class dtoken_converter:
             self.parameters_owner = appendtokens[-2]
         elif state == cstate.GET_ONE_PARAMETER:
             if t1.type == tokenize.NUMBER:
-                self.parameters.append(int(t1.string,0))
+                self.parameters.append(int(t1.string, 0))
             else:
                 self.parameters.append(t1.string)
         elif state == cstate.PARAMETER_LIST_END:
@@ -181,7 +179,7 @@ class dtoken_converter:
             self.dtoken_lines.append([self.marks_per_line[0].lineno, self.marks_per_line])
             self.marks_per_line = []
 
-    def convert(self,pytokens_iter):
+    def convert(self, pytokens_iter):
         """
         pytokens_iter:
             iterable object that contains py tokens.
@@ -237,5 +235,5 @@ class dtoken_converter:
                     continue
                 else:
                     break
-                
+
         return self.dtoken_lines, pytoken_lines

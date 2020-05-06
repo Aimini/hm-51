@@ -1,0 +1,7 @@
+# 0xD6-0xD7, XCHD A, @Ri
+@INC "snippet\load_ri_to_sr.ds"
+RF(T0, WE), BUS(RAM)
+RF(A),ALU(A), WR(WE)
+RF(T0),ALU(XCHD), RAM(WE)
+RF(T0),ALU(A),WR(WE)
+RF(A,WE),ALU(XCHD),J(STAGE_CHECK_INTERRUPT)

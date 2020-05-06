@@ -1,0 +1,19 @@
+#This file fits the function  "A + direct + BR"(ADD, ADDC) or "A- direct - BR"(SUBB)
+# par 0: the BR function, ADD using ZERO. ADDC and SUBB using Q,
+# but you should load CY to BR before include this file.
+# par 1: ALU function,  must ADDC or SUBB
+# par 2: FLAG of ADDC, of SUBB, must be ADDCF or SUBBF
+
+RF(T0, WE), BUS(ROM),  SR(WE), BR(@0)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+RF(T1, WE), ALU(B)         # T1 <- WR <- RAM[direct]
+
+# load flag to PSW
+RF(A), ALU(@2), WR(WE)
+RF(T0, WE), ALU(B)
+RF(T0), ALU(ADJF), WR(WE)
+RF(PSW, WE), ALU(SETPSWF)
+
+RF(T1), ALU(A), WR(WE)
+RF(A, WE), ALU(@1), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

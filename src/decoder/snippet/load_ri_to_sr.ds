@@ -1,0 +1,13 @@
+####################################################
+# load byte that contain target bit.
+# require: 
+#   - NONE
+# used:
+#    WR, SR
+# leave:
+#   WR: PSW
+#   SR: Ri address
+####################################################
+RF(PSW), ALU(A), WR(WE)
+RF(IR), ALU(Ri), SR(WE)
+BUS(RAM),SR(WE)

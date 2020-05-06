@@ -1,1 +1,1 @@
-src\dscompiler\compile.py -i src\decoder\decoder.ds -o eeprom-bin\decoder.bin -d temp\decoder.disa
+src\dscompiler\compile.py -i src\decoder\decoder.ds -o eeprom-bin\decoder.bin -d temp\decoder.disa -s temp\decoder.pre.ds

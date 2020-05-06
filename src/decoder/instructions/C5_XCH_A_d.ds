@@ -1,0 +1,12 @@
+########### 0xC5,XCH A, direct
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+RF(T0, WE), ALU(B)  # T0 <- RAM[direct]
+RF(A), ALU(A), WR(WE)
+RF(SFR), RAM(WE), ALU(B)  # RAM[direct] <- A
+RF(T0), ALU(A), WR(WE)
+RF(A, WE), ALU(B), BR(ONE)  # A <- T0
+
+
+@INC "snippet\inc_pc_jchkint.ds"

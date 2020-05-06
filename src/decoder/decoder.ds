@@ -15,15 +15,14 @@ RF(IR,WE),BUS(ROM)
 
 # set parity flag
 RF(A),      ALU(PF),   BR(ALUDF)
-RF(PSW,WE), ALU(SETPF), BR(ONE) # set BR to prepare increase PC
+RF(PSW,WE), ALU(SETPF), BR(ONE) 
 #increase PC
-RF(PCL,WE),ALU(INCC), WR(WE), BR(CY)           # PCL + 1,  STORE CARRY
-RF(PCH,WE),ALU(INCC), SR(WE)                   # PCH + CY
+@INC "snippet\inc_pc_wrsr.ds"
 
 ###
 # indstruction decode jump
 #####
-RF(IR), JLT(0x80,IRSEG_0_7F)
+RF(IR), JLT(0x80,IRSEG_0_7F), BR(ZERO) # set BR to prepare increase PC
 ## IRSEG_80_FF
 RF(IR), JLT(0xC0,IRSEG_80_BF)
 ## IRSEG_C0_FF
@@ -31,112 +30,55 @@ RF(IR), JLT(0xE0,IRSEG_C0_DF)
 ## IRSEG_E0_FF
 RF(IR), JLT(0xF0,IRSEG_E0_EF)
 ## IRSEG_F0_FF
-RF(IR), JLT(0xF8,IRSEG_F0_F7), WR(WE) # move IR to WR, why? see "MOV Rn, A"
-## IRSEG_F8_FF, MOV Rn, A
-## we had move IR to WR at JLT. WR -> T0
-RF(T0,WE), ALU(B)
-RF(PSW),ALU(A), WR(WE)
-RF(T0), ALU(Rn),SR(WE)
-RF(A,WE), BUS(RAM)
+RF(IR), JLT(0xF8,IRSEG_F0_F7)
+## IRSEG_F8_FF -----------------
+#  MOV Rn, A
+@INC "instructions\F8_FF_MOV_Rn_A.ds"
+#------------------------------
+
 
 IRSEG_F0_F7:
 RF(IR), JLT(0xF4,IRSEG_F0_F3)
 ## IRSEG_F4_F7
 RF(IR), JLT(0xF6,IRSEG_F4_F5)
-## IRSEG_F6_F7
+# IRSEG_F6_F7 ------------------
+# MOV @Ri, A
+@INC "instructions\F6_F7_MOV_Ri_A.ds"
+#------------------------------
 
 
 IRSEG_F4_F5:
 RF(IR), JLT(0xF5,IRSEG_F4)
 IRSEG_F5: #--------------------
-
+# MOV direct, A
+@INC "instructions\F5_MOV_d_A.ds"
 #------------------------------
 
 
 IRSEG_F4: #--------------------
-
+#CPL A
+RF(A,WE), ALU(NA), J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
 IRSEG_F0_F3:
 RF(IR), JLT(0xF2,IRSEG_F0_F1)
-## IRSEG_F2_F3
-RF(IR), JLT(0xF3,IRSEG_F2)
-IRSEG_F3: #--------------------
-
-#------------------------------
-
-
-IRSEG_F2: #--------------------
-
+## IRSEG_F2_F3 ----------------
+@INC "instructions\F2_F3_MOVX_Ri_A.ds"
 #------------------------------
 
 
 IRSEG_F0_F1:
-RF(IR), JLT(0xF1,IRSEG_F0)
-IRSEG_F1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xF0,CSEG_ACALL_ADDR11)
 IRSEG_F0: #--------------------
-
+@INC "instructions\F0_MOVX_DPTR_A.ds"
 #------------------------------
 
 
 IRSEG_E0_EF:
 RF(IR), JLT(0xE8,IRSEG_E0_E7)
-## IRSEG_E8_EF
-RF(IR), JLT(0xEC,IRSEG_E8_EB)
-## IRSEG_EC_EF
-RF(IR), JLT(0xEE,IRSEG_EC_ED)
-## IRSEG_EE_EF
-RF(IR), JLT(0xEF,IRSEG_EE)
-IRSEG_EF: #--------------------
-
-#------------------------------
-
-
-IRSEG_EE: #--------------------
-
-#------------------------------
-
-
-IRSEG_EC_ED:
-RF(IR), JLT(0xED,IRSEG_EC)
-IRSEG_ED: #--------------------
-
-#------------------------------
-
-
-IRSEG_EC: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8_EB:
-RF(IR), JLT(0xEA,IRSEG_E8_E9)
-## IRSEG_EA_EB
-RF(IR), JLT(0xEB,IRSEG_EA)
-IRSEG_EB: #--------------------
-
-#------------------------------
-
-
-IRSEG_EA: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8_E9:
-RF(IR), JLT(0xE9,IRSEG_E8)
-IRSEG_E9: #--------------------
-
-#------------------------------
-
-
-IRSEG_E8: #--------------------
-
+## IRSEG_E8_EF ----------------
+@INC "instructions\E8_EF_MOV_A_Rn.ds"
 #------------------------------
 
 
@@ -144,53 +86,34 @@ IRSEG_E0_E7:
 RF(IR), JLT(0xE4,IRSEG_E0_E3)
 ## IRSEG_E4_E7
 RF(IR), JLT(0xE6,IRSEG_E4_E5)
-## IRSEG_E6_E7
-RF(IR), JLT(0xE7,IRSEG_E6)
-IRSEG_E7: #--------------------
-
-#------------------------------
-
-
-IRSEG_E6: #--------------------
-
+# IRSEG_E6_E7 ----------------
+@INC "instructions\E6_E7_MOV_A_Ri.ds"
 #------------------------------
 
 
 IRSEG_E4_E5:
 RF(IR), JLT(0xE5,IRSEG_E4)
 IRSEG_E5: #--------------------
-
+@INC "instructions\E5_MOV_A_d.ds"
 #------------------------------
 
 
 IRSEG_E4: #--------------------
-
+@INC "instructions\E4_CLR_A.ds"
 #------------------------------
 
 
 IRSEG_E0_E3:
 RF(IR), JLT(0xE2,IRSEG_E0_E1)
-## IRSEG_E2_E3
-RF(IR), JLT(0xE3,IRSEG_E2)
-IRSEG_E3: #--------------------
-
-#------------------------------
-
-
-IRSEG_E2: #--------------------
-
+# IRSEG_E2_E3 -----------------
+@INC "instructions\E2_E3_MOVX_A_Ri.ds"
 #------------------------------
 
 
 IRSEG_E0_E1:
-RF(IR), JLT(0xE1,IRSEG_E0)
-IRSEG_E1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xE0,CSEG_AJMP_ADDR11)
 IRSEG_E0: #--------------------
-
+@INC "instructions\E0_MOVX_A_DPTR.ds"
 #------------------------------
 
 
@@ -198,57 +121,8 @@ IRSEG_C0_DF:
 RF(IR), JLT(0xD0,IRSEG_C0_CF)
 ## IRSEG_D0_DF
 RF(IR), JLT(0xD8,IRSEG_D0_D7)
-## IRSEG_D8_DF
-RF(IR), JLT(0xDC,IRSEG_D8_DB)
-## IRSEG_DC_DF
-RF(IR), JLT(0xDE,IRSEG_DC_DD)
-## IRSEG_DE_DF
-RF(IR), JLT(0xDF,IRSEG_DE)
-IRSEG_DF: #--------------------
-
-#------------------------------
-
-
-IRSEG_DE: #--------------------
-
-#------------------------------
-
-
-IRSEG_DC_DD:
-RF(IR), JLT(0xDD,IRSEG_DC)
-IRSEG_DD: #--------------------
-
-#------------------------------
-
-
-IRSEG_DC: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8_DB:
-RF(IR), JLT(0xDA,IRSEG_D8_D9)
-## IRSEG_DA_DB
-RF(IR), JLT(0xDB,IRSEG_DA)
-IRSEG_DB: #--------------------
-
-#------------------------------
-
-
-IRSEG_DA: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8_D9:
-RF(IR), JLT(0xD9,IRSEG_D8)
-IRSEG_D9: #--------------------
-
-#------------------------------
-
-
-IRSEG_D8: #--------------------
-
+## IRSEG_D8_DF -----------------
+@INC "instructions\D8_DF_DJNZ_Rn_o.ds"
 #------------------------------
 
 
@@ -256,27 +130,20 @@ IRSEG_D0_D7:
 RF(IR), JLT(0xD4,IRSEG_D0_D3)
 ## IRSEG_D4_D7
 RF(IR), JLT(0xD6,IRSEG_D4_D5)
-## IRSEG_D6_D7
-RF(IR), JLT(0xD7,IRSEG_D6)
-IRSEG_D7: #--------------------
-
-#------------------------------
-
-
-IRSEG_D6: #--------------------
-
+# IRSEG_D6_D7 -----------------
+@INC "instructions\D6_D7_XCHD_A_Ri.ds"
 #------------------------------
 
 
 IRSEG_D4_D5:
 RF(IR), JLT(0xD5,IRSEG_D4)
 IRSEG_D5: #--------------------
-
+@INC "instructions\D5_DJNZ_d_o.ds"
 #------------------------------
 
 
 IRSEG_D4: #--------------------
-
+@INC "instructions\D4_DA_A.ds"
 #------------------------------
 
 
@@ -285,80 +152,29 @@ RF(IR), JLT(0xD2,IRSEG_D0_D1)
 ## IRSEG_D2_D3
 RF(IR), JLT(0xD3,IRSEG_D2)
 IRSEG_D3: #--------------------
-
+# SETB C
+@INC "instructions\D3_SETB_C.ds"
 #------------------------------
 
 
 IRSEG_D2: #--------------------
-
+# SETB bit
+@INC "instructions\D2_SETB_b.ds"
 #------------------------------
 
 
 IRSEG_D0_D1:
-RF(IR), JLT(0xD1,IRSEG_D0)
-IRSEG_D1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xD0,CSEG_ACALL_ADDR11)
 IRSEG_D0: #--------------------
-
+@INC "instructions\D0_POP_d.ds"
 #------------------------------
 
 
 IRSEG_C0_CF:
 RF(IR), JLT(0xC8,IRSEG_C0_C7)
-## IRSEG_C8_CF
-RF(IR), JLT(0xCC,IRSEG_C8_CB)
-## IRSEG_CC_CF
-RF(IR), JLT(0xCE,IRSEG_CC_CD)
-## IRSEG_CE_CF
-RF(IR), JLT(0xCF,IRSEG_CE)
-IRSEG_CF: #--------------------
-
-#------------------------------
-
-
-IRSEG_CE: #--------------------
-
-#------------------------------
-
-
-IRSEG_CC_CD:
-RF(IR), JLT(0xCD,IRSEG_CC)
-IRSEG_CD: #--------------------
-
-#------------------------------
-
-
-IRSEG_CC: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8_CB:
-RF(IR), JLT(0xCA,IRSEG_C8_C9)
-## IRSEG_CA_CB
-RF(IR), JLT(0xCB,IRSEG_CA)
-IRSEG_CB: #--------------------
-
-#------------------------------
-
-
-IRSEG_CA: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8_C9:
-RF(IR), JLT(0xC9,IRSEG_C8)
-IRSEG_C9: #--------------------
-
-#------------------------------
-
-
-IRSEG_C8: #--------------------
-
+# IRSEG_C8_CF -----------------
+# XCH A, Rn
+@INC "instructions\C8_CF_XCH_A_Rn.ds"
 #------------------------------
 
 
@@ -366,27 +182,21 @@ IRSEG_C0_C7:
 RF(IR), JLT(0xC4,IRSEG_C0_C3)
 ## IRSEG_C4_C7
 RF(IR), JLT(0xC6,IRSEG_C4_C5)
-## IRSEG_C6_C7
-RF(IR), JLT(0xC7,IRSEG_C6)
-IRSEG_C7: #--------------------
-
-#------------------------------
-
-
-IRSEG_C6: #--------------------
-
+# IRSEG_C6_C7 -----------------
+@INC "instructions\C6_C7_XCH_A_Ri.ds"
 #------------------------------
 
 
 IRSEG_C4_C5:
 RF(IR), JLT(0xC5,IRSEG_C4)
 IRSEG_C5: #--------------------
-
+# XCH A, direct
+@INC "instructions\C5_XCH_A_d.ds"
 #------------------------------
 
 
 IRSEG_C4: #--------------------
-
+@INC "instructions\C4_SWAP_A.ds"
 #------------------------------
 
 
@@ -395,24 +205,21 @@ RF(IR), JLT(0xC2,IRSEG_C0_C1)
 ## IRSEG_C2_C3
 RF(IR), JLT(0xC3,IRSEG_C2)
 IRSEG_C3: #--------------------
-
+@INC "instructions\C3_CLR_C.ds"
 #------------------------------
 
 
 IRSEG_C2: #--------------------
-
+# CLR bit
+@INC "instructions\C2_CLR_b.ds"
 #------------------------------
 
 
 IRSEG_C0_C1:
-RF(IR), JLT(0xC1,IRSEG_C0)
-IRSEG_C1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xC0,CSEG_AJMP_ADDR11)
 IRSEG_C0: #--------------------
-
+# PUSH direct
+@INC "instructions\C0_PUSH_d.ds"
 #------------------------------
 
 
@@ -422,57 +229,8 @@ RF(IR), JLT(0xA0,IRSEG_80_9F)
 RF(IR), JLT(0xB0,IRSEG_A0_AF)
 ## IRSEG_B0_BF
 RF(IR), JLT(0xB8,IRSEG_B0_B7)
-## IRSEG_B8_BF
-RF(IR), JLT(0xBC,IRSEG_B8_BB)
-## IRSEG_BC_BF
-RF(IR), JLT(0xBE,IRSEG_BC_BD)
-## IRSEG_BE_BF
-RF(IR), JLT(0xBF,IRSEG_BE)
-IRSEG_BF: #--------------------
-
-#------------------------------
-
-
-IRSEG_BE: #--------------------
-
-#------------------------------
-
-
-IRSEG_BC_BD:
-RF(IR), JLT(0xBD,IRSEG_BC)
-IRSEG_BD: #--------------------
-
-#------------------------------
-
-
-IRSEG_BC: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8_BB:
-RF(IR), JLT(0xBA,IRSEG_B8_B9)
-## IRSEG_BA_BB
-RF(IR), JLT(0xBB,IRSEG_BA)
-IRSEG_BB: #--------------------
-
-#------------------------------
-
-
-IRSEG_BA: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8_B9:
-RF(IR), JLT(0xB9,IRSEG_B8)
-IRSEG_B9: #--------------------
-
-#------------------------------
-
-
-IRSEG_B8: #--------------------
-
+# IRSEG_B8_BF -----------------
+@INC "instructions\B8_BF_CJNE_Rn_i_o.ds"
 #------------------------------
 
 
@@ -480,27 +238,22 @@ IRSEG_B0_B7:
 RF(IR), JLT(0xB4,IRSEG_B0_B3)
 ## IRSEG_B4_B7
 RF(IR), JLT(0xB6,IRSEG_B4_B5)
-## IRSEG_B6_B7
-RF(IR), JLT(0xB7,IRSEG_B6)
-IRSEG_B7: #--------------------
-
-#------------------------------
-
-
-IRSEG_B6: #--------------------
-
+## IRSEG_B6_B7 -----------------
+# CJNE @Ri, #immed, offset
+@INC "instructions\B6_B7_CJNE_Ri_i_o.ds"
 #------------------------------
 
 
 IRSEG_B4_B5:
 RF(IR), JLT(0xB5,IRSEG_B4)
 IRSEG_B5: #--------------------
-
+# CJNE A, direct, offset
+@INC "instructions\B5_CJNE_A_d_o.ds"
 #------------------------------
 
 
 IRSEG_B4: #--------------------
-
+@INC "instructions\B4_CJNE_A_i_o.ds"
 #------------------------------
 
 
@@ -509,80 +262,28 @@ RF(IR), JLT(0xB2,IRSEG_B0_B1)
 ## IRSEG_B2_B3
 RF(IR), JLT(0xB3,IRSEG_B2)
 IRSEG_B3: #--------------------
-
+#CLP C
+@INC "instructions\B3_CPL_C.ds"
 #------------------------------
 
 
 IRSEG_B2: #--------------------
-
+# CPL bit
+@INC "instructions\B2_CPL_b.ds"
 #------------------------------
 
 
 IRSEG_B0_B1:
-RF(IR), JLT(0xB1,IRSEG_B0)
-IRSEG_B1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xB0,CSEG_ACALL_ADDR11)
 IRSEG_B0: #--------------------
-
+@INC "instructions\B0_ANL_C_nb.ds"
 #------------------------------
 
 
 IRSEG_A0_AF:
 RF(IR), JLT(0xA8,IRSEG_A0_A7)
-## IRSEG_A8_AF
-RF(IR), JLT(0xAC,IRSEG_A8_AB)
-## IRSEG_AC_AF
-RF(IR), JLT(0xAE,IRSEG_AC_AD)
-## IRSEG_AE_AF
-RF(IR), JLT(0xAF,IRSEG_AE)
-IRSEG_AF: #--------------------
-
-#------------------------------
-
-
-IRSEG_AE: #--------------------
-
-#------------------------------
-
-
-IRSEG_AC_AD:
-RF(IR), JLT(0xAD,IRSEG_AC)
-IRSEG_AD: #--------------------
-
-#------------------------------
-
-
-IRSEG_AC: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8_AB:
-RF(IR), JLT(0xAA,IRSEG_A8_A9)
-## IRSEG_AA_AB
-RF(IR), JLT(0xAB,IRSEG_AA)
-IRSEG_AB: #--------------------
-
-#------------------------------
-
-
-IRSEG_AA: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8_A9:
-RF(IR), JLT(0xA9,IRSEG_A8)
-IRSEG_A9: #--------------------
-
-#------------------------------
-
-
-IRSEG_A8: #--------------------
-
+# IRSEG_A8_AF -----------------
+@INC "instructions\A8_AF_MOV_Rn_d.ds"
 #------------------------------
 
 
@@ -590,15 +291,8 @@ IRSEG_A0_A7:
 RF(IR), JLT(0xA4,IRSEG_A0_A3)
 ## IRSEG_A4_A7
 RF(IR), JLT(0xA6,IRSEG_A4_A5)
-## IRSEG_A6_A7
-RF(IR), JLT(0xA7,IRSEG_A6)
-IRSEG_A7: #--------------------
-
-#------------------------------
-
-
-IRSEG_A6: #--------------------
-
+## IRSEG_A6_A7 ----------------
+@INC "instructions\A6_A7_MOV_Ri_d.ds"
 #------------------------------
 
 
@@ -610,8 +304,7 @@ IRSEG_A5: #--------------------
 
 
 IRSEG_A4: #--------------------
-
-
+@INC "instructions\A4_MUL_AB.ds"
 #------------------------------
 
 
@@ -621,28 +314,21 @@ RF(IR), JLT(0xA2,IRSEG_A0_A1)
 RF(IR), JLT(0xA3,IRSEG_A2)
 IRSEG_A3: #--------------------
 #INC DPTR
-LI(0), WR(WE), BR(ONE)
-RF(DPL,WE), ALU(ADDC),BR(CY)
-RF(DPH,WE), ALU(ADDC),J(STAGE_CHECK_INTERRUPT)
+@INC "instructions\A3_INC_DPTR.ds"
 #------------------------------
 
 
 IRSEG_A2: #--------------------
-#MOV C, bit
-
+#MOV bit, C
+@INC "instructions\A2_MOV_C_b.ds"
 #------------------------------
 
 
 IRSEG_A0_A1:
-RF(IR), JLT(0xA1,IRSEG_A0)
-IRSEG_A1: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0xA0,CSEG_AJMP_ADDR11)
 IRSEG_A0: #--------------------
 #ORL C, /bit
-
+@INC "instructions\A0_ORL_C_nb.ds"
 #------------------------------
 
 
@@ -652,7 +338,7 @@ RF(IR), JLT(0x90,IRSEG_80_8F)
 RF(IR), JLT(0x98,IRSEG_90_97)
 ## IRSEG_98_9F#--------------------
 # SUBB A,Rn
-
+@INC "instructions\SUB_ADD_A_Rn.ds","A7","SUBB","SUBBF"
 #------------------------------
 
 
@@ -662,17 +348,23 @@ RF(IR), JLT(0x94,IRSEG_90_93)
 RF(IR), JLT(0x96,IRSEG_94_95)
 ## IRSEG_96_97-----------------
 # SUBB A,@Ri
+@INC "instructions\SUB_ADD_A_Ri.ds","A7","SUBB","SUBBF"
+#------------------------------
 
 
 IRSEG_94_95:
 RF(IR), JLT(0x95,IRSEG_94)
 IRSEG_95: #--------------------
-
+# SUBB A,direct
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_d.ds","Q","SUBB","SUBBF"
 #------------------------------
 
 
 IRSEG_94: #--------------------
-
+# SUBB A,#immed
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","SUBB","SUBBF"
 #------------------------------
 
 
@@ -681,80 +373,28 @@ RF(IR), JLT(0x92,IRSEG_90_91)
 ## IRSEG_92_93
 RF(IR), JLT(0x93,IRSEG_92)
 IRSEG_93: #--------------------
-
+#MOVC A,@A+DPTR
+@INC "instructions\93_MOVC_A_A_DPTR.ds"
 #------------------------------
 
 
 IRSEG_92: #--------------------
-
+#MOV bit, C
+@INC "instructions\92_MOV_b_C.ds"
 #------------------------------
 
 
 IRSEG_90_91:
-RF(IR), JLT(0x91,IRSEG_90)
-IRSEG_91: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x90,CSEG_ACALL_ADDR11)
 IRSEG_90: #--------------------
-
+@INC "instructions\90_MOV_dptr_i.ds"
 #------------------------------
 
 
 IRSEG_80_8F:
 RF(IR), JLT(0x88,IRSEG_80_87)
-## IRSEG_88_8F
-RF(IR), JLT(0x8C,IRSEG_88_8B)
-## IRSEG_8C_8F
-RF(IR), JLT(0x8E,IRSEG_8C_8D)
-## IRSEG_8E_8F
-RF(IR), JLT(0x8F,IRSEG_8E)
-IRSEG_8F: #--------------------
-
-#------------------------------
-
-
-IRSEG_8E: #--------------------
-
-#------------------------------
-
-
-IRSEG_8C_8D:
-RF(IR), JLT(0x8D,IRSEG_8C)
-IRSEG_8D: #--------------------
-
-#------------------------------
-
-
-IRSEG_8C: #--------------------
-
-#------------------------------
-
-
-IRSEG_88_8B:
-RF(IR), JLT(0x8A,IRSEG_88_89)
-## IRSEG_8A_8B
-RF(IR), JLT(0x8B,IRSEG_8A)
-IRSEG_8B: #--------------------
-
-#------------------------------
-
-
-IRSEG_8A: #--------------------
-
-#------------------------------
-
-
-IRSEG_88_89:
-RF(IR), JLT(0x89,IRSEG_88)
-IRSEG_89: #--------------------
-
-#------------------------------
-
-
-IRSEG_88: #--------------------
-
+# IRSEG_88_8F -----------------
+@INC "instructions\88_8F_MOV_d_Rn.ds"
 #------------------------------
 
 
@@ -762,15 +402,8 @@ IRSEG_80_87:
 RF(IR), JLT(0x84,IRSEG_80_83)
 ## IRSEG_84_87
 RF(IR), JLT(0x86,IRSEG_84_85)
-## IRSEG_86_87
-RF(IR), JLT(0x87,IRSEG_86)
-IRSEG_87: #--------------------
-
-#------------------------------
-
-
-IRSEG_86: #--------------------
-
+# IRSEG_86_87 -----------------
+@INC "instructions\86_87_MOV_d_Ri.ds"
 #------------------------------
 
 
@@ -778,12 +411,12 @@ IRSEG_84_85:
 RF(IR), JLT(0x85,IRSEG_84)
 IRSEG_85: #--------------------
 # MOV direct, direct
-
+@INC "instructions\85_MOV_d_d.ds"
 #------------------------------
 
 
 IRSEG_84: #--------------------
-
+@INC "instructions\84_DIV_AB.ds"
 #------------------------------
 
 
@@ -792,24 +425,21 @@ RF(IR), JLT(0x82,IRSEG_80_81)
 ## IRSEG_82_83
 RF(IR), JLT(0x83,IRSEG_82)
 IRSEG_83: #--------------------
-
+#MOV A,@A+PC
+@INC "instructions\83_MOVC_A_A_PC.ds"
 #------------------------------
 
 
 IRSEG_82: #--------------------
-
+# ANL C, bit
+@INC "instructions\ORL_ANL_C_b.ds", "AND"
 #------------------------------
 
 
 IRSEG_80_81:
-RF(IR), JLT(0x81,IRSEG_80)
-IRSEG_81: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x80,CSEG_AJMP_ADDR11)
 IRSEG_80: #--------------------
-
+@INC "instructions\80_SJMP_o.ds"
 #------------------------------
 
 
@@ -821,57 +451,8 @@ RF(IR), JLT(0x60,IRSEG_40_5F)
 RF(IR), JLT(0x70,IRSEG_60_6F)
 ## IRSEG_70_7F
 RF(IR), JLT(0x78,IRSEG_70_77)
-## IRSEG_78_7F
-RF(IR), JLT(0x7C,IRSEG_78_7B)
-## IRSEG_7C_7F
-RF(IR), JLT(0x7E,IRSEG_7C_7D)
-## IRSEG_7E_7F
-RF(IR), JLT(0x7F,IRSEG_7E)
-IRSEG_7F: #--------------------
-
-#------------------------------
-
-
-IRSEG_7E: #--------------------
-
-#------------------------------
-
-
-IRSEG_7C_7D:
-RF(IR), JLT(0x7D,IRSEG_7C)
-IRSEG_7D: #--------------------
-
-#------------------------------
-
-
-IRSEG_7C: #--------------------
-
-#------------------------------
-
-
-IRSEG_78_7B:
-RF(IR), JLT(0x7A,IRSEG_78_79)
-## IRSEG_7A_7B
-RF(IR), JLT(0x7B,IRSEG_7A)
-IRSEG_7B: #--------------------
-
-#------------------------------
-
-
-IRSEG_7A: #--------------------
-
-#------------------------------
-
-
-IRSEG_78_79:
-RF(IR), JLT(0x79,IRSEG_78)
-IRSEG_79: #--------------------
-
-#------------------------------
-
-
-IRSEG_78: #--------------------
-
+## IRSEG_78_7F ----------------
+@INC "instructions\78_7F_MOV_Rn_i.ds"
 #------------------------------
 
 
@@ -879,16 +460,8 @@ IRSEG_70_77:
 RF(IR), JLT(0x74,IRSEG_70_73)
 ## IRSEG_74_77
 RF(IR), JLT(0x76,IRSEG_74_75)
-## IRSEG_76_77
-RF(IR), JLT(0x77,IRSEG_76)
-IRSEG_77: #--------------------
-
-#------------------------------
-
-
-IRSEG_76: #--------------------
-
-
+# IRSEG_76_77 ----------------
+@INC "instructions\76_77_MOV_Ri_i.ds"
 #------------------------------
 
 
@@ -896,30 +469,14 @@ IRSEG_74_75:
 RF(IR), JLT(0x75,IRSEG_74)
 IRSEG_75: #--------------------
 # MOV direct,#immed
-RF(T0,WE), BUS(ROM),BR(ONE)              # T0 <- direct
-
-# ++PC
-RF(PCL,WE), ALU(INCC),WR(WE),  BR(CY)
-RF(PCH,WE), ALU(INCC),SR(WE)       
-BUS(ROM), WR(WE)         # WR <- immed
-
-RF(T0),   ALU(SFR), RFSRCR(WE)
-RF(T0),   ALU(A),   SR(WE)
-RF(SFR),  ALU(B),  RAM(WE), BR(ONE) # RAM[direct] <- immed
-
-RF(PCL,WE),ALU(INCC), BR(CY)
-RF(PCH,WE),ALU(INCC), J(STAGE_CHECK_INTERRUPT) # ++PC
+@INC "instructions\75_MOV_d_i.ds"
 #------------------------------
 
 
+
 IRSEG_74: #--------------------
-# MOV A, #IMMED
-# WR(WE), RF(PCL), ALU(A)
-# SR(WE), RF(PCH), ALU(A)
-# RF(A,WE),BUS(ROM)
-# WR(WE), LI(0), BR(ONE)
-# RF(PCL,WE),ALU(ADDC),  BR(CY)
-# RF(PCH,WE),ALU(ADDC),  J(STAGE_CHECK_INTERRUPT)
+# MOV A, #immed
+@INC "instructions\74_MOV_A_i.ds"
 #------------------------------
 
 
@@ -928,80 +485,28 @@ RF(IR), JLT(0x72,IRSEG_70_71)
 ## IRSEG_72_73
 RF(IR), JLT(0x73,IRSEG_72)
 IRSEG_73: #--------------------
-
+@INC "instructions\73_JMP_A_DPTR.ds"
 #------------------------------
 
 
 IRSEG_72: #--------------------
-
+# ORL C, bit
+@INC "instructions\ORL_ANL_C_b.ds", "OR"
 #------------------------------
 
 
 IRSEG_70_71:
-RF(IR), JLT(0x71,IRSEG_70)
-IRSEG_71: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x70,CSEG_ACALL_ADDR11)
 IRSEG_70: #--------------------
-
+@INC "instructions\70_JNZ_o.ds"
 #------------------------------
 
 
 IRSEG_60_6F:
 RF(IR), JLT(0x68,IRSEG_60_67)
-## IRSEG_68_6F
-RF(IR), JLT(0x6C,IRSEG_68_6B)
-## IRSEG_6C_6F
-RF(IR), JLT(0x6E,IRSEG_6C_6D)
-## IRSEG_6E_6F
-RF(IR), JLT(0x6F,IRSEG_6E)
-IRSEG_6F: #--------------------
-
-#------------------------------
-
-
-IRSEG_6E: #--------------------
-
-#------------------------------
-
-
-IRSEG_6C_6D:
-RF(IR), JLT(0x6D,IRSEG_6C)
-IRSEG_6D: #--------------------
-
-#------------------------------
-
-
-IRSEG_6C: #--------------------
-
-#------------------------------
-
-
-IRSEG_68_6B:
-RF(IR), JLT(0x6A,IRSEG_68_69)
-## IRSEG_6A_6B
-RF(IR), JLT(0x6B,IRSEG_6A)
-IRSEG_6B: #--------------------
-
-#------------------------------
-
-
-IRSEG_6A: #--------------------
-
-#------------------------------
-
-
-IRSEG_68_69:
-RF(IR), JLT(0x69,IRSEG_68)
-IRSEG_69: #--------------------
-
-#------------------------------
-
-
-IRSEG_68: #--------------------
-
+## IRSEG_68_6F ----------------
+# XRL A, Rn
+@INC "instructions\OAL_A_Rn.ds","XOR"
 #------------------------------
 
 
@@ -1009,27 +514,21 @@ IRSEG_60_67:
 RF(IR), JLT(0x64,IRSEG_60_63)
 ## IRSEG_64_67
 RF(IR), JLT(0x66,IRSEG_64_65)
-## IRSEG_66_67
-RF(IR), JLT(0x67,IRSEG_66)
-IRSEG_67: #--------------------
-
-#------------------------------
-
-
-IRSEG_66: #--------------------
-
+## IRSEG_66_67 --------------------
+# XRL A, @Ri
+@INC "instructions\OAL_A_Ri.ds","XOR"
 #------------------------------
 
 
 IRSEG_64_65:
 RF(IR), JLT(0x65,IRSEG_64)
 IRSEG_65: #--------------------
-
+@INC "instructions\OAL_A_d.ds","XOR"
 #------------------------------
 
 
 IRSEG_64: #--------------------
-
+@INC "instructions\OAL_A_i.ds","XOR"
 #------------------------------
 
 
@@ -1038,24 +537,21 @@ RF(IR), JLT(0x62,IRSEG_60_61)
 ## IRSEG_62_63
 RF(IR), JLT(0x63,IRSEG_62)
 IRSEG_63: #--------------------
+# XRL direct, #immed
+@INC "instructions\OAL_d_i.ds","XOR"
 
 #------------------------------
 
 
 IRSEG_62: #--------------------
-
+@INC "instructions\OAL_d_A.ds","XOR"
 #------------------------------
 
 
 IRSEG_60_61:
-RF(IR), JLT(0x61,IRSEG_60)
-IRSEG_61: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x60,CSEG_AJMP_ADDR11)
 IRSEG_60: #--------------------
-
+@INC "instructions\60_JZ_o.ds"
 #------------------------------
 
 
@@ -1063,57 +559,9 @@ IRSEG_40_5F:
 RF(IR), JLT(0x50,IRSEG_40_4F)
 ## IRSEG_50_5F
 RF(IR), JLT(0x58,IRSEG_50_57)
-## IRSEG_58_5F
-RF(IR), JLT(0x5C,IRSEG_58_5B)
-## IRSEG_5C_5F
-RF(IR), JLT(0x5E,IRSEG_5C_5D)
-## IRSEG_5E_5F
-RF(IR), JLT(0x5F,IRSEG_5E)
-IRSEG_5F: #--------------------
-
-#------------------------------
-
-
-IRSEG_5E: #--------------------
-
-#------------------------------
-
-
-IRSEG_5C_5D:
-RF(IR), JLT(0x5D,IRSEG_5C)
-IRSEG_5D: #--------------------
-
-#------------------------------
-
-
-IRSEG_5C: #--------------------
-
-#------------------------------
-
-
-IRSEG_58_5B:
-RF(IR), JLT(0x5A,IRSEG_58_59)
-## IRSEG_5A_5B
-RF(IR), JLT(0x5B,IRSEG_5A)
-IRSEG_5B: #--------------------
-
-#------------------------------
-
-
-IRSEG_5A: #--------------------
-
-#------------------------------
-
-
-IRSEG_58_59:
-RF(IR), JLT(0x59,IRSEG_58)
-IRSEG_59: #--------------------
-
-#------------------------------
-
-
-IRSEG_58: #--------------------
-
+## IRSEG_58_5F ----------------
+# ANL A, Rn
+@INC "instructions\OAL_A_Rn.ds","AND"
 #------------------------------
 
 
@@ -1121,27 +569,21 @@ IRSEG_50_57:
 RF(IR), JLT(0x54,IRSEG_50_53)
 ## IRSEG_54_57
 RF(IR), JLT(0x56,IRSEG_54_55)
-## IRSEG_56_57
-RF(IR), JLT(0x57,IRSEG_56)
-IRSEG_57: #--------------------
-
-#------------------------------
-
-
-IRSEG_56: #--------------------
-
+## IRSEG_56_57--------------------
+@INC "instructions\OAL_A_Ri.ds","AND"
 #------------------------------
 
 
 IRSEG_54_55:
 RF(IR), JLT(0x55,IRSEG_54)
 IRSEG_55: #--------------------
-
+@INC "instructions\OAL_A_d.ds","AND"
 #------------------------------
 
 
 IRSEG_54: #--------------------
-
+# ANL A,#immed
+@INC "instructions\OAL_A_i.ds","AND"
 #------------------------------
 
 
@@ -1150,80 +592,28 @@ RF(IR), JLT(0x52,IRSEG_50_51)
 ## IRSEG_52_53
 RF(IR), JLT(0x53,IRSEG_52)
 IRSEG_53: #--------------------
-
+# ANL direct, #immed
+@INC "instructions\OAL_d_i.ds","AND"
 #------------------------------
 
 
 IRSEG_52: #--------------------
-
+@INC "instructions\OAL_d_A.ds","AND"
 #------------------------------
 
 
 IRSEG_50_51:
-RF(IR), JLT(0x51,IRSEG_50)
-IRSEG_51: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x50,CSEG_ACALL_ADDR11)
 IRSEG_50: #--------------------
-
+# JNC offset
+@INC "instructions\50_JNC_o.ds"
 #------------------------------
 
 
 IRSEG_40_4F:
 RF(IR), JLT(0x48,IRSEG_40_47)
-## IRSEG_48_4F
-RF(IR), JLT(0x4C,IRSEG_48_4B)
-## IRSEG_4C_4F
-RF(IR), JLT(0x4E,IRSEG_4C_4D)
-## IRSEG_4E_4F
-RF(IR), JLT(0x4F,IRSEG_4E)
-IRSEG_4F: #--------------------
-
-#------------------------------
-
-
-IRSEG_4E: #--------------------
-
-#------------------------------
-
-
-IRSEG_4C_4D:
-RF(IR), JLT(0x4D,IRSEG_4C)
-IRSEG_4D: #--------------------
-
-#------------------------------
-
-
-IRSEG_4C: #--------------------
-
-#------------------------------
-
-
-IRSEG_48_4B:
-RF(IR), JLT(0x4A,IRSEG_48_49)
-## IRSEG_4A_4B
-RF(IR), JLT(0x4B,IRSEG_4A)
-IRSEG_4B: #--------------------
-
-#------------------------------
-
-
-IRSEG_4A: #--------------------
-
-#------------------------------
-
-
-IRSEG_48_49:
-RF(IR), JLT(0x49,IRSEG_48)
-IRSEG_49: #--------------------
-
-#------------------------------
-
-
-IRSEG_48: #--------------------
-
+## IRSEG_48_4F ----------------
+@INC "instructions\OAL_A_Rn.ds","OR"
 #------------------------------
 
 
@@ -1231,27 +621,22 @@ IRSEG_40_47:
 RF(IR), JLT(0x44,IRSEG_40_43)
 ## IRSEG_44_47
 RF(IR), JLT(0x46,IRSEG_44_45)
-## IRSEG_46_47
-RF(IR), JLT(0x47,IRSEG_46)
-IRSEG_47: #--------------------
-
-#------------------------------
-
-
-IRSEG_46: #--------------------
-
+## IRSEG_46_47 --------------------
+@INC "instructions\OAL_A_Ri.ds","OR"
 #------------------------------
 
 
 IRSEG_44_45:
 RF(IR), JLT(0x45,IRSEG_44)
 IRSEG_45: #--------------------
-
+# OR A, direct
+@INC "instructions\OAL_A_d.ds","OR"
 #------------------------------
 
 
 IRSEG_44: #--------------------
-
+# OR A, #immed
+@INC "instructions\OAL_A_i.ds","OR"
 #------------------------------
 
 
@@ -1260,24 +645,21 @@ RF(IR), JLT(0x42,IRSEG_40_41)
 ## IRSEG_42_43
 RF(IR), JLT(0x43,IRSEG_42)
 IRSEG_43: #--------------------
-
+# ORL direct, #immed
+@INC "instructions\OAL_d_i.ds","OR"
 #------------------------------
 
 
 IRSEG_42: #--------------------
-
+# ORL direct, A
+@INC "instructions\OAL_d_A.ds","OR"
 #------------------------------
 
 
 IRSEG_40_41:
-RF(IR), JLT(0x41,IRSEG_40)
-IRSEG_41: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x40,CSEG_AJMP_ADDR11)
 IRSEG_40: #--------------------
-
+@INC "instructions\40_JC_o.ds"
 #------------------------------
 
 
@@ -1287,57 +669,8 @@ RF(IR), JLT(0x20,IRSEG_0_1F)
 RF(IR), JLT(0x30,IRSEG_20_2F)
 ## IRSEG_30_3F
 RF(IR), JLT(0x38,IRSEG_30_37)
-## IRSEG_38_3F
-RF(IR), JLT(0x3C,IRSEG_38_3B)
-## IRSEG_3C_3F
-RF(IR), JLT(0x3E,IRSEG_3C_3D)
-## IRSEG_3E_3F
-RF(IR), JLT(0x3F,IRSEG_3E)
-IRSEG_3F: #--------------------
-
-#------------------------------
-
-
-IRSEG_3E: #--------------------
-
-#------------------------------
-
-
-IRSEG_3C_3D:
-RF(IR), JLT(0x3D,IRSEG_3C)
-IRSEG_3D: #--------------------
-
-#------------------------------
-
-
-IRSEG_3C: #--------------------
-
-#------------------------------
-
-
-IRSEG_38_3B:
-RF(IR), JLT(0x3A,IRSEG_38_39)
-## IRSEG_3A_3B
-RF(IR), JLT(0x3B,IRSEG_3A)
-IRSEG_3B: #--------------------
-
-#------------------------------
-
-
-IRSEG_3A: #--------------------
-
-#------------------------------
-
-
-IRSEG_38_39:
-RF(IR), JLT(0x39,IRSEG_38)
-IRSEG_39: #--------------------
-
-#------------------------------
-
-
-IRSEG_38: #--------------------
-
+## IRSEG_38_3F ---------------
+@INC "instructions\SUB_ADD_A_Rn.ds","A7","ADDC","ADDCF"
 #------------------------------
 
 
@@ -1345,27 +678,23 @@ IRSEG_30_37:
 RF(IR), JLT(0x34,IRSEG_30_33)
 ## IRSEG_34_37
 RF(IR), JLT(0x36,IRSEG_34_35)
-## IRSEG_36_37
-RF(IR), JLT(0x37,IRSEG_36)
-IRSEG_37: #--------------------
-
-#------------------------------
-
-
-IRSEG_36: #--------------------
-
+## IRSEG_36_37 ----------------
+@INC "instructions\SUB_ADD_A_Ri.ds","A7","ADDC","ADDCF"
 #------------------------------
 
 
 IRSEG_34_35:
 RF(IR), JLT(0x35,IRSEG_34)
 IRSEG_35: #--------------------
-
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_d.ds","Q","ADDC","ADDCF"
 #------------------------------
 
 
 IRSEG_34: #--------------------
-
+# ADDC A,#immed
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","ADDC","ADDCF"
 #------------------------------
 
 
@@ -1374,78 +703,28 @@ RF(IR), JLT(0x32,IRSEG_30_31)
 ## IRSEG_32_33
 RF(IR), JLT(0x33,IRSEG_32)
 IRSEG_33: #--------------------
-
+# RLC A
+@INC "instructions\33_RLC_A.ds"
 #------------------------------
 
 
 IRSEG_32: #--------------------
-
+@INC "instructions\32_RETI.ds"
 #------------------------------
 
 
 IRSEG_30_31:
-RF(IR), JLT(0x31,IRSEG_30)
-
-
-
+RF(IR), JGT(0x30,CSEG_ACALL_ADDR11)
 IRSEG_30: #--------------------
-
+# JNB bit, offset
+@INC "instructions\30_JNB_b_o.ds"
 #------------------------------
 
 
 IRSEG_20_2F:
 RF(IR), JLT(0x28,IRSEG_20_27)
-## IRSEG_28_2F
-RF(IR), JLT(0x2C,IRSEG_28_2B)
-## IRSEG_2C_2F
-RF(IR), JLT(0x2E,IRSEG_2C_2D)
-## IRSEG_2E_2F
-RF(IR), JLT(0x2F,IRSEG_2E)
-IRSEG_2F: #--------------------
-
-#------------------------------
-
-
-IRSEG_2E: #--------------------
-
-#------------------------------
-
-
-IRSEG_2C_2D:
-RF(IR), JLT(0x2D,IRSEG_2C)
-IRSEG_2D: #--------------------
-
-#------------------------------
-
-
-IRSEG_2C: #--------------------
-
-#------------------------------
-
-
-IRSEG_28_2B:
-RF(IR), JLT(0x2A,IRSEG_28_29)
-## IRSEG_2A_2B
-RF(IR), JLT(0x2B,IRSEG_2A)
-IRSEG_2B: #--------------------
-
-#------------------------------
-
-
-IRSEG_2A: #--------------------
-
-#------------------------------
-
-
-IRSEG_28_29:
-RF(IR), JLT(0x29,IRSEG_28)
-IRSEG_29: #--------------------
-
-#------------------------------
-
-
-IRSEG_28: #--------------------
-
+## IRSEG_28_2F ----------------
+@INC "instructions\SUB_ADD_A_Rn.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
@@ -1453,27 +732,20 @@ IRSEG_20_27:
 RF(IR), JLT(0x24,IRSEG_20_23)
 ## IRSEG_24_27
 RF(IR), JLT(0x26,IRSEG_24_25)
-## IRSEG_26_27
-RF(IR), JLT(0x27,IRSEG_26)
-IRSEG_27: #--------------------
-
-#------------------------------
-
-
-IRSEG_26: #--------------------
-
+## IRSEG_26_27 ----------------
+@INC "instructions\SUB_ADD_A_Ri.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
 IRSEG_24_25:
 RF(IR), JLT(0x25,IRSEG_24)
 IRSEG_25: #--------------------
-
+@INC "instructions\SUB_ADD_A_d.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
 IRSEG_24: #--------------------
-
+@INC "instructions\SUB_ADD_A_i.ds","ZERO","ADDC","ADDCF"
 #------------------------------
 
 
@@ -1482,24 +754,20 @@ RF(IR), JLT(0x22,IRSEG_20_21)
 ## IRSEG_22_23
 RF(IR), JLT(0x23,IRSEG_22)
 IRSEG_23: #--------------------
-
+# RL A
+@INC "instructions\23_RL_A.ds"
 #------------------------------
 
 
 IRSEG_22: #--------------------
-
+@INC "instructions\22_RET.ds"
 #------------------------------
 
 
 IRSEG_20_21:
-RF(IR), JLT(0x21,IRSEG_20)
-IRSEG_21: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x20,CSEG_AJMP_ADDR11)
 IRSEG_20: #--------------------
-
+@INC "instructions\20_JB_b_o.ds"
 #------------------------------
 
 
@@ -1507,85 +775,35 @@ IRSEG_0_1F:
 RF(IR), JLT(0x10,IRSEG_0_F)
 ## IRSEG_10_1F
 RF(IR), JLT(0x18,IRSEG_10_17)
-## IRSEG_18_1F
-RF(IR), JLT(0x1C,IRSEG_18_1B)
-## IRSEG_1C_1F
-RF(IR), JLT(0x1E,IRSEG_1C_1D)
-## IRSEG_1E_1F
-RF(IR), JLT(0x1F,IRSEG_1E)
-IRSEG_1F: #--------------------
-
-#------------------------------
+## IRSEG_18_1F --------------------
+@INC "instructions\18_1F_DEC_Rn.ds"
+#----------------------------------
 
 
-IRSEG_1E: #--------------------
 
-#------------------------------
-
-
-IRSEG_1C_1D:
-RF(IR), JLT(0x1D,IRSEG_1C)
-IRSEG_1D: #--------------------
-
-#------------------------------
-
-
-IRSEG_1C: #--------------------
-
-#------------------------------
-
-
-IRSEG_18_1B:
-RF(IR), JLT(0x1A,IRSEG_18_19)
-## IRSEG_1A_1B
-RF(IR), JLT(0x1B,IRSEG_1A)
-IRSEG_1B: #--------------------
-
-#------------------------------
-
-
-IRSEG_1A: #--------------------
-
-#------------------------------
-
-
-IRSEG_18_19:
-RF(IR), JLT(0x19,IRSEG_18)
-IRSEG_19: #--------------------
-
-#------------------------------
-
-
-IRSEG_18: #--------------------
-
-#------------------------------
 
 
 IRSEG_10_17:
 RF(IR), JLT(0x14,IRSEG_10_13)
 ## IRSEG_14_17
 RF(IR), JLT(0x16,IRSEG_14_15)
-## IRSEG_16_17
-RF(IR), JLT(0x17,IRSEG_16)
-IRSEG_17: #--------------------
-
-#------------------------------
-
-
-IRSEG_16: #--------------------
-
-#------------------------------
+## IRSEG_16_17 --------------------
+# DEC @Ri
+@INC "instructions\INC_DEC_ri.ds", "DEC"
+#----------------------------------
 
 
 IRSEG_14_15:
 RF(IR), JLT(0x15,IRSEG_14)
 IRSEG_15: #--------------------
-
+#DEC direct
+@INC "instructions\15_DEC_d.ds"
 #------------------------------
 
 
 IRSEG_14: #--------------------
-
+#DEC A
+@INC "instructions\14_DEC_A.ds"
 #------------------------------
 
 
@@ -1594,109 +812,48 @@ RF(IR), JLT(0x12,IRSEG_10_11)
 ## IRSEG_12_13
 RF(IR), JLT(0x13,IRSEG_12)
 IRSEG_13: #--------------------
-
+# RRC A
+@INC "instructions\13_RRC_A.ds"
 #------------------------------
 
 
 IRSEG_12: #--------------------
-
+@INC "instructions\12_LCALL_a16.ds"
 #------------------------------
 
 
 IRSEG_10_11:
-RF(IR), JLT(0x11,IRSEG_10)
-IRSEG_11: #--------------------
-
-#------------------------------
-
-
+RF(IR), JGT(0x10,CSEG_ACALL_ADDR11)
 IRSEG_10: #--------------------
-
+@INC "instructions\10_JBC_b_o.ds"
 #------------------------------
 
 
 IRSEG_0_F:
 RF(IR), JLT(0x8,IRSEG_0_7)
-## IRSEG_8_F
-RF(IR), JLT(0xC,IRSEG_8_B)
-## IRSEG_C_F
-RF(IR), JLT(0xE,IRSEG_C_D)
-## IRSEG_E_F
-RF(IR), JLT(0xF,IRSEG_E)
-IRSEG_F: #--------------------
-
+## IRSEG_8_F --------------------
+@INC "instructions\08_0F_INC_Rn.ds"
 #------------------------------
-
-
-IRSEG_E: #--------------------
-
-#------------------------------
-
-
-IRSEG_C_D:
-RF(IR), JLT(0xD,IRSEG_C)
-IRSEG_D: #--------------------
-
-#------------------------------
-
-
-IRSEG_C: #--------------------
-
-#------------------------------
-
-
-IRSEG_8_B:
-RF(IR), JLT(0xA,IRSEG_8_9)
-## IRSEG_A_B
-RF(IR), JLT(0xB,IRSEG_A)
-IRSEG_B: #--------------------
-
-#------------------------------
-
-
-IRSEG_A: #--------------------
-
-#------------------------------
-
-
-IRSEG_8_9:
-RF(IR), JLT(0x9,IRSEG_8)
-IRSEG_9: #--------------------
-
-#------------------------------
-
-
-IRSEG_8: #--------------------
-
-#------------------------------
-
 
 IRSEG_0_7:
 RF(IR), JLT(0x4,IRSEG_0_3)
 ## IRSEG_4_7
 RF(IR), JLT(0x6,IRSEG_4_5)
-## IRSEG_6_7
-RF(IR), JLT(0x7,IRSEG_6)
-IRSEG_7: #--------------------
-
+## IRSEG_6_7 --------------------
+# INC @Ri
+@INC "instructions\INC_DEC_Ri.ds","INC"
 #------------------------------
-
-
-IRSEG_6: #--------------------
-
-#------------------------------
-
 
 IRSEG_4_5:
 RF(IR), JLT(0x5,IRSEG_4)
 IRSEG_5: #--------------------
-
+@INC "instructions\05_INC_direct.ds"
 #------------------------------
 
 
 IRSEG_4: #--------------------
 # INC A
-RF(A,WE),ALU(INC)
+@INC "instructions\04_INC_A.ds"
 #------------------------------
 
 
@@ -1706,30 +863,34 @@ RF(IR), JLT(0x2,IRSEG_0_1)
 RF(IR), JLT(0x3,IRSEG_2)
 IRSEG_3: #--------------------
 # RR A
-RF(A,WE),ALU(RR)
+@INC "instructions\03_RR_A.ds"
 #------------------------------
 
 
 IRSEG_2: #--------------------
 #LJMP addr16
-
+@INC "instructions\02_LJMP_a16.ds"
 #------------------------------
 
 
 IRSEG_0_1:
-RF(IR), JLT(0x1,IRSEG_0)
-IRSEG_1: #--------------------
-IRSEG_AJMP_ADDR11:
-#AJMP addr11
-# load ADDR11[7:0]
-J(STAGE_CHECK_INTERRUPT) #SET PCH
-
-#------------------------------
-
+RF(IR), JGT(0x00,CSEG_AJMP_ADDR11)
 IRSEG_0: #--------------------
+J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
+CSEG_AJMP_ADDR11:
+@INC "instructions\x01_AJMP_a11.ds"
 
+CSEG_ACALL_ADDR11:
+@INC "instructions\x11_ACALL_a11.ds"
+
+ADDC_PC_BEFORE_CHECK_INTERRUPT:
+RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
+RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
+
+INC_PC_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc.ds"
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE
@@ -1738,46 +899,29 @@ IRSEG_0: #--------------------
 ######################################################## 
 STAGE_CHECK_INTERRUPT:
 #------------- check EA
-RF(IE), JLT(0x80,STAGE_FETCH), ALU(A),  WR(WE)
+# 1. WR <- IE
+# 2. jump_if(IE < 0x80)
+RF(IE), ALU(A),  WR(WE), JLT(0x81, STAGE_FETCH)
 
 #------------- check IE
 RF(T0,WE),    BUS(IRQ)
-RF(T0,WE),    ALU(AND),     WR(WE)    # MIRQ(IE & IRQ), check IRQ enable bit
-RF(T0),    JLT(0x1, STAGE_FETCH)               # any valid interrupt?
+# 1. T0 <- IE & IRQ
+# 2. jump_if(IIRQ < 0x80)
+RF(T0,WE),    ALU(AND),   WR(WE), JLT(0x1, STAGE_FETCH)    
 
-#------------- select highest priority number by using IP register. 
+#------------- 
 RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
-RF(T0,WE), ALU(SHIRQN)
+# 1. T0, WR <- GENIRQN(IE & IRQ, IP)
+# 2. jump_if(IE & IRQ == 0)
+RF(T0), ALU(GENIRQN), WR(WE), JLT(0x1, STAGE_FETCH)
+RF(ISR, WE), ALU(ISRAPPIRQ)
+RF(ISR), JGT(0x7F, STAGE_FETCH)
+
+RF(T0),  ALU(A), IRQ(CLR)
 ### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
 ### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
 #--------------------------
 
-
-
-RF(ISR),  ALU(A),  WR(WE)
-RF(T1,WE),ALU(B)          
-RF(T2,WE),ALU(B)          # T2,T1 <- ISR
-
-#------------- compare ISR and IRQ
-# wheather IRQ have higher priority than current interrupt.
-RF(IP),   ALU(A),    WR(WE) 
-RF(T1),ALU(SHIRQN),  WR(WE), BR(ONE) # WR <- (highest priority ISR number)
-
-RF(T0),   ALU(SUBB) ,  BR(CY)             #  CY meaing SHIRQN(IRQ) - SHIRQN(ISR) - 1 < 0
-JBIT(STAGE_FETCH)                         # meaing SHIRQN(IRQ) < SHIRQN(ISR) + 1, namely meaing SHIRQN(IRQ) <= SHIRQN(ISR) 
-
-
-#------------- accept interrupt
-# Before append IRQ to ISR, we must check if there is an interrupt service number 
-# in the ISR same as the IRQ number.
-RF(T0), ALU(IRQN2IRQ),  WR(WE)    # WR <- (IRQN TO IRQ, USING 2 - 4 DECODER)
-
-## check wheather IRQ with the IRQ number already append
-RF(T2, WE), ALU(AND)    #  (ISR & IRQ)
-RF(T2),     JGT(0, STAGE_FETCH)
-
-## append IRQ to ISR
-RF(ISR,WE), ALU(OR)
 
 ## save PC
 RF(SP,WE), ALU(INC),  SR(WE)
