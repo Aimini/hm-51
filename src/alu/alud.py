@@ -9,22 +9,23 @@ import argparse
 ## 1 bit for fi(flag in), 4bit for operand A nibble, 4bit for operaend B nibble and 4bit for function select
 ## high -> low
 ## fi | f[3:0] | b[3:0] | a[3:0]
-# for ouput, we using treat it as two 4-bit ouput. For function that must send info
-# to high part alu(ADDC, SUBB, etc.), we using high nibble are used to send flag 
-# like carry or ov, oterwise we using high nibble to encode another function.
+# for ouput, we using treat it as two 4-bit ouput. For function that must send info from low
+# part to high part alu(ADDC, SUBB, etc.), the high nibble is used to sent flag(carry, ov, etc),
+# oterwise, the high nibble is used to encode another function.
 ## high -> low
 #  QH[3:0] | QL[3:0]
 ## becuase low part and high part have different operation on dirrent function, so
 ## we must generate diffrent LUT for low part and high part.
 # for example :
-#    EXTB A,B, extract bit filed A[B] to Q[7] ,Q[6:0] are always 0.
-#   for low part,
-#   bus ouput(Q[3:0]) is always zero, and co(Q[7]) is extracted bit from lower part,
-#　 if B < 4, co is A[B], otherwise, co is zero.
-#   for high part,
-#   Q[2:0] is zero, if B < 4, co is A[B], Q[3] take the value from low part's co.
-#   otherwise, Q[3] = A[B]
-
+#    EXTB A,B - extract bit filed A[B] to Q[7] ,Q[6:0] are always 0.
+#   for low part:
+#       bus ouput(Q[3:0]) is always zero, and co(Q[7]) is extracted bit from lower part,
+#　     if B < 4, co is A[B], otherwise, co is zero.
+#   for high part:
+#       Q[2:0] is zero, if B < 4, co is A[B], Q[3] take the value from low part's co.
+#       otherwise, Q[3] = A[B]
+#
+# you can view more detail in file /src/alu/README.md
 
 def enum_input(callback):
     '''
@@ -41,6 +42,22 @@ def enum_input(callback):
 
 
 def get_flag_add(a, b, ci):
+    """
+    get the result of a + b + ci
+        a,b: int
+            must be 4-bit number
+        ci: int 
+            must be 1-bit number
+        ret: tuple[int,int]
+            return a tuple the cantain two 4-bit nubmers.
+            ret[0] is a number cantain ov and cy.
+            ret[0][3] is cy, ret[0][2] is ov.
+            
+            ret[1] is the result of a+b+ci.
+
+
+
+    """
     R = a + b + ci
     cy = (R >> 1) & 0x08                    # carry at bit 3
     # (A XNOR B) AND (A XOR R)
@@ -138,7 +155,7 @@ def generate_low_by_op(ci, f,  b, a):
         RL = (0xb & a) | ((~0xb) & (b >> 1))
         RH = 8 if a == 0 else 0 # send ZF to high part
 
-    elif f == 0xA:# ADDR11REPLACE A, B
+    elif f == 0xA:# ADDR11REPLACE A, B / CYANDBIT
         # asume A = PCH[3:0], B = IR[7:4]
         # according to instruction set manual, we have PC[10:8] = IR[7:5]
         # namely, A[2:0] = B[3:1]
@@ -152,14 +169,14 @@ def generate_low_by_op(ci, f,  b, a):
         RL = b
         RH = 8 if b == 0 else 0 # send ZF to high part
 
-    elif f == 0xD: 
+    elif f == 0xD: #Rn /AND
         RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
         RH = a & b #AND
 
-    elif f == 0xE: # NA/ SETPF
+    elif f == 0xE: # SETPF/ NA
         RL = (a & 0xE) | ci
         RH = ~a
-    elif f == 0xF: #INCC
+    elif f == 0xF: #INCC / INCCF
         RH,RL = get_flag_add(a,0,ci)
 
     v =  ((RH & 0xF) << 4) | (RL& 0xF)
@@ -266,14 +283,14 @@ def generate_high_by_op(ci, f, b, a):
         T = ci == 1 and b == 0
         RH = 8 if T else 0
 
-    elif f == 0xD:  # Ri IR, PSW/AND
+    elif f == 0xD:  # Rn IR,PSW / AND
         RL = b & 0x1 #RS1
         RH = a & b
 
-    elif f == 0xE:  #NA / SETPF
+    elif f == 0xE:  #SETPF / NA
         RL = a
         RH =  ~a
-    elif f == 0xF: #INCC
+    elif f == 0xF: #INCC / INCCF
         RH,RL = get_flag_add(a,0,ci)
     v =  ((RH & 0xF) << 4) | (RL& 0xF)
     return v
