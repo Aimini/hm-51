@@ -21,9 +21,9 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 
 Swap `A[6]` and `A[3]`.
 
-|7-0|
-|:-:|
-|A|
+|7|6    |5-4 |3  |2-0|
+|:-:|:-:  |:-: |:-:|:-:|
+|A\[7\]|A\[3\]|A\[5:4\]|A\[6\]|A\[2:0\]|
 
 Usage:
 
