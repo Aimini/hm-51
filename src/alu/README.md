@@ -14,7 +14,7 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 |0|[ADJF](###0.-ADJF)|[IVADDR](###1.-IVADDR)|[CAA](###2.-CAA)|[SFR](###3.-SFR)|
 |1|[RR](###4.-RR)|[RL](###5.-RL)|[RRC](###6.-RRC)|[RLC](###7.-RLC)|
 |2|[INC](###8.-INC)|[DEC](###9.-DEC)|[BADDR](###10.-BADDR)|[BIDX](###11.-BIDX)|
-|3|[SETCY](###12.-SETCY)|[SETOVCLRCY](###13.-SETOVCLRCY)|[CHIRQ](###14.-CHIRQ)|[SWAP](###15.-SWAP)|
+|3|[SETCY](###12.-SETCY)|[SELHIRQ](###13.-SELHIRQ)|[ISRRETI](###14.-ISRIRETI)|[SWAP](###15.-SWAP)|
 
 ## Description
 ### 0. ADJF
@@ -135,22 +135,11 @@ Get direct address from bit address.
 
  It's usually used to **set** PSW's **CY** flag. It's work for instruction that only affected CY flag(SETB C, DA A, CPL C, etc..)
  
-### 13. SETOVCLRCY
-Set `A[7]` to 0, and set `A[2]` to `C`. 
-|7|6-0|
-|:-:|:-:|
-|C|A\[6:0\]|
+### 13. SELHIRQ
+(TODO)
 
-It's usually used to **set OV** flag and **cl**ea**r** **CY** flag. It's work for instruction MUL AB and DIV AB.
-
-### 14. CHIRQ
-Of all the bits that are 1, set the highest one to 0. 
-
-|7-0|
-|:-:|
-|CHIRQ|
-
-It's used to **C**lear **H**ighest **IRQ** in ISR when IRET instruction executed.
+### 14. ISRRETI
+(TODO)
 
 
 ### 15. SWAP
@@ -184,7 +173,7 @@ C ─ ╢A12       ║
     ╚══════════╝
 ```
 
-Obviously,only one chip can't perform two 8-bit input one 8-bit output function, but we can combine two chip togther. For function like `AND` `OR`, they don't need info from low part, lower nibble and high nibble can calculate indvidually and combine the output to one 8-bit output. For one chip, one function only using 4-bit ouput, and we can using another 4-bit for another function, for example, we can encode `AND` and `OR` in one S input:
+Obviously,a single chip can't encoding function that contain two 8-bit inputs with and an 8-bit output, but we can combine two chip togther. For function like `AND` `OR`, they don't need info from low part, lower nibble and high nibble can calculate indvidually and then combine the output to one 8-bit output. For one chip, a function only using 4-bit ouput, and we can using another 4-bit to encoding other function, for example, we can encode `AND` and `OR` in the same `S` input:
 
 ```python
    ╔══════════╗
@@ -249,27 +238,27 @@ But for function like `ADD`, `SUB`, the need carry signal from low part, we need
 
 
 ## Encoding
-For convenient, we treat high part's `QL` and low part's `QL` to one 8-bit `QL` output, `QH` two. We can explain it separately if necessary.
+For convenient, we treat high part's `QL` and low part's `QL` to one 8-bit `QL` output, and `QH` so on. We will explain it separately if necessary.
 
-The number in first column are the upper nibble, the number in fisrt row  are the lower nibble.
+The number in first column is the upper nibble in `S`, the number in fisrt row is the lower nibble in `S`.
 
  **QL:**
 
 |encode|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
-|0|[XOR](####0.-XOR)|[DA](####1.-DA)|[ADDC](####2.-[ADDC])|[SUBB](####3.-[SUBB])|
-|1|[A](####4.-A)|[B](####5.-B)|[OR](####6.-OR)|[AND](####7.-AND)|
-|2|[IRQN2IRQ](####8.-IRQN2IRQ)|[SETPSWF](####9.-SETPSWF)|[ADDR11REPLACE](####10.-ADDR11REPLACE)|[SHIRQN](####11.-SHIRQN)|
-|3|[Ri](####12.-Ri)|[Rn](####13.-Rn)|[NA](####14.-NA)|[INCC](####15.-INCC)|
+|0|[XOR](####0.-XOR)|[DA](####1.-DA)|[ADDC](####2.-ADDC)|[SUBB](####3.-SUBB)|
+|1|[A](####4.-A)|[Ri](####5.-Ri)|[INSB](####6.-INSB)|[XCHD](####7.-XCHD)|
+|2|[GENIRQN](####8.-GENIRQN)|[SETPSWF](####9.-SETPSWF)|[ADDR11REPLACE](####10.-ADDR11REPLACE)|[SETOVCLRCY](####11.-SETOVCLRCY)|
+|3|[B](####12.-B)|[Rn](####13.-Rn)|[SETPF](####14.-SETPF)|[INCC](####15.-INCC)|
 
 **QH:**
 
 |encode|0|1|2|3|
 |:-:|:-:|:-:|:-:|:-:|
-|0||[DAF](####1.-DAF)|[ADDCF](####2.-ADDCF)|[SUBBF](####3.-SUBBF)|
-|1|[PF](####4.-PF)|[ZF](####5.-ZF)|[INSB](####6.-INSB)|[EXTB](####7.-EXTB)|
-|2|||||
-|3|||[SETPF](####14.-SETPF)|[INCCF](####15.-INCCF)|
+|0|[CPLB](####0.-CPLB)|[DAF](####1.-DAF)|[ADDCF](####2.-ADDCF)|[SUBBF](####3.-SUBBF)|
+|1|[PF](####4.-PF)|[OR](####5.-OR)|[INSBF](####6.-INSBF)|[EXTB](####7.-EXTB)|
+|2|[ISRAPPIRQ](####8.-ISRAPPIRQ)|[ZF](####9.-ZF)|||
+|3|[ZF_B](####12.-ZF_B)|[AND](####13.-AND)|[NA](####14.-NA)|[INCCF](####15.-INCCF)|
 
 ## Description
 
@@ -320,41 +309,33 @@ We treat `B[3]` as `AC`, `B[7]` ac `CY`, according to instruction set manual, it
  |:-:|
  |A|
 
-#### 5. B
-`QL` = `B`.
 
- |7-0|
- |:-:|
- |B|
+#### 5. Ri
+`Q = (A & 0x18) | (B & 0x1)`.
 
-#### 6. OR
-`QL` equal to `A` logic or `B`. 
+ |7-5|4  |3  |2  |1-0|
+ |:-:|:-:|:-:|:-:|:-:|
+ |0|A\[4\]|A\[3\]|0|B\[1:0\]|
 
- |7-0|
- |:-:|
- |A \| B|
-
-#### 7. AND
-`QL` equal to `A` logic and `B`.
-
- |7-0|
- |:-:|
- |A & B|
-
-#### 8. IRQN2IRQ
- It's like a 2 line to 4 line decoder with eanble output pin, `A[1:0]` is data input, `A[3]` is enable input.`A[2]` is not care.
- 
- |7-0|
- |:-:|
- |A\[2\] == 0? 0 : decoder2_4(A\[1:0\]) |
-
- ```python
- # example code
-    if A & 0x8:
-        Q = 1 << (A & 0x3)
-    else:
-        Q = 0
+ It's used to generate register bank address when using indirect address. Under normal circumstances, `A = PSW`, `B = IR`.
+ ``` python
+ #example
+ RF(IR), ALU(A), WR(WE)
+ RF(PSW), ALU(Ri), SR(WE) # load to SR as ram address
+ BUS(RAM)                 # do something with @Ri value
  ```
+
+#### 6. INSB
+Let `T = A`, Then let `T[B[2:0]] = C`, then `Q = T`.
+|7|6|5|4|3|2|1|0|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|B\[2:0\] == 7 ? C : A\[7\]|B\[2:0\] == 6 ? C : A\[6\]|B\[2:0\] == 5 ? C : A\[5\]|B\[2:0\] == 4 ? C : A\[4\]|B\[2:0\] == 3 ? C : A\[3\]|B\[2:0\] == 2 ? C : A\[2\]|B\[2:0\] == 1 ? C : A\[1\]|B\[2:0\] == 0 ? C : A\[0\]|
+
+
+#### 7. XCHD
+
+#### 8. GENIRQN
+  
 
 #### 9. SETPSWF
  Replace `A[7]` to `B[7]`, `A[6]` to `B[6]`, `A[2]` to `B[3]`.
@@ -386,28 +367,6 @@ RF(IR), ALU(SWAP), WR(WE)        # move ADDR11[10:8] to WR[3:1]
 RF(PCH,WE), ALU(ADDR11REPLACE)
 ```
 
-#### 11. SHIRQ
-<!-- get indexes of the bit that value is 1, select the biggest index as Q. -->
-**This one is a little complicated, we will take it later.**
- |7-4|3-0|
- |:-:|:-:|
- |0|SHIRQ(A,B)|
-###
-
-#### 12. Ri
-`Q = (A & 0x18) | (B & 0x1)`.
-
- |7-5|4  |3  |2  |1-0|
- |:-:|:-:|:-:|:-:|:-:|
- |0|A\[4\]|A\[3\]|0|B\[1:0\]|
-
- It's used to generate register bank address when using indirect address. Under normal circumstances, `A = PSW`, `B = IR`.
- ``` python
- #example
- RF(IR), ALU(A), WR(WE)
- RF(PSW), ALU(Ri), SR(WE) # load to SR as ram address
- BUS(RAM)                 # do something with @Ri value
- ```
 
 #### 13. Rn
 `Q = (A & 0x18) | (B & 0x7)`.
@@ -425,12 +384,14 @@ RF(PCH,WE), ALU(ADDR11REPLACE)
  BUS(RAM)                 # do something with Rn value
  ```
 
-#### 14. NA
-`Q` equal to logic not `A`.
+#### 14. SETPF
+ replace `A[0]` to `C`.
+ |7-1 |0|
+ |:-:|:-:|
+ |A\[7:1\] |C |
 
- |7-0|
- |:-:|
- |~A|
+Use to set parity flag in `PSW`.
+
 
 #### 15. INCC
 `Q` = `A` + `C`.
@@ -442,6 +403,9 @@ RF(PCH,WE), ALU(ADDR11REPLACE)
 
 ___
 ### QH
+#### 0. CPLB
+ (TODO)
+
 #### 1. DAF
 
 If there a carry from low nibble, `AC` is 1, if there a carry from high nibble, `CY` is 1.
@@ -468,19 +432,16 @@ if `A[3:0]` contains an odd number of 1s, then `PFL` is 1, if `A` contains an od
 |:-:|:-:|:-:|:-:|
 |PF|X|PFL|X|
 
-#### 5. ZF
-if `A[3:0] == 0`, then `ZFL = 1`. If `A` is 0, then `ZF` is 1.
 
-|7|6-4|3|2-0|
-|:-:|:-:|:-:|:-:|
-|ZF|X|ZFL|X|
+#### 5. OR
+`QL` equal to `A` logic or `B`. 
 
-#### 6. INSB
-Let `T = A`, Then let `T[B[2:0]] = C`, then `Q = T`.
-|7|6|5|4|3|2|1|0|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|B\[2:0\] == 7 ? C : A\[7\]|B\[2:0\] == 6 ? C : A\[6\]|B\[2:0\] == 5 ? C : A\[5\]|B\[2:0\] == 4 ? C : A\[4\]|B\[2:0\] == 3 ? C : A\[3\]|B\[2:0\] == 2 ? C : A\[2\]|B\[2:0\] == 1 ? C : A\[1\]|B\[2:0\] == 0 ? C : A\[0\]|
+ |7-0|
+ |:-:|
+ |A \| B|
 
+#### 6. INSBF
+(TODO)
 #### 7. EXTB
 `Q[7] = A[B[2:0]]`.
 |7|6-4|3|2-0|
@@ -495,13 +456,32 @@ In low part, `B[2:0] < 4` meaing the bix you want get is in `A[3:0]`, we get the
 
 In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set the `Q[7]` to the value of `C`. But if `B[2:0] >= 4`, we take bit from `A[7:4]` as output.
 
-#### 14. SETPF
- replace `A[0]` to `C`.
- |7-1 |0|
- |:-:|:-:|
- |A\[7:1\] |C |
+#### 9. ZF
+if `A[3:0] == 0`, then `ZFL = 1`. If `A` is 0, then `ZF` is 1.
 
-Use to set parity flag in `PSW`.
+|7|6-4|3|2-0|
+|:-:|:-:|:-:|:-:|
+|ZF|X|ZFL|X|
+
+#### 12. ZF_B
+(TODO)
+
+
+#### 13. AND
+`QL` equal to `A` logic and `B`.
+
+ |7-0|
+ |:-:|
+ |A & B|
+
+
+#### 14. NA
+`Q` equal to logic not `A`.
+
+ |7-0|
+ |:-:|
+ |~A|
+
 
 #### 15. INCCF
 If there a carry from low nibble, `AC` is 1, if there a carry from high nibble, `CY` is 1.
