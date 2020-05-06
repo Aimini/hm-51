@@ -94,6 +94,6 @@ def creat_jump_link( jump_count, order):
     all_seg_str_list.append(f'JMP_SEG_END_{order}:')
     return '\n'.join(all_seg_str_list) 
 
-for x in range(887):
+for x in range(886):
     p += creat_jump_link(7, x)
 
