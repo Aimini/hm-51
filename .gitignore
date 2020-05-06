@@ -1,1 +1,5 @@
 test/temp/*
+.vscode/*
+/eeprom-bin/*
+*.pyc
+/temp/*
