@@ -2,6 +2,8 @@ import subprocess
 import sys
 import pathlib
 import os
+import random
+import string
 class trysubp():
     """
     provide subprocess chain, if one subprocess in chain return code is not 0,
@@ -70,9 +72,16 @@ class test_process():
         A51 = tooldir / 'A51.exe'
         BL51 = tooldir / 'BL51.exe'
         OH51 = tooldir / 'OH51.exe'
-
+        # create a unique dir for BL51
+        # Since the damned BL51 always uses the same temporary file name, 
+        # there is a possibility that two BL51.exe will conflict when working at the same time.
+        BL_temp_dir_str = '__' + ''.join(random.sample(string.ascii_letters + string.digits, 16))
+        BL_abs_temp_dir_str = str((self.tempdir / BL_temp_dir_str).absolute())
+        os.mkdir(BL_abs_temp_dir_str)
+        evn_BL51 = os.environ.copy()
+        evn_BL51["TMP"] = BL_abs_temp_dir_str
         rp = trysubp(f"{A51} {filename} OBJECT({objfile})")\
-            .chain(f"{BL51} {objfile} TO {absfile}")\
+            .chain(f"{BL51} {objfile} TO {absfile}", env=evn_BL51)\
             .chain(f"{OH51} {absfile}  HEXfile({hexfile})")
 
         self.rom_file = hexfile
