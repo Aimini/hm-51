@@ -353,6 +353,7 @@ Let `T = A`, Then let `T[B[2:0]] = C`, then `Q = T`.
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |B\[2:0\] == 7 ? C : A\[7\]|B\[2:0\] == 6 ? C : A\[6\]|B\[2:0\] == 5 ? C : A\[5\]|B\[2:0\] == 4 ? C : A\[4\]|B\[2:0\] == 3 ? C : A\[3\]|B\[2:0\] == 2 ? C : A\[2\]|B\[2:0\] == 1 ? C : A\[1\]|B\[2:0\] == 0 ? C : A\[0\]|
 
+Because the high part ouput must using `C` when B\[2:0\] >= 4, then we have function [INSBF](####6.-INSBF) to do this stuff.
 
 #### 7. XCHD
 
@@ -463,7 +464,13 @@ if `A[3:0]` contains an odd number of 1s, then `PFL` is 1, if `A` contains an od
  |A \| B|
 
 #### 6. INSBF
-(TODO)
+Cooperate with [INSB](####6.-INSB) function, it's simply transmit signal `C` from low part chip to high part chip.
+
+ |7-4|3  |2-0|
+ |:-:|:-:|:-:|
+ |X  | C |X  |
+
+
 #### 7. EXTB
 `Q[7] = A[B[2:0]]`.
 |7|6-4|3|2-0|
