@@ -427,7 +427,18 @@ Use to set parity flag in `PSW`.
 ___
 ### QH
 #### 0. CPLB
- (TODO)
+ using `A` as bit index, invert(complement) the bit in `B`.
+
+``` python
+Q = B
+Q[A[2:0]] = ~Q[A[2:0]]
+```
+|7-0|
+|:-:|:-:|:-:|:-:|
+|CPLB(A, B)|
+
+
+ The `A` must be the result of [BIDX](###11.-BIDX). 
 
 #### 1. DAF
 
