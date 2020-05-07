@@ -136,7 +136,25 @@ Get direct address from bit address.
  It's usually used to **set** PSW's **CY** flag. It's work for instruction that only affected CY flag(SETB C, DA A, CPL C, etc..)
  
 ### 13. SELHIRQ
-(TODO)
+ Select the highest priority interrupt(not interrupt number) from input `A`. 
+ 
+ In short, you must using function [GENIRQN](####8.-GENIRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRQ` to get highest IRQ output and `IP` flag.
+
+ |7   |6-0 |
+ |:-: |:-: |
+ |IP  |IRQ |
+
+```python
+ #example
+ RF(IP),  ALU(A), WR(WE) # WR <- IP
+ RF(T0,WE), BUS(IRQ)     # T0 <- IRQ
+ RF(T0,WE), ALU(GENIRQN) # T0 <- generate IRQ number, IP flag, interrupt valid flag.
+ RF(T0,WE), ALU(SELHIRQ) # T0 <- get highest interrupt request and IP flag.
+
+ RF(T0), ALU(GENIRQN), WR(WE), JLT(0x1, STAGE_FETCH)
+RF(ISR, WE), ALU(ISRAPPIRQ)
+RF(ISR), JGT(0x7F, STAGE_FETCH)
+```
 
  ## 14. ISRRETI
  Clear the interrupt service flag in ISR, used in `RETI` instruction.
