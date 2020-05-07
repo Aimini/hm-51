@@ -486,7 +486,11 @@ if `A[3:0] == 0`, then `ZFL = 1`. If `A` is 0, then `ZF` is 1.
 |ZF|X|ZFL|X|
 
 #### 12. ZF_B
-(TODO)
+Same as [ZF](####9.-ZF), but using B as operand. If `B[3:0] == 0`, then `ZFL = 1`. If `B` is 0, then `ZF` is 1.
+
+|7|6-4|3|2-0|
+|:-:|:-:|:-:|:-:|
+|ZF|X|ZFL|X|
 
 
 #### 13. AND
