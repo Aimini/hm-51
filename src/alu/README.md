@@ -138,9 +138,13 @@ Get direct address from bit address.
 ### 13. SELHIRQ
 (TODO)
 
-### 14. ISRRETI
-(TODO)
-
+ ## 14. ISRRETI
+ Clear the interrupt service flag in ISR, used in `RETI` instruction.
+ See `Architecture Design` in /README.md to get more detail.
+ |7  |6  |5  |4-0|
+ |:-:|:-:|:-:|:-:|
+ |A\[7\]|A\[6\] == 1 ? 0 : A\[6\] |A\[6\] == 0 ? 0 : A\[5\]   |  A\[4:0\]  |
+ 
 
 ### 15. SWAP
 **Swap** the nibble within the `A`.
