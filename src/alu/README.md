@@ -356,6 +356,22 @@ Let `T = A`, Then let `T[B[2:0]] = C`, then `Q = T`.
 Because the high part ouput must using `C` when B\[2:0\] >= 4, then we have function [INSBF](####6.-INSBF) to do this stuff.
 
 #### 7. XCHD
+`Q = {A[7:4],B[3:0]}`.
+Concat the high nibble of `A` and the low nibble of `B`.
+
+|7-4|3-0|
+|:-:|:-:|
+|A\[7:4\]|B\[3:0\]|
+
+``` python
+# example: swap low nibble of T0 and low nibble of T1
+RF(T0), ALU(A), WR(WE)
+RF(T2,WE), ALU(B)        # backup, T2 <- T0
+RF(T1), ALU(A), WR(WE)
+RF(T0,WE), ALU(XCHD)  # {T0[7:4], T1[3:0]}
+RF(T2), ALU(A), WR(WE)
+RF(T1,WE), ALU(XCHD)
+```
 
 #### 8. GENIRQN
   
