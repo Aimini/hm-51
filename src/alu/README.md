@@ -41,7 +41,7 @@ See function [SETPSWF](####9.-SETPSWF) to know how this example work.
 # ADDC example
 RF(T0,WE), ALU(ADDCF), BUS(ALU)     # T0 + WR, store flag to T0, CY at A[7], OV at A[6], AC at A[3]
 RF(T0), ALU(ADJF), BUS(ALU), WR(WE) # now OV at A[3], AC at A[6]
-RF(PSW, WE), ALU(SETPSWF), BUS(ALU) 
+RF(PSW, WE), ALU(SETPSWF), BUS(ALU)
 ```
 
 See function [DA](####1.-DA) to know how this example work.
@@ -49,7 +49,7 @@ See function [DA](####1.-DA) to know how this example work.
 ``` python
 # DA example
 RF(PSW), ALU(ADJF), BUS(ALU), WR(WE) # now AC at A[3], CY still at A[7].
-RF(A, WE), ALU(DA), BUS(ALU) 
+RF(A, WE), ALU(DA), BUS(ALU)
 ```
 
 ### 1. IVADDR
@@ -76,8 +76,8 @@ Obtain the SFR number in RF according to the SFR address.
 |:-:|:-:|:-:|
 |0|SFR hit|SFR number in RF|
 
- For example, if RF\[1\] is register B, 
- and we know that B's SFR address is 0xF0. 
+ For example, if RF\[1\] is register B,
+ and we know that B's SFR address is 0xF0.
  When input `A` is 0xF0, the `Q[4]` (SFR hit) is 1, and `Q[3:0]` is 1. If `A` is an address without SFR mapped, the `Q[4]` (SFR hit) is 0, `Q[3:0]` can be any arbitrary number.
 
 ### 4. RR
@@ -110,14 +110,14 @@ Rotate shift left `A` with `C` .
 
 ### 8. INC
 
-`Q = A + 1` 
+`Q = A + 1`
 |7-0|
 |:-:|
 |A + 1|
 
 ### 9. DEC
 
-`Q = A - 1` 
+`Q = A - 1`
 |7-0|
 |:-:|
 |A - 1|
@@ -153,10 +153,9 @@ Get bytes's direct address according bit address.
 
  It's usually used to **set** PSW's **CY** flag. It's work for instruction that only affected CY flag(SETB C, DA A, CPL C, etc.)
 
-
 ### 13. SELHIRQ
 
- Select the highest priority interrupt(not the interrupt number) from the input `A` . 
+ Select the highest priority interrupt(not the interrupt number) from the input `A` .
 
  In short, you must using function [GENIRQN](####8.-GENIRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRQ` to get highest IRQ output and `IP` flag.
 
@@ -184,8 +183,6 @@ RF(ISR), JGT(0x7F, STAGE_FETCH)
 |    7   |             6            |             5            |    4-0   |
 |:------:|:------------------------:|:------------------------:|:--------:|
 | A\[7\] | A\[6\] == 1 ? 0 : A\[6\] | A\[6\] == 0 ? 0 : A\[5\] | A\[4:0\] |
-
- 
 
 ### 15. SWAP
 
@@ -240,7 +237,7 @@ BL ─╢   C64  LQ╟─────┯━━━━━  LQ
 S  ─╢        HQ╟─────┼─┐
 C0 ─╢          ║     │ │
     ╚══════════╝     │ │
-                     │ │ 
+                     │ │
     ╔══════════╗     │ │
 AH ─╢   AT28   ║     │ │
 BH ─╢   C64  LQ╟─────┘ │
@@ -259,8 +256,8 @@ But for function like `ADD` , `SUB` , the need carry signal from low part, we ne
     └ ╢.   A    .╟ │
     ┌ ╢.   T    .╟ ├ AL + BL
     │ ╢.   2    .╟ ┘
- BL ┥ ╢.   8    .╟ 
-    └ ╢.   C    .╟ 
+ BL ┥ ╢.   8    .╟
+    └ ╢.   C    .╟
     ┌ ╢.   6    .╟        CY
     │ ╢.   4   D7╟────────┴─────┐
   S ┥ ╢.         ║              │
@@ -313,6 +310,7 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 ## Description
 
 ### QL
+
 Remember, QL is consist of low part chip's low nibble and high part chip's low nibble.
 
 #### 0. XOR
@@ -370,7 +368,6 @@ We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, 
 |   0   | A\[4\] | A\[3\] |   0   | B\[1:0\] |
 
  It's used to generate register bank address when using indirect address. Under normal circumstances, `A = PSW` , `B = IR` .
- 
 
 ``` python
  #example
@@ -418,15 +415,13 @@ RF(T1,WE), ALU(XCHD)
 |   IV  |   IP  |  IRQn |   IV  |   IP  |  IRQn |
 |   H   |   H   |   H   |   L   |   L   |   L   |
 
- 
  The `A` must be IRQ and `B` must be thevalue  of `IP` .
- 
+
  IV: interrupt valid flag. If there is any IRQ in this nibble, this flag is 1, otherwise it is 0.
- 
+
  IP: IP flag. If the corresponding bit of the high priority interrupt in the `IP` register is 1, then this flag is 1, otherwise it is 0.
- 
+
  IRQn: the highest priority interrupt number.
- 
 
 #### 9. SETPSWF
 
@@ -470,8 +465,6 @@ RF(PCH,WE), ALU(ADDR11REPLACE)
 
  Similar to function `Ri` , it's used to generate register bank address when using Rn address. Under normal circumstances, `A = PSW` , `B = IR` .
 
- 
-
 ``` python
  #example
  RF(IR), ALU(A), WR(WE)
@@ -504,6 +497,7 @@ ___
 ### QH
 
 #### 0. CPLB
+
  using `A` as bit index, invert(complement) the bit in `B` .
 
 ``` python
@@ -515,7 +509,7 @@ Q[A[2:0]] = ~Q[A[2:0]]
 |:-:|:-:|:-:|:-:|
 |CPLB(A, B)|
 
- The `A` must be the result of [BIDX](###11.-BIDX). 
+ The `A` must be the result of [BIDX](###11.-BIDX).
 
 #### 1. DAF
 
@@ -551,7 +545,7 @@ if `A[3:0]` contains an odd number of 1s, then `PFL` is 1, if `A` contains an od
 
 #### 5. OR
 
-`QL` equal to `A` logic or `B` . 
+`QL` equal to `A` logic or `B` .
 
 |  7-0  |     |
 |:-----:|-----|
@@ -574,7 +568,7 @@ Cooperate with [INSB](####6.-INSB) function, it's simply transmit signal `C` fro
 
 Let see how it work.
 
-Usually, the B is the result of [BIDX](###11.-BIDX), so `B[2:0]` and `B[6:4]` is the same value, they are both the bit index. 
+Usually, the B is the result of [BIDX](###11.-BIDX), so `B[2:0]` and `B[6:4]` is the same value, they are both the bit index.
 
 In low part, `B[2:0] < 4` meaing the bix you want get is in `A[3:0]` , we get the bit from it, but the final output of bit is in `Q[7]` , so we need send the bit from low part chip to high part chip, which what you see at `Q[3]` .
 
@@ -584,30 +578,30 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
  Mark the corresponding interrupt servicing flag in the `ISR` register.
 
- In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**.
+ In short, if `ISR` **can** accept current interrupt, the  ** `Q[7]` is 0(be careful!)** , otherwise the ** `Q[7]` is 1**.
 
  It should work with [ISRRETI](###14.-ISRRETI).
 
 |7-0|
 |:-:|
-|ISRAPPIRQ(A,B)|
+|ISRAPPIRQ(A, B)|
 
 *notice*
 
-`A` must be `ISR`. and `B` must be the result of `SELHIRQ`(see example in [SELHIRQ](###13.-SELHIRQ)).
+`A` must be `ISR` . and `B` must be the result of `SELHIRQ` (see example in [SELHIRQ](###13.-SELHIRQ)).
 
 *detail*
 
- Let's see how it work: The bit where the interrupt service flag in the ISR is arbitrarily selected by us, but according to my `Hardware encoding` in `/README.md`:
+ Let's see how it work: The bit where the interrupt service flag in the ISR is arbitrarily selected by us, but according to my `Hardware encoding` in `/README.md` :
 
-- `ISR[6] == 1` means an interrupt with priority 1 is being servced.
-- `ISR[5] == 1` means an interrupt with priority 0 is being servced.
-- `ISR[7]` can be customized.
+* `ISR[6] == 1` means an interrupt with priority 1 is being servced.
+* `ISR[5] == 1` means an interrupt with priority 0 is being servced.
+* `ISR[7]` can be customized.
 
- Now assume `A = ISR`, `B` is the result of `SELHIRQ`, we first list the condition that can't accept current interrupt.
+ Now assume `A = ISR` , `B` is the result of `SELHIRQ` , we first list the condition that can't accept current interrupt.
 
-- `A[6] == 1`, means that the priority of the interrupt being serviced is 1. You cannot accept any other interrupts because 1 is the highest priority.
-- `A[6] == 0 && A[5] == 1 && B[7] == 0`, means that only interrupt with priority 0 be serviced, but IRQ's priority is 0 too, we shouldn'taccept it.
+* `A[6] == 1` , means that the priority of the interrupt being serviced is 1. You cannot accept any other interrupts because 1 is the highest priority.
+* `A[6] == 0 && A[5] == 1 && B[7] == 0` , means that only interrupt with priority 0 be serviced, but IRQ's priority is 0 too, we shouldn'taccept it.
 
 Then, we use `Q[7]` to indicate whether we can accept the interrupt.
 
