@@ -374,8 +374,22 @@ RF(T1,WE), ALU(XCHD)
 ```
 
 #### 8. GENIRQN
-  
+ Select the highest priority interrupt number in the high nibble and low nibble  respectively.
 
+ See example in [SELHIRQ](###13.-SELHIRQ).
+ |7  |6  |5-4 |3  |2  |1-0 |
+ |:-:|:-:|:-: |:-:|:-:|:-: |
+ |IV | IP|IRQn|IV |IP |IRQn|
+ |H | H  | H  |L  |L  |L   |
+ 
+ The `A` must be IRQ and `B` must be thevalue  of `IP`.
+ 
+ IV: interrupt valid flag. If there is any IRQ in this nibble, this flag is 1, otherwise it is 0.
+ 
+ IP: IP flag. If the corresponding bit of the high priority interrupt in the `IP` register is 1, then this flag is 1, otherwise it is 0.
+ 
+ IRQn: the highest priority interrupt number.
+ 
 #### 9. SETPSWF
  Replace `A[7]` to `B[7]`, `A[6]` to `B[6]`, `A[2]` to `B[3]`.
 
