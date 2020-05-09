@@ -21,7 +21,7 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 |0|[ADJF](###0.-ADJF)|[IVADDR](###1.-IVADDR)|[CAA](###2.-CAA)|[SFR](###3.-SFR)|
 |1|[RR](###4.-RR)|[RL](###5.-RL)|[RRC](###6.-RRC)|[RLC](###7.-RLC)|
 |2|[INC](###8.-INC)|[DEC](###9.-DEC)|[BADDR](###10.-BADDR)|[BIDX](###11.-BIDX)|
-|3|[SETCY](###12.-SETCY)|[SELHIRQ](###13.-SELHIRQ)|[ISRRETI](###14.-ISRIRETI)|[SWAP](###15.-SWAP)|
+|3|[SETCY](###12.-SETCY)|[SELHIRQ](###13.-SELHIRQ)|[ISRRETI](###14.-ISRRETI)|[SWAP](###15.-SWAP)|
 
 ## Description
 
