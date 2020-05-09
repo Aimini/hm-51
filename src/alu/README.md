@@ -1,4 +1,5 @@
 # Introduction
+
 This document contains descriptions of [ALUS](#ALUS) and [ALUD](#ALUD) functions.
 
 # ALUS
@@ -151,12 +152,12 @@ Get bytes's direct address according bit address.
 |   C   | A\[6:0\] |
 
  It's usually used to **set** PSW's **CY** flag. It's work for instruction that only affected CY flag(SETB C, DA A, CPL C, etc.)
- 
+
 
 ### 13. SELHIRQ
 
  Select the highest priority interrupt(not the interrupt number) from the input `A` . 
- 
+
  In short, you must using function [GENIRQN](####8.-GENIRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRQ` to get highest IRQ output and `IP` flag.
 
 |   7   |  6-0  |
@@ -175,7 +176,8 @@ RF(ISR, WE), ALU(ISRAPPIRQ)
 RF(ISR), JGT(0x7F, STAGE_FETCH)
 ```
 
- ## 14. ISRRETI
+## 14. ISRRETI
+
  Clear the interrupt service flag in ISR, used in `RETI` instruction.
  See `Architecture Design` in /README.md to get more detail.
 
@@ -577,6 +579,37 @@ Usually, the B is the result of [BIDX](###11.-BIDX), so `B[2:0]` and `B[6:4]` is
 In low part, `B[2:0] < 4` meaing the bix you want get is in `A[3:0]` , we get the bit from it, but the final output of bit is in `Q[7]` , so we need send the bit from low part chip to high part chip, which what you see at `Q[3]` .
 
 In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set the `Q[7]` to the value of `C` . But if `B[2:0] >= 4` , we take bit from `A[7:4]` as output.
+
+#### 8. ISRAPPIRQ
+
+ Mark the corresponding interrupt servicing flag in the `ISR` register.
+
+ In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**.
+
+ It should work with [ISRRETI](###14.-ISRRETI).
+
+|7-0|
+|:-:|
+|ISRAPPIRQ(A,B)|
+
+*notice*
+
+`A` must be `ISR`. and `B` must be the result of `SELHIRQ`(see example in [SELHIRQ](###13.-SELHIRQ)).
+
+*detail*
+
+ Let's see how it work: The bit where the interrupt service flag in the ISR is arbitrarily selected by us, but according to my `Hardware encoding` in `/README.md`:
+
+- `ISR[6] == 1` means an interrupt with priority 1 is being servced.
+- `ISR[5] == 1` means an interrupt with priority 0 is being servced.
+- `ISR[7]` can be customized.
+
+ Now assume `A = ISR`, `B` is the result of `SELHIRQ`, we first list the condition that can't accept current interrupt.
+
+- `A[6] == 1`, means that the priority of the interrupt being serviced is 1. You cannot accept any other interrupts because 1 is the highest priority.
+- `A[6] == 0 && A[5] == 1 && B[7] == 0`, means that only interrupt with priority 0 be serviced, but IRQ's priority is 0 too, we shouldn'taccept it.
+
+Then, we use `Q[7]` to indicate whether we can accept the interrupt.
 
 #### 9. ZF
 
