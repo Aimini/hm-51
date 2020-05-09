@@ -363,17 +363,17 @@ We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, 
 
 `Q = (A & 0x18) | (B & 0x1)` .
 
-|  7-5  |    4   |    3   |   2   |    1-0   |
-|:-----:|:------:|:------:|:-----:|:--------:|
-|   0   | A\[4\] | A\[3\] |   0   | B\[1:0\] |
+|  7-5  |    4-3   |   2-1 |       0|
+|:-----:|:--------:|:-----:|:------:|
+|   0   | A\[4:3\] |   0   | B\[0\] |
 
- It's used to generate register bank address when using indirect address. Under normal circumstances, `A = PSW` , `B = IR` .
+ It's used to generate register bank address when using indirect address. Under normal circumstances, `A = IR` , `B = PSW` .
 
 ``` python
  #example
- RF(IR), ALU(A), WR(WE)
- RF(PSW), ALU(Ri), SR(WE) # load to SR as ram address
- BUS(RAM)                 # do something with @Ri value
+ RF(PSW), ALU(A), WR(WE)
+ RF(IR), ALU(Ri), SR(WE) # load to SR as ram address
+ BUS(RAM)                 # do something with @Ri addr value
  ```
 
 #### 6. INSB
@@ -459,16 +459,16 @@ RF(PCH,WE), ALU(ADDR11REPLACE)
 
 `Q = (A & 0x18) | (B & 0x7)` .
 
-|  7-5  |    4   |    3   |   2   |    1-0   |
-|:-----:|:------:|:------:|:-----:|:--------:|
-|   0   | A\[4\] | A\[3\] |   0   | B\[1:0\] |
+|  7-5  |    4-3   |   2-0    |
+|:-----:|:--------:|:--------:|
+|   0   | B\[4:3\] | A\[2:0\] |
 
- Similar to function `Ri` , it's used to generate register bank address when using Rn address. Under normal circumstances, `A = PSW` , `B = IR` .
+ Similar to function `Ri` , it's used to generate register bank address when using Rn address. Under normal circumstances, `A = IR` , `B = PSW` .
 
 ``` python
  #example
- RF(IR), ALU(A), WR(WE)
- RF(PSW), ALU(Rn), SR(WE) # load to SR as ram address
+ RF(PSW), ALU(A), WR(WE)
+ RF(IR), ALU(Rn), SR(WE) # load to SR as ram address
  BUS(RAM)                 # do something with Rn value
  ```
 
