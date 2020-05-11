@@ -1,6 +1,8 @@
 # Introduction
+
 # Hardware and simulator requirment
-I recommend that you implement these sfrs' function in your hardware design and simulator so that you can easily check that the test results are correct.
+
+I recommend that you implement these SFRs' function in your hardware design and simulator so that you can easily check that the test results are correct.
 
 |address| register|function|
 |:-: | :-:   |:-:|
@@ -10,56 +12,53 @@ I recommend that you implement these sfrs' function in your hardware design and 
 |0xFE| PAR1  |[Assertion](##assertion)|
 |0xFF| AFUNC |[Assertion](##assertion)|
 
-
 ## Assertion
-Assert function using 3 registers named `AFUNC`, `PAR1`, `PAR0`. `PAR0` and `PAR1` store the number you want to compare, AFUNC control comparison mode:
+
+Assert function using 3 registers named `AFUNC` , `PAR1` , `PAR0` . `PAR0` and `PAR1` store the number you want to compare, AFUNC control comparison mode:
 
 |value   | 0   | 1     |2       | 3     |
 |:-:     |:-:  |:-:    |:-:     |:-:    |
 |function| None|p0 > p1|p0 == p1|p0 < p1|
 
-Assertions are the basic requirement for testing. It is used to check whether the results of certain instructions are correct. In the emulator, you can use assertions to verify that your .A51 is working as expected, making sure there are no human mistake in the .A51 file, so an assertion failure in the hardware design will tell you that there must be an error in hardware level.
+Assertions are the basic requirement for testing. It is used to check whether the results of certain instructions are correct. In the emulator, you can use assertions to verify that your . A51 is working as expected, making sure there are no human mistake in the . A51 file, so an assertion failure in the hardware design will tell you that there must be an error in hardware level.
 
 ## Exit
-When you write a value greater than zero to `EXR`, it tells the simulator/hardware design tool that the program has exited.
+
+When you write a value greater than zero to `EXR` , it tells the simulator/hardware design tool that the program has exited.
 
 Some simulators check if the program exits based on the length of data loaded in ROM. However, I still recommend that you implement this feature.
 
 ## Dump
-When you write an `DUMP` value greater than zero, it tells the simulator / hardware design tool to dump the value of IRAM and the value of the register to a file. The registers you want to dump, the IRAM range you want to dump, and the file format are determined by your design. The ultimate goal is that you can determine whether the hardware design is correct by comparing the contents of the simulator dump results and the hardware design tool dump results.
+
+When you write an `DUMP` value greater than zero, it tells the simulator / hardware design tool to dump the value of IRAM and the value of the register to a file.
+
+The registers you want to dump, the IRAM range you want to dump, and the file format are determined by your design. 
+
+The ultimate goal is that you can determine whether the hardware design is correct by comparing the contents of the simulator dump results and the hardware design tool dump results.
 <!-- # Common testing process
+
 1. write a 
 
 When compare result not at expect, you'd better to check the soft
+
 # Create new test -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # manual test instructions
+
 We first implement the following two instructions:
    - MOV direct, #immed
    - MOV direct, direct
 
- Why? using first instruction we can move any immediate number to any 
- address(include all SFR in RF). Using the second instruction, we can move
- any data from one memory cell/register to another memory cell/register.
- When we implement these two isntructions and make sure they work properly,
- then we can using  hardware assertion to check other instrcutions' result.
- (memory cell equal to immediate, ne register equal to another register etc).
+ *Why?*
+
+ Using first instruction we can move any immediate number to any address(include all SFR in RF).
+
+  Using the second instruction, we can move  any data from one memory cell/register to another memory cell/register.
+
+ When we implement these two isntructions and make sure they work properly, then we can using  hardware assertion to check other instrcutions' result. (memory cell equal to immediate, ne register equal to another register etc).
 
 # test table
+
 |opcode|mnemonic|tested|
 |:-|:-|:-|
 |0x00|NOP     | |
