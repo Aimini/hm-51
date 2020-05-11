@@ -64,7 +64,7 @@ Get interrupt vector address according to IRQ number.
 
 Each bit in `A` and `C` performs logical AND operation.
 
-|7|6|5|4|3|2|1|0|
+|7 |6|5|4|3|2|1|0|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |C&A\[7\]|C&A\[6\]|C&A\[5\]|C&A\[4\]|C&A\[3\]|C&A\[2\]|C&A\[1\]|C&A\[0\]|
 
@@ -76,9 +76,7 @@ Obtain the SFR number in RF according to the SFR address.
 |:-:|:-:|:-:|
 |0|SFR hit|SFR number in RF|
 
- For example, if RF\[1\] is register B,
- and we know that B's SFR address is 0xF0.
- When input `A` is 0xF0, the `Q[4]` (SFR hit) is 1, and `Q[3:0]` is 1. If `A` is an address without SFR mapped, the `Q[4]` (SFR hit) is 0, `Q[3:0]` can be any arbitrary number.
+ For example, if RF\[1\] is register B, and we know that B's SFR address is 0xF0. When input `A` is 0xF0, the `Q[4]` (SFR hit) is 1, and `Q[3:0]` is 1. If `A` is an address without SFR mapped, the `Q[4]` (SFR hit) is 0, `Q[3:0]` can be any arbitrary number.
 
 ### 4. RR
 
@@ -110,14 +108,14 @@ Rotate shift left `A` with `C` .
 
 ### 8. INC
 
-`Q = A + 1`
+`Q = A + 1` .
 |7-0|
 |:-:|
 |A + 1|
 
 ### 9. DEC
 
-`Q = A - 1`
+`Q = A - 1` .
 |7-0|
 |:-:|
 |A - 1|
@@ -435,7 +433,7 @@ It's usually used to set PSW flag when execute `ADDC` , `SUBB` , `ADD` instructi
 
 #### 10. ADDR11REPLACE
 
-`A[2:0]` = `B[3:1]` 
+`A[2:0]` = `B[3:1]`.
 
 |    7-3   |    2-0   |
 |:--------:|:--------:|
@@ -444,8 +442,8 @@ It's usually used to set PSW flag when execute `ADDC` , `SUBB` , `ADD` instructi
 This function was used to `AJMP` and `ACALL` , let's explain how it work. In ISA, the abs address is a 11bit immed:
 
 |encoding|byte0    |  byte1 |
-|:-:     |:-:        |:-:|
-|value|A10-A8 xxxxx|A7-A0|
+|:-:     |:-:      |:-:     |
+|value|A10-A8 xxxxx|A7-A0   |
 
 And when excute `AJMP` and `ACALL` we have a step `PC[10:0]= A[10:0]` , note `PC[15:8]` as `PCH` , `PC[7:0]` as `PCL` , then we get `PCL = A[7:0] = byte1` it's simply move `byte1` to `PCL` . For `PCH` , we have `PCH[2:0] = A[10:8]` , meaing we want `PCH[2:0]` = `byte0[7:5]` . That's seem can't work by this function, but if excute [SWAP](###15.-SWAP) to `byte0` , we have `_byte0[3:0] = byte0[7:4]` , it's meaing `_byte0[3:1] = byte0[7:5]` , and now, we can excute `ADDR11REPLACE` .
 
@@ -547,9 +545,9 @@ if `A[3:0]` contains an odd number of 1s, then `PFL` is 1, if `A` contains an od
 
 `QL` equal to `A` logic or `B` .
 
-|  7-0  |     |
-|:-----:|-----|
-|  A \  | B   |
+|  7-0  |
+|:-----:|
+|A \| B |
 
 #### 6. INSBF
 
@@ -578,7 +576,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
  Mark the corresponding interrupt servicing flag in the `ISR` register.
 
- In short, if `ISR` **can** accept current interrupt, the  ** `Q[7]` is 0(be careful!)** , otherwise the ** `Q[7]` is 1**.
+ In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**.
 
  It should work with [ISRRETI](###14.-ISRRETI).
 
