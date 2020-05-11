@@ -32,6 +32,12 @@
 
 According `IRQ` , register `ISR`  `IE`  `IP` to select highest priority `IRQ` and append it to `ISR` , then set `PC` to interrupt vector address.
 
+# Stage reset all
+
+ Considering that some register file chips do not have a reset input (maybe you are using a dual-port RAM chip as a register file chip), we can't reset the contents of the register through the hardware-level reset pin.
+
+ Therefore, I added a piece of MI code for resetting the register contents (including PC). When the RESET input is high, MIPC will jump to this code and return to the FETCH stage after execution.
+
 # Conventions
 
  For shrink some instruction cycle, The decoder script is follow the following conventions:
