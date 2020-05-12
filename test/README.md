@@ -1,18 +1,20 @@
-# Introduction
+# Test Case Document
 
-# Hardware and simulator requirment
+---
+
+## Hardware and simulator requirment
 
 I recommend that you implement these SFRs' function in your hardware design and simulator so that you can easily check that the test results are correct.
 
 |address| register|function|
 |:-: | :-:   |:-:|
-|0xFB| DUMP | [Dump](##dump)|
-|0xFC| EXR   |[Exit](##exit)|
-|0xFD| PAR0  |[Assertion](##assertion)|
-|0xFE| PAR1  |[Assertion](##assertion)|
-|0xFF| AFUNC |[Assertion](##assertion)|
+|0xFB| DUMP | [dump](##dump)|
+|0xFC| EXR   |[exit](##exit)|
+|0xFD| PAR0  |[assertion](##assertion)|
+|0xFE| PAR1  |[assertion](##assertion)|
+|0xFF| AFUNC |[assertion](##assertion)|
 
-## Assertion
+### assertion
 
 Assert function using 3 registers named `AFUNC` , `PAR1` , `PAR0` . `PAR0` and `PAR1` store the number you want to compare, AFUNC control comparison mode:
 
@@ -22,13 +24,13 @@ Assert function using 3 registers named `AFUNC` , `PAR1` , `PAR0` . `PAR0` and `
 
 Assertions are the basic requirement for testing. It is used to check whether the results of certain instructions are correct. In the emulator, you can use assertions to verify that your . A51 is working as expected, making sure there are no human mistake in the . A51 file, so an assertion failure in the hardware design will tell you that there must be an error in hardware level.
 
-## Exit
+### exit
 
 When you write a value greater than zero to `EXR` , it tells the simulator/hardware design tool that the program has exited.
 
 Some simulators check if the program exits based on the length of data loaded in ROM. However, I still recommend that you implement this feature.
 
-## Dump
+### dump
 
 When you write an `DUMP` value greater than zero, it tells the simulator / hardware design tool to dump the value of IRAM and the value of the register to a file.
 
@@ -43,12 +45,12 @@ When compare result not at expect, you'd better to check the soft
 
 # Create new test -->
 
-# manual test instructions
+## Manual test instructions
 
 We first implement the following two instructions:
    - MOV direct, #immed
    - MOV direct, direct
-
+  
  *Why?*
 
  Using first instruction we can move any immediate number to any address(include all SFR in RF).
@@ -57,7 +59,7 @@ We first implement the following two instructions:
 
  When we implement these two isntructions and make sure they work properly, then we can using  hardware assertion to check other instrcutions' result. (memory cell equal to immediate, ne register equal to another register etc).
 
-# test table
+## Test table
 
 |opcode|mnemonic|tested|
 |:-|:-|:-|
@@ -188,3 +190,7 @@ We first implement the following two instructions:
 |0xF5| MOV direct, A   | |
 |0xF6-0xF7| MOV @Ri, A  | |
 |0xF8-0xFF| MOV Rn, A   | |
+
+<!-- ## test code generate script
+### create new script
+###  -->
