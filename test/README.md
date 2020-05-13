@@ -37,13 +37,7 @@ When you write an `DUMP` value greater than zero, it tells the simulator / hardw
 The registers you want to dump, the IRAM range you want to dump, and the file format are determined by your design. 
 
 The ultimate goal is that you can determine whether the hardware design is correct by comparing the contents of the simulator dump results and the hardware design tool dump results.
-<!-- # Common testing process
 
-1. write a 
-
-When compare result not at expect, you'd better to check the soft
-
-# Create new test -->
 
 ## Manual test instructions
 
@@ -191,6 +185,32 @@ We first implement the following two instructions:
 |0xF6-0xF7| MOV @Ri, A  | |
 |0xF8-0xFF| MOV Rn, A   | |
 
-<!-- ## test code generate script
-### create new script
-###  -->
+## The test case
+
+ In fact, it is tedious to manually write a bunch of code to test edge conditions or normal conditions, So we will use the script to generate assembly code.
+
+ You should follow the following rules so that the test case runner(TCR) can invoke the generate script and correctly execute the compilation and run verification process.
+
+### create new test case
+
+ In this section, I will explain how to write correct test case generate script.
+
+ *directory and filename*
+
+ the generate script should stored in '/test/generate' diectory, and it's shouldn't start with '__'(that meaing it's an util file).
+
+ *command line arguments format*
+
+ test case runner require the following format
+
+ ``` bash
+  (TODO: merge master to update code)
+ ```
+
+<!-- ### modify the TCR
+
+In some case you might want to change the compile program or change the verify porcess, you might to change the code of the TCR.
+
+*instructions simulator*
+
+*hardware emulation* -->
