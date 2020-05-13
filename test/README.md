@@ -193,23 +193,28 @@ We first implement the following two instructions:
 
 ### create new test case
 
- In this section, I will explain how to write correct test case generate script.
+ In this section, I will explain how to write correct test case generation script.
 
  *directory and filename*
 
- the generate script should stored in '/test/generate' diectory, and it's shouldn't start with '__'(that meaing it's an util file).
+ the generation script should be stored in then '/test/generate' diectory, and it shouldn't start with '__'(which means it's a util file).
 
  *command line arguments format*
-
- test case runner require the following format
+ 
+ assume your generation script is 'XX\.py', the test case runner require the following format:
 
  ``` bash
-  (TODO: merge master to update code)
+  XX.py -o <output_dir>
  ```
+
+ the generation script should generate a assembly file named XX.A51 and store it in the directory `<ouput_dir>`.
 
 <!-- ### modify the TCR
 
 In some case you might want to change the compile program or change the verify porcess, you might to change the code of the TCR.
+
+You can view the source code of TCR in '/test/compile_verify.py'.
+*assembly compile*
 
 *instructions simulator*
 
