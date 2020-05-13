@@ -22,6 +22,6 @@ p = u.create_test()
 for x in [[I_00, I_00], [I_02, I_40], [I_DE, I_A0]]:
     a = x[0]
     b = x[1]
-    p(atl.astl(a,b))
-    p(atl.aste(a,b))
-    p(atl.astg(a,b))
+    p += atl.astl(a,b)
+    p += atl.aste(a,b)
+    p += atl.astg(a,b)

@@ -1,0 +1,13 @@
+# 0xA8-0xAF, MOV Rn, direct
+RF(T0, WE), BUS(ROM), SR(WE)
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+RF(T0, WE), ALU(B)
+
+
+@INC "snippet\load_rn_to_sr.ds"
+
+RF(T0), ALU(A), RAM(WE), BR(ONE)
+
+
+@INC "snippet\inc_pc_jchkint.ds"

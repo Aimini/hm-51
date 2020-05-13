@@ -1,0 +1,77 @@
+########### 0xA4, MUL AB
+RF(T0, WE), LI(0), BR(ZERO)  # reuslt low, T0
+
+##############################################################################
+# calculate
+##############################################################################
+############# 0
+RF(A, WE), ALU(RRC), BR(A0), JLT(0x01, MUL_A_ZERO)
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 1
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin CY <= A[0]; A0<= {CY, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 2
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin CY <= A[0]; A0<= {CY, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 3
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 4
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 5
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 6
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+############# 7
+RF(A, WE), ALU(RRC), BR(A0)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+RF(B), ALU(CAA), WR(WE), BR(ZERO)
+RF(T0, WE), ALU(ADDC), BR(CY)  # T0 += {8{A[0]}} & B
+
+RF(T0, WE), ALU(RRC), BR(A0), WR(WE)  # always_ff(@posedge clk) begin BR <= T0[0]; T0<= {T0, T0[7:1]}; end
+
+
+RF(A, WE), ALU(RRC), J(MUL_MOV_RESULT_SET_FLAG)  # always_ff(@posedge clk) begin BR <= A[0]; A0<= {BR, T0[7:1]}; end
+##############################################################################
+# because A is 0 zero now, jump to here rotate the result
+##############################################################################
+MUL_A_ZERO:  # A is 0 at begin!
+RF(A, WE), LI(0)
+RF(B, WE), LI(0), BR(ZERO)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+
+##############################################################################
+# MOV result
+##############################################################################
+MUL_MOV_RESULT_SET_FLAG:
+RF(B, WE), ALU(B), BR(ZF)  # load ZF to BR, because B and ZF_B have same encoding.
+RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)

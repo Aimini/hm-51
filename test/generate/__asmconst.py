@@ -32,3 +32,14 @@ D_C0 = atl.D(0xC0); D_C1 = atl.D(0xC1); D_C2 = atl.D(0xC2); D_C3 = atl.D(0xC3); 
 D_D0 = atl.D(0xD0); D_D1 = atl.D(0xD1); D_D2 = atl.D(0xD2); D_D3 = atl.D(0xD3); D_D4 = atl.D(0xD4); D_D5 = atl.D(0xD5); D_D6 = atl.D(0xD6); D_D7 = atl.D(0xD7); D_D8 = atl.D(0xD8); D_D9 = atl.D(0xD9); D_DA = atl.D(0xDA); D_DB = atl.D(0xDB); D_DC = atl.D(0xDC); D_DD = atl.D(0xDD); D_DE = atl.D(0xDE); D_DF = atl.D(0xDF); 
 D_E0 = atl.D(0xE0); D_E1 = atl.D(0xE1); D_E2 = atl.D(0xE2); D_E3 = atl.D(0xE3); D_E4 = atl.D(0xE4); D_E5 = atl.D(0xE5); D_E6 = atl.D(0xE6); D_E7 = atl.D(0xE7); D_E8 = atl.D(0xE8); D_E9 = atl.D(0xE9); D_EA = atl.D(0xEA); D_EB = atl.D(0xEB); D_EC = atl.D(0xEC); D_ED = atl.D(0xED); D_EE = atl.D(0xEE); D_EF = atl.D(0xEF); 
 D_F0 = atl.D(0xF0); D_F1 = atl.D(0xF1); D_F2 = atl.D(0xF2); D_F3 = atl.D(0xF3); D_F4 = atl.D(0xF4); D_F5 = atl.D(0xF5); D_F6 = atl.D(0xF6); D_F7 = atl.D(0xF7); D_F8 = atl.D(0xF8); D_F9 = atl.D(0xF9); D_FA = atl.D(0xFA); D_FB = atl.D(0xFB); D_FC = atl.D(0xFC); D_FD = atl.D(0xFD); D_FE = atl.D(0xFE); D_FF = atl.D(0xFF); 
+
+
+
+SFR_SP =  D_81
+SFR_DPL = D_82
+SFR_DPH = D_83
+SFR_IE =  D_A8
+SFR_IP =  D_B8
+SFR_PSW = D_D0
+SFR_A =   D_E0
+SFR_B =   D_F0

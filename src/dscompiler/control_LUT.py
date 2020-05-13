@@ -44,6 +44,7 @@ class name_parameters_lut(abstract_parameters_lut):
     """
     using string name to find encoding
     """
+
     def __init__(self, LUT):
         """
         LUT:list
@@ -152,16 +153,10 @@ REGISTER_FILE = name_parameters_lut([
                  'T0',  'T1',  'T2',  'T3']
     },
     {
-        'sh': 'LWE',
+        'sh': 'WE',
         'name': 'write low nibble',
         'len': 1,
-        'enum': ['', 'LWE']
-    },
-    {
-        'sh': 'HWE',
-        'name': 'write high nibble',
-        'len': 1,
-        'enum': ['', 'HWE']
+        'enum': ['', 'WE']
     },
     {
         'sh': 'SFR',
@@ -198,12 +193,12 @@ SR = name_parameters_lut([
     }
 ])
 
-RFSRCR =  name_parameters_lut([
+RFSRCR = name_parameters_lut([
     {
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'enum': ['',"WE"],
+        'enum': ['', "WE"],
     }
 ])
 BR = name_parameters_lut([
@@ -213,10 +208,26 @@ BR = name_parameters_lut([
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
                  'ALUSF', ['ALUDF', 'CY', 'ZF', 'PF'], 'A7', 'A0'],
+    },
+    {
+        'sh': 'CPLQ',
+        'name': 'invert output',
+        'len': 1,
+        'enum': ['', 'CPLQ'],
     }
 ])
 
+
 RAM = name_parameters_lut([
+    {
+        'sh': 'WE',
+        'name': 'write enable',
+        'len': 1,
+        'enum': ['', 'WE']
+    }
+])
+
+XRAM = name_parameters_lut([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -234,9 +245,9 @@ ALUDL = name_parameters_lut([
         'len': 4,
         'enum': [
             'XOR', 'DA', 'ADDC', 'SUBB',
-            'A',  'B', 'OR', 'AND',
-            'IRQN2IRQ', 'SETPSWF', 'ADDR11REPLACE', 'SHIRQN',
-            'Ri', 'Rn', 'NA', 'INCC']
+            'A',  'Ri', 'INSB', 'XCHD',
+            'GENIRQN', 'SETPSWF', 'ADDR11REPLACE', 'SETOVCLRCY',
+            'B', 'Rn', 'SETPF', 'INCC']
     }
 ])
 # see /src/alu/README.md
@@ -246,10 +257,10 @@ ALUDH = name_parameters_lut([
         'name': 'alud high part function',
         'len': 4,
         'enum': [
-            '',   'DAF', 'ADDCF', 'SUBBF',
-            'PF', 'ZF',  'INSB',  'EXTB',
-            '',   '',    '',      '',
-            '',    '',   'SETPF', 'INCCF']
+            'CPLB', 'DAF', 'ADDCF', 'SUBBF',
+            'PF', 'OR',  'INSBF',  'EXTB',
+            'ISRAPPIRQ',   'ZF',    '',      '',
+            'ZF_B',    'AND',   'NA', 'INCCF']
     }
 ])
 
@@ -262,7 +273,7 @@ ALUS = name_parameters_lut([
         'enum':  ['ADJF', 'IVADDR', 'CAA', 'SFR',
                   'RR', 'RL', 'RRC', 'RLC',
                   'INC', 'DEC', 'BADDR', 'BIDX',
-                  'SETCY', 'SETOVCLRCY', 'CHIRQ', 'SWAP']
+                  'SETCY', 'SELHIRQ', 'ISRRETI', 'SWAP']
     }
 ])
 
@@ -294,6 +305,15 @@ ALUSD = name_parameters_lut(copy.deepcopy(ALUS.LUT))
 for idx, one in enumerate(ALUSD.LUT):
     copy_one_parameter(one, ALUDL.LUT[idx])
     copy_one_parameter(one, ALUDH.LUT[idx])
+
+IRQ = name_parameters_lut([
+    {
+        'sh': '',
+        'name': 'write enable',
+        'len': 1,
+        'enum': ['', 'CLR']
+    }
+])
 
 JUMPABS = name_parameters_lut([
     {
@@ -331,9 +351,11 @@ CTL_LUT = {
     'WR': WR,
     'SR': SR,
     'BR': BR,
-    'RFSRCR':RFSRCR,
+    'RFSRCR': RFSRCR,
     'RAM': RAM,
+    'XRAM': XRAM,
     'ALUSD': ALUSD,
+    'IRQ': IRQ,
     'JUMPABS': JUMPABS,
     'ADDRESS': ADDRESS,
     'IMMED': IMMED,

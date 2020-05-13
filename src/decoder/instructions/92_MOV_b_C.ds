@@ -1,0 +1,11 @@
+# 0x92 MOV bit, C
+
+RF(PSW), BR(A7)             # BR <- CY
+@INC "instructions\get_bit_byte_ends_with.ds","BR(Q)"
+
+RF(T1), ALU(INSB), WR(WE)  # INSB(T1, WR)
+RF(SFR), RAM(WE), ALU(B), BR(ONE)
+
+
+@INC "snippet\inc_pc_jchkint.ds"
+

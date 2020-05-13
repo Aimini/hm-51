@@ -1,0 +1,9 @@
+# SJMP offset
+# fetch offset and add it to PC, then jump to check interrupt.
+# PC + 1 + offset
+RF(T0,WE), WR(WE), BUS(ROM), BR(ONE) 
+RF(PCL,WE),ALU(ADDC), BR(CY)
+RF(PCH,WE),ALU(INCC), BR(ZERO)
+# PC - offset[7]*2^8
+RF(T0), BR(A7), LI(0), WR(WE)  
+RF(PCH, WE), ALU(SUBB), J(STAGE_CHECK_INTERRUPT)

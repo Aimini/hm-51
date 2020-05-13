@@ -19,10 +19,12 @@ import dtoken
 import control_LUT
 import copy
 
+
 class empty_translator():
     """
     a translator than do nothing, providing create dtoken function.
     """
+
     def prepare(self):
             pass
 
@@ -40,7 +42,7 @@ class empty_translator():
             dt: dtoken
                 dtoken might be translated.
         """
-        
+
         return None
 
     def create_jump(self, lineno, type):
@@ -63,6 +65,7 @@ class empty_translator():
         r.parameters = [sel]
         return r
 
+
 class alu_translator(empty_translator):
     '''
     translate ALU and BUS to ALUS/ALUDL/ALUDH operation.
@@ -70,6 +73,7 @@ class alu_translator(empty_translator):
     ALUO meaing uisng ALU function only, but you still need to check 
     whether there is BUS(ALU) and translate it to BUS(ALUS), BUS(ALUDL) etc.
     '''
+
     def prepare(self):
         self.type = None
 
@@ -95,7 +99,7 @@ class alu_translator(empty_translator):
 
     def scan(self, dt):
         """ decide alu type. """
-        if dt.value not in ("ALU","ALUO"):
+        if dt.value not in ("ALU", "ALUO"):
             return
 
         for p in dt.parameters:
@@ -121,7 +125,7 @@ class alu_translator(empty_translator):
             r0 = copy.deepcopy(dt)
             r0.value = 'ALUSD'
             r1 = self.create_bus(dt.lineno, self.type)
-            return (r0,r1)
+            return (r0, r1)
 
         # "BUS(ALU) -> BUS(ALUS) or BUS(ALUD)"
         if dt.value == "BUS":
@@ -137,6 +141,7 @@ class rf_translator(empty_translator):
     """
     translate RF(WE,...) to RF(HWE,LWE,...)
     """
+
     def translate(self, dt):
         """
             second scan, if you decide to translate dtoken to another dtoken
@@ -177,25 +182,24 @@ class jump_translator(empty_translator):
         return r
 
 
-
 class load_immed_translator(empty_translator):
     def translate(self, dt):
-        
+
         if dt.value != "LI":
             return None
-        
+
         r = []
         r.append(self.create_immed(dt.lineno, dt.parameters[0]))
         r.append(self.create_bus(dt.lineno, "IMMED"))
         return r
 
 
-DEFAULT_TRANSLATOR = (alu_translator(), rf_translator(),
+DEFAULT_TRANSLATOR = (alu_translator(), 
                       jump_translator(), load_immed_translator())
 
 
 class hl_dtoken_converter:
-    def __init__(self, dtoken_translators = DEFAULT_TRANSLATOR):
+    def __init__(self, dtoken_translators=DEFAULT_TRANSLATOR):
         self.dtokens_translator = dtoken_translators
 
     def convert(self, dtoken_lines):

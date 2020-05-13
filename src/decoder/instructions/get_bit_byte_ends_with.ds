@@ -1,0 +1,20 @@
+####################################################
+# load byte that contain target bit.
+# require: 
+#   - WR,SR: store the PC of bit address.
+# par0:
+#   string append to last statment in this file, if you
+#   are not sure what should you do, just pass "BR(Q)".
+# used:
+#    T0, T1, WR, SR
+# leave:
+#   SR, T0: direct address of target byte.
+#   T1: BIDX value
+#   WR: byte value
+RF(T0, WE), BUS(ROM), WR(WE)        # WR,T0 <- baddr
+RF(T1, WE), ALU(B) 
+RF(T1, WE), ALU(BIDX)            # T1 <- BIDX(WR)
+RF(T0, WE), ALU(BADDR), SR(WE)     # T0 <- BADDR2DIRECT(T0)
+
+RF(T0), ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE), @0  # WR <- RAM[T0]

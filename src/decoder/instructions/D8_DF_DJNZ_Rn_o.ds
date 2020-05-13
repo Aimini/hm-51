@@ -1,0 +1,17 @@
+# 0xD8-0xDF DJNZ Rn, offset
+RF(T0, WE), BUS(ROM)           # T0 <- offset
+@INC "snippet\load_rn_to_sr.ds"
+RF(T1, WE), BUS(RAM)           # T1 <-RAM[direct]
+RF(T1, WE), ALU(DEC), RAM(WE)  # RAM[direct],T1 <- T1 - 1
+
+# check T1 == 0
+# if T1 != 0, jump to segment that execute PC + 1(BR) + 1(WR),
+RF(T1), BR(ONE), JLT(0x01, INC_PC_BEFORE_CHECK_INTERRUPT)
+
+# else execute a SJMP.
+RF(T0), ALU(A), WR(WE), BR(ONE)
+RF(PCL, WE), ALU(ADDC), BR(CY)
+RF(PCH, WE), ALU(INCC), BR(ZERO)
+# PC - offset[7]*2^8
+RF(T0), BR(A7), LI(0), WR(WE)
+RF(PCH, WE), ALU(SUBB), J(STAGE_CHECK_INTERRUPT)

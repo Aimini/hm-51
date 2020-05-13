@@ -1,0 +1,14 @@
+#This file fits the function "ADD A + #immed + BR" or "A- # immed-BR"
+# par 0: the BR function, ZERO is suite for ADD. Q is suite for ADDC and SUBB,
+# but you should load CY to BR before include this file.
+# par 1: ALU function, must ADDC or SUBB
+# par 2: FLAG of ADDC, of SUBB, must be ADDCF or SUBBF
+RF(T1, WE), BUS(ROM), WR(WE), BR(@0)
+
+RF(A), ALU(@2), WR(WE)
+RF(T0,WE), ALU(B)
+RF(T0), ALU(ADJF), WR(WE)
+RF(PSW, WE), ALU(SETPSWF)
+
+RF(T1), ALU(A), WR(WE)
+RF(A, WE), ALU(@1), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)
