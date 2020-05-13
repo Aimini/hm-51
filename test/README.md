@@ -4,7 +4,7 @@
 
 ## Hardware and simulator requirment
 
-I recommend that you implement these SFRs' function in your hardware design and simulator so that you can easily check that the test results are correct.
+I recommend that you implement these SFRs' function in your hardware design and instruction simulator so that you can easily check that the test results are correct.
 
 |address| register|function|
 |:-: | :-:   |:-:|
@@ -13,6 +13,7 @@ I recommend that you implement these SFRs' function in your hardware design and 
 |0xFD| PAR0  |[assertion](##assertion)|
 |0xFE| PAR1  |[assertion](##assertion)|
 |0xFF| AFUNC |[assertion](##assertion)|
+
 
 ### assertion
 
@@ -41,17 +42,42 @@ The ultimate goal is that you can determine whether the hardware design is corre
 
 ## Manual test instructions
 
-We first implement the following two instructions:
+We first implement the following four instructions:
+
    - MOV direct, #immed
    - MOV direct, direct
+   - MOV @Ri, #immed
+   - MOV direct, @Ri
   
- *Why?*
+ *why `MOV direct, #immed` and `MOV direct,direct`?*
 
- Using first instruction we can move any immediate number to any address(include all SFR in RF).
+ In our verification process, it's simply executes instructions and checks whether the results meet our expectations. Therefore,loaing immediate values to registers/memory is the basis of all test cases.
+ 
+ For example, you want to check the instruction `ADD A, R0`, you must write an assertion:
 
-  Using the second instruction, we can move  any data from one memory cell/register to another memory cell/register.
+   - load 3 to `A`
+   - load 4 to `R0`
+   - check if `A == 7` after `ADD A, R0` executed.
 
- When we implement these two isntructions and make sure they work properly, then we can using  hardware assertion to check other instrcutions' result. (memory cell equal to immediate, ne register equal to another register etc).
+ As you can see, we need to use #immed in many scenarios. Register A,register B, R0-R7 and direct address, most of these registers/memory can accessed by direct address(SFR). Therefore, you should first implement `MOV direct, #immed`.
+
+But, in more detail, how do we use assertions? Using the previous `ADD A, R0` example, we should do that:
+
+ - load 7 to `ARG0`
+ - load `A` to `ARG1`
+ - load 2 to `AFUNC`
+
+What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV direct, direct` are the most common instructions, because for most instructions, their destination can be accessed by direct address.
+
+ *why `MOV @Ri, #immed` and `MOV direct,@Ri`?*
+
+ There are some instructions using indirect address. The reason is the same as direct address.
+
+ *that's all*
+
+ Of course, there are a few instructions (MOVX, MOVC) that involve other types of addresses, but they only move data between XRAM / ROM and RAM, and the generation script will test move to and move back in pairs.
+
+ When we implement these four isntructions and make sure they work properly, then we can using hardware assertion to check other instrcutions' result. (memory cell equal to immediate, ne register equal to another register etc).
 
 ## Test table
 
