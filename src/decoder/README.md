@@ -25,7 +25,7 @@
 
 ### decode
 
- it is essentially a big jump branch. Just like binary search, it's according `IR` 's value jump to corresponding address(we using jump mark in script).
+ it is essentially a big jump branch. Just like binary search, it's according `IR` 's value jump to corresponding address(we using jump mark in script). Manually writing these jumps is tedious, you can use "/src/decoder/gen_template.py" to generate a template file containing these jump codes.
 
 ### execute
 
