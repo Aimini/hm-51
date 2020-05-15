@@ -35,9 +35,17 @@
   RF(A,WE), IMMED(0x80), BUS(IMMED)
   ```
 
+
 ### composite-control token
+ Composite-control tokens are looks like normal tokens, but it perform an higher level of abstraction(provides a simpler way of writing). A composite-control tokens can be translated into one or more component control tokens.
+ 
+ For example,  `LI(0x80)` means that you want to using the immediate value 0x80 to drive the bus. Obviously, you want the `IMMED` component to drive the bus, so it's best to convert it to `BUS(IMMED), IMMED(0x80)`.
+
+ See [this](###-add-composite-control-translator) for how to add customer composite-control token.
+
 
 ### jump label
+ 
 
 ### macro
 
