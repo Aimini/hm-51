@@ -89,9 +89,44 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
 
 ### directive
 
-
 ## Disassemble
+ In the case you want to correct syntax errors or view the tokens of the composite-control is transalted, you can using the disassemble function of compile.py.
 
+ ### view the preprocessed file
+  The compiler's will show syntax error base on preprocessd text, Uinsg the `-s` argument will let compiler dump the preprocessed text to target file:
+
+  ```python
+  compile.py -s <preprocessed_file> -i <input_file> -o <ouput_file>
+  ```
+
+### view the machine code and MIPC
+ Using `-d` can dump more information about you decoder script, it's provide more powerful tool to inspect the control token conflicts or hardware desgin issues.
+
+ ```
+ compile.py -d <disassemble_file> -i <input_file> -o <ouput_file>
+ ```
+ 
+ This is example of one microinstruction:
+ ```
+   17: RF(A),      ALU(PF),   BR(ALUDF)
+[0003]000000102886 RF(A), ALUSD(PF), BUS(ALUDH), BR(ALUDF) 
+```
+The first line is the original text in preprocessed file, the second line  is addidtional information(hardware level) about the first line. 
+
+Here is the meaning of each part:
+```
+   17: RF(A),      ALU(PF),   BR(ALUDF)
+   ^   ^------------+----------------^
+   |          original tokens     
+line number
+  
+[0003]000000102886 RF(A), ALUSD(PF), BUS(ALUDH), BR(ALUDF) 
+  ^       ^         ^-----------------+-----------------^
+  |       |                 hardware level tokens
+  |       |       (traslated from composite-control tokens)      
+  |  machine code
+ MIPC
+```
 ## Change LUT
 
 ## More detail
