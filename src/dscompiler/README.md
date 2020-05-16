@@ -193,10 +193,13 @@ line number
  MIPC
 ```
 ## Change LUT
+ The LUT is used to define the component and its control pins, include describe the name of the component, the function encoding and bit index of the control pins.
+
+ Please refer to the comments in the file "/src/compiler/control_LUT.py" for more details.
 
 ## More detail
 
-Wanna to add new macros or add more abstract tokens?
+Wanna to add new directive or add composite-control tokens?
 
 Let's go.
 
