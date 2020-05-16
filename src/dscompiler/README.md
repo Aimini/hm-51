@@ -45,9 +45,49 @@
 
 
 ### jump label
- 
+ When you need to get the MIPC value corresponding to a line of microinstructions (usually a jump token), using the jump label can let the compiler help you get these (not easy to manually calculate) values.
 
-### macro
+ The jump label starts with its name, followed by a colon:
+
+ ```python
+ SEG_HELLO:
+```
+
+ If the jump label is on a separate line, it represents the MIPC value of the microinstruction on the next line.
+
+ If the jump label and the microinstruction are on the same line, it represents the MIPC value of the microinstruction in the current line.
+ ```python
+# jump if less than(A < 0x80)
+RF(A), JTYPE(JLT), IMMED(0x80), ADDRESS(SEG_TEST)
+# something A >= 0x80
+# ...
+
+#---- at different lines
+SEG_TEST: # <- jump label
+# something A < 0x80
+# ...
+JTYPE(JMP), ADDRESS(SEG_END)
+
+#---- at same line
+SEG_END: RF(A,WE), LI(0x80)
+# ^
+# jump label
+```
+The jump label is ensstianlly a number, it's the value of the MIPC corresponding to the line where the label is located, so the following example will work:
+
+ ```python
+ TEST_MIPC: 
+ # TEST_MIPC represents a number, it's legal.
+ IMMED(TEST_MIPC), BUS(IMMED)
+ # 0xABC is a magic number, but it's legal too.
+ JTYPE(JMP), ADDRESS(0xABC) 
+ ```
+ 
+ In the decoder script, you will use a large number of jump tokens to decode the opcode. Jump labels can provide meaningful name for code segments.
+
+
+
+### directive
 
 
 ## Disassemble
