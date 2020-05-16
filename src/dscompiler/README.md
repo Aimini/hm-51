@@ -88,6 +88,71 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
 
 
 ### directive
+ The directive starts with '@', followed by the directive name. No space is allowed between '@' and the name, the space after the name separates the directive name and the arguments. The arguments are separated by commas, all arguments are string literals:
+
+ ``` powershell
+ #example
+ @INC "test.ds","1","2"
+ ^ ^  ^-------+-------^
+ | |       arguments
+ | name
+ directive symbol
+ ```
+ *directive @INC*
+
+  We only support one directive `@INC`, it's used to reuse code, this is the arguments meaning of `@ INC`:
+
+  ``` powershell
+  @INC "filename","ph0","ph1",...,"phN"
+  ```
+  Obviously, first argument is filename that will be included, "ph0" is placeholder 0, "ph1" is placeholder 1. 
+  
+  What is placeholder? It's a string that will be insert into included file, for eaxmple:
+
+  ```powershell
+  # file top.ds
+  @INC "2.ds","0", "1"
+  ```
+  ```powershell
+  #file 2.ds
+  INC_ME(HEL)
+  @0, @1
+  INC_END(HEL)
+  ```
+  This is content after preprocess:
+  ```powershell
+  INC_ME(HEL)
+  0, 1
+  INC_END(HEL)
+  ```
+  
+  Another example:
+
+  ```powershell
+  # file 1.ds
+  IAM(TOP)
+  @INC "2.ds","HELLO", "WORLD", ")"
+  ```
+  ```powershell
+  #file 2.ds
+  INC_ME(HEL)
+  @0(@1 @2
+  INC_END(HEL)
+  ```
+  After preprocess:
+  ```powershell
+  IAM(TOP)
+  INC_ME(HEL)
+  HELLO(WORLD)
+  INC_END(HEL)
+  ```
+
+  In the current design, preprocessing will do these things:
+
+   - copies the contents of the file in the @INC directive.
+   - replace placeholder in the content.
+   - paste it into the current file, replacing the line with `@INC`.
+
 
 ## Disassemble
  In the case you want to correct syntax errors or view the tokens of the composite-control is transalted, you can using the disassemble function of compile.py.
