@@ -1,18 +1,86 @@
-# introduction
+# Test Case Document
 
-# manual test instructions
-We first implement the following two instructions:
+---
+
+## Hardware and simulator requirment
+
+I recommend that you implement these SFRs' function in your hardware design and instruction simulator so that you can easily check that the test results are correct.
+
+|address| register|function|
+|:-: | :-:   |:-:|
+|0xFB| DUMP | [dump](##dump)|
+|0xFC| EXR   |[exit](##exit)|
+|0xFD| PAR0  |[assertion](##assertion)|
+|0xFE| PAR1  |[assertion](##assertion)|
+|0xFF| AFUNC |[assertion](##assertion)|
+
+
+### assertion
+
+Assert function using 3 registers named `AFUNC` , `PAR1` , `PAR0` . `PAR0` and `PAR1` store the number you want to compare, AFUNC control comparison mode:
+
+|value   | 0   | 1     |2       | 3     |
+|:-:     |:-:  |:-:    |:-:     |:-:    |
+|function| None|p0 > p1|p0 == p1|p0 < p1|
+
+Assertions are the basic requirement for testing. It is used to check whether the results of certain instructions are correct. In the emulator, you can use assertions to verify that your . A51 is working as expected, making sure there are no human mistake in the . A51 file, so an assertion failure in the hardware design will tell you that there must be an error in hardware level.
+
+### exit
+
+When you write a value greater than zero to `EXR` , it tells the simulator/hardware design tool that the program has exited.
+
+Some simulators check if the program exits based on the length of data loaded in ROM. However, I still recommend that you implement this feature.
+
+### dump
+
+When you write an `DUMP` value greater than zero, it tells the simulator / hardware design tool to dump the value of IRAM and the value of the register to a file.
+
+The registers you want to dump, the IRAM range you want to dump, and the file format are determined by your design. 
+
+The ultimate goal is that you can determine whether the hardware design is correct by comparing the contents of the simulator dump results and the hardware design tool dump results.
+
+
+## Manual test instructions
+
+We first implement the following four instructions:
+
    - MOV direct, #immed
    - MOV direct, direct
+   - MOV @Ri, #immed
+   - MOV direct, @Ri
+  
+ *why `MOV direct, #immed` and `MOV direct,direct`?*
 
- Why? using first instruction we can move any immediate number to any 
- address(include all SFR in RF). Using the second instruction, we can move
- any data from one memory cell/register to another memory cell/register.
- When we implement these two isntructions and make sure they work properly,
- then we can using  hardware assertion to check other instrcutions' result.
- (memory cell equal to immediate, ne register equal to another register etc).
+ In our verification process, it's simply executes instructions and checks whether the results meet our expectations. Therefore,loaing immediate values to registers/memory is the basis of all test cases.
+ 
+ For example, you want to check the instruction `ADD A, R0`, you must write an assertion:
 
-# test table
+   - load 3 to `A`
+   - load 4 to `R0`
+   - check if `A == 7` after `ADD A, R0` executed.
+
+ As you can see, we need to use #immed in many scenarios. Register A,register B, R0-R7 and direct address, most of these registers/memory can accessed by direct address(SFR). Therefore, you should first implement `MOV direct, #immed`.
+
+But, in more detail, how do we use assertions? Using the previous `ADD A, R0` example, we should do that:
+
+ - load 7 to `ARG0`
+ - load `A` to `ARG1`
+ - load 2 to `AFUNC`
+
+What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV direct, direct` are the most common instructions, because for most instructions, their destination can be accessed by direct address.
+
+ *why `MOV @Ri, #immed` and `MOV direct,@Ri`?*
+
+ There are some instructions using indirect address. The reason is the same as direct address.
+
+ *that's all*
+
+ Of course, there are a few instructions (MOVX, MOVC) that involve other types of addresses, but they only move data between XRAM / ROM and RAM, and the generation script will test move to and move back in pairs.
+
+ When we implement these four isntructions and make sure they work properly, then we can using hardware assertion to check other instrcutions' result. (memory cell equal to immediate, ne register equal to another register etc).
+
+## Test table
+
 |opcode|mnemonic|tested|
 |:-|:-|:-|
 |0x00|NOP     | |
@@ -84,7 +152,7 @@ We first implement the following two instructions:
 |0x82| ANL C, bit  | |
 |0x83| MOVC A, @A+PC    | |
 |0x84| DIV AB  | |
-|0x85| MOV direct, direct  | |
+|0x85| MOV direct, direct  |M|
 |0x86-0x87| MOV direct, @Ri | |
 |0x88-0x8F| MOV direct, Rn  | |
 |0x90| MOV DPTR, #immed    | |
@@ -142,3 +210,33 @@ We first implement the following two instructions:
 |0xF5| MOV direct, A   | |
 |0xF6-0xF7| MOV @Ri, A  | |
 |0xF8-0xFF| MOV Rn, A   | |
+
+## The test case
+
+ In fact, it is tedious to manually write a bunch of code to test edge conditions or normal conditions, So we will use the script to generate assembly code.
+
+ You should follow the following rules so that the test case runner(TCR) can invoke the generate script and correctly execute the compilation and run verification process.
+
+### create new test case
+
+ In this section, I will explain how to write correct test case generation script.
+
+ *directory and filename*
+
+ the generation script should be stored in then '/test/generate' diectory, and it shouldn't start with '__'(which means it's a util file).
+
+ *command line arguments format*
+
+ assume your generation script is 'XX\.py', the test case runner require the following format:
+
+ ``` bash
+  XX.py -o <output_dir>
+ ```
+
+ the generation script should generate a assembly file named XX.A51 and store it in the directory `<ouput_dir>`.
+
+### modify the TCR
+
+In some case you might want to change the compile program or change the verify porcess, you might to change the code of the TCR.
+
+You can view the source code of TCR in '/test/compile_verify.py'.

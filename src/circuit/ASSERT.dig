@@ -15,9 +15,9 @@
       <string>Description</string>
       <string>This cricuit provide assert function. you can write value to 
 special address to excute assert function.
- 0xFF: value0,
+ 0xFD: value0,
  0xFE: value1,
- 0xFD: function select(
+ 0xFF: function select(
   1: assert v0 &gt; v1, 
   2: assert v0 = v1, 
   3: assert v0 &lt; v1)

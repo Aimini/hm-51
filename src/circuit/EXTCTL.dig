@@ -15,8 +15,8 @@
       <string>Description</string>
       <string>The circuit was using to make condition exit in Java
 (see Digitalc.exe&apos;s source code, MainCmd.java). 
-when you write a value greater than 0 to EXR, MainCmd.java will
-stop run and using ECR&apos;s value as exit code.</string>
+When you write a value greater than 0 to EXR (0xFC),
+The debug simulator will consider the program to end normally.</string>
     </entry>
   </attributes>
   <visualElements>
