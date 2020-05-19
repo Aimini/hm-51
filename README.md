@@ -64,3 +64,41 @@ You might say: Obviously, `MOV A, @DPTR` will make `A = 4` , but it's will also 
  In theory, `MOVX A, @R0` just provide a 8-bit address of extrnal RAM, You should not assume the higher 8-bit address value.
 
 What you should do is read this chapter to understand how to connect peripheral devices(XRAM, SFR, etc), the behavior of external components is up to you.
+
+### interface
+
+``` python
+    ╔══════════╗
+    ║          ║
+    ║        IO╟───/8───
+    ║          ║
+    ║   IRQ_CLR╟───/1───
+    ║    IRQ_OE╟───/1───
+    ║    SFR_WE╟───/1───
+    ║    SFR_OE╟───/1───
+    ║   XRAM_WE╟───/1───
+    ║   XRAM_OE╟───/1───
+    ║          ║
+    ║   Address╟──/16───
+    ║          ║
+    ╚══════════╝     
+
+```
+
+ - IO Pin
+   -  output data when writing SFR/XRAM.
+   -  receive data when reading SRF/XRAM.
+   -  receive IRQs when checking interrupt.
+   -  output IRQ to when CPU wants you to clear this IRQ.
+   -  
+-  Control Pin
+   -  IRQ_CLR, clear IRQ according IO pin value.
+   -  IRQ_OE, IRQs output enable.
+   -  SFR_WE, SFR write enable.
+   -  SFR_OE, SFR output enable.
+   -  XRAM_WE, XRAM write enable.
+   -  XRAM_OE, XRAM output enable.
+   -  
+ - Address Pin
+   - using all 16 bits when operating XRAM
+   - using higher 8 bits when operating SFR by RAM address.
