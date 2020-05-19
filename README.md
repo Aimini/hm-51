@@ -102,3 +102,36 @@ What you should do is read this chapter to understand how to connect peripheral 
  - Address Pin
    - using all 16 bits when operating XRAM
    - using higher 8 bits when operating SFR by RAM address.
+
+### add SFR
+ When adding SFR, the input/ouput pin of the device should be connected to the IO pin of CPU, the higher 8-bit of the address pin of the CPU will ouput the SFR address, and your device should check the address to ensure that the CPU is trying to operate it. 
+
+  In the case of CPU operating you deivce, when `SFR_OE` is hight, your device must ouput the desired content to the IO pin, and when `SFR_WE` is high, your device should accept then value of the IO Pin.
+
+  Howerver, no matter what, the device's read/write behavior is designed by you.
+
+ This is an example, an simple register are mapped in address 0xE2.
+  ```
+    ╔══════════╗
+    ║          ║        ┌──────────────────────────────────────────┐
+    ║        IO╟───/8───┥         ╔═════════╗     ┌────────────┐   |
+    ║          ║        └─────────╢D  REG  Q╟─/8──|trisatebuffer>──┘                  
+    ║          ║              ┌───╢WE       ║     └───────┯────┘ 
+    ║          ║           ╔═╗|   ╚═════════╝             |OE
+    ║    SFR_OE╟───/1──────╢&╟┘                           |
+    ║          ║       MD ─╢ ║     ╔═╗                    |
+    ║          ║           ╚═╝ MD ─╢&╟────────────────────┘
+    ║    SFR_WE╟───/1──────────────╢ ║               
+    ║          ║        0-7        ╚═╝               
+    ║          ║      ┌─────     ╔══════════╗                                        
+    ║   Address╟──/16─┥ 8-15     ║Comparator║                                            
+    ║          ║      └──────────╢ A       Q╟─ MD                                          
+    ╚══════════╝           0xE2──╢ B        ║                                          
+                                 ╚══════════╝      
+  ```
+
+
+
+
+
+
