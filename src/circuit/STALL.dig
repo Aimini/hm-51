@@ -15,6 +15,10 @@
       <string>Description</string>
       <string>stop ouput clock if input S  is high. if go is 1, clock will ouput normally.</string>
     </entry>
+    <entry>
+      <string>Width</string>
+      <int>4</int>
+    </entry>
   </attributes>
   <visualElements>
     <visualElement>
@@ -60,7 +64,7 @@
     <visualElement>
       <elementName>Not</elementName>
       <elementAttributes/>
-      <pos x="940" y="780"/>
+      <pos x="920" y="780"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -85,15 +89,11 @@
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
-          <string>Description</string>
-          <string>stop clock</string>
-        </entry>
-        <entry>
           <string>Label</string>
-          <string>S</string>
+          <string>AC</string>
         </entry>
       </elementAttributes>
-      <pos x="160" y="920"/>
+      <pos x="140" y="640"/>
     </visualElement>
     <visualElement>
       <elementName>Register</elementName>
@@ -155,6 +155,20 @@
       <elementAttributes>
         <entry>
           <string>Description</string>
+          <string>stop clock</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>S</string>
+        </entry>
+      </elementAttributes>
+      <pos x="160" y="920"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
           <string>continue clock. enable CLKO when detected raise edge. sync with ~CLKI</string>
         </entry>
         <entry>
@@ -163,6 +177,25 @@
         </entry>
       </elementAttributes>
       <pos x="160" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes/>
+      <pos x="1000" y="640"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>clock output</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>OAC</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1140" y="660"/>
     </visualElement>
   </visualElements>
   <wires>
@@ -189,6 +222,10 @@
     <wire>
       <p1 x="480" y="960"/>
       <p2 x="520" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="140" y="640"/>
+      <p2 x="1000" y="640"/>
     </wire>
     <wire>
       <p1 x="160" y="740"/>
@@ -227,6 +264,10 @@
       <p2 x="900" y="840"/>
     </wire>
     <wire>
+      <p1 x="980" y="680"/>
+      <p2 x="1000" y="680"/>
+    </wire>
+    <wire>
       <p1 x="780" y="940"/>
       <p2 x="800" y="940"/>
     </wire>
@@ -235,8 +276,8 @@
       <p2 x="900" y="780"/>
     </wire>
     <wire>
-      <p1 x="980" y="780"/>
-      <p2 x="1000" y="780"/>
+      <p1 x="960" y="780"/>
+      <p2 x="980" y="780"/>
     </wire>
     <wire>
       <p1 x="140" y="780"/>
@@ -248,7 +289,7 @@
     </wire>
     <wire>
       <p1 x="900" y="780"/>
-      <p2 x="940" y="780"/>
+      <p2 x="920" y="780"/>
     </wire>
     <wire>
       <p1 x="500" y="780"/>
@@ -265,6 +306,10 @@
     <wire>
       <p1 x="160" y="780"/>
       <p2 x="180" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="780"/>
+      <p2 x="1000" y="780"/>
     </wire>
     <wire>
       <p1 x="600" y="880"/>
@@ -299,6 +344,10 @@
       <p2 x="460" y="980"/>
     </wire>
     <wire>
+      <p1 x="1060" y="660"/>
+      <p2 x="1140" y="660"/>
+    </wire>
+    <wire>
       <p1 x="700" y="920"/>
       <p2 x="720" y="920"/>
     </wire>
@@ -319,10 +368,6 @@
       <p2 x="620" y="1020"/>
     </wire>
     <wire>
-      <p1 x="240" y="780"/>
-      <p2 x="240" y="980"/>
-    </wire>
-    <wire>
       <p1 x="160" y="740"/>
       <p2 x="160" y="780"/>
     </wire>
@@ -335,6 +380,22 @@
       <p2 x="800" y="940"/>
     </wire>
     <wire>
+      <p1 x="900" y="780"/>
+      <p2 x="900" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="780"/>
+      <p2 x="360" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="960"/>
+      <p2 x="460" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="780"/>
+      <p2 x="240" y="980"/>
+    </wire>
+    <wire>
       <p1 x="340" y="960"/>
       <p2 x="340" y="980"/>
     </wire>
@@ -343,8 +404,8 @@
       <p2 x="500" y="980"/>
     </wire>
     <wire>
-      <p1 x="900" y="780"/>
-      <p2 x="900" y="840"/>
+      <p1 x="980" y="680"/>
+      <p2 x="980" y="780"/>
     </wire>
     <wire>
       <p1 x="600" y="840"/>
@@ -355,16 +416,8 @@
       <p2 x="600" y="1060"/>
     </wire>
     <wire>
-      <p1 x="360" y="780"/>
-      <p2 x="360" y="980"/>
-    </wire>
-    <wire>
       <p1 x="220" y="960"/>
       <p2 x="220" y="980"/>
-    </wire>
-    <wire>
-      <p1 x="460" y="960"/>
-      <p2 x="460" y="980"/>
     </wire>
     <wire>
       <p1 x="700" y="900"/>
