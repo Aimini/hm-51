@@ -2886,7 +2886,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         </entry>
         <entry>
           <string>Bits</string>
-          <int>12</int>
+          <int>16</int>
         </entry>
       </elementAttributes>
       <pos x="-620" y="80"/>
@@ -2963,10 +2963,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>Label</string>
           <string>~XRAM_WE</string>
         </entry>
-        <entry>
-          <string>Bits</string>
-          <int>16</int>
-        </entry>
       </elementAttributes>
       <pos x="-280" y="60"/>
     </visualElement>
@@ -2994,10 +2990,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         <entry>
           <string>Label</string>
           <string>~XRAM_OE</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>16</int>
         </entry>
       </elementAttributes>
       <pos x="-280" y="120"/>
@@ -3037,10 +3029,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>Label</string>
           <string>SFR_WE</string>
         </entry>
-        <entry>
-          <string>Bits</string>
-          <int>16</int>
-        </entry>
       </elementAttributes>
       <pos x="-620" y="200"/>
     </visualElement>
@@ -3050,10 +3038,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         <entry>
           <string>Label</string>
           <string>SFR_OE</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>16</int>
         </entry>
       </elementAttributes>
       <pos x="-620" y="240"/>
@@ -3068,10 +3052,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         <entry>
           <string>Label</string>
           <string>CLK</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>16</int>
         </entry>
       </elementAttributes>
       <pos x="-620" y="40"/>
