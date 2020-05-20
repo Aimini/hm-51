@@ -2829,7 +2829,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>CLK</string>
+          <string>CLKA</string>
         </entry>
       </elementAttributes>
       <pos x="-380" y="80"/>
