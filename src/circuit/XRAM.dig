@@ -18,36 +18,6 @@
   </attributes>
   <visualElements>
     <visualElement>
-      <elementName>RAMSinglePortSel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>AddrBits</string>
-          <int>16</int>
-        </entry>
-        <entry>
-          <string>isProgramMemory</string>
-          <boolean>true</boolean>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>XRAM</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-        <entry>
-          <string>inverterConfig</string>
-          <inverterConfig>
-            <string>CS</string>
-            <string>OE</string>
-            <string>WE</string>
-          </inverterConfig>
-        </entry>
-      </elementAttributes>
-      <pos x="820" y="860"/>
-    </visualElement>
-    <visualElement>
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
@@ -118,53 +88,23 @@
       <elementAttributes/>
       <pos x="500" y="900"/>
     </visualElement>
-    <visualElement>
-      <elementName>Const</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Value</string>
-          <long>0</long>
-        </entry>
-      </elementAttributes>
-      <pos x="780" y="880"/>
-    </visualElement>
   </visualElements>
   <wires>
     <wire>
-      <p1 x="780" y="880"/>
-      <p2 x="800" y="880"/>
-    </wire>
-    <wire>
       <p1 x="240" y="900"/>
       <p2 x="500" y="900"/>
-    </wire>
-    <wire>
-      <p1 x="880" y="900"/>
-      <p2 x="1120" y="900"/>
     </wire>
     <wire>
       <p1 x="240" y="1000"/>
       <p2 x="580" y="1000"/>
     </wire>
     <wire>
-      <p1 x="580" y="920"/>
-      <p2 x="800" y="920"/>
-    </wire>
-    <wire>
       <p1 x="240" y="940"/>
       <p2 x="500" y="940"/>
     </wire>
     <wire>
-      <p1 x="580" y="940"/>
-      <p2 x="800" y="940"/>
-    </wire>
-    <wire>
       <p1 x="240" y="780"/>
       <p2 x="580" y="780"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="860"/>
-      <p2 x="820" y="860"/>
     </wire>
     <wire>
       <p1 x="580" y="940"/>
