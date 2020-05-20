@@ -145,10 +145,6 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
           <string>Label</string>
           <string>~IRQ_OE</string>
         </entry>
-        <entry>
-          <string>InDefault</string>
-          <value v="1" z="false"/>
-        </entry>
       </elementAttributes>
       <pos x="680" y="420"/>
     </visualElement>
