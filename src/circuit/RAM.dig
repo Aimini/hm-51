@@ -6,8 +6,8 @@
       <string>backgroundColor</string>
       <awt-color>
         <red>255</red>
-        <green>242</green>
-        <blue>242</blue>
+        <green>255</green>
+        <blue>204</blue>
         <alpha>255</alpha>
       </awt-color>
     </entry>

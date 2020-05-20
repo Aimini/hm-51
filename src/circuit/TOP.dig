@@ -764,7 +764,7 @@
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>EXT</string>
+          <string>EXIT</string>
         </entry>
       </elementAttributes>
       <pos x="-1020" y="260"/>
