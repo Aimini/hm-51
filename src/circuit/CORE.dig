@@ -838,10 +838,10 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>IRQ_OE</string>
+          <string>~IRQ_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1580" y="40"/>
+      <pos x="-1620" y="40"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2513,11 +2513,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <pos x="-440" y="-300"/>
     </visualElement>
     <visualElement>
-      <elementName>Not</elementName>
-      <elementAttributes/>
-      <pos x="-1640" y="40"/>
-    </visualElement>
-    <visualElement>
       <elementName>DriverInvSel</elementName>
       <elementAttributes>
         <entry>
@@ -2840,7 +2835,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
         </entry>
         <entry>
           <string>NetName</string>
-          <string>IRQ_OE</string>
+          <string>~IRQ_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-320" y="200"/>
@@ -2864,7 +2859,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>IRQ_OE</string>
+          <string>~IRQ_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-280" y="200"/>
@@ -3204,16 +3199,12 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <p2 x="-1700" y="40"/>
     </wire>
     <wire>
-      <p1 x="-1600" y="40"/>
-      <p2 x="-1580" y="40"/>
+      <p1 x="-660" y="40"/>
+      <p2 x="-620" y="40"/>
     </wire>
     <wire>
       <p1 x="-1660" y="40"/>
-      <p2 x="-1640" y="40"/>
-    </wire>
-    <wire>
-      <p1 x="-660" y="40"/>
-      <p2 x="-620" y="40"/>
+      <p2 x="-1620" y="40"/>
     </wire>
     <wire>
       <p1 x="-1340" y="-300"/>

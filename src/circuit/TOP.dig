@@ -644,7 +644,7 @@
         </entry>
         <entry>
           <string>NetName</string>
-          <string>IRQ_OE</string>
+          <string>~IRQ_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-940" y="-180"/>
@@ -715,7 +715,7 @@
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>IRQ_OE</string>
+          <string>~IRQ_OE</string>
         </entry>
       </elementAttributes>
       <pos x="-1180" y="100"/>
