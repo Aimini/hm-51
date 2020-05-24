@@ -4,32 +4,8 @@ import pathlib
 import os
 import random
 import string
-class trysubp():
-    """
-    provide subprocess chain, if one subprocess in chain return code is not 0,
-    then subprocess will stop excute consecutive subprocesses.
-    usage:
-        ret = trysubp.build(arg_to_subprocess0)
-            .chain(arg_to_subprocess1)
-            .chain(arg_to_subprocess1)
-            .chain(arg_to_subprocess1)
-            .chain(arg_to_subprocess1)
-            ...
-        ret is the failed subprocess(if have, you can check ret's return code)
-    """
-    def __init__(self,*args, **kargs):
-        """
-        args, kargs:
-            arguments pass to subprocess
-        """
-        self.returncode = subprocess.run(*args, **kargs).returncode
 
 
-    def chain(self, *args, **kargs):
-        if self.returncode == 0:
-            return trysubp(*args, **kargs)
-        else:
-            return self
 class test_process():
     def __init__(self, asm_filename_str, temp_dir_str):
         self.filename =  pathlib.Path(asm_filename_str)
@@ -65,27 +41,12 @@ class test_process():
         filename = self.filename
         filestem = filename.stem
 
-        objfile =  self.tempdir  / (filestem + ".obj")
-        absfile =  self.tempdir  / (filestem + ".abs")
         hexfile =  self.tempdir  / (filestem + ".hex")
-        tooldir = pathlib.Path(R"C:\Keil_v5\C51\BIN")
-        A51 = tooldir / 'A51.exe'
-        BL51 = tooldir / 'BL51.exe'
-        OH51 = tooldir / 'OH51.exe'
-        # create a unique dir for BL51
-        # Since the damned BL51 always uses the same temporary file name, 
-        # there is a possibility that two BL51.exe will conflict when working at the same time.
-        BL_temp_dir_str = '__' + ''.join(random.sample(string.ascii_letters + string.digits, 16))
-        BL_abs_temp_dir_str = str((self.tempdir / BL_temp_dir_str).absolute())
-        os.mkdir(BL_abs_temp_dir_str)
-        evn_BL51 = os.environ.copy()
-        evn_BL51["TMP"] = BL_abs_temp_dir_str
-        rp = trysubp(f"{A51} {filename} OBJECT({objfile})")\
-            .chain(f"{BL51} {objfile} TO {absfile}", env=evn_BL51)\
-            .chain(f"{OH51} {absfile}  HEXfile({hexfile})")
+
+        returncode = subprocess.run(f"test/compile.py {filename} {hexfile}").returncode
 
         self.rom_file = hexfile
-        return rp.returncode
+        return returncode
 
 
     def simulate_instruction(self):
@@ -93,8 +54,10 @@ class test_process():
         simulator_exe = pathlib.Path(R"tools\py51\51sim.py")
         
         self.simulate_instruction_dump_file_template = self.tempdir  / (rom_file.stem + ".simulate_instruction.dump-%d.txt")
-        rp = trysubp(['python',simulator_exe, '-i', rom_file, '-d', self.simulate_instruction_dump_file_template])
-        return rp.returncode
+        returncode = subprocess.run(['python',simulator_exe,
+            '-i', rom_file,
+            '-d', self.simulate_instruction_dump_file_template]).returncode
+        return returncode
 
 
     def simulate_hardware(self):
@@ -103,7 +66,9 @@ class test_process():
         simulator_exe = pathlib.Path(R"tools\Digitalc.jar")
         cirucit_file =  pathlib.Path(R"src\circuit\CORE.dig")
         ds_file =  pathlib.Path(R"eeprom-bin\decoder.bin")
-        rp = trysubp(['java','-jar',simulator_exe, cirucit_file,ds_file, rom_file, self.simulate_hardware_dump_file_template])
+        rp = subprocess.run(['java','-jar',simulator_exe,
+            cirucit_file,ds_file, rom_file,
+             self.simulate_hardware_dump_file_template]).returncode
         return rp.returncode
 
     def verify(self):
@@ -130,11 +95,11 @@ class test_process():
 
 usage = """
 usage:
-    compile_all <input_file> <template_dir>
+    compile_all <input_file> <temporary_dir>
     input_file:
         51 assembly file
-    template_dir:
-        directory to store output file,it's an intel hex format file, and it have the same name as input file.
+    temporary_dir:
+        directory to store all temporary file and target intel hex format file.
 """
 
 if len(sys.argv) < 3:
