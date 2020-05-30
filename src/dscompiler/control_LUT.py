@@ -346,17 +346,17 @@ IMMED = value_parameter_lut([
 ##################
 # each control's parmaters LUT to make a big control LUT
 CTL_LUT = {
+    'IMMED': IMMED,
+    'ADDRESS': ADDRESS,
+    'BR': BR,
     'RF': REGISTER_FILE,
-    'BUS': BUS,
+    'RFSRCR': RFSRCR,
+    'IRQ': IRQ,
     'WR': WR,
     'SR': SR,
-    'BR': BR,
-    'RFSRCR': RFSRCR,
     'RAM': RAM,
     'XRAM': XRAM,
     'ALUSD': ALUSD,
-    'IRQ': IRQ,
+    'BUS': BUS,
     'JUMPABS': JUMPABS,
-    'ADDRESS': ADDRESS,
-    'IMMED': IMMED,
 }
