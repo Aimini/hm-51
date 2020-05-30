@@ -121,11 +121,6 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
     <visualElement>
       <elementName>And</elementName>
       <elementAttributes/>
-      <pos x="980" y="980"/>
-    </visualElement>
-    <visualElement>
-      <elementName>And</elementName>
-      <elementAttributes/>
       <pos x="980" y="1080"/>
     </visualElement>
     <visualElement>
@@ -250,6 +245,11 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       </elementAttributes>
       <pos x="1540" y="480"/>
     </visualElement>
+    <visualElement>
+      <elementName>NAnd</elementName>
+      <elementAttributes/>
+      <pos x="980" y="980"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -369,7 +369,7 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <p2 x="1540" y="420"/>
     </wire>
     <wire>
-      <p1 x="1040" y="1000"/>
+      <p1 x="1060" y="1000"/>
       <p2 x="1080" y="1000"/>
     </wire>
     <wire>

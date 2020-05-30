@@ -99,11 +99,11 @@
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>Enable pin. Storing a value works only if this pin is set high.</string>
+          <string>Enable pin. Storing a value works only if this pin is set low.</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>LE</string>
+          <string>~LE</string>
         </entry>
       </elementAttributes>
       <pos x="860" y="380"/>
@@ -142,7 +142,14 @@
     </visualElement>
     <visualElement>
       <elementName>Or</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>In_2</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
       <pos x="1100" y="340"/>
     </visualElement>
   </visualElements>
@@ -201,7 +208,7 @@
     </wire>
     <wire>
       <p1 x="860" y="380"/>
-      <p2 x="1100" y="380"/>
+      <p2 x="1080" y="380"/>
     </wire>
     <wire>
       <p1 x="1040" y="280"/>

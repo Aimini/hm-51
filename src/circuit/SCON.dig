@@ -199,7 +199,12 @@
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>0</long>
+        </entry>
+      </elementAttributes>
       <pos x="720" y="880"/>
     </visualElement>
     <visualElement>

@@ -128,7 +128,12 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>0</long>
+        </entry>
+      </elementAttributes>
       <pos x="1120" y="1160"/>
     </visualElement>
     <visualElement>

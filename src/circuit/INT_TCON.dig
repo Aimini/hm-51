@@ -57,7 +57,7 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>WE</string>
+          <string>~WE</string>
         </entry>
       </elementAttributes>
       <pos x="700" y="860"/>

@@ -184,7 +184,7 @@ WR = name_parameters_lut([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'al':False,
+        'al':True,
         'enum': ['', 'WE']
     }
 ])
@@ -194,7 +194,7 @@ SR = name_parameters_lut([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'al':False,
+        'al':True,
         'enum': ['', 'WE']
     }
 ])
