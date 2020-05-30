@@ -17,7 +17,7 @@ if len(sys.argv) < 3:
 
 generate_srcipt = pathlib.Path(sys.argv[1])
 temp_dir = pathlib.Path(sys.argv[2])
-p = R"test\compile_verify.py"
+p = R"test\verify.py"
 
 a = subprocess.run(['python', generate_srcipt, '-o',temp_dir])
 if a.returncode != 0:

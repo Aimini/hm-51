@@ -43,7 +43,7 @@ class test_process():
 
         hexfile =  self.tempdir  / (filestem + ".hex")
 
-        returncode = subprocess.run(f"test/compile.py {filename} {hexfile}").returncode
+        returncode = subprocess.run(f"python test\\compile.py {filename} {hexfile}").returncode
 
         self.rom_file = hexfile
         return returncode
