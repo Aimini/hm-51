@@ -39,6 +39,8 @@ class abstract_parameters_lut():
             r.append((one['pos'], one['len'], one['sh']))
         return r
 
+    def inital_value(self):
+        return 0
 
 class name_parameters_lut(abstract_parameters_lut):
     """
@@ -98,6 +100,8 @@ class name_parameters_lut(abstract_parameters_lut):
         else:
             one = self.LUT[idx]
             place_info = (one['pos'], one['len'])
+            if one.get('al',False):
+                encoding = (2**one['len'] - 1) ^ encoding
             return place_info, encoding
 
     def get_encoding(self, name):
@@ -180,6 +184,7 @@ WR = name_parameters_lut([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
+        'al':False,
         'enum': ['', 'WE']
     }
 ])
@@ -189,6 +194,7 @@ SR = name_parameters_lut([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
+        'al':False,
         'enum': ['', 'WE']
     }
 ])
@@ -198,6 +204,7 @@ RFSRCR = name_parameters_lut([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
+        'al':True,
         'enum': ['', "WE"],
     }
 ])
@@ -308,7 +315,7 @@ for idx, one in enumerate(ALUSD.LUT):
 
 IRQ = name_parameters_lut([
     {
-        'sh': '',
+        'sh': 'CAI',
         'name': 'write enable',
         'len': 1,
         'enum': ['', 'CLR']

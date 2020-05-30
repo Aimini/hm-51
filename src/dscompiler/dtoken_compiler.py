@@ -27,21 +27,17 @@ class machine_code:
     - Checks whether inserted value will overlaps with the bits than had encoded other values
     '''
 
-    def __init__(self):
-        self.value = 0
+    def __init__(self,bits_len,initial_value):
+        #because some pin are active low, it's default state should be 1,
+        #  so we need initial value
+        self.bits_len = bits_len
+        self.value = initial_value
         # for index i,if self.users[i] is None,
         # it's meaing this bit not used,
         # otherwise it's this bit's user object(dtoken)
-        self.users = []
+        self.users = [None for _ in range(bits_len)]
+        
 
-    def extend_users(self, size):
-        """
-        ajust user list to target size, append None
-            size: 
-                target size
-        """
-        while len(self.users) <= size:
-            self.users.append(None)
 
     def insert(self, value, pos, size, user):
         """
@@ -56,16 +52,19 @@ class machine_code:
             user:
                 who owned those bits
         """
-        if value > 2**size:
+
+        if value > 2**size or value < 0:
                 raise SyntaxError("encoding value {} to bit to fit size {}".format(value, size))
 
-        self.extend_users(pos + size)
         for i in range(size):
             x = i + pos
             if self.users[x] is not None:
                 raise SyntaxError("inserted value {} conflict with {}".format(user, self.users[x]))
+            if (1 << x) & self.value:
+                self.value ^= (1 << x)
             self.users[x] = user
-        self.value += (value << pos)
+            
+        self.value |= (value << pos)
 
 
 class dtoken_compiler:
@@ -83,9 +82,21 @@ class dtoken_compiler:
 
     def calcuate_LUT_parameters_position(self):
         pos = 0
+        self.inital_machine_code = 0
         for k, v in self.CTL_LUT.items():  # v = RF LUT , WR LUT ...
             pos = v.auto_position(pos)
+        self.bits_len = pos
+        self.bytes_len = int((self.bits_len + 7)/8)
 
+        self.inital_machine_code = 0
+        for k, v in self.CTL_LUT.items():  # v = RF LUT , WR LUT ...
+            for par in v.LUT:
+                if par.get('al',False):
+                    pos,l= par['pos'], par['len']
+                    self.inital_machine_code |= ((2**l - 1) << pos)
+
+
+        
     def controls_parameters_position_info(self):
         """
         get all control's parameters info
@@ -141,7 +152,7 @@ class dtoken_compiler:
             return: int
                 current line machine code value
         """
-        mc = machine_code()
+        mc = machine_code(self.bits_len, self.inital_machine_code)  
         for one in dtokens:
             self.convert_one_token(one, mc)
         return mc.value
