@@ -68,37 +68,43 @@ What you should do is read this chapter to understand how to connect peripheral 
 ### interface
 
 ``` python
-    ╔══════════╗
-    ║          ║
-    ║        IO╟───/8───
-    ║          ║
-    ║   IRQ_CLR╟───/1───
-    ║    IRQ_OE╟───/1───
-    ║    SFR_WE╟───/1───
-    ║    SFR_OE╟───/1───
-    ║   XRAM_WE╟───/1───
-    ║   XRAM_OE╟───/1───
-    ║          ║
-    ║   Address╟──/16───
-    ║          ║
-    ╚══════════╝     
+      ╔════════════╗
+──/1──╢>CLKI   CLKO╟───/1───
+      ║            ║
+      ║          IO╟───/8───
+      ║            ║
+      ║     IRQ_CLR╟───/1───
+      ║      IRQ_OE╟───/1───
+      ║     /SFR_WE╟───/1───
+      ║     /SFR_OE╟───/1───
+      ║   /XRAM_AWE╟───/1───
+      ║    /XRAM_OE╟───/1───
+      ║            ║
+      ║     Address╟──/16───
+      ║            ║
+      ╚════════════╝     
 
 ```
+  - CLKI
+    - the clock input, used to generate the main clock of the CPU and the WE pulse of the asynchronous RAM chip. In the current design, 12MHz is preferred.
+  
+  - CLKO
+    - CPU's main clock, provide clock to peripherals(SFR).
 
  - IO Pin
    -  output data when writing SFR/XRAM.
    -  receive data when reading SRF/XRAM.
    -  receive IRQs when checking interrupt.
    -  output IRQ to when CPU wants you to clear this IRQ.
-   -  
+  
 -  Control Pin
    -  IRQ_CLR, clear IRQ according IO pin value.
    -  IRQ_OE, IRQs output enable.
-   -  SFR_WE, SFR write enable.
-   -  SFR_OE, SFR output enable.
-   -  XRAM_WE, XRAM write enable.
-   -  XRAM_OE, XRAM output enable.
-   -  
+   -  /SFR_WE, SFR write enable,active low, prepared for clocked chip.
+   -  /SFR_OE, SFR output enable, active low.
+   -  /XRAM_AWE, RAM write enable, active low, prepared for async chip.
+   -  /XRAM_OE, RAM output enable, active low.
+   
  - Address Pin
    - using all 16 bits when operating XRAM
    - using higher 8 bits when operating SFR by RAM address.
@@ -115,13 +121,14 @@ What you should do is read this chapter to understand how to connect peripheral 
     ╔══════════╗
     ║          ║        ┌──────────────────────────────────────────┐
     ║        IO╟───/8───┥         ╔═════════╗     ┌────────────┐   |
-    ║          ║        └─────────╢D  REG  Q╟─/8──|trisatebuffer>──┘                  
-    ║          ║              ┌───╢WE       ║     └───────┯────┘ 
-    ║          ║           ╔═╗|   ╚═════════╝             |OE
-    ║    SFR_OE╟───/1──────╢&╟┘                           |
+    ║          ║        └─────────╢D  REG  Q╟─/8──|trisatebuffer>──┘ 
+    ║      CLKO╟──────────────────╢>CLK     ║     └───────┯────┘ 
+    ║          ║              ┌───╢WE       ║             |OE
+    ║          ║           ╔═╗|   ╚═════════╝             |
+    ║   /SFR_WE╟───/1─╢~╟──╢&╟┘                           |
     ║          ║       MD ─╢ ║     ╔═╗                    |
     ║          ║           ╚═╝ MD ─╢&╟────────────────────┘
-    ║    SFR_WE╟───/1──────────────╢ ║               
+    ║   /SFR_OE╟───/1────╢~╟───────╢ ║               
     ║          ║        0-7        ╚═╝               
     ║          ║      ┌─────     ╔══════════╗                                        
     ║   Address╟──/16─┥ 8-15     ║Comparator║                                            
@@ -129,6 +136,7 @@ What you should do is read this chapter to understand how to connect peripheral 
     ╚══════════╝           0xE2──╢ B        ║                                          
                                  ╚══════════╝      
   ```
+
 
 
 
