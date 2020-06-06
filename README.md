@@ -140,6 +140,15 @@ What you should do is read this chapter to understand how to connect peripheral 
 
 
 
+### add XRAM
+ XRAM is controlled by `Address`, `/XRAM_AWE` and `/XRAM_OE`. Remember, `/XRAM_AWE` is a short low pulse before rasing edge of `CLKO`, so an asynchronous SRAM chip is required.
 
-
-
+  ```
+    ╔══════════╗               ╔═════════╗
+    ║        IO╟─────/8────────╢IO       ║
+    ║   Address╟─────/16───────╢ADDR     ║ 
+    ║ /XRAM_AWE╟─────/1────────╢/WE      ║                   
+    ║  /XRAM_OE╟─────/1────────╢/OE      ║                                           
+    ╚══════════╝               ╚═════════╝                                          
+                                   
+  ```
