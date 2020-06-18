@@ -7,7 +7,7 @@
 # -
 # IR might be changed after excute stage#
 ############################################################
-JRST(STAGE_RESET_ALL)
+J(STAGE_RESET_ALL)
 ##############################################
 # decoder vector
 ##############################################
@@ -32,7 +32,7 @@ RF(PSW,WE), ALU(SETPF), BR(ONE)
 ###
 # indstruction decode jump
 #####
-RF(IR), JLT(0x80,IRSEG_0_7F), BR(ZERO) # set BR to prepare increase PC
+RF(IR), J(0),MIPCSRC(DECVEC), BR(ZERO) # set BR to prepare increase PC
 ## IRSEG_80_FF
 RF(IR), JLT(0xC0,IRSEG_80_BF)
 ## IRSEG_C0_FF

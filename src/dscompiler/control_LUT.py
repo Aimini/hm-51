@@ -350,6 +350,16 @@ IMMED = value_parameter_lut([
     }
 ])
 
+MIPCSRC = name_parameters_lut([
+    {
+        'sh': 'MIPCSRC',
+        'name': 'MIPC data source',
+        'len': 1,
+        'enum':  ['', 'DECVEC']
+    }
+])
+
+
 ##################
 # each control's parmaters LUT to make a big control LUT
 CTL_LUT = {
@@ -366,4 +376,5 @@ CTL_LUT = {
     'ALUSD': ALUSD,
     'BUS': BUS,
     'JUMPABS': JUMPABS,
+    'MIPCSRC': MIPCSRC
 }

@@ -161,6 +161,10 @@
           <string>Bits</string>
           <int>12</int>
         </entry>
+        <entry>
+          <string>generic</string>
+          <string>Bits := int(args.Bits);</string>
+        </entry>
       </elementAttributes>
       <pos x="800" y="960"/>
     </visualElement>
@@ -175,6 +179,10 @@
           <string>outputBits</string>
           <int>12</int>
         </entry>
+        <entry>
+          <string>generic</string>
+          <string>ouputBits := int(args.Bits);</string>
+        </entry>
       </elementAttributes>
       <pos x="600" y="940"/>
     </visualElement>
@@ -184,6 +192,10 @@
         <entry>
           <string>Bits</string>
           <int>12</int>
+        </entry>
+        <entry>
+          <string>generic</string>
+          <string>Bits := int(args.Bits);</string>
         </entry>
       </elementAttributes>
       <pos x="700" y="920"/>
