@@ -1,29 +1,32 @@
 import sys
-def print_2div(start, end):
-    m = int((start + end)/2)
-    if m + 1 < end:
-	    print(f"RF(IR), BLT(0x{m:X},IRSEG_{start:X}_{m - 1:X})")
-	    print(f";; IRSEG_{m:X}_{end - 1:X}")
-	    print_2div(m, end)
-    elif m + 1 == end:
-        print(f"RF(IR), BLT(0x{m:X},IRSEG_{m - 1 :X})")
-        print(f"IRSEG_{end - 1:X}: ;--------------------")
-        print("")
-        print(";------------------------------")
-        print("")
-        print("")
+def print_dec_vec():
+    for x in range(256):
+        print("# ---- 0x{:0>2X} ---- ".format(x))
+        if x == 0:
+            SEG_NAME = 'STAGE_CHECK_INTERRUPT'
+        elif x & 0xF == 1:
+            if (x >> 4) & 1:
+                SEG_NAME = 'CSEG_ACALL_ADDR11'
+            else:
+                SEG_NAME = 'CSEG_AJMP_ADDR11'
+        else:
+            l = x & 0xF
+            h = x & 0xF0
+            if l >= 8:
+                SEG_NAME = f"IRSEG_{h + 8:X}_{h + 0xF:X}"
+            elif l >= 6:
+                SEG_NAME = f"IRSEG_{h + 6:X}_{h + 7:X}"
+            elif x in (0xE2,0xE3):
+                SEG_NAME = f"IRSEG_E2_E3"
+            elif x in (0xF2,0xF3):
+                SEG_NAME = f"IRSEG_F2_F3"
+            else:
+                SEG_NAME = f"IRSEG_{x:X}"
 
-    if start + 1 < m:
-	    print(f"IRSEG_{start:X}_{m - 1:X}:")
-	    print_2div(start,m)
-    else:
-        print(f"IRSEG_{start:X}: ---------------------")
-        print("")
-        print(";------------------------------")
-        print("")
-        print("")
-        
+        for _ in range(2):
+            print(f"J({SEG_NAME})")
+
 print("gen")
-sys.stdout = open("decoder_template.ds",mode="w+")
-print_2div(0, 0x100)
-sys.stdout.close()
+with open("decoder_template.ds",mode="w+") as fh:
+    sys.stdout = fh
+    print_dec_vec()

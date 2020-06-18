@@ -1,0 +1,768 @@
+# ---- 0x00 ---- 
+J(STAGE_CHECK_INTERRUPT)
+J(STAGE_CHECK_INTERRUPT)
+# ---- 0x01 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0x02 ---- 
+J(IRSEG_2)
+J(IRSEG_2)
+# ---- 0x03 ---- 
+J(IRSEG_3)
+J(IRSEG_3)
+# ---- 0x04 ---- 
+J(IRSEG_4)
+J(IRSEG_4)
+# ---- 0x05 ---- 
+J(IRSEG_5)
+J(IRSEG_5)
+# ---- 0x06 ---- 
+J(IRSEG_6_7)
+J(IRSEG_6_7)
+# ---- 0x07 ---- 
+J(IRSEG_6_7)
+J(IRSEG_6_7)
+# ---- 0x08 ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x09 ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0A ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0B ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0C ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0D ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0E ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x0F ---- 
+J(IRSEG_8_F)
+J(IRSEG_8_F)
+# ---- 0x10 ---- 
+J(IRSEG_10)
+J(IRSEG_10)
+# ---- 0x11 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0x12 ---- 
+J(IRSEG_12)
+J(IRSEG_12)
+# ---- 0x13 ---- 
+J(IRSEG_13)
+J(IRSEG_13)
+# ---- 0x14 ---- 
+J(IRSEG_14)
+J(IRSEG_14)
+# ---- 0x15 ---- 
+J(IRSEG_15)
+J(IRSEG_15)
+# ---- 0x16 ---- 
+J(IRSEG_16_17)
+J(IRSEG_16_17)
+# ---- 0x17 ---- 
+J(IRSEG_16_17)
+J(IRSEG_16_17)
+# ---- 0x18 ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x19 ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1A ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1B ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1C ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1D ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1E ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x1F ---- 
+J(IRSEG_18_1F)
+J(IRSEG_18_1F)
+# ---- 0x20 ---- 
+J(IRSEG_20)
+J(IRSEG_20)
+# ---- 0x21 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0x22 ---- 
+J(IRSEG_22)
+J(IRSEG_22)
+# ---- 0x23 ---- 
+J(IRSEG_23)
+J(IRSEG_23)
+# ---- 0x24 ---- 
+J(IRSEG_24)
+J(IRSEG_24)
+# ---- 0x25 ---- 
+J(IRSEG_25)
+J(IRSEG_25)
+# ---- 0x26 ---- 
+J(IRSEG_26_27)
+J(IRSEG_26_27)
+# ---- 0x27 ---- 
+J(IRSEG_26_27)
+J(IRSEG_26_27)
+# ---- 0x28 ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x29 ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2A ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2B ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2C ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2D ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2E ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x2F ---- 
+J(IRSEG_28_2F)
+J(IRSEG_28_2F)
+# ---- 0x30 ---- 
+J(IRSEG_30)
+J(IRSEG_30)
+# ---- 0x31 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0x32 ---- 
+J(IRSEG_32)
+J(IRSEG_32)
+# ---- 0x33 ---- 
+J(IRSEG_33)
+J(IRSEG_33)
+# ---- 0x34 ---- 
+J(IRSEG_34)
+J(IRSEG_34)
+# ---- 0x35 ---- 
+J(IRSEG_35)
+J(IRSEG_35)
+# ---- 0x36 ---- 
+J(IRSEG_36_37)
+J(IRSEG_36_37)
+# ---- 0x37 ---- 
+J(IRSEG_36_37)
+J(IRSEG_36_37)
+# ---- 0x38 ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x39 ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3A ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3B ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3C ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3D ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3E ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x3F ---- 
+J(IRSEG_38_3F)
+J(IRSEG_38_3F)
+# ---- 0x40 ---- 
+J(IRSEG_40)
+J(IRSEG_40)
+# ---- 0x41 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0x42 ---- 
+J(IRSEG_42)
+J(IRSEG_42)
+# ---- 0x43 ---- 
+J(IRSEG_43)
+J(IRSEG_43)
+# ---- 0x44 ---- 
+J(IRSEG_44)
+J(IRSEG_44)
+# ---- 0x45 ---- 
+J(IRSEG_45)
+J(IRSEG_45)
+# ---- 0x46 ---- 
+J(IRSEG_46_47)
+J(IRSEG_46_47)
+# ---- 0x47 ---- 
+J(IRSEG_46_47)
+J(IRSEG_46_47)
+# ---- 0x48 ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x49 ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4A ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4B ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4C ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4D ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4E ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x4F ---- 
+J(IRSEG_48_4F)
+J(IRSEG_48_4F)
+# ---- 0x50 ---- 
+J(IRSEG_50)
+J(IRSEG_50)
+# ---- 0x51 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0x52 ---- 
+J(IRSEG_52)
+J(IRSEG_52)
+# ---- 0x53 ---- 
+J(IRSEG_53)
+J(IRSEG_53)
+# ---- 0x54 ---- 
+J(IRSEG_54)
+J(IRSEG_54)
+# ---- 0x55 ---- 
+J(IRSEG_55)
+J(IRSEG_55)
+# ---- 0x56 ---- 
+J(IRSEG_56_57)
+J(IRSEG_56_57)
+# ---- 0x57 ---- 
+J(IRSEG_56_57)
+J(IRSEG_56_57)
+# ---- 0x58 ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x59 ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5A ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5B ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5C ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5D ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5E ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x5F ---- 
+J(IRSEG_58_5F)
+J(IRSEG_58_5F)
+# ---- 0x60 ---- 
+J(IRSEG_60)
+J(IRSEG_60)
+# ---- 0x61 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0x62 ---- 
+J(IRSEG_62)
+J(IRSEG_62)
+# ---- 0x63 ---- 
+J(IRSEG_63)
+J(IRSEG_63)
+# ---- 0x64 ---- 
+J(IRSEG_64)
+J(IRSEG_64)
+# ---- 0x65 ---- 
+J(IRSEG_65)
+J(IRSEG_65)
+# ---- 0x66 ---- 
+J(IRSEG_66_67)
+J(IRSEG_66_67)
+# ---- 0x67 ---- 
+J(IRSEG_66_67)
+J(IRSEG_66_67)
+# ---- 0x68 ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x69 ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6A ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6B ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6C ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6D ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6E ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x6F ---- 
+J(IRSEG_68_6F)
+J(IRSEG_68_6F)
+# ---- 0x70 ---- 
+J(IRSEG_70)
+J(IRSEG_70)
+# ---- 0x71 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0x72 ---- 
+J(IRSEG_72)
+J(IRSEG_72)
+# ---- 0x73 ---- 
+J(IRSEG_73)
+J(IRSEG_73)
+# ---- 0x74 ---- 
+J(IRSEG_74)
+J(IRSEG_74)
+# ---- 0x75 ---- 
+J(IRSEG_75)
+J(IRSEG_75)
+# ---- 0x76 ---- 
+J(IRSEG_76_77)
+J(IRSEG_76_77)
+# ---- 0x77 ---- 
+J(IRSEG_76_77)
+J(IRSEG_76_77)
+# ---- 0x78 ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x79 ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7A ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7B ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7C ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7D ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7E ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x7F ---- 
+J(IRSEG_78_7F)
+J(IRSEG_78_7F)
+# ---- 0x80 ---- 
+J(IRSEG_80)
+J(IRSEG_80)
+# ---- 0x81 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0x82 ---- 
+J(IRSEG_82)
+J(IRSEG_82)
+# ---- 0x83 ---- 
+J(IRSEG_83)
+J(IRSEG_83)
+# ---- 0x84 ---- 
+J(IRSEG_84)
+J(IRSEG_84)
+# ---- 0x85 ---- 
+J(IRSEG_85)
+J(IRSEG_85)
+# ---- 0x86 ---- 
+J(IRSEG_86_87)
+J(IRSEG_86_87)
+# ---- 0x87 ---- 
+J(IRSEG_86_87)
+J(IRSEG_86_87)
+# ---- 0x88 ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x89 ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8A ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8B ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8C ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8D ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8E ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x8F ---- 
+J(IRSEG_88_8F)
+J(IRSEG_88_8F)
+# ---- 0x90 ---- 
+J(IRSEG_90)
+J(IRSEG_90)
+# ---- 0x91 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0x92 ---- 
+J(IRSEG_92)
+J(IRSEG_92)
+# ---- 0x93 ---- 
+J(IRSEG_93)
+J(IRSEG_93)
+# ---- 0x94 ---- 
+J(IRSEG_94)
+J(IRSEG_94)
+# ---- 0x95 ---- 
+J(IRSEG_95)
+J(IRSEG_95)
+# ---- 0x96 ---- 
+J(IRSEG_96_97)
+J(IRSEG_96_97)
+# ---- 0x97 ---- 
+J(IRSEG_96_97)
+J(IRSEG_96_97)
+# ---- 0x98 ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x99 ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9A ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9B ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9C ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9D ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9E ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0x9F ---- 
+J(IRSEG_98_9F)
+J(IRSEG_98_9F)
+# ---- 0xA0 ---- 
+J(IRSEG_A0)
+J(IRSEG_A0)
+# ---- 0xA1 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0xA2 ---- 
+J(IRSEG_A2)
+J(IRSEG_A2)
+# ---- 0xA3 ---- 
+J(IRSEG_A3)
+J(IRSEG_A3)
+# ---- 0xA4 ---- 
+J(IRSEG_A4)
+J(IRSEG_A4)
+# ---- 0xA5 ---- 
+J(IRSEG_A5)
+J(IRSEG_A5)
+# ---- 0xA6 ---- 
+J(IRSEG_A6_A7)
+J(IRSEG_A6_A7)
+# ---- 0xA7 ---- 
+J(IRSEG_A6_A7)
+J(IRSEG_A6_A7)
+# ---- 0xA8 ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xA9 ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAA ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAB ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAC ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAD ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAE ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xAF ---- 
+J(IRSEG_A8_AF)
+J(IRSEG_A8_AF)
+# ---- 0xB0 ---- 
+J(IRSEG_B0)
+J(IRSEG_B0)
+# ---- 0xB1 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0xB2 ---- 
+J(IRSEG_B2)
+J(IRSEG_B2)
+# ---- 0xB3 ---- 
+J(IRSEG_B3)
+J(IRSEG_B3)
+# ---- 0xB4 ---- 
+J(IRSEG_B4)
+J(IRSEG_B4)
+# ---- 0xB5 ---- 
+J(IRSEG_B5)
+J(IRSEG_B5)
+# ---- 0xB6 ---- 
+J(IRSEG_B6_B7)
+J(IRSEG_B6_B7)
+# ---- 0xB7 ---- 
+J(IRSEG_B6_B7)
+J(IRSEG_B6_B7)
+# ---- 0xB8 ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xB9 ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBA ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBB ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBC ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBD ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBE ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xBF ---- 
+J(IRSEG_B8_BF)
+J(IRSEG_B8_BF)
+# ---- 0xC0 ---- 
+J(IRSEG_C0)
+J(IRSEG_C0)
+# ---- 0xC1 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0xC2 ---- 
+J(IRSEG_C2)
+J(IRSEG_C2)
+# ---- 0xC3 ---- 
+J(IRSEG_C3)
+J(IRSEG_C3)
+# ---- 0xC4 ---- 
+J(IRSEG_C4)
+J(IRSEG_C4)
+# ---- 0xC5 ---- 
+J(IRSEG_C5)
+J(IRSEG_C5)
+# ---- 0xC6 ---- 
+J(IRSEG_C6_C7)
+J(IRSEG_C6_C7)
+# ---- 0xC7 ---- 
+J(IRSEG_C6_C7)
+J(IRSEG_C6_C7)
+# ---- 0xC8 ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xC9 ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCA ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCB ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCC ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCD ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCE ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xCF ---- 
+J(IRSEG_C8_CF)
+J(IRSEG_C8_CF)
+# ---- 0xD0 ---- 
+J(IRSEG_D0)
+J(IRSEG_D0)
+# ---- 0xD1 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0xD2 ---- 
+J(IRSEG_D2)
+J(IRSEG_D2)
+# ---- 0xD3 ---- 
+J(IRSEG_D3)
+J(IRSEG_D3)
+# ---- 0xD4 ---- 
+J(IRSEG_D4)
+J(IRSEG_D4)
+# ---- 0xD5 ---- 
+J(IRSEG_D5)
+J(IRSEG_D5)
+# ---- 0xD6 ---- 
+J(IRSEG_D6_D7)
+J(IRSEG_D6_D7)
+# ---- 0xD7 ---- 
+J(IRSEG_D6_D7)
+J(IRSEG_D6_D7)
+# ---- 0xD8 ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xD9 ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDA ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDB ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDC ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDD ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDE ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xDF ---- 
+J(IRSEG_D8_DF)
+J(IRSEG_D8_DF)
+# ---- 0xE0 ---- 
+J(IRSEG_E0)
+J(IRSEG_E0)
+# ---- 0xE1 ---- 
+J(CSEG_AJMP_ADDR11)
+J(CSEG_AJMP_ADDR11)
+# ---- 0xE2 ---- 
+J(IRSEG_E2_E3)
+J(IRSEG_E2_E3)
+# ---- 0xE3 ---- 
+J(IRSEG_E2_E3)
+J(IRSEG_E2_E3)
+# ---- 0xE4 ---- 
+J(IRSEG_E4)
+J(IRSEG_E4)
+# ---- 0xE5 ---- 
+J(IRSEG_E5)
+J(IRSEG_E5)
+# ---- 0xE6 ---- 
+J(IRSEG_E6_E7)
+J(IRSEG_E6_E7)
+# ---- 0xE7 ---- 
+J(IRSEG_E6_E7)
+J(IRSEG_E6_E7)
+# ---- 0xE8 ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xE9 ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xEA ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xEB ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xEC ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xED ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xEE ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xEF ---- 
+J(IRSEG_E8_EF)
+J(IRSEG_E8_EF)
+# ---- 0xF0 ---- 
+J(IRSEG_F0)
+J(IRSEG_F0)
+# ---- 0xF1 ---- 
+J(CSEG_ACALL_ADDR11)
+J(CSEG_ACALL_ADDR11)
+# ---- 0xF2 ---- 
+J(IRSEG_F2_F3)
+J(IRSEG_F2_F3)
+# ---- 0xF3 ---- 
+J(IRSEG_F2_F3)
+J(IRSEG_F2_F3)
+# ---- 0xF4 ---- 
+J(IRSEG_F4)
+J(IRSEG_F4)
+# ---- 0xF5 ---- 
+J(IRSEG_F5)
+J(IRSEG_F5)
+# ---- 0xF6 ---- 
+J(IRSEG_F6_F7)
+J(IRSEG_F6_F7)
+# ---- 0xF7 ---- 
+J(IRSEG_F6_F7)
+J(IRSEG_F6_F7)
+# ---- 0xF8 ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xF9 ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFA ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFB ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFC ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFD ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFE ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
+# ---- 0xFF ---- 
+J(IRSEG_F8_FF)
+J(IRSEG_F8_FF)
