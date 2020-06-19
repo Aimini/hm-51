@@ -23,16 +23,6 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
   </attributes>
   <visualElements>
     <visualElement>
-      <elementName>INT_TCON.dig</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Label</string>
-          <string>TCON</string>
-        </entry>
-      </elementAttributes>
-      <pos x="1140" y="580"/>
-    </visualElement>
-    <visualElement>
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
@@ -249,6 +239,11 @@ select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
       <elementName>NAnd</elementName>
       <elementAttributes/>
       <pos x="980" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>INT_TCON.dig</elementName>
+      <elementAttributes/>
+      <pos x="1140" y="580"/>
     </visualElement>
   </visualElements>
   <wires>
