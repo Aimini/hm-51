@@ -64,12 +64,12 @@ class test_process():
         rom_file = self.rom_file
         self.simulate_hardware_dump_file_template = self.tempdir  / (rom_file.stem + ".simulate_hardware.dump-%d.txt")
         simulator_exe = pathlib.Path(R"tools\Digitalc.jar")
-        cirucit_file =  pathlib.Path(R"src\circuit\CORE.dig")
+        cirucit_file =  pathlib.Path(R"src\circuit\TOP.dig")
         ds_file =  pathlib.Path(R"eeprom-bin\decoder.bin")
-        rp = subprocess.run(['java','-jar',simulator_exe,
+        returncode = subprocess.run(['java','-jar',simulator_exe,
             cirucit_file,ds_file, rom_file,
              self.simulate_hardware_dump_file_template]).returncode
-        return rp.returncode
+        return returncode
 
     def verify(self):
         count = 0

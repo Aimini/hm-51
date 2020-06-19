@@ -41,7 +41,7 @@ def compile(inputfile_str, outputfile_str):
     objfile =  tempdir  / (filestem + ".obj")
     absfile =  tempdir  / (filestem + ".abs")
     hexfile =  tempdir  / (filestem + ".hex")
-    tooldir = pathlib.Path(R"tools\keil51")
+    tooldir = pathlib.Path(R"C:\Keil_v5\C51\BIN")
     A51 = tooldir / 'A51.exe'
     BL51 = tooldir / 'BL51.exe'
     OH51 = tooldir / 'OH51.exe'
