@@ -3068,6 +3068,20 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       </elementAttributes>
       <pos x="-1120" y="-160"/>
     </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~CLR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1720" y="-60"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -3857,6 +3871,10 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
     <wire>
       <p1 x="-380" y="-60"/>
       <p2 x="-340" y="-60"/>
+    </wire>
+    <wire>
+      <p1 x="-1720" y="-60"/>
+      <p2 x="-1700" y="-60"/>
     </wire>
     <wire>
       <p1 x="-1660" y="60"/>
