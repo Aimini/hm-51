@@ -49,8 +49,11 @@ def generate_by_op(ci, f, A):
 
     elif f == 0x3:  # SFR
         T = SFR_MAP.get(A)
+        
         if T is not None:
-            R = T | 0x10
+            if T > 0x7:
+                raise Exception('SFR index must less than 8')
+            R = T | 0x8
 
     elif f == 0x4:  # RR A
         R = ((A & 1) << 7) | (A >> 1)
