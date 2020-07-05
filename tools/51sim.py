@@ -1,6 +1,4 @@
-import core51
-import core51_peripheral
-import hex_decoder
+from py51 import create_stand51,core51,hex_decoder
 import argparse
 import random
 import sys
@@ -22,11 +20,10 @@ run_flag = True
 dump_count = 0
 
 
-vm = core51.core51()
-core51_peripheral.install_default_peripherals(vm)
+vm = create_stand51()
 
 
-def dump_core(core: core51.core51, fh):
+def dump_core(core: core51, fh):
     ram_dump = list(core.IRAM)
     reg_dump = [core.SP, core.DPL, core.DPH, core.PSW, core.A, core.B]
 
@@ -101,7 +98,7 @@ def assert_and_dump_test(core):
     dump_core(core, sys.stdout)
 
 
-def install_my_sfr(core: core51.core51):
+def install_my_sfr(core: core51):
     p0 = "ASTPAR0"
     p1 = "ASTPAR1"
     my_sfr = {
