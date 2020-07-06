@@ -10,14 +10,16 @@ def enum_input(callback):
      To enumerate all the numbers x in [0 ~ 2 ^ 13) x.
      treat x as a binary number, 
      then state = x[3:0](4-bit), counter = x[7:4](4-bit),
-    sample_bits = x[10:8](3-bit), sample_enable = x[11](1-bit)   
+    sample_bits = x[10:8](3-bit), sample_enable = x[11](1-bit) 
+    rx_enalbe = x[12](1-bit)  
      invoke callback(ci,f,b, a) to generate  low part ouput
     '''
-    for sample_enable in range(2**1):
-        for sample_bits in range(2**3):
-            for counter in range(2**4):
-                for state in range(2**4):
-                    callback(sample_enable, sample_bits, counter, state)
+    for rx_enable in range(2**1):
+        for sample_enable in range(2**1):
+            for sample_bits in range(2**3):
+                for counter in range(2**4):
+                    for state in range(2**4):
+                        callback(rx_enable,sample_enable, sample_bits, counter, state)
 
 
 S_PRE = 0
@@ -33,7 +35,7 @@ S_D7 = 9
 S_DEND = 10
 
 
-def gen(se, sbs, cnt, s):
+def gen(re, se, sbs, cnt, s):
     cnt_bin_str = bin(cnt)[2:].zfill(4)
     cnt = int(cnt_bin_str[::-1],2)
     #  |   FRAM0(START BIT)  |      FRAM1(D0)      |      FRAM2(D1)      |  ....|      FRAM8(D7)      |    FRAM9(STOP_BIT)  |
@@ -47,35 +49,37 @@ def gen(se, sbs, cnt, s):
     next_state = s
     cycle_count_en = 0
     shift_en = 0
-
-    rx_count1 = bin(sbs).count('1')
-    rx_bit = 1 if rx_count1 >= 2 else 0
-
+    rx_bit = 0
     rec_end = 0
 
-    if S_SBIT <= s and s <= S_DEND:
-        cycle_count_en = 1
+    if re:
+        rx_count1 = bin(sbs).count('1')
+        rx_bit = 1 if rx_count1 >= 2 else 0
+        if S_SBIT <= s and s <= S_DEND:
+            cycle_count_en = 1
 
-    if not (S_PRE <= s and s <= S_DEND):
+        if not (S_PRE <= s and s <= S_DEND):
+            next_state = S_PRE
+
+        if s == S_D7 and cnt == 9:
+            rec_end = 1
+
+        if se:
+            if s == S_PRE:
+                if cnt == 2 and rx_bit == 0:
+                    next_state = S_SBIT
+                    cycle_count_en = 1
+
+            elif S_SBIT <= s and s <= S_D7:
+                if cnt == 15:
+                    next_state = s + 1
+                if cnt == 9:
+                    shift_en = 1
+            elif s == S_DEND:
+                if cnt == 15:
+                    next_state = S_PRE
+    else:
         next_state = S_PRE
-
-    if s == S_D7 and cnt == 9:
-        rec_end = 1
-
-    if se:
-        if s == S_PRE:
-            if cnt == 2 and rx_bit == 0:
-                next_state = S_SBIT
-                cycle_count_en = 1
-
-        elif S_SBIT <= s and s <= S_D7:
-            if cnt == 15:
-                next_state = s + 1
-            if cnt == 9:
-                shift_en = 1
-        elif s == S_DEND:
-            if cnt == 15:
-                next_state = S_PRE
 
     return next_state | (cycle_count_en << 4) | (shift_en << 5) | (rx_bit << 6) | (rec_end << 7)
 
@@ -83,8 +87,8 @@ def gen(se, sbs, cnt, s):
 def gen_to_file(fname):
     d = bytearray()
 
-    def write_one_byte(se, sbs, cnt, s):
-        d.append(gen(se, sbs, cnt, s) & 0xFF)
+    def write_one_byte(re, se, sbs, cnt, s):
+        d.append(gen(re, se, sbs, cnt, s) & 0xFF)
 
     enum_input(write_one_byte)
 
