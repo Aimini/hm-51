@@ -61,7 +61,7 @@ def gen(re, se, sbs, cnt, s):
         if not (S_PRE <= s and s <= S_DEND):
             next_state = S_PRE
 
-        if s == S_D7 and cnt == 9:
+        if s == S_D7 and cnt == 9 and se:
             rec_end = 1
 
         if se:
