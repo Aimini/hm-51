@@ -74,7 +74,7 @@ What you should do is read this chapter to understand how to connect peripheral 
       ║          IO╟───/8───
       ║            ║
       ║     IRQ_CLR╟───/1───
-      ║      IRQ_OE╟───/1───
+      ║     /IRQ_OE╟───/1───
       ║     /SFR_WE╟───/1───
       ║     /SFR_OE╟───/1───
       ║   /XRAM_AWE╟───/1───
@@ -151,4 +151,33 @@ What you should do is read this chapter to understand how to connect peripheral 
     ║  /XRAM_OE╟─────/1────────╢/OE      ║                                           
     ╚══════════╝               ╚═════════╝                                          
                                    
+  ```
+
+### Interrupt
+  When `/IRQ_OE` is 0, you should output IRQ to IO BUS, `BUS[0]` should be the highest priority interrupt request, and `BUS[7]` should be the lowest priority interrupt request.
+
+  At some point after the CPU accepts the interrupt, the CPU will set `IRQ_CLR` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits in the register at this time.
+
+  If the CPU finds that the IRQ in `BUS[0]` is the highest priority interrupt request, then `BUS[0]` will output `0b00000001` when `IRQ_CLR` is 1. And, if the `BUS[1]` is the highest priority interrupt request, then `BUS[0]` will output `0b00000010`.
+
+  ```
+    ╔═════════════╗        ╔═════════╗
+    ║          CLK╟───/8───╢>        ║
+    ║           IO╟───/8───╢   IRR   ║
+    ║      IRQ_CLR╟───/1───╢         ║
+    ║      /IRQ_OE╟───/1───╢         ║                           
+    ╚═════════════╝        ╚═════════╝                         
+                                   
+  ```
+  Here is an example of IRR logic.
+
+  ``` 
+                                ╔════════╗
+    CLK ────────────────────────╢>CLK   Q╟─┐
+    IRQ ───────────────┐  ╔═╗   ║ IRR[0] ║ |     
+            ╔═╗    ╔═╗ └──╢|╟───╢ D      ║ |     
+   IRQ_CLR ─╢&╟o───╢&╟────╢ ║   ╚════════╝ |                  
+    BUS[0] ─╢ ║  ┌─╢ ║    ╚═╝              | 
+            ╚═╝  | ╚═╝                     |                                       
+                 └─────────────────────────┘        
   ```
