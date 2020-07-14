@@ -105,20 +105,20 @@
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>I7</string>
+          <string>I6</string>
         </entry>
       </elementAttributes>
-      <pos x="440" y="580"/>
+      <pos x="440" y="540"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>I6</string>
+          <string>I7</string>
         </entry>
       </elementAttributes>
-      <pos x="440" y="540"/>
+      <pos x="440" y="580"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>

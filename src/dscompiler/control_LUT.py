@@ -214,7 +214,7 @@ BR = name_parameters_lut([
         'name': 'input select',
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
-                 'ALUSF', ['ALUDF', 'CY', 'ZF', 'PF'], 'A7', 'A0'],
+                 'ALUSF', ['ALUDF', 'CY', 'ZF', 'PF'], 'A0', 'A7'],
     },
     {
         'sh': 'CPLQ',
