@@ -1,3 +1,19 @@
+from random import expovariate
+import sys
+import importlib.util
+
+py51path = '../Code/py51'
+sys.path.append(py51path)
+py51notfund = False
+try:
+    if importlib.util.find_spec("py51") is None:
+        py51notfund = True
+except ModuleNotFoundError:
+    py51notfund = True
+
+if py51notfund:
+    raise Exception("py51 not found in folder {!r}, please check the <py51path> in file {!r} or using customized simulator.".format(py51path,sys.argv[0]))
+
 from py51 import create_stand51,core51,hex_decoder
 import argparse
 import random
