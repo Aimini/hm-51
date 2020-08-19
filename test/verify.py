@@ -51,7 +51,7 @@ class test_process():
 
     def simulate_instruction(self):
         rom_file = self.rom_file
-        simulator_exe = pathlib.Path(R"tools\py51\51sim.py")
+        simulator_exe = pathlib.Path(R"tools\51sim.py")
         
         self.simulate_instruction_dump_file_template = self.tempdir  / (rom_file.stem + ".simulate_instruction.dump-%d.txt")
         returncode = subprocess.run(['python',simulator_exe,
@@ -95,7 +95,7 @@ class test_process():
 
 usage = """
 usage:
-    compile_all <input_file> <temporary_dir>
+    verify.py <input_file> <temporary_dir>
     input_file:
         51 assembly file
     temporary_dir:
