@@ -161,7 +161,7 @@ class rf_translator(empty_translator):
 class jump_translator(empty_translator):
     def translate(self, dt):
         r = []
-        if dt.value not in ("J", "JLT", "JGT", "JBIT", "JRST"):
+        if dt.value not in ("J", "JLT","JEQ", "JGT", "JBIT", "JRST"):
             return None
 
         lineno = dt.lineno
