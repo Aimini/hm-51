@@ -741,6 +741,10 @@ a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80</data>
           <string>Label</string>
           <string>~LOE</string>
         </entry>
+        <entry>
+          <string>InDefault</string>
+          <value v="1" z="false"/>
+        </entry>
       </elementAttributes>
       <pos x="760" y="860"/>
     </visualElement>
@@ -801,6 +805,10 @@ a,b,c,d,e,f,80,1,2,3,4,5,6,7,48,9,a,b,c,d,e,f,80</data>
         <entry>
           <string>avoidActiveLow</string>
           <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>InDefault</string>
+          <value v="1" z="false"/>
         </entry>
       </elementAttributes>
       <pos x="760" y="900"/>
