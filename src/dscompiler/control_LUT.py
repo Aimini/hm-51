@@ -175,7 +175,7 @@ BUS = name_parameters_lut([
         'sh': 'SRC',
         'name': 'bus ouput driver',
         'len': 3,
-        'enum': ['ALUS', 'ALUDL', 'ALUDH', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRQ']
+        'enum': ['ALUS', 'ALUDL', 'ALUDH', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRR']
     }
 ])
 
@@ -253,7 +253,7 @@ ALUDL = name_parameters_lut([
         'enum': [
             'XOR', 'DA', 'ADDC', 'SUBB',
             'A',  'Ri', 'INSB', 'XCHD',
-            'GENIRQN', 'SETPSWF', 'ADDR11REPLACE', 'SETOVCLRCY',
+            'GENIRRQN', 'SETPSWF', 'ADDR11REPLACE', 'SETOVCLRCY',
             'B', 'Rn', 'SETPF', 'INCC']
     }
 ])
@@ -266,7 +266,7 @@ ALUDH = name_parameters_lut([
         'enum': [
             'CPLB', 'DAF', 'ADDCF', 'SUBBF',
             'PF', 'OR',  'INSBF',  'EXTB',
-            'ISRAPPIRQ',   'ZF',    '',      '',
+            'ISRSET',   'ZF',    '',      '',
             'ZF_B',    'AND',   'NA', 'INCCF']
     }
 ])
@@ -280,7 +280,7 @@ ALUS = name_parameters_lut([
         'enum':  ['ADJF', 'IVADDR', 'CAA', 'SFR',
                   'RR', 'RL', 'RRC', 'RLC',
                   'INC', 'DEC', 'BADDR', 'BIDX',
-                  'SETCY', 'SELHIRQ', 'ISRRETI', 'SWAP']
+                  'SETCY', 'SELHIRRQN', 'ISRRETI', 'SWAP']
     }
 ])
 
@@ -313,7 +313,7 @@ for idx, one in enumerate(ALUSD.LUT):
     copy_one_parameter(one, ALUDL.LUT[idx])
     copy_one_parameter(one, ALUDH.LUT[idx])
 
-IRQ = name_parameters_lut([
+IRR = name_parameters_lut([
     {
         'sh': 'CAI',
         'name': 'write enable',
@@ -368,7 +368,7 @@ CTL_LUT = {
     'BR': BR,
     'RF': REGISTER_FILE,
     'RFSRCR': RFSRCR,
-    'IRQ': IRQ,
+    'IRR': IRR,
     'WR': WR,
     'SR': SR,
     'RAM': RAM,

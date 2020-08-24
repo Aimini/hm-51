@@ -145,7 +145,7 @@ def generate_low_by_op(ci, f,  b, a):
         co = get_bit(b, a & 7)
         RH = co << 3
 
-    elif f == 0x8: # GENIRQN/ ISRAPPIRQ
+    elif f == 0x8: # GENIRRQN/ ISRSET
         # IRQN2IRQ A
         RL = get_irqn(a,b)
         RH = b
@@ -241,11 +241,11 @@ def generate_high_by_op(ci, f, b, a):
         co &= 1
         RH = (co << 3)
     
-    elif f == 0x8:  # GENIRQN/ISRAPPIRQ
+    elif f == 0x8:  # GENIRRQN/ISRSET
         # generate low nibble IRQN
         RL = get_irqn(a & 7, b) # only need a[2:0]
 
-        # ISRAPPIRQN
+        # ISRSETN
         ISR = a
         IRRIP = (b >> 3)&1
         ISRIP1 = (ISR & 0x4) >> 2

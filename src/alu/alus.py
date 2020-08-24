@@ -78,7 +78,7 @@ def generate_by_op(ci, f, A):
         R = T | (T << 4)
     elif f == 0xC:  # SETCY A
         R = (A & 0x7F) | (ci << 7)
-    elif f == 0xD:  # SELHIRQ
+    elif f == 0xD:  # SELHIRRQN
         IP_L = (A & 4) >> 2
         IV_L = (A & 8) >> 3
         IR_L = (A & 3)
