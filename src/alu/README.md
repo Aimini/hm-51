@@ -21,7 +21,7 @@ The number in first column are the upper nibble, the number in fisrt row  are th
 |0|[ADJF](###0.-ADJF)|[IVADDR](###1.-IVADDR)|[CAA](###2.-CAA)|[SFR](###3.-SFR)|
 |1|[RR](###4.-RR)|[RL](###5.-RL)|[RRC](###6.-RRC)|[RLC](###7.-RLC)|
 |2|[INC](###8.-INC)|[DEC](###9.-DEC)|[BADDR](###10.-BADDR)|[BIDX](###11.-BIDX)|
-|3|[SETCY](###12.-SETCY)|[SELHIRQ](###13.-SELHIRQ)|[ISRRETI](###14.-ISRRETI)|[SWAP](###15.-SWAP)|
+|3|[SETCY](###12.-SETCY)|[SELHIRQN](###13.-SELHIRQN)|[ISRRETI](###14.-ISRRETI)|[SWAP](###15.-SWAP)|
 
 ## Description
 
@@ -151,26 +151,26 @@ Get bytes's direct address according bit address.
 
  It's usually used to **set** PSW's **CY** flag. It's work for instruction that only affected CY flag(SETB C, DA A, CPL C, etc.)
 
-### 13. SELHIRQ
+### 13. SELHIRQN
 
  Select the highest priority interrupt(not the interrupt number) from the input `A` .
 
- In short, you must using function [GENIRQN](####8.-GENIRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRQ` to get highest IRQ output and `IP` flag.
+ In short, you must using function [GENIRQN](####8.-GENIRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRQN` to get highest IRQ number and `IP` flag.
 
-|   7   |  6-0  |
-|:-----:|:-----:|
-|   IP  |  IRQ  |
+|   7   |6-3    |  2-0  |
+|:-----:|:-----:|:-----:|
+|   IP  |       |IRQN   |
 
 ``` python
  #example
  RF(IP),  ALU(A), WR(WE) # WR <- IP
  RF(T0,WE), BUS(IRQ)     # T0 <- IRQ
  RF(T0,WE), ALU(GENIRQN) # T0 <- generate IRQ number, IP flag, interrupt valid flag.
- RF(T0,WE), ALU(SELHIRQ) # T0 <- get highest interrupt request and IP flag.
+ RF(T0,WE), ALU(SELHIRQN) # T0 <- get highest interrupt request and IP flag.
 
  RF(T0), ALU(GENIRQN), WR(WE), JLT(0x1, STAGE_FETCH)
-RF(ISR, WE), ALU(ISRAPPIRQ)
-RF(ISR), JGT(0x7F, STAGE_FETCH)
+ RF(ISR, WE), ALU(ISRAPPIRQ), IRR(CLR)
+ RF(ISR), JGT(0x7F, STAGE_FETCH)
 ```
 
 ## 14. ISRRETI
@@ -406,7 +406,7 @@ RF(T1,WE), ALU(XCHD)
 
  Select the highest priority interrupt number in the high nibble and low nibble  respectively.
 
- See example in [SELHIRQ](###13.-SELHIRQ).
+ See example in [SELHIRQN](###13.-SELHIRQN).
 
 |   7   |   6   |  5-4  |   3   |   2   |  1-0  |
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -576,7 +576,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
  Mark the corresponding interrupt servicing flag in the `ISR` register.
 
- In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**.
+ In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**. Current IRQ number are stored in `ISR[2:0]` .
 
  It should work with [ISRRETI](###14.-ISRRETI).
 
@@ -586,7 +586,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
 *notice*
 
-`A` must be `ISR` . and `B` must be the result of `SELHIRQ` (see example in [SELHIRQ](###13.-SELHIRQ)).
+`A` must be `ISR` . and `B` must be the result of `SELHIRQN` (see example in [SELHIRQN](###13.-SELHIRQN)).
 
 *detail*
 
@@ -596,7 +596,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 * `ISR[5] == 1` means an interrupt with priority 0 is being servced.
 * `ISR[7]` can be customized.
 
- Now assume `A = ISR` , `B` is the result of `SELHIRQ` , we first list the condition that can't accept current interrupt.
+ Now assume `A = ISR` , `B` is the result of `SELHIRQN` , we first list the condition that can't accept current interrupt.
 
 * `A[6] == 1` , means that the priority of the interrupt being serviced is 1. You cannot accept any other interrupts because 1 is the highest priority.
 * `A[6] == 0 && A[5] == 1 && B[7] == 0` , means that only interrupt with priority 0 be serviced, but IRQ's priority is 0 too, we shouldn'taccept it.
