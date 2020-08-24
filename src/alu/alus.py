@@ -41,7 +41,7 @@ def generate_by_op(ci, f, A):
         R = (A & 0xB7) | ((A & 0x08) << 3) | ((A & 0x40) >>3)
     elif f == 0x1: #IVADDR
         # don't forget remove useless flag
-        IRNQ = (A & -A).bit_length() - 1
+        IRNQ = A & 0x7
         R = (IRNQ << 3) + 3
     elif f == 0x2: #CAA
         if ci:
@@ -88,12 +88,12 @@ def generate_by_op(ci, f, A):
         IR_H = ((A >> 4) & 3)
         if IV_L:
             if IV_H and IP_H and not IP_L:
-                R = (1 << (IR_H + 4)) | (IP_H << 7)
+                R = (IR_H + 4) | (IP_H << 7)
             else:
-                R = (1 << IR_L) | (IP_L << 7)
+                R = (IR_L) | (IP_L << 7)
         else:
             if IV_H:
-                R = (1 << (IR_H + 4)) | (IP_H << 7)
+                R = (IR_H + 4) | (IP_H << 7)
 
     elif f == 0xE:  # ISRRET ISR
         if A & 0x40:

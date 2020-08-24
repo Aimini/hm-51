@@ -148,7 +148,7 @@ def generate_low_by_op(ci, f,  b, a):
     elif f == 0x8: # GENIRQN/ ISRAPPIRQ
         # IRQN2IRQ A
         RL = get_irqn(a,b)
-        RH = a
+        RH = b
     elif f == 0x9: # SETPSWF A (PSW),B/ ZF
         # just replace A's OV AC CY from B
         # for lower part, set OV only
@@ -247,15 +247,15 @@ def generate_high_by_op(ci, f, b, a):
 
         # ISRAPPIRQN
         ISR = a
-        IRQ = b
+        IRRIP = (b >> 3)&1
         ISRIP1 = (ISR & 0x4) >> 2
         ISRIP0 = (ISR & 0x2) >> 1
-        IRQIP = (IRQ & 0x8) >> 3
-        if ISRIP1 or ISRIP0 and not IRQIP:
+
+        if ISRIP1 or ISRIP0 and not IRRIP:
             ISR |= 0x8
         else:
             ISR &= 0x7
-            if IRQIP:
+            if IRRIP:
                 ISR |= 0x4
             else:
                 ISR |= 0x2

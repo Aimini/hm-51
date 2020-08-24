@@ -728,10 +728,9 @@ RF(T0,WE), ALU(GENIRQN), WR(WE), JLT(0x1, STAGE_FETCH)
 # select the highest priority IRQ
 # T0, WR <-SELHIRQ(IE&IRQ)
 RF(T0, WE), ALU(SELHIRQ), WR(WE)
-RF(ISR, WE), ALU(ISRAPPIRQ)
+RF(ISR, WE), ALU(ISRAPPIRQ), IRQ(CLR)
 RF(ISR), JGT(0x7F, STAGE_FETCH)
 
-RF(T0),  ALU(A), IRQ(CLR)
 ### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
 ### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
 #--------------------------

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>backgroundColor</string>
+      <awt-color>
+        <red>255</red>
+        <green>242</green>
+        <blue>242</blue>
+        <alpha>255</alpha>
+      </awt-color>
+    </entry>
+    <entry>
+      <string>Width</string>
+      <int>6</int>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~SFR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="260" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Comparator</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="380" y="880"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~SFR_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="260" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>A</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="260" y="880"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>MADDR</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="260" y="920"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="480" y="900"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="560" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="560" y="900"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="700" y="820"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="700" y="920"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="260" y="800"/>
+      <p2 x="560" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="880"/>
+      <p2 x="380" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="960"/>
+      <p2 x="540" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="820"/>
+      <p2 x="700" y="820"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="900"/>
+      <p2 x="380" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="520" y="900"/>
+      <p2 x="540" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="900"/>
+      <p2 x="480" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="900"/>
+      <p2 x="560" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="920"/>
+      <p2 x="300" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="920"/>
+      <p2 x="700" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="840"/>
+      <p2 x="560" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="940"/>
+      <p2 x="560" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="840"/>
+      <p2 x="540" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="940"/>
+      <p2 x="540" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="900"/>
+      <p2 x="300" y="920"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
