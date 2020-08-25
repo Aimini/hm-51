@@ -17,7 +17,7 @@
     </entry>
     <entry>
       <string>Width</string>
-      <int>4</int>
+      <int>7</int>
     </entry>
   </attributes>
   <visualElements>
@@ -66,14 +66,14 @@
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>clock output</string>
+          <string>main clock</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>O</string>
+          <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="1540" y="800"/>
+      <pos x="1500" y="800"/>
     </visualElement>
     <visualElement>
       <elementName>Or</elementName>
@@ -144,7 +144,7 @@
         </entry>
         <entry>
           <string>Label</string>
-          <string>S</string>
+          <string>Stall</string>
         </entry>
       </elementAttributes>
       <pos x="160" y="940"/>
@@ -158,7 +158,7 @@
         </entry>
         <entry>
           <string>Label</string>
-          <string>G</string>
+          <string>Go</string>
         </entry>
       </elementAttributes>
       <pos x="160" y="1000"/>
@@ -173,14 +173,14 @@
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>clock output</string>
+          <string>clock to generate write pulse for async RAM</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>OAC</string>
+          <string>CLK_async</string>
         </entry>
       </elementAttributes>
-      <pos x="1540" y="640"/>
+      <pos x="1500" y="640"/>
     </visualElement>
     <visualElement>
       <elementName>Delay</elementName>
@@ -293,7 +293,7 @@
       <elementAttributes>
         <entry>
           <string>NetName</string>
-          <string>SWCLK</string>
+          <string>CLK_switch</string>
         </entry>
       </elementAttributes>
       <pos x="-80" y="700"/>
@@ -317,7 +317,7 @@
         </entry>
         <entry>
           <string>NetName</string>
-          <string>SWCLK</string>
+          <string>CLK_switch</string>
         </entry>
       </elementAttributes>
       <pos x="-440" y="980"/>
@@ -356,7 +356,7 @@ set 1 to usign manual clock</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>MC</string>
+          <string>CLK_manual</string>
         </entry>
       </elementAttributes>
       <pos x="-440" y="1120"/>
@@ -371,7 +371,7 @@ set 1 to usign manual clock</string>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>SWCLK</string>
+          <string>CLK_SW</string>
         </entry>
       </elementAttributes>
       <pos x="-100" y="680"/>
@@ -426,7 +426,7 @@ set 1 to usign manual clock</string>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>GC</string>
+          <string>CLK_in</string>
         </entry>
       </elementAttributes>
       <pos x="-480" y="720"/>
@@ -451,7 +451,7 @@ set 1 to usign manual clock</string>
     </wire>
     <wire>
       <p1 x="1440" y="640"/>
-      <p2 x="1540" y="640"/>
+      <p2 x="1500" y="640"/>
     </wire>
     <wire>
       <p1 x="980" y="640"/>
@@ -603,7 +603,7 @@ set 1 to usign manual clock</string>
     </wire>
     <wire>
       <p1 x="1440" y="800"/>
-      <p2 x="1540" y="800"/>
+      <p2 x="1500" y="800"/>
     </wire>
     <wire>
       <p1 x="880" y="800"/>
