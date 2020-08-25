@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>backgroundColor</string>
+      <awt-color>
+        <red>255</red>
+        <green>242</green>
+        <blue>242</blue>
+        <alpha>255</alpha>
+      </awt-color>
+    </entry>
+    <entry>
+      <string>Description</string>
+      <string>PC external, for debug purpose, laod PC from RF to this register.
+select byte PCEL when RS is 8, select byte PCEH when RS is 9.</string>
+    </entry>
+    <entry>
+      <string>Width</string>
+      <int>5</int>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>D</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>isHighZ</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="780" y="880"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>clear accepted interrupt</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>IRR_CLR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="780" y="1040"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>8</string>
+        </entry>
+        <entry>
+          <string>Output Splitting</string>
+          <string>3,4,1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="880" y="880"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Decoder</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Selector Bits</string>
+          <int>3</int>
+        </entry>
+      </elementAttributes>
+      <pos x="980" y="720"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="720"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="740"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="760"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="820"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="840"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="1040" y="860"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>1,1,1,1,1,1,1,1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1100" y="720"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="1220" y="720"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>Q</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="1460" y="740"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Or</elementName>
+      <elementAttributes>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>In_2</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
+      <pos x="1020" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Rectangle</elementName>
+      <elementAttributes>
+        <entry>
+          <string>RectHeight</string>
+          <int>18</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>74xx138</string>
+        </entry>
+        <entry>
+          <string>RectWidth</string>
+          <int>18</int>
+        </entry>
+      </elementAttributes>
+      <pos x="960" y="700"/>
+    </visualElement>
+    <visualElement>
+      <elementName>BitExtender</elementName>
+      <elementAttributes>
+        <entry>
+          <string>inputBits</string>
+          <int>1</int>
+        </entry>
+        <entry>
+          <string>outputBits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="1120" y="1020"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="1020" y="800"/>
+      <p2 x="1040" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="800"/>
+      <p2 x="1100" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="740"/>
+      <p2 x="1040" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="740"/>
+      <p2 x="1100" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="1300" y="740"/>
+      <p2 x="1460" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="840"/>
+      <p2 x="1040" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="840"/>
+      <p2 x="1100" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="1000"/>
+      <p2 x="1020" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="780"/>
+      <p2 x="1040" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="780"/>
+      <p2 x="1100" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="880"/>
+      <p2 x="880" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="880"/>
+      <p2 x="1000" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="720"/>
+      <p2 x="1040" y="720"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="720"/>
+      <p2 x="1100" y="720"/>
+    </wire>
+    <wire>
+      <p1 x="1120" y="720"/>
+      <p2 x="1220" y="720"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="1040"/>
+      <p2 x="1000" y="1040"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="820"/>
+      <p2 x="1040" y="820"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="820"/>
+      <p2 x="1100" y="820"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="760"/>
+      <p2 x="1040" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="760"/>
+      <p2 x="1100" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="1200" y="760"/>
+      <p2 x="1220" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="900" y="920"/>
+      <p2 x="980" y="920"/>
+    </wire>
+    <wire>
+      <p1 x="1020" y="860"/>
+      <p2 x="1040" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="860"/>
+      <p2 x="1100" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="1100" y="1020"/>
+      <p2 x="1120" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="1180" y="1020"/>
+      <p2 x="1200" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="1200" y="760"/>
+      <p2 x="1200" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="920"/>
+      <p2 x="980" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1000" y="860"/>
+      <p2 x="1000" y="880"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
