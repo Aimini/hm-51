@@ -1120,11 +1120,6 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
     <visualElement>
       <elementName>Button</elementName>
       <elementAttributes/>
-      <pos x="-1520" y="40"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Button</elementName>
-      <elementAttributes/>
       <pos x="-1460" y="20"/>
     </visualElement>
     <visualElement>
@@ -1343,7 +1338,7 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[25]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[24]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -1675,7 +1670,7 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
           <string>CLR</string>
         </entry>
       </elementAttributes>
-      <pos x="-1440" y="60"/>
+      <pos x="-1520" y="40"/>
     </visualElement>
     <visualElement>
       <elementName>EXTCTL.dig</elementName>
@@ -2170,7 +2165,7 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[96]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[95]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2235,12 +2230,12 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <elementName>DriverInvSel</elementName>
       <elementAttributes>
         <entry>
-          <string>flipSelPos</string>
-          <boolean>true</boolean>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>8</int>
+        </entry>
+        <entry>
+          <string>flipSelPos</string>
+          <boolean>true</boolean>
         </entry>
       </elementAttributes>
       <pos x="-880" y="-100"/>
@@ -2399,10 +2394,6 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
     <wire>
       <p1 x="-1080" y="-80"/>
       <p2 x="-960" y="-80"/>
-    </wire>
-    <wire>
-      <p1 x="-1400" y="80"/>
-      <p2 x="-1380" y="80"/>
     </wire>
     <wire>
       <p1 x="-1220" y="80"/>
@@ -2581,16 +2572,16 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <p2 x="-880" y="-40"/>
     </wire>
     <wire>
-      <p1 x="-1520" y="40"/>
-      <p2 x="-1380" y="40"/>
-    </wire>
-    <wire>
       <p1 x="-1220" y="40"/>
       <p2 x="-1180" y="40"/>
     </wire>
     <wire>
       <p1 x="-1080" y="40"/>
       <p2 x="-1060" y="40"/>
+    </wire>
+    <wire>
+      <p1 x="-1520" y="40"/>
+      <p2 x="-1380" y="40"/>
     </wire>
     <wire>
       <p1 x="-1600" y="360"/>
@@ -2693,12 +2684,12 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <p2 x="-960" y="-60"/>
     </wire>
     <wire>
-      <p1 x="-1220" y="60"/>
-      <p2 x="-1180" y="60"/>
+      <p1 x="-1400" y="60"/>
+      <p2 x="-1380" y="60"/>
     </wire>
     <wire>
-      <p1 x="-1440" y="60"/>
-      <p2 x="-1380" y="60"/>
+      <p1 x="-1220" y="60"/>
+      <p2 x="-1180" y="60"/>
     </wire>
     <wire>
       <p1 x="-1800" y="380"/>
@@ -2737,7 +2728,7 @@ f24a000000,9a359050700,12258500000,9f159050700,1f358500000,1f359000000,214243020
       <p2 x="-660" y="-120"/>
     </wire>
     <wire>
-      <p1 x="-1400" y="80"/>
+      <p1 x="-1400" y="60"/>
       <p2 x="-1400" y="280"/>
     </wire>
     <wire>
