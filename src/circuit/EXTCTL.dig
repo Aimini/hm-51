@@ -60,7 +60,14 @@ The debug simulator will consider the program to end normally.</string>
     </visualElement>
     <visualElement>
       <elementName>And</elementName>
-      <elementAttributes/>
+      <elementAttributes>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>In_2</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
       <pos x="660" y="820"/>
     </visualElement>
     <visualElement>
@@ -68,14 +75,14 @@ The debug simulator will consider the program to end normally.</string>
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>write enable</string>
+          <string>CLK</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>WE</string>
+          <string>C</string>
         </entry>
       </elementAttributes>
-      <pos x="460" y="860"/>
+      <pos x="460" y="980"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -110,14 +117,14 @@ The debug simulator will consider the program to end normally.</string>
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>CLK</string>
+          <string>write enable</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>C</string>
+          <string>~WE</string>
         </entry>
       </elementAttributes>
-      <pos x="460" y="980"/>
+      <pos x="460" y="860"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -173,7 +180,7 @@ The debug simulator will consider the program to end normally.</string>
     </wire>
     <wire>
       <p1 x="460" y="860"/>
-      <p2 x="660" y="860"/>
+      <p2 x="640" y="860"/>
     </wire>
     <wire>
       <p1 x="760" y="800"/>

@@ -1336,7 +1336,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>CLR</string>
         </entry>
       </elementAttributes>
-      <pos x="-1660" y="-240"/>
+      <pos x="-1660" y="-280"/>
     </visualElement>
     <visualElement>
       <elementName>Multiplexer</elementName>
@@ -1822,7 +1822,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>CLR</string>
+          <string>~CLR</string>
         </entry>
       </elementAttributes>
       <pos x="-1760" y="-240"/>
@@ -2143,7 +2143,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>~CLR</string>
         </entry>
       </elementAttributes>
-      <pos x="-1660" y="-280"/>
+      <pos x="-1660" y="-240"/>
     </visualElement>
     <visualElement>
       <elementName>Not</elementName>
@@ -3311,10 +3311,6 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <p2 x="-1260" y="20"/>
     </wire>
     <wire>
-      <p1 x="-1680" y="-280"/>
-      <p2 x="-1660" y="-280"/>
-    </wire>
-    <wire>
       <p1 x="-1740" y="-280"/>
       <p2 x="-1720" y="-280"/>
     </wire>
@@ -3333,6 +3329,10 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
     <wire>
       <p1 x="-1140" y="-280"/>
       <p2 x="-1120" y="-280"/>
+    </wire>
+    <wire>
+      <p1 x="-1680" y="-280"/>
+      <p2 x="-1660" y="-280"/>
     </wire>
     <wire>
       <p1 x="-560" y="-280"/>

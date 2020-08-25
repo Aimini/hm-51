@@ -121,24 +121,6 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>Data in</string>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>D</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="360" y="680"/>
-    </visualElement>
-    <visualElement>
-      <elementName>In</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
           <string>Address to locate register</string>
         </entry>
         <entry>
@@ -151,6 +133,24 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
         </entry>
       </elementAttributes>
       <pos x="360" y="740"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>Data in</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>D</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="360" y="700"/>
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
@@ -203,7 +203,7 @@ If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string
         </entry>
         <entry>
           <string>Label</string>
-          <string>WE</string>
+          <string>~WE</string>
         </entry>
       </elementAttributes>
       <pos x="360" y="1040"/>
@@ -349,6 +349,11 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       </elementAttributes>
       <pos x="1060" y="580"/>
     </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="460" y="1040"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -392,16 +397,20 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       <p2 x="760" y="780"/>
     </wire>
     <wire>
-      <p1 x="360" y="1040"/>
-      <p2 x="660" y="1040"/>
-    </wire>
-    <wire>
-      <p1 x="700" y="720"/>
+      <p1 x="420" y="720"/>
       <p2 x="900" y="720"/>
     </wire>
     <wire>
       <p1 x="920" y="720"/>
       <p2 x="940" y="720"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="1040"/>
+      <p2 x="460" y="1040"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="1040"/>
+      <p2 x="660" y="1040"/>
     </wire>
     <wire>
       <p1 x="620" y="980"/>
@@ -468,16 +477,8 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       <p2 x="560" y="740"/>
     </wire>
     <wire>
-      <p1 x="360" y="680"/>
-      <p2 x="440" y="680"/>
-    </wire>
-    <wire>
       <p1 x="880" y="680"/>
       <p2 x="940" y="680"/>
-    </wire>
-    <wire>
-      <p1 x="440" y="680"/>
-      <p2 x="820" y="680"/>
     </wire>
     <wire>
       <p1 x="740" y="1000"/>
@@ -532,6 +533,10 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       <p2 x="680" y="760"/>
     </wire>
     <wire>
+      <p1 x="360" y="700"/>
+      <p2 x="440" y="700"/>
+    </wire>
+    <wire>
       <p1 x="1000" y="700"/>
       <p2 x="1080" y="700"/>
     </wire>
@@ -540,15 +545,11 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       <p2 x="1120" y="700"/>
     </wire>
     <wire>
-      <p1 x="420" y="700"/>
-      <p2 x="700" y="700"/>
-    </wire>
-    <wire>
       <p1 x="900" y="700"/>
       <p2 x="940" y="700"/>
     </wire>
     <wire>
-      <p1 x="820" y="700"/>
+      <p1 x="440" y="700"/>
       <p2 x="840" y="700"/>
     </wire>
     <wire>
@@ -581,7 +582,7 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
     </wire>
     <wire>
       <p1 x="420" y="600"/>
-      <p2 x="420" y="700"/>
+      <p2 x="420" y="720"/>
     </wire>
     <wire>
       <p1 x="660" y="800"/>
@@ -596,10 +597,6 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
       <p2 x="660" y="1040"/>
     </wire>
     <wire>
-      <p1 x="820" y="680"/>
-      <p2 x="820" y="700"/>
-    </wire>
-    <wire>
       <p1 x="760" y="520"/>
       <p2 x="760" y="780"/>
     </wire>
@@ -609,7 +606,7 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
     </wire>
     <wire>
       <p1 x="440" y="580"/>
-      <p2 x="440" y="680"/>
+      <p2 x="440" y="700"/>
     </wire>
     <wire>
       <p1 x="1080" y="580"/>
@@ -622,10 +619,6 @@ CLKO will be disabled at next cycle if it&apos;s high.</string>
     <wire>
       <p1 x="780" y="620"/>
       <p2 x="780" y="900"/>
-    </wire>
-    <wire>
-      <p1 x="700" y="700"/>
-      <p2 x="700" y="720"/>
     </wire>
     <wire>
       <p1 x="860" y="700"/>
