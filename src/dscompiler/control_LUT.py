@@ -175,7 +175,7 @@ BUS = name_parameters_lut([
         'sh': 'SRC',
         'name': 'bus ouput driver',
         'len': 3,
-        'enum': ['ALUS', 'ALUDL', 'ALUDH', 'IMMED', 'RAM', 'XRAM', 'ROM', 'IRR']
+        'enum': ['ALUS', 'ALUDL', 'ALUDH','RAM', 'ROM',  'XRAM', 'IMMED', 'IRR']
     }
 ])
 
