@@ -1,10 +1,12 @@
 import optparse
+import traceback
 import os
 import sys
 import io
 import tokenize
 import pathlib
 import codecs
+from types import TracebackType
 from preprocessor import Preprocessor
 import dtoken_converter
 import hl_dtoken_converter
@@ -128,11 +130,13 @@ if __name__ == "__main__":
     op, ar = arg_parser.parse_args()
 
     infile = op.input
-    preprocessed_file = Preprocessor(infile).result()
+    pre = Preprocessor(infile)
+    preprocessed_file = pre.result()
     if op.preprocess_file != None:
         with open(op.preprocess_file, "w") as fh:
-                fh.write(preprocessed_file.read())
-                preprocessed_file.seek(0)
+            fh.write(preprocessed_file.read())
+            preprocessed_file.seek(0)
+            fh.close()
 
     try:
         outfile = op.output
@@ -146,5 +150,9 @@ if __name__ == "__main__":
         print("lines:", l)
         print("size:", kb, "KB")
     except SyntaxError as e:
-        e.filename = infile
-        raise e
+        lineinfo = pre.getlineinfo(e.lineno - 1)
+        e.filename = lineinfo[0].file
+        print(e)
+        for one in lineinfo:
+            print('File "{}", line {},'.format(str(one.file), one.row))
+            print("  ", one.str)
