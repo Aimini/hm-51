@@ -3,7 +3,7 @@ import os
 import sys
 from compiler import preprocessor
 from compiler import parser
-from compiler.micro_control_converter.micro_control_converter import MicroControlConverter
+from compiler.micro_control_converter.micro_control_converter import MicroControlConverter,DecvecConverter
 from compiler.micro_instruction_compiler import MicroinstrcutionCompiler
 
 
@@ -13,29 +13,30 @@ def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_l
     for idx, t in enumerate(source_lines):
         x = idx + 1
         write('{:>5d}: '.format(x))
-        write(t.decode('utf-8').strip())
+        write(t.strip())
         write('\n')
 
-        if mcidx < len(machine_code_lines):
-            if x == machine_code_lines[mcidx][0]:
-                write('[{:0>4X}]'.format(mcidx))
-                write(('{:0>' + str(bytes_len*2) + 'X} ').format(machine_code_lines[mcidx][1]))
-                mcidx += 1
+        while mcidx < len(machine_code_lines) and x == machine_code_lines[mcidx][0]:
+            write('[{:0>4X}]'.format(mcidx))
+            write(('{:0>' + str(bytes_len*2) + 'X} ').format(machine_code_lines[mcidx][1]))
+            write('\n')
+            write(', '.join([_.simple_str() for _ in machine_code_lines[mcidx][2]]))
+            write('\n')
+            mcidx += 1
 
-        if hlidx < len(hl_dtoken_lines):
-            if x == hl_dtoken_lines[hlidx][0]:
-                write(', '.join([_.simple_str() for _ in hl_dtoken_lines[hlidx][1]]))
-                hlidx += 1
-                write('\n')
-
-
-
+        # while hlidx < len(hl_dtoken_lines) and  x == hl_dtoken_lines[hlidx][0]:
+        
+        #     hlidx += 1
+        #     write('\n')
 
 
 
 
 
-def compile_ds(readline, write):
+
+
+
+def compile_ds(readline, write,veclineno, vecnum):
     """
     parameters
         readline :
@@ -63,8 +64,6 @@ def compile_ds(readline, write):
 
     """
 
-    par = parser.Parser()
-    hlc =   MicroControlConverter()
     c =     MicroinstrcutionCompiler()
     c.calcuate_LUT_parameters_position()
 
@@ -78,8 +77,13 @@ def compile_ds(readline, write):
             print(pos_fmt_str.format(pos, size, name))
     bytes_len = int((bits_len + 7)/8)  # how many bytes using to encoding, math.ceil(bits_len/8)
 
-    dtoken_lines = par.parse(readline)
-    hl_token_lines = hlc.convert(dtoken_lines)
+    dtoken_lines = parser.Parser().parse(readline)
+    hl_token_lines = MicroControlConverter().convert(dtoken_lines)
+    hl_token_lines = DecvecConverter(hl_token_lines, veclineno, vecnum ).result()
+    with open("test.pp","w") as fh:
+        for l in hl_token_lines:
+                fh.write(', '.join([_.simple_str() for _ in l[1]]))
+                fh.write('\n')
     machine_code_lines, pure_control_tokens_line = c.compile(hl_token_lines)
 
     [write(_[1].to_bytes(bytes_len, "little")) for _ in machine_code_lines]
@@ -87,7 +91,7 @@ def compile_ds(readline, write):
     return bytes_len, pure_control_tokens_line, machine_code_lines
 
 
-def compile_ds_to_file(fileobj, outfile, dis_file):
+def compile_ds_to_file(fileobj,veclineno, vecnum, outfile, dis_file):
     """
     parameters
         infile :
@@ -101,7 +105,7 @@ def compile_ds_to_file(fileobj, outfile, dis_file):
     """
 
     with open(outfile, "wb") as fho:
-        bytes_len, hl_token_lines, machine_code_lines = compile_ds(fileobj.readline, fho.write)
+        bytes_len, hl_token_lines, machine_code_lines = compile_ds(fileobj.readline, fho.write,veclineno, vecnum)
         if dis_file is not None:
             fileobj.seek(0)
             with open(dis_file, "w") as disfh:
@@ -138,15 +142,16 @@ if __name__ == "__main__":
 
         if outfile == None:
             outfile = os.path.splitext(infile)[0] + '.bin'
-        bl, l = compile_ds_to_file(preprocessed_file, outfile, dis_file)
+        veclineno, vecnum =     pre.decvecinfo()
+        bl, l = compile_ds_to_file(preprocessed_file,veclineno, vecnum, outfile, dis_file)
         kb = (bl * l)/1024
         print("line bytes:", bl)
         print("lines:", l)
         print("size:", kb, "KB")
     except SyntaxError as e:
-        lineinfo = pre.getlineinfo(e.lineno - 1)
-        e.filename = lineinfo[0].file
+        # lineinfo = pre.getlineinfo(e.lineno - 1)
+        #e.filename = lineinfo[0].file
         print(e)
-        for one in lineinfo:
-            print('File "{}", line {},'.format(str(one.file), one.row))
-            print("  ", one.str)
+        #for one in lineinfo:
+         #   print('File "{}", line {},'.format(str(one.file), one.row))
+         #   print("  ", one.str)

@@ -32,11 +32,18 @@ class Preprocessor():
         self._inc_chain_info = []
         self._all_lines_info = []
         self._outputfile = StringIO()
+        self._decveclineno = None
+        self._decvecnum = None
+        self._linecnt = 0
+
+    def decvecinfo(self):
+        return self._decveclineno, self._decvecnum
 
     def result(self): 
         self._preprocess_include([self.file.name])
         self._outputfile.seek(0)
         return self._outputfile
+    
 
     def _preprocess_include(self, arg_tokens):
         replacement = arg_tokens[1:]
@@ -59,6 +66,9 @@ class Preprocessor():
             self._preprocess_file(StringIO(content))
         self._inc_chain_info.pop()
 
+    def _preprocess_decvec(self,args):
+        self._decveclineno = self._linecnt
+        self._decvecnum = int(args[0], 0)
 
     def _filter_directive_args(self, args):
         ret = []
@@ -80,11 +90,14 @@ class Preprocessor():
         args = self._filter_directive_args(args[2:])
         if name == "INC":
             self._preprocess_include(args)
+        elif name == "DECVEC":
+            self._preprocess_decvec(args)
         else:
             raise Exception("unknow directive {!r}".format(name))
         
     def _preprocess_file(self, fileobj):
         for row, s in enumerate(fileobj.readlines()):
+            self._linecnt += 1
             self._inc_chain_info[-1].row = row + 1
             self._inc_chain_info[-1].str = s
 

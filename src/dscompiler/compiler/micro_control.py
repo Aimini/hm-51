@@ -36,3 +36,8 @@ class MicroCTL():
 
     def __repr__(self):
         return self.__str__()
+
+    def copy(self):
+        ret = MicroCTL(self.lineno,self.type,self.value)
+        ret.parameters = self.parameters
+        return ret

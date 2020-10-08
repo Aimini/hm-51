@@ -28,7 +28,7 @@ class empty_translator():
         """
         pass
 
-
+    
     def create_jump(self, lineno, type):
         r = micro_control.MicroCTL(lineno, micro_control.PAR_CONTROL, "JUMPABS")
         r.parameters = [type]
