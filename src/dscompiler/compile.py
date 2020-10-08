@@ -1,16 +1,10 @@
 import optparse
-import traceback
 import os
 import sys
-import io
-import tokenize
-import pathlib
-import codecs
-from types import TracebackType
-from preprocessor import Preprocessor
-import dtoken_converter
-import hl_dtoken_converter
-import dtoken_compiler
+from compiler import preprocessor
+from compiler import parser
+from compiler.micro_control_converter.micro_control_converter import MicroControlConverter
+from compiler.micro_instruction_compiler import MicroinstrcutionCompiler
 
 
 def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_lines):
@@ -69,9 +63,9 @@ def compile_ds(readline, write):
 
     """
 
-    dc = dtoken_converter.dtoken_converter()
-    hlc = hl_dtoken_converter.hl_dtoken_converter()
-    c = dtoken_compiler.dtoken_compiler()
+    par = parser.Parser()
+    hlc =   MicroControlConverter()
+    c =     MicroinstrcutionCompiler()
     c.calcuate_LUT_parameters_position()
 
     controls_parameters_position_info = c.controls_parameters_position_info()
@@ -84,7 +78,7 @@ def compile_ds(readline, write):
             print(pos_fmt_str.format(pos, size, name))
     bytes_len = int((bits_len + 7)/8)  # how many bytes using to encoding, math.ceil(bits_len/8)
 
-    dtoken_lines = dc.convert(readline)
+    dtoken_lines = par.parse(readline)
     hl_token_lines = hlc.convert(dtoken_lines)
     machine_code_lines, pure_control_tokens_line = c.compile(hl_token_lines)
 
@@ -130,7 +124,7 @@ if __name__ == "__main__":
     op, ar = arg_parser.parse_args()
 
     infile = op.input
-    pre = Preprocessor(infile)
+    pre = preprocessor.Preprocessor(infile)
     preprocessed_file = pre.result()
     if op.preprocess_file != None:
         with open(op.preprocess_file, "w") as fh:

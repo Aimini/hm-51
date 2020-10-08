@@ -10,143 +10,16 @@
 
 #
 import copy
+from .named_parameters_lut import NamedParametersLUT
+from .value_paramters_LUT import ValueParametersLUT
 
 
-class abstract_parameters_lut():
-    def __init__(self, LUT):
-        self.LUT = LUT
-
-    def auto_position(self, start):
-        """
-        Automatically assign the start position of each parameter
-            start:int
-                The position of the first bit to allocate
-        """
-        pos = start
-        for one in self.LUT:
-            one['pos'] = pos
-            pos += one['len']
-        return pos
-
-    def position_info(self):
-        """
-        return parameters position info.
-            return:
-                tuple:(pos:int , len:int ,name:str)
-        """
-        r = []
-        for one in self.LUT:
-            r.append((one['pos'], one['len'], one['sh']))
-        return r
-
-    def inital_value(self):
-        return 0
-
-class name_parameters_lut(abstract_parameters_lut):
-    """
-    using string name to find encoding
-    """
-
-    def __init__(self, LUT):
-        """
-        LUT:list
-            [
-                {
-                    'sh': 'short hand',
-                    'name': 'full name',
-                    'len' : 'bit length to encoding',
-                    'pos' : 'start position to encoding',
-                    'enum' : ['NAME0','NAME1',...]
-                },
-                {
-                    'sh': 'short hand',
-                    'name': 'full name',
-                    ...  # same as above map
-                },
-                ... # same as above map
-            ]
-        """
-        super().__init__(LUT)
-        self.LUT = LUT
-
-    def try_enum_multiname_encoding(self, multiname_list, parameter_name):
-        """
-        treat current enum as a list contain multiple name, and try find
-        parameter_name in this list.
-            ret:bool
-                True is find name else return False
-        """
-        if isinstance(multiname_list, (tuple, list)):
-            try:
-                multiname_list.index(parameter_name)
-                return True
-            except ValueError:
-                return False
-        else:
-            return False
-
-    def get_info(self, parameter_name):
-        '''
-        get parameter's enum name ecoding and place info
-            parameter_name: str
-            return: Tuple
-                (place_info:Tuple,encoding:int)
-                    place_info:
-                    (pos:int, len:int)
-        '''
-        idx, encoding = self.get_encoding(parameter_name)
-        if idx is None:
-            return None, None
-        else:
-            one = self.LUT[idx]
-            place_info = (one['pos'], one['len'])
-            if one.get('al',False):
-                encoding = (2**one['len'] - 1) ^ encoding
-            return place_info, encoding
-
-    def get_encoding(self, name):
-        """
-        get a name encoding info:
-        return:
-            index, encoding
-            self.LUT[index] is the parameter LUT that cantain the name in it's enum list
-        """
-        for idx, one in enumerate(self.LUT):
-            # find parameter name in one parameter LUT
-            for encoding, enum_name in enumerate(one['enum']):
-                if name == enum_name:
-                    return idx, encoding
-
-                if self.try_enum_multiname_encoding(enum_name, name):
-                    return idx, encoding
-
-        return None, None
-
-    def have_encoding_name(self, name):
-        idx, _ = self.get_encoding(name)
-        return idx != None
-
-
-class value_parameter_lut(abstract_parameters_lut):
-    def __init__(self, LUT):
-        super().__init__(LUT)
-        self.LUT = LUT
-
-    def get_place_info(self, i):
-        '''
-        get parameter's enum name ecoding and place info
-        return:
-            place_info : (pos:int, len:int)
-        '''
-        one = self.LUT[i]
-        # find parameter name in one parameter LUST
-        return (one['pos'], one['len'])
 
 
 # one control have many parameters,
 # one parameter have many avaliable enum name
 # one encoding  enum name
-REGISTER_FILE = name_parameters_lut([
+REGISTER_FILE = NamedParametersLUT([
     {
         'sh': 'SRC',
         'name': 'register selector',
@@ -170,7 +43,7 @@ REGISTER_FILE = name_parameters_lut([
     }
 ])
 
-BUS = name_parameters_lut([
+BUS = NamedParametersLUT([
     {
         'sh': 'SRC',
         'name': 'bus ouput driver',
@@ -179,7 +52,7 @@ BUS = name_parameters_lut([
     }
 ])
 
-WR = name_parameters_lut([
+WR = NamedParametersLUT([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -189,7 +62,7 @@ WR = name_parameters_lut([
     }
 ])
 
-SR = name_parameters_lut([
+SR = NamedParametersLUT([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -199,7 +72,7 @@ SR = name_parameters_lut([
     }
 ])
 
-RFSRCR = name_parameters_lut([
+RFSRCR = NamedParametersLUT([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -208,7 +81,7 @@ RFSRCR = name_parameters_lut([
         'enum': ['', "WE"],
     }
 ])
-BR = name_parameters_lut([
+BR = NamedParametersLUT([
     {
         'sh': 'SRC',
         'name': 'input select',
@@ -225,7 +98,7 @@ BR = name_parameters_lut([
 ])
 
 
-RAM = name_parameters_lut([
+RAM = NamedParametersLUT([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -234,7 +107,7 @@ RAM = name_parameters_lut([
     }
 ])
 
-XRAM = name_parameters_lut([
+XRAM = NamedParametersLUT([
     {
         'sh': 'WE',
         'name': 'write enable',
@@ -245,7 +118,7 @@ XRAM = name_parameters_lut([
 ####################################################################
 # see /src/alu/README.md get more info about ALU function info
 ####################################################################
-ALUDL = name_parameters_lut([
+ALUDL = NamedParametersLUT([
     {
         'sh': 'FUNC',
         'name': 'alud low part function',
@@ -258,7 +131,7 @@ ALUDL = name_parameters_lut([
     }
 ])
 # see /src/alu/README.md
-ALUDH = name_parameters_lut([
+ALUDH = NamedParametersLUT([
     {
         'sh': 'FUNC',
         'name': 'alud high part function',
@@ -272,7 +145,7 @@ ALUDH = name_parameters_lut([
 ])
 
 # see /src/alu/README.md
-ALUS = name_parameters_lut([
+ALUS = NamedParametersLUT([
     {
         'sh': 'FUNC',
         'name': 'alus function',
@@ -308,12 +181,12 @@ def copy_one_parameter(dest, src):
         dest_enum[idx] = a
 
 
-ALUSD = name_parameters_lut(copy.deepcopy(ALUS.LUT))
+ALUSD = NamedParametersLUT(copy.deepcopy(ALUS.LUT))
 for idx, one in enumerate(ALUSD.LUT):
     copy_one_parameter(one, ALUDL.LUT[idx])
     copy_one_parameter(one, ALUDH.LUT[idx])
 
-IRR = name_parameters_lut([
+IRR = NamedParametersLUT([
     {
         'sh': 'CAI',
         'name': 'write enable',
@@ -322,7 +195,7 @@ IRR = name_parameters_lut([
     }
 ])
 
-JUMPABS = name_parameters_lut([
+JUMPABS = NamedParametersLUT([
     {
         'sh': 'TYPE',
         'name': 'jump type',
@@ -332,7 +205,7 @@ JUMPABS = name_parameters_lut([
     }
 ])
 
-ADDRESS = value_parameter_lut([
+ADDRESS = ValueParametersLUT([
     {
 
         'sh': '',
@@ -341,7 +214,7 @@ ADDRESS = value_parameter_lut([
     }
 ])
 
-IMMED = value_parameter_lut([
+IMMED = ValueParametersLUT([
     {
 
         'sh': '',
@@ -350,7 +223,7 @@ IMMED = value_parameter_lut([
     }
 ])
 
-MIPCSRC = name_parameters_lut([
+MIPCSRC = NamedParametersLUT([
     {
         'sh': 'MIPCSRC',
         'name': 'MIPC data source',
@@ -362,7 +235,7 @@ MIPCSRC = name_parameters_lut([
 
 ##################
 # each control's parmaters LUT to make a big control LUT
-CTL_LUT = {
+DEFAULT_CTL_LUT = {
     'IMMED': IMMED,
     'ADDRESS': ADDRESS,
     'BR': BR,

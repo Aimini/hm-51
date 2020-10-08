@@ -6,8 +6,9 @@
 ##########################################
 import enum
 import tokenize
-import dtoken
+import tokenize
 import json
+from  . import micro_control
 
 
 class cstate(enum.Enum):
@@ -127,9 +128,9 @@ class cstate(enum.Enum):
         pass
 
 
-class dtoken_converter:
+class Parser:
     """
-    Convert py tokens stream to dtoken list, include control label,
+    Convert py tokens stream to micro control list, include control label,
     parameterized control label and jump label.
     """
 
@@ -142,7 +143,7 @@ class dtoken_converter:
 
     def dtoken_from_pytoken(self, pytoken, dtype):
         # line, type, name
-        return dtoken.dtoken(pytoken.start[0], dtype, pytoken.string)
+        return micro_control.MicroCTL(pytoken.start[0], dtype, pytoken.string)
 
     def add(self, state, appendtokens):
         """
@@ -154,13 +155,13 @@ class dtoken_converter:
             # name, ','
             # name, '\n\r'
             dt2 = self.dtoken_from_pytoken(appendtokens[-2], None)
-            dt2.type = dtoken.CONTROL
+            dt2.type = micro_control.CONTROL
             self.marks_per_line.append(dt2)
         #find jump mark
         elif state == cstate.JUMP_MARK:
             # name , ':'
             dt2 = self.dtoken_from_pytoken(appendtokens[-2], None)
-            dt2.type = dtoken.JUMP_MARK
+            dt2.type = micro_control.JUMP_MARK
             self.marks_per_line.append(dt2)
         elif state == cstate.PARAMETER_LIST_BEGIN:
             # name , "("
@@ -171,7 +172,7 @@ class dtoken_converter:
             else:
                 self.parameters.append(t1.string)
         elif state == cstate.PARAMETER_LIST_END:
-            t = self.dtoken_from_pytoken(self.parameters_owner, dtoken.PAR_CONTROL)
+            t = self.dtoken_from_pytoken(self.parameters_owner, micro_control.PAR_CONTROL)
             t.parameters = self.parameters
             self.marks_per_line.append(t)
             self.parameters = []
@@ -179,24 +180,20 @@ class dtoken_converter:
             self.dtoken_lines.append([self.marks_per_line[0].lineno, self.marks_per_line])
             self.marks_per_line = []
 
-    def convert(self, pytokens_iter):
+    def parse(self, readline):
         """
         pytokens_iter:
             iterable object that contains py tokens.
 
-        ret: tuple
-            A tuple of two elements: (list, list)
-            The first element is a list. It is organized as follows:
+        ret: list
+            t is organized as follows:
             [
-                [lineno:int, [dtoken00_at_this_line(dtoken), dtoken01_at_this_line(dtoken), ..]]
-                [lineno:int, [dtoken10_at_this_line(dtoken), dtoken11_at_this_line(dtoken), ..]]
+                [lineno:int, [MicroCTL(dtoken), MicroCTL(dtoken), ..]]
+                [lineno:int, [MicroCTL(dtoken), MicroCTL(dtoken), ..]]
                 ...
             ]
-            lineno is line number in source .ds file.
-            The second is also a list, you better not use it.
 
         """
-        pytoken_lines = [[]]
         scanned_tokens = []
         # clear
         self.dtoken_lines = []
@@ -205,15 +202,10 @@ class dtoken_converter:
 
         state = cstate.START
         previous_state = state  # debug
-
+        pytokens_iter = tokenize.generate_tokens(readline)
         for t in pytokens_iter:
             previous_state = state
             scanned_tokens.append(t)
-            if t.type == tokenize.NL or t.type == tokenize.NEWLINE:
-                pytoken_lines.append([])
-            else:
-                pytoken_lines[-1].append(t)
-
             while True:
                 # don't care
                 if t.type == tokenize.COMMENT or t.type == tokenize.ENCODING:
@@ -236,4 +228,4 @@ class dtoken_converter:
                 else:
                     break
 
-        return self.dtoken_lines, pytoken_lines
+        return self.dtoken_lines

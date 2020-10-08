@@ -3,7 +3,7 @@ JUMP_MARK = "JUMP_MARK"
 PAR_CONTROL = "PAR_CONTROL"
 
 
-class dtoken():
+class MicroCTL():
     def __init__(self, lineno, t, v):
         self.lineno = lineno
         self.type = t

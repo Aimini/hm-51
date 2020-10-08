@@ -10,14 +10,16 @@
 # then we can using mark "LWE" to meaing write low, "A" meaing select
 # reigiter 0 in RF.
 #
-# for most of parameter control mark, it's only using name parameter,
+# for moest of parameter control mark, it's only using name parameter,
 # we can just using a LUT to find encoding parameter encoding.
 # for another control mark, we using special logic to encode it.
 ###############################################################
 import enum
-import dtoken
-import control_LUT
 
+from . import micro_control
+from .CTL_LUT.named_parameters_lut import NamedParametersLUT
+from .CTL_LUT.value_paramters_LUT import ValueParametersLUT
+from .CTL_LUT.control_LUT import DEFAULT_CTL_LUT
 
 class machine_code:
     '''
@@ -67,13 +69,13 @@ class machine_code:
         self.value |= (value << pos)
 
 
-class dtoken_compiler:
-    def __init__(self, CTL_LUT=control_LUT.CTL_LUT):
+class MicroinstrcutionCompiler:
+    def __init__(self, CTL_LUT = DEFAULT_CTL_LUT):
         """
         parameter:
             CTL_LUT: see control_LUT.CTL_LUT
         """
-        self.CTL_LUT = CTL_LUT
+        self.CTL_LUT = DEFAULT_CTL_LUT
 
     def reset(self):
         self.jump_table = {}  # store jump label address, jump_label:string -> pc_address: int
@@ -111,7 +113,7 @@ class dtoken_compiler:
                        for x in v.position_info()])
         return pi
 
-    def convert_one_token(self, dt, mc):
+    def convert_mcrio_controls(self, dt, mc):
         """
         using machine_code object to convert one dtoken to int value
             parameters:
@@ -127,9 +129,9 @@ class dtoken_compiler:
             raise SyntaxError('unkonw control name "{}"'.format(dt.value))
 
         for i, p in enumerate(dt.parameters):
-            if isinstance(control_parameter_LUTs, control_LUT.name_parameters_lut):
+            if isinstance(control_parameter_LUTs, NamedParametersLUT):
                 place_info, encoding = control_parameter_LUTs.get_info(p)
-            elif isinstance(control_parameter_LUTs, control_LUT.value_parameter_lut):
+            elif isinstance(control_parameter_LUTs, ValueParametersLUT):
                 place_info = control_parameter_LUTs.get_place_info(i)
                 if isinstance(p, int):
                     encoding = p
@@ -137,7 +139,7 @@ class dtoken_compiler:
                     encoding = self.jump_table.get(p)
                     #for dissasemble, replace string mark to number
                     dt.parameters[i] = encoding
-
+            
             if place_info is None:
                 raise SyntaxError('unkonw control parameter "{}"'.format(p))
 
@@ -154,10 +156,10 @@ class dtoken_compiler:
         """
         mc = machine_code(self.bits_len, self.inital_machine_code)  
         for one in dtokens:
-            self.convert_one_token(one, mc)
+            self.convert_mcrio_controls(one, mc)
         return mc.value
 
-    def split_jump_dtoken(self, dtoken_lines):
+    def split_jump_control(self, dtoken_lines):
         """
         generate pure control dtokens
         1. remove jump mark(also build jump table)
@@ -181,7 +183,7 @@ class dtoken_compiler:
                 v = one_dtoken.value
 
                 # check jump mark
-                if one_dtoken.type == dtoken.JUMP_MARK:
+                if one_dtoken.type == micro_control.JUMP_MARK:
                     if self.jump_table.get(v) is not None:
                         raise SyntaxError(
                             'duplicate jump label "{}" at line {}'.format(v, lineno))
@@ -225,14 +227,14 @@ class dtoken_compiler:
                 lineno is line number in source .ds file
         """
         self.reset()
-        pure_control_tokens = self.split_jump_dtoken(dtoken_lines)
+        pure_micro_instructions = self.split_jump_control(dtoken_lines)
 
         machine_code_lines = []
-        for lineno, one in pure_control_tokens:
+        for lineno, one in pure_micro_instructions:
             try:
                 code = self.convert_one_line(one)
                 machine_code_lines.append([lineno, code, one])
             except SyntaxError as e:
                 e.msg = e.msg + " at line " + str(lineno)
                 raise e
-        return machine_code_lines, pure_control_tokens
+        return machine_code_lines, pure_micro_instructions
