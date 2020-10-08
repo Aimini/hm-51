@@ -5,7 +5,7 @@ import io
 import tokenize
 import pathlib
 import codecs
-
+from preprocessor import Preprocessor
 import dtoken_converter
 import hl_dtoken_converter
 import dtoken_compiler
@@ -33,90 +33,10 @@ def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_l
                 write('\n')
 
 
-def preprocess_args(args_str):
-    """
-    convert string like  '"s0","a+b","c+d"' to a list like ['s0', 'a+b', 'c+d']
-        args_str: str
-
-    """
-    ARG_END = 'ARG_END'
-    ARG_BEGIN = 'ARG_BEGIN'
-    ARG_SPLIT = 'ARG_SPLIT'
-    state = ARG_SPLIT
-
-    arg_list = []
-    start_idx = 0
-    for current_idx, c in enumerate(args_str):
-        if c.isspace():
-            continue
-
-        if state == ARG_END:
-            if c == ',':
-                state = ARG_SPLIT
-            else:
-                pass
-                e = SyntaxError('unexcept double quates')
-                e.offset = current_idx
-                raise e
-        elif state == ARG_BEGIN:
-            if c == '"':
-                state = ARG_END
-                arg_list.append(args_str[start_idx:current_idx])
-        elif state == ARG_SPLIT:
-            if c == '"':
-               state = ARG_BEGIN
-               start_idx = current_idx + 1
-            else:
-                e = SyntaxError('unexcept char \'{}\''.format(c))
-                e.offset = current_idx
-                raise e
-
-    if state is ARG_BEGIN:
-        e = SyntaxError('unclosed string literal "{}"'.format(args_str[start_idx - 1]))
-        e.offset = start_idx - 1
-        raise e
-    return arg_list
 
 
-def preprocess_include(line, filename):
-    ret_str = ""
-    args = preprocess_args(line.strip()[4:].strip())
-    include_filename_str = str(pathlib.Path(filename).parent / args[0])
-
-    ret_str += '\n#>>>>>>>>>>>>>> include file "{}" start. >>>>>>>>>>>>'.format(include_filename_str)
-    ret_str += '\n#>>> {}\n'.format(line)
-    with open(include_filename_str) as inc_fh:
-        content = inc_fh.read()
-        for idx, one_arg in enumerate(args[1:]):
-            content = content.replace(f"@{idx}", one_arg)
-        ret_str += content
-    ret_str += '\n#<<<<<<<<<<<<<<<<<<< "{}" end. <<<<<<<<<<<<<<<<<<<<<<\n'.format(include_filename_str)
-    return ret_str
 
 
-def preprocess(filename):
-    file_need_preprocess = io.StringIO(open(filename).read())
-    need_preprocess = True
-
-    while need_preprocess:
-        need_preprocess = False
-        file_need_preprocess.seek(0)
-        file_preprocessed = io.StringIO()
-
-        for line in file_need_preprocess.readlines():
-            pt = line.strip().split()
-
-            #include process, @INC "filename", "arg0", "arg1"
-            if len(pt) < 1 or pt[0] != '@INC':
-                file_preprocessed.write(line)
-            else:
-                need_preprocess = True
-                file_preprocessed.write(preprocess_include(line, filename))
-
-        file_need_preprocess = file_preprocessed
-
-    file_need_preprocess.seek(0)
-    return file_need_preprocess
 
 
 def compile_ds(readline, write):
@@ -162,7 +82,7 @@ def compile_ds(readline, write):
             print(pos_fmt_str.format(pos, size, name))
     bytes_len = int((bits_len + 7)/8)  # how many bytes using to encoding, math.ceil(bits_len/8)
 
-    dtoken_lines, pytoken_lines = dc.convert(tokenize.tokenize(readline))
+    dtoken_lines = dc.convert(readline)
     hl_token_lines = hlc.convert(dtoken_lines)
     machine_code_lines, pure_control_tokens_line = c.compile(hl_token_lines)
 
@@ -171,7 +91,7 @@ def compile_ds(readline, write):
     return bytes_len, pure_control_tokens_line, machine_code_lines
 
 
-def compile_ds_to_file(fhi, outfile, dis_file):
+def compile_ds_to_file(fileobj, outfile, dis_file):
     """
     parameters
         infile :
@@ -183,12 +103,13 @@ def compile_ds_to_file(fhi, outfile, dis_file):
             t[0] is bytes per line
             t[1] is how many lines
     """
+
     with open(outfile, "wb") as fho:
-        bytes_len, hl_token_lines, machine_code_lines = compile_ds(fhi.readline, fho.write)
+        bytes_len, hl_token_lines, machine_code_lines = compile_ds(fileobj.readline, fho.write)
         if dis_file is not None:
-            fhi.seek(0)
+            fileobj.seek(0)
             with open(dis_file, "w") as disfh:
-                dissassemble(disfh.write, bytes_len, fhi.readlines(), machine_code_lines, hl_token_lines)
+                dissassemble(disfh.write, bytes_len, fileobj.readlines(), machine_code_lines, hl_token_lines)
 
         return bytes_len, len(machine_code_lines)
 
@@ -207,18 +128,19 @@ if __name__ == "__main__":
     op, ar = arg_parser.parse_args()
 
     infile = op.input
-    preprocessed_file_obj = preprocess(infile)
-    content = preprocessed_file_obj.read()
+    preprocessed_file = Preprocessor(infile).result()
     if op.preprocess_file != None:
         with open(op.preprocess_file, "w") as fh:
-            fh.write(content)
+                fh.write(preprocessed_file.read())
+                preprocessed_file.seek(0)
+
     try:
         outfile = op.output
         dis_file = op.dis_file
 
         if outfile == None:
             outfile = os.path.splitext(infile)[0] + '.bin'
-        bl, l = compile_ds_to_file(io.BytesIO(content.encode('utf-8')), outfile, dis_file)
+        bl, l = compile_ds_to_file(preprocessed_file, outfile, dis_file)
         kb = (bl * l)/1024
         print("line bytes:", bl)
         print("lines:", l)
