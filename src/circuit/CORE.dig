@@ -3076,6 +3076,10 @@ through a bus transceiver.</string>
           <string>Label</string>
           <string>DBUS_inter</string>
         </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
       </elementAttributes>
       <pos x="-1500" y="120"/>
     </visualElement>
