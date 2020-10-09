@@ -1,0 +1,47 @@
+
+######################################################## 
+#  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
+# 1. check IE
+# 2. select IRQ with IP
+# 3. J to interrupt vector
+######################################################## 
+#------------- check EA
+# 1. WR <- IE
+# 2. jump_if(IE < 0x80)
+RF(IE), ALU(A),  WR(WE), JLT(0x81, @0)
+
+#------------- check IE
+# T0 <- IRQ
+RF(T0,WE),    BUS(IRR)
+# 1. T0 <- IE & IRR
+# 2. jump_if(IRR == 0)
+RF(T0,WE),    ALU(AND),   WR(WE), JLT(0x1, @0)    
+
+#------------- 
+RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
+# 1. T0, WR <- GENIRRQN(IE & IRR, IP)
+# 2. jump_if(IE & IRR == 0)
+RF(T0,WE), ALU(GENIRRQN), WR(WE), JLT(0x1, @0)
+# select the highest priority IRQ
+# T0, WR <-SELHIRRQN(IE&IRQ)
+RF(T0, WE), ALU(SELHIRRQN), WR(WE)
+RF(ISR, WE), ALU(ISRSET), IRR(CLR)
+RF(ISR), JGT(0x7F, @0)
+
+### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
+### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
+#--------------------------
+
+
+## save PC
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCL),   ALU(A),   RAM(WE)
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCH),   ALU(A),   RAM(WE)
+
+
+## load interrupt vector address to pc
+RF(T0,WE), ALU(IVADDR),  WR(WE)
+
+RF(PCH,WE), LI(0)
+RF(PCL,WE),ALU(B)   , J(@0)

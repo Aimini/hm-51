@@ -5,4 +5,4 @@ RF(A), ALU(A), WR(WE)
 RF(SFR), RAM(WE), ALU(B), BR(ONE)
 
 
-@INC "snippet\inc_pc_jchkint.ds"
+@INC "snippet\inc_pc_jintskiplir.ds"
