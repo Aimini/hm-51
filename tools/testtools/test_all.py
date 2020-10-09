@@ -2,13 +2,13 @@
 # scan all test fille in <dir>
 #########################################################
 
-import subprocess
+import asyncio
 import sys
 import pathlib
 import os
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
+from test_process import test_process
 import io
 import threading
 import signal
@@ -29,7 +29,7 @@ if len(args) < 2:
 
 script_dir = args[0]  # pathlib.Path(sys.argv[1])
 temp_dir = args[1]  # pathlib.Path(sys.argv[2])
-p = R'python tools\test_one.py {} {}'
+
 print_lock = threading.Lock()
 
 ignored_file = {'__51util.py', '__asmconst.py', '__asmutil.py', '__numutil.py', '__util.py',
@@ -38,23 +38,26 @@ ignored_file = {'__51util.py', '__asmconst.py', '__asmutil.py', '__numutil.py', 
                 'INS_OPERATION.py'}
 
 
-def create_subprocess(name):
+
+def create_subprocess(fullpathname, temp_dir):
+    tp = test_process(fullpathname, temp_dir)
+    tp.addflag(test_process.F_NEW_ASM).addflag(test_process.F_NEW_HEX)\
+    .addflag(test_process.F_SIM_INSTRUCTION).addflag(test_process.F_SIM_CIRCUIT)\
+    .addflag(test_process.F_VERIFY)
+
     with print_lock:
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print('>>>> test:{}'.format(name))
-    p = subprocess.Popen(name, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdoutdata, stderrdata = p.communicate('')
-    return p, name, stdoutdata, stderrdata
+        print('>>>> test:{}'.format(fullpathname))
+
+    return tp.run(), fullpathname, tp.output
 
 
-if __name__ == '__main__':
-    pool = ThreadPoolExecutor(max_workers=5)
-
+def main(executor):
     tasks = []
     find_debug = False
     for filename in os.listdir(script_dir):
-        # if filename == 'F6_F7_MOV_Ri_A.py':
-        find_debug = True
+        if filename == 'F8_FF_MOV_Rn_A.py':
+            find_debug = True
 
         if filename in ignored_file:
             continue
@@ -68,32 +71,36 @@ if __name__ == '__main__':
         fullpathname = os.path.join(script_dir, filename)
         if not os.path.isfile(fullpathname):
             continue
+        tsk = executor.submit(create_subprocess, fullpathname, temp_dir)
+        tasks.append(tsk)
 
-        cmd = p.format(fullpathname, temp_dir)
-        r = pool.submit(create_subprocess, cmd)
-        tasks.append(r)
-
-    def cancel_all():
-        for one in tasks:
-            if not one.cancelled():
-                one.cancel()
-        pool.shutdown(wait = False)
+    
+    def cancel_executor():
+        for t in tasks:
+            t.cancel()
+        executor.shutdown()
 
     def int_cacel(signum, frame):
-        cancel_all()
+        cancel_executor()
 
     signal.signal(signal.SIGINT, int_cacel)                                
 
+
     for future in as_completed(tasks):
-        ret, name, stdout, stderr = future.result()
-        if ret.returncode != 0:
-            with print_lock:
-                print('error:', name)
-                print(stdout.decode('utf-8'))
-                print(stderr.decode('utf-8'))
-            
-            cancel_all()
-            exit(-1)
+        retcode, filename, output = future.result()
+        if retcode != 0:
+            cancel_executor()
+            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+            print(output.decode('utf-8'))
+            print('error at file {!r}'.format(filename))
             break
     print('total test:', len(tasks))
-    exit(0)
+
+if __name__ == '__main__':
+    executor = ThreadPoolExecutor(max_workers=5)
+    main(executor)
+
+    
+
+

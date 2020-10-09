@@ -61,19 +61,19 @@ def compile(inputfile_str, outputfile_str):
 
 
 
+if __name__ == "__main__":
+    usage = """
+    usage:
+        compile_all <input_file> <output_file>
+        input_file:
+            51 assembly file
+        output_file:
+            output file,it's an intel hex format file
+    """
 
-usage = """
-usage:
-    compile_all <input_file> <output_file>
-    input_file:
-        51 assembly file
-    output_file:
-        output file,it's an intel hex format file
-"""
-
-if len(sys.argv) < 3:
-    print(usage)
-else:
-    t = compile(sys.argv[1], sys.argv[2])
-    print("program exit with code {}.".format(t))
-    exit(t)
+    if len(sys.argv) < 3:
+        print(usage)
+    else:
+        t = compile(sys.argv[1], sys.argv[2])
+        print("program exit with code {}.".format(t))
+        exit(t)
