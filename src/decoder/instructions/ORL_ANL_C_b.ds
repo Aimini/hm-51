@@ -4,7 +4,4 @@
 RF(T1), ALU(EXTB), WR(WE)     # T1 <- WR[T1]
 RF(PSW), ALU(@0),  BR(CY)     # BR <- (PSW @0 ~T1)[7]
 
-RF(PSW, WE), ALU(SETCY), BR(ONE)
-
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(PSW, WE), ALU(SETCY), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

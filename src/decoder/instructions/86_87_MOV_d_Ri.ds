@@ -8,6 +8,5 @@ BUS(RAM), WR(WE)
 
 RF(T0),  ALU(SFR), RFSRCR(WE)
 RF(T0),  ALU(A), SR(WE)
-RF(SFR), ALU(B), RAM(WE), BR(ONE)
+RF(SFR), ALU(B), RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)
 
-@INC "snippet\inc_pc_jchkint.ds"

@@ -2,7 +2,4 @@
 
 
 RF(T1), ALU(CPLB),  WR(WE)
-RF(SFR),ALU(B), RAM(WE), BR(ONE)
-
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(SFR),ALU(B), RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

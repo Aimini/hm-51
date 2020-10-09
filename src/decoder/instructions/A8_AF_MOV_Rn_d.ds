@@ -7,7 +7,4 @@ RF(T0, WE), ALU(B)
 
 @INC "snippet\load_rn_to_sr.ds"
 
-RF(T0), ALU(A), RAM(WE), BR(ONE)
-
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(T0), ALU(A), RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

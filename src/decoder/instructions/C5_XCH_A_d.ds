@@ -6,7 +6,4 @@ RF(T0, WE), ALU(B)  # T0 <- RAM[direct]
 RF(A), ALU(A), WR(WE)
 RF(SFR), RAM(WE), ALU(B)  # RAM[direct] <- A
 RF(T0), ALU(A), WR(WE)
-RF(A, WE), ALU(B), BR(ONE)  # A <- T0
-
-
-@INC "snippet\inc_pc_jchkint.ds"
+RF(A, WE), ALU(B), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)  # A <- T0

@@ -8,5 +8,4 @@ RF(T0), ALU(A), SR(WE)
 RF(T0), ALU(SFR), RFSRCR(WE)
 RF(SFR),ALU(B), RAM(WE)
 
-RF(SP, WE), ALU(DEC), BR(ONE)
-@INC "snippet\inc_pc_jchkint.ds"
+RF(SP, WE), ALU(DEC), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)
