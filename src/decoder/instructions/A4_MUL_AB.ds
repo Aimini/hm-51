@@ -1,4 +1,6 @@
 ########### 0xA4, MUL AB
+RF(IR, WE),BUS(ROM) # IR<-instruction
+
 RF(T0, WE), LI(0), BR(ZERO)  # reuslt low, T0
 
 ##############################################################################
@@ -67,11 +69,11 @@ RF(A, WE), ALU(RRC), J(MUL_MOV_RESULT_SET_FLAG)  # always_ff(@posedge clk) begin
 MUL_A_ZERO:  # A is 0 at begin!
 RF(A, WE), LI(0)
 RF(B, WE), LI(0), BR(ZERO)
-RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
 
 ##############################################################################
 # MOV result
 ##############################################################################
 MUL_MOV_RESULT_SET_FLAG:
 RF(B, WE), ALU(B), BR(ZF)  # load ZF to BR, because B and ZF_B have same encoding.
-RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)

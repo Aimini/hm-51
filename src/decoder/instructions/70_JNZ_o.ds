@@ -1,4 +1,4 @@
 # 0x70 JNZ offset
 RF(A), ALUO(ZF), BR(ZF)
 JBIT(IRSEG_80),  BR(ONE, CPLQ)  #JUMP to SJMP if ZF
-@INC "snippet\inc_pc_jchkint.ds"
+@INC "snippet\inc_pc_jintskiplir.ds"
