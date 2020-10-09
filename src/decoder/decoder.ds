@@ -700,7 +700,7 @@ RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
 RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
 
 INC_PC_BEFORE_CHECK_INTERRUPT:
-@INC "snippet\inc_pc.ds"
+@INC "snippet\inc_pc_jintskiplir.ds"
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE
