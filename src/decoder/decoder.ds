@@ -55,7 +55,7 @@ IRSEG_F5: #--------------------
 
 IRSEG_F4: #--------------------
 #CPL A
-RF(A,WE), ALU(NA), J(STAGE_CHECK_INTERRUPT)
+@INC "instructions\F4_CPL_A.ds"
 #------------------------------
 
 
@@ -685,7 +685,7 @@ IRSEG_2: #--------------------
 
 
 IRSEG_0: #--------------------
-J(STAGE_CHECK_INTERRUPT)
+@INC "instructions\00_NOP.ds"
 #------------------------------
 
 
@@ -697,7 +697,8 @@ CSEG_ACALL_ADDR11:
 
 ADDC_PC_BEFORE_CHECK_INTERRUPT:
 RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
-RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
+RF(PCH, WE), ALU(INCC), SR(WE)
+RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)# PCH + CY
 
 INC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_jintskiplir.ds"
