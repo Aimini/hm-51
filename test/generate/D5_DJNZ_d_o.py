@@ -23,36 +23,39 @@ def init_ram(p):
 def creat_jump_link(p, jump_count, order):
     init_ram(p)
 
-    jmpords = ntl.jl(jump_count)
-    start =random.choice(jmpords)
+    jumpords = list(range(jump_count))
+    random.shuffle(jumpords)
+    segcode = ['' for _ in range(jump_count)]
+    start =jumpords[0]
 
     p += f"""
     SJMP JMP_SEG_{order}_{start}
     """
     ris = list(p.rdirect())
-    for idx,next_idx in enumerate(jmpords):
-        p += f"JMP_SEG_{order}_{idx}:"
+    for i, idx in enumerate(jumpords):
+        segcode[idx] += f"JMP_SEG_{order}_{idx}:\n"
         
         addr = random.choice(ris)
         value = (ram.get_direct(addr) - 1) & 0xFF
         ram.set_direct(addr, value)
 
-        if next_idx == start:
-            target = f"JMP_SEG_END_{order}"
+        if i < len(jumpords) - 1:
+            next_idx = jumpords[i + 1]
+            target = f"JMP_SEG_{order}_{next_idx}\n"
         else:
-            target = f"JMP_SEG_{order}_{next_idx}"
+            target = f"JMP_SEG_END_{order}\n"
 
         if value != 0:
-            p += f"DJNZ {atl.D(addr)}, {target}"
-            p += atl.crash()
+            segcode[idx] += f"DJNZ {atl.D(addr)}, {target}\n"
+            segcode[idx] += atl.crash() + '\n'
         else:
             jump_wrong = f"SEG_WRONG_{order}_{idx}"
 
-            p += f"DJNZ {atl.D(addr)}, {jump_wrong}"
-            p += f"SJMP {target}"
-            p += f"{jump_wrong}:"
-            p += atl.crash()
-
+            segcode[idx] += f"DJNZ {atl.D(addr)}, {jump_wrong}\n"
+            segcode[idx] += f"SJMP {target}\n"
+            segcode[idx] += f"{jump_wrong}:\n"
+            segcode[idx] += atl.crash() + '\n'
+    p += '\n'.join(segcode)
     p += f"JMP_SEG_END_{order}:"
 
 for x in range(110):
