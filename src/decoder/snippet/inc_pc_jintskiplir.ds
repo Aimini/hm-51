@@ -1,6 +1,6 @@
 # increase PC, and load insruction to IR by the way
 # you should set BR(ONE) before include this file
 #
-RF(PCL,WE),ALU(INCC),WR(WE), BR(CY)  
-RF(PCH,WE),ALU(INCC),SR(WE)
+RF(PCL,WE),ALU(INCC),SR(WE), BR(CY)  
+RF(PCH,WE),ALU(INCC),WR(WE)
 RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)

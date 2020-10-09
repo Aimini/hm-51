@@ -2,5 +2,5 @@
 @INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
 RF(T1), ALUO(EXTB), BR(CY)
 JBIT(ADDC_PC_BEFORE_CHECK_INTERRUPT), WR(WE), LI(1), BR(ONE) #PC + 1(WR) + 1(BR)
-RF(PCL, WE), ALU(INCC), WR(WE), BR(CY)            # PCL + 1,  STORE CARRY
-RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)        # PCH + CY
+RF(PCL, WE), ALU(INCC), SR(WE), BR(CY)            # PCL + 1,  STORE CARRY
+RF(PCH, WE), ALU(INCC), WR(WE), J(IRSEG_80)        # PCH + CY

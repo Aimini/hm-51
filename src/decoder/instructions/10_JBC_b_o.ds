@@ -12,5 +12,5 @@ JBC_CLEAR_BIT:
 RF(T1), ALU(INSB), WR(WE)
 RF(SFR), ALU(B), RAM(WE), BR(ONE)
 
-RF(PCL, WE), ALU(INCC), WR(WE), BR(CY)                # PCL + 1,  STORE CARRY
-RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)           # PCH + CY
+RF(PCL, WE), ALU(INCC), SR(WE), BR(CY)                # PCL + 1,  STORE CARRY
+RF(PCH, WE), ALU(INCC), WR(WE), J(IRSEG_80)           # PCH + CY
