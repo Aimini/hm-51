@@ -80,10 +80,7 @@ def compile_ds(readline, write,veclineno, vecnum):
     dtoken_lines = parser.Parser().parse(readline)
     hl_token_lines = MicroControlConverter().convert(dtoken_lines)
     hl_token_lines = DecvecConverter(hl_token_lines, veclineno, vecnum ).result()
-    with open("test.pp","w") as fh:
-        for l in hl_token_lines:
-                fh.write(', '.join([_.simple_str() for _ in l[1]]))
-                fh.write('\n')
+    
     machine_code_lines, pure_control_tokens_line = c.compile(hl_token_lines)
 
     [write(_[1].to_bytes(bytes_len, "little")) for _ in machine_code_lines]

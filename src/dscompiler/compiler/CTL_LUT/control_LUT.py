@@ -87,7 +87,7 @@ BR = NamedParametersLUT([
         'name': 'input select',
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
-                 ['ALUDF', 'CY', 'ZF', 'PF'], "NALUDF", 'A0', 'A7'],
+                 ['ALUDF', 'CY', 'ZF', 'PF'], "ALUDNF", 'A0', 'A7'],
     },
     {
         'sh': 'CPLQ',
@@ -201,7 +201,7 @@ JUMPABS = NamedParametersLUT([
         'name': 'jump type',
         'len': 3,
         'enum':  ['', 'J', 'JGT', 'JEQ',
-                  'JLT', 'JBIT', 'JALUF', 'JNALUF']
+                  'JLT', 'JBIT', 'JALUF', 'JALUNF']
     }
 ])
 

@@ -76,11 +76,40 @@ class MicroinstrcutionCompiler:
             CTL_LUT: see control_LUT.CTL_LUT
         """
         self.CTL_LUT = DEFAULT_CTL_LUT
+        self._special_labels = ["__0"]
 
     def reset(self):
         self.jump_table = {}  # store jump label address, jump_label:string -> pc_address: int
         # hardware level dtokens, [[lineno,dtoken_list],[lineno,dtoken_list]...]
         self.hl_dtokens = []
+
+    def addjumpaddr(self, label, address):
+        existaddress = self.jump_table.get(label)
+        
+        if existaddress == None:
+            if label in self._special_labels:
+                self.jump_table[label] = [address]
+            else:
+                self.jump_table[label] = address
+        else:
+            if label in self._special_labels:
+                self.jump_table[label].append(address)
+            else:
+                raise SyntaxError(
+                            'duplicate jump label "{}"'.format(label))
+
+
+    def getjumpaddr(self, label, pc = None):
+        if label in self._special_labels:
+            addresses = self.jump_table.get(label)
+            assert(pc != None)
+            # label  "__0" only care about address after he
+            addresses = filter(lambda addr: addr >= pc, addresses)
+            addresses = sorted(addresses)
+            if(len(addresses)):
+                return addresses[0] # select the most close address
+        else:
+            return self.jump_table.get(label)
 
     def calcuate_LUT_parameters_position(self):
         pos = 0
@@ -113,7 +142,7 @@ class MicroinstrcutionCompiler:
                        for x in v.position_info()])
         return pi
 
-    def convert_mcrio_controls(self, dt, mc):
+    def convert_mcrio_controls(self, dt, mc, pc):
         """
         using machine_code object to convert one dtoken to int value
             parameters:
@@ -136,7 +165,7 @@ class MicroinstrcutionCompiler:
                 if isinstance(p, int):
                     encoding = p
                 else:
-                    encoding = self.jump_table.get(p)
+                    encoding = self.getjumpaddr(p, pc)
                     #for dissasemble, replace string mark to number
                     dt.parameters[i] = encoding
             
@@ -148,15 +177,15 @@ class MicroinstrcutionCompiler:
 
             mc.insert(encoding, place_info[0], place_info[1], dt)
 
-    def convert_one_line(self, dtokens):
+    def convert_one_line(self, instruction, pc):
         """
         convert one lines token to machine code
             return: int
                 current line machine code value
         """
         mc = machine_code(self.bits_len, self.inital_machine_code)  
-        for one in dtokens:
-            self.convert_mcrio_controls(one, mc)
+        for ctl in instruction:
+            self.convert_mcrio_controls(ctl, mc, pc)
         return mc.value
 
     def split_jump_control(self, dtoken_lines):
@@ -184,10 +213,7 @@ class MicroinstrcutionCompiler:
 
                 # check jump mark
                 if one_dtoken.type == micro_control.JUMP_MARK:
-                    if self.jump_table.get(v) is not None:
-                        raise SyntaxError(
-                            'duplicate jump label "{}" at line {}'.format(v, lineno))
-                    self.jump_table[v] = pc
+                    self.addjumpaddr(v, pc)
                 else:
                     a.append(one_dtoken)
 
@@ -227,14 +253,14 @@ class MicroinstrcutionCompiler:
                 lineno is line number in source .ds file
         """
         self.reset()
-        pure_micro_instructions = self.split_jump_control(dtoken_lines)
+        microprogram = self.split_jump_control(dtoken_lines)
 
         machine_code_lines = []
-        for lineno, one in pure_micro_instructions:
+        for pc, (lineno, one) in  enumerate(microprogram):
             try:
-                code = self.convert_one_line(one)
+                code = self.convert_one_line(one, pc)
                 machine_code_lines.append([lineno, code, one])
             except SyntaxError as e:
                 e.msg = e.msg + " at line " + str(lineno)
                 raise e
-        return machine_code_lines, pure_micro_instructions
+        return machine_code_lines, microprogram
