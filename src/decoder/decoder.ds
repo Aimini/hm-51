@@ -21,6 +21,15 @@ STAGE_FETCH:
 RF(PCL),  ALU(A), SR(WE)
 RF(PCH),  ALU(A), WR(WE)
 RF(IR,WE),BUS(ROM)
+
+# set parity flag
+RF(A),      ALU(PF),   BR(ALUDF)
+RF(PSW,WE), ALU(SETPF), BR(ONE) 
+
+@INC "snippet\inc_pc_srwr_npch.ds"
+
+RF(IR), J(0),MIPCSRC(DECVEC), BR(ZERO) # set BR to prepare increase PC
+
 STAGE_FETCH_SKIP_LOAD_IR:
 
 # set parity flag
@@ -699,6 +708,9 @@ ADDC_PC_BEFORE_CHECK_INTERRUPT:
 RF(PCL, WE), ALU(ADDC), SR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
 RF(PCH, WE), ALU(INCC), WR(WE)
 RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)# PCH + CY
+
+INC_PC_BEFOR_INT_ASSUME_PCH_IN_WR:
+@INC "snippet\inc_pc_npch_jintskiplir.ds"
 
 INC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_jintskiplir.ds"
