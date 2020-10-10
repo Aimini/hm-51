@@ -1,4 +1,5 @@
 # 0x50 JNC offset
 RF(PSW), BR(A7)
 JBIT(IRSEG_80),  BR(ONE, CPLQ)  #JUMP to SJMP if ZF
-@INC "snippet\inc_pc_jintskiplir.ds"
+
+@INC "snippet\inc_pc_npch_jintskiplir.ds"

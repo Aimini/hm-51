@@ -1,8 +1,7 @@
 #0x12 LCALL, addr16
 RF(T0, WE), BUS(ROM), BR(ONE)
 
-RF(PCL, WE), ALU(INCC), SR(WE), BR(CY)
-RF(PCH, WE), ALU(INCC), WR(WE)
+@INC "snippet\inc_pc_srwr_npch.ds"
 
 BUS(ROM), WR(WE)
 

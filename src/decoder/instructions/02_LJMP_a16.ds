@@ -1,6 +1,6 @@
 #0x02 LJMP, addr16
 RF(T0,WE),BUS(ROM), BR(ONE)
-@INC "snippet\inc_pc_wrsr.ds"
+@INC "snippet\inc_pc_srwr_npch.ds"
 
 RF(PCL,WE),BUS(ROM),SR(WE)
 RF(T0), ALU(A), WR(WE)
