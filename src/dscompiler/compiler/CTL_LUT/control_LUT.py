@@ -201,7 +201,7 @@ JUMPABS = NamedParametersLUT([
         'name': 'jump type',
         'len': 3,
         'enum':  ['', 'J', 'JGT', 'JEQ',
-                  'JLT', 'JBIT', 'JRST', '']
+                  'JLT', 'JBIT', 'JALUF', '']
     }
 ])
 

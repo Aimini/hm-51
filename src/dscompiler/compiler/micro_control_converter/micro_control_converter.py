@@ -22,6 +22,7 @@ from .. import micro_control
 from .alu_translator import ALUTranslator
 from .jump_translator import JumpTranslator
 from .load_immed_translator import LoadImmedTranslator
+from ..CTL_LUT.control_LUT import JUMPABS
 
 DEFAULT_TRANSLATOR = (ALUTranslator(), 
                       JumpTranslator(), LoadImmedTranslator())
@@ -126,7 +127,7 @@ class DecvecConverter:
 
         for ctl in microinstrction:
             if ctl.type == micro_control.CONTROL:
-                if ctl.name in ('J', 'JGT', 'JEQ','JLT', 'JBIT', 'JRST'):
+                if JUMPABS.have_encoding_name(ctl.name):
                     return ctl.name
         return None
 
@@ -140,7 +141,7 @@ class DecvecConverter:
                     jtype = ctl.parameters[0]
                     if jtype ==  'J': # no condtion jump, so copy itdirectly 
                         return True
-                    elif jtype in ('JGT', 'JEQ','JLT', 'JBIT', 'JRST'):
+                    elif jtype in ('JGT', 'JEQ','JLT', 'JBIT', 'JALUF'):
                         # condition jump? we can't predict where it's going on
                         # so keep the code, try next microinstruction
                         break
