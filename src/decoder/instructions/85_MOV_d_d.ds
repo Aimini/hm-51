@@ -10,7 +10,7 @@ WR(WE), BUS(RAM), RF(SFR) # load with SFR
 RF(T1,WE), ALU(B), BR(ONE) # T1 <- RAM[src]
 
 # inc pc and get dest_direct
-@INC "snippet\inc_pc_wrsr.ds"
+@INC "snippet\inc_pc_srwr.ds"
 RF(T0,WE), BUS(ROM), SR(WE)
 
 # store value to dest_direct

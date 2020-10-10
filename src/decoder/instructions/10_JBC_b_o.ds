@@ -1,15 +1,15 @@
 # 0x10 JBC bit, offset
 @INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
-
-RF(T1), ALU(EXTB), BR(CY)
-JBIT(JBC_CLEAR_BIT), BR(ZERO) #don't modify WR, it's contain bit index!
-
 #  jump to check interrupt
+RF(T1), ALU(EXTB), BR(CY), JALUNF(JBC_B_O_NOJUMP)
+RF(T1), ALU(INSB), WR(WE), BR(CPLQ)
+RF(SFR), ALU(B), RAM(WE), BR(ONE)
+@INC "snippet\inc_pc_jsjmp.ds"
+
+JBC_B_O_NOJUMP:#  jump to check interrupt
 LI(2), WR(WE), BR(ZERO), J(ADDC_PC_BEFORE_CHECK_INTERRUPT)
 
 
-JBC_CLEAR_BIT:
-RF(T1), ALU(INSB), WR(WE)
-RF(SFR), ALU(B), RAM(WE), BR(ONE)
 
-@INC "snippet\inc_pc_jsjmp.ds"
+
+

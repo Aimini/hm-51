@@ -7,5 +7,5 @@
 #   SR <- PCL
 #   WR <- PCH
 ###################################################################
-@INC "snippet\inc_pc_srwr_endswith.ds","BR(Q)"
-RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
+@INC "snippet\inc_pc_srwr.ds"
+RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT)
