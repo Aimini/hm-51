@@ -1,3 +1,9 @@
-# increase PC, you should set BR(ONE) before include this file
-RF(PCL, WE), ALU(INCC), SR(WE), BR(CY)
-RF(PCH, WE), ALU(INCC), WR(WE), J(IRSEG_80)
+###################################################################
+# increase PC, then jump to execut SJMP
+# require:
+#   BR <- 1
+# leavel:
+#   SR <- PCL
+#   WR <- PCH
+###################################################################
+@INC "snippet\inc_pc_srwr_endswith.ds","J(IRSEG_80)"

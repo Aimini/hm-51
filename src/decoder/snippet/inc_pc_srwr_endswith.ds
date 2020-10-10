@@ -6,4 +6,5 @@
 #   SR <- PCL
 #   WR <- PCH
 ###################################################################
-@INC "snippet\inc_pc_srwr_endswith.ds","BR(Q)"
+RF(PCL,WE),ALU(INCC), SR(WE), BR(CY)  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), WR(WE), @0       # PCH + CY
