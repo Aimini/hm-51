@@ -43,25 +43,6 @@ external int: TCON</string>
       <pos x="1060" y="800"/>
     </visualElement>
     <visualElement>
-      <elementName>CLRIRR.dig</elementName>
-      <elementAttributes/>
-      <pos x="820" y="480"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>BUS_D</string>
-        </entry>
-      </elementAttributes>
-      <pos x="800" y="480"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -74,20 +55,6 @@ external int: TCON</string>
         </entry>
       </elementAttributes>
       <pos x="1060" y="400"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>IRR_CLR</string>
-        </entry>
-      </elementAttributes>
-      <pos x="800" y="520"/>
     </visualElement>
     <visualElement>
       <elementName>Splitter</elementName>
@@ -240,30 +207,6 @@ external int: TCON</string>
       <pos x="1280" y="600"/>
     </visualElement>
     <visualElement>
-      <elementName>DriverInvSel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-        <entry>
-          <string>flipSelPos</string>
-          <boolean>true</boolean>
-        </entry>
-      </elementAttributes>
-      <pos x="1440" y="560"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>NetName</string>
-          <string>BUS_D</string>
-        </entry>
-      </elementAttributes>
-      <pos x="1500" y="560"/>
-    </visualElement>
-    <visualElement>
       <elementName>SFR_TCON.dig</elementName>
       <elementAttributes/>
       <pos x="1080" y="360"/>
@@ -297,16 +240,6 @@ external int: TCON</string>
         </entry>
       </elementAttributes>
       <pos x="580" y="380"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>NetName</string>
-          <string>IRR_CLR</string>
-        </entry>
-      </elementAttributes>
-      <pos x="620" y="680"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -415,16 +348,6 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <pos x="620" y="580"/>
     </visualElement>
     <visualElement>
-      <elementName>In</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Label</string>
-          <string>IRR_CLR</string>
-        </entry>
-      </elementAttributes>
-      <pos x="580" y="680"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -433,21 +356,6 @@ The SFR in the corresponding address will drive the data  bus.</string>
         </entry>
       </elementAttributes>
       <pos x="620" y="440"/>
-    </visualElement>
-    <visualElement>
-      <elementName>In</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
-          <string>IRR ouput enable.
-The IRR will drive the data bus.</string>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>~IRR_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="580" y="920"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -487,7 +395,7 @@ The IRR will drive the data bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[38]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[30]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -567,7 +475,7 @@ The IRR will drive the data bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[45]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[37]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -628,7 +536,7 @@ The IRR will drive the data bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[50]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[42]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -642,6 +550,20 @@ The IRR will drive the data bus.</string>
       <elementAttributes/>
       <pos x="1080" y="800"/>
     </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~IRR_CLRB</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="860" y="500"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -651,82 +573,6 @@ The IRR will drive the data bus.</string>
     <wire>
       <p1 x="800" y="640"/>
       <p2 x="820" y="640"/>
-    </wire>
-    <wire>
-      <p1 x="1220" y="580"/>
-      <p2 x="1300" y="580"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="580"/>
-      <p2 x="620" y="580"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="840"/>
-      <p2 x="820" y="840"/>
-    </wire>
-    <wire>
-      <p1 x="980" y="840"/>
-      <p2 x="1080" y="840"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="520"/>
-      <p2 x="820" y="520"/>
-    </wire>
-    <wire>
-      <p1 x="1060" y="460"/>
-      <p2 x="1080" y="460"/>
-    </wire>
-    <wire>
-      <p1 x="1060" y="400"/>
-      <p2 x="1080" y="400"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="400"/>
-      <p2 x="820" y="400"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="660"/>
-      <p2 x="820" y="660"/>
-    </wire>
-    <wire>
-      <p1 x="980" y="660"/>
-      <p2 x="1080" y="660"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="340"/>
-      <p2 x="620" y="340"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="600"/>
-      <p2 x="820" y="600"/>
-    </wire>
-    <wire>
-      <p1 x="940" y="600"/>
-      <p2 x="980" y="600"/>
-    </wire>
-    <wire>
-      <p1 x="1060" y="600"/>
-      <p2 x="1080" y="600"/>
-    </wire>
-    <wire>
-      <p1 x="1280" y="600"/>
-      <p2 x="1300" y="600"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="920"/>
-      <p2 x="1440" y="920"/>
-    </wire>
-    <wire>
-      <p1 x="800" y="860"/>
-      <p2 x="820" y="860"/>
-    </wire>
-    <wire>
-      <p1 x="960" y="860"/>
-      <p2 x="1080" y="860"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="540"/>
-      <p2 x="620" y="540"/>
     </wire>
     <wire>
       <p1 x="1200" y="800"/>
@@ -753,12 +599,16 @@ The IRR will drive the data bus.</string>
       <p2 x="620" y="480"/>
     </wire>
     <wire>
-      <p1 x="800" y="480"/>
-      <p2 x="820" y="480"/>
-    </wire>
-    <wire>
       <p1 x="980" y="480"/>
       <p2 x="1080" y="480"/>
+    </wire>
+    <wire>
+      <p1 x="1220" y="580"/>
+      <p2 x="1300" y="580"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="580"/>
+      <p2 x="620" y="580"/>
     </wire>
     <wire>
       <p1 x="1060" y="740"/>
@@ -771,6 +621,14 @@ The IRR will drive the data bus.</string>
     <wire>
       <p1 x="800" y="420"/>
       <p2 x="820" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="840"/>
+      <p2 x="820" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="840"/>
+      <p2 x="1080" y="840"/>
     </wire>
     <wire>
       <p1 x="940" y="360"/>
@@ -789,12 +647,12 @@ The IRR will drive the data bus.</string>
       <p2 x="820" y="360"/>
     </wire>
     <wire>
-      <p1 x="580" y="680"/>
-      <p2 x="620" y="680"/>
-    </wire>
-    <wire>
       <p1 x="960" y="680"/>
       <p2 x="1080" y="680"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="460"/>
+      <p2 x="1080" y="460"/>
     </wire>
     <wire>
       <p1 x="1180" y="620"/>
@@ -813,28 +671,40 @@ The IRR will drive the data bus.</string>
       <p2 x="960" y="620"/>
     </wire>
     <wire>
-      <p1 x="1220" y="560"/>
-      <p2 x="1300" y="560"/>
+      <p1 x="1060" y="400"/>
+      <p2 x="1080" y="400"/>
     </wire>
     <wire>
-      <p1 x="1460" y="560"/>
-      <p2 x="1500" y="560"/>
+      <p1 x="800" y="400"/>
+      <p2 x="820" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="1220" y="560"/>
+      <p2 x="1300" y="560"/>
     </wire>
     <wire>
       <p1 x="1320" y="560"/>
       <p2 x="1340" y="560"/>
     </wire>
     <wire>
-      <p1 x="1340" y="560"/>
-      <p2 x="1420" y="560"/>
+      <p1 x="800" y="660"/>
+      <p2 x="820" y="660"/>
     </wire>
     <wire>
-      <p1 x="920" y="500"/>
-      <p2 x="940" y="500"/>
+      <p1 x="980" y="660"/>
+      <p2 x="1080" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="340"/>
+      <p2 x="620" y="340"/>
     </wire>
     <wire>
       <p1 x="960" y="500"/>
       <p2 x="980" y="500"/>
+    </wire>
+    <wire>
+      <p1 x="860" y="500"/>
+      <p2 x="940" y="500"/>
     </wire>
     <wire>
       <p1 x="1060" y="820"/>
@@ -853,12 +723,40 @@ The IRR will drive the data bus.</string>
       <p2 x="1180" y="820"/>
     </wire>
     <wire>
+      <p1 x="800" y="600"/>
+      <p2 x="820" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="940" y="600"/>
+      <p2 x="980" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="600"/>
+      <p2 x="1080" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="1280" y="600"/>
+      <p2 x="1300" y="600"/>
+    </wire>
+    <wire>
       <p1 x="960" y="440"/>
       <p2 x="1080" y="440"/>
     </wire>
     <wire>
       <p1 x="580" y="440"/>
       <p2 x="620" y="440"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="860"/>
+      <p2 x="820" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="860"/>
+      <p2 x="1080" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="540"/>
+      <p2 x="620" y="540"/>
     </wire>
     <wire>
       <p1 x="800" y="380"/>
@@ -883,10 +781,6 @@ The IRR will drive the data bus.</string>
     <wire>
       <p1 x="1060" y="700"/>
       <p2 x="1080" y="700"/>
-    </wire>
-    <wire>
-      <p1 x="1440" y="580"/>
-      <p2 x="1440" y="920"/>
     </wire>
     <wire>
       <p1 x="960" y="380"/>

@@ -763,7 +763,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>IMMED</string>
         </entry>
       </elementAttributes>
-      <pos x="-1800" y="-260"/>
+      <pos x="-1800" y="-240"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -787,7 +787,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>~IMMED_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1800" y="-300"/>
+      <pos x="-1800" y="-280"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1228,12 +1228,12 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>BUS_D</string>
         </entry>
       </elementAttributes>
-      <pos x="-1680" y="-260"/>
+      <pos x="-1680" y="-240"/>
     </visualElement>
     <visualElement>
       <elementName>Probe</elementName>
       <elementAttributes/>
-      <pos x="-1680" y="-240"/>
+      <pos x="-1680" y="-220"/>
     </visualElement>
     <visualElement>
       <elementName>PullDown</elementName>
@@ -1243,7 +1243,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1700" y="-220"/>
+      <pos x="-1700" y="-200"/>
     </visualElement>
     <visualElement>
       <elementName>Probe</elementName>
@@ -1330,7 +1330,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>RF_Q</string>
         </entry>
       </elementAttributes>
-      <pos x="-1800" y="-180"/>
+      <pos x="-1800" y="-160"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1344,7 +1344,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>~RF_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1800" y="-220"/>
+      <pos x="-1800" y="-200"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1657,20 +1657,24 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>MC</string>
+          <string>IRQ_IN</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1860" y="-20"/>
+      <pos x="-1800" y="140"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>SW</string>
+          <string>MC</string>
         </entry>
       </elementAttributes>
-      <pos x="-1760" y="-40"/>
+      <pos x="-1860" y="-20"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -1706,10 +1710,10 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
       <elementAttributes>
         <entry>
           <string>Label</string>
-          <string>Go</string>
+          <string>SW</string>
         </entry>
       </elementAttributes>
-      <pos x="-1760" y="-80"/>
+      <pos x="-1760" y="-40"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2208,7 +2212,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1760" y="-260"/>
+      <pos x="-1760" y="-240"/>
     </visualElement>
     <visualElement>
       <elementName>DriverInvSel</elementName>
@@ -2218,7 +2222,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1760" y="-180"/>
+      <pos x="-1760" y="-160"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2287,7 +2291,7 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <int>12</int>
         </entry>
       </elementAttributes>
-      <pos x="-1240" y="240"/>
+      <pos x="-1500" y="180"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2301,21 +2305,31 @@ d,40,2,d,9b,1,18,1,2,19,3,e8</data>
           <string>MIPC</string>
         </entry>
       </elementAttributes>
-      <pos x="-1280" y="240"/>
+      <pos x="-1540" y="180"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
       <elementAttributes>
         <entry>
+          <string>Label</string>
+          <string>Go</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1760" y="-80"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
           <string>Description</string>
-          <string>stall CPU</string>
+          <string>The CPU main clock</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>Stall</string>
+          <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="-1860" y="-100"/>
+      <pos x="-1240" y="240"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -2336,24 +2350,6 @@ through a bus transceiver.</string>
         </entry>
       </elementAttributes>
       <pos x="-1240" y="180"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Out</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
-          <string>address used by external SFR</string>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>ADDR</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="-1240" y="120"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2417,46 +2413,22 @@ through a bus transceiver.</string>
       <pos x="-860" y="260"/>
     </visualElement>
     <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>~XRAM_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1540" y="180"/>
-    </visualElement>
-    <visualElement>
       <elementName>Out</elementName>
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>XRAM ~OE signal</string>
+          <string>address used by external SFR</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>~XRAM_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1500" y="180"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Out</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
-          <string>The CPU main clock</string>
+          <string>ADDR</string>
         </entry>
         <entry>
-          <string>Label</string>
-          <string>CLK</string>
+          <string>Bits</string>
+          <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1240" y="300"/>
+      <pos x="-1240" y="120"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2470,21 +2442,7 @@ through a bus transceiver.</string>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="-1280" y="300"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>~IRQ_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1540" y="240"/>
+      <pos x="-1280" y="240"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2499,30 +2457,6 @@ through a bus transceiver.</string>
         </entry>
       </elementAttributes>
       <pos x="-1540" y="300"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Out</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Label</string>
-          <string>~IRQ_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1500" y="240"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Out</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
-          <string>clear accepted interrupt request</string>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>IRQ_CAI</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1500" y="300"/>
     </visualElement>
     <visualElement>
       <elementName>NAnd</elementName>
@@ -3059,19 +2993,15 @@ through a bus transceiver.</string>
       <elementName>Out</elementName>
       <elementAttributes>
         <entry>
-          <string>Description</string>
-          <string>IR load value</string>
-        </entry>
-        <entry>
           <string>Label</string>
-          <string>DBUS_inter</string>
+          <string>~IRQ_CLRB</string>
         </entry>
         <entry>
           <string>Bits</string>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-1500" y="120"/>
+      <pos x="-1380" y="280"/>
     </visualElement>
     <visualElement>
       <elementName>Comparator</elementName>
@@ -3111,11 +3041,19 @@ through a bus transceiver.</string>
       <elementName>Out</elementName>
       <elementAttributes>
         <entry>
+          <string>Description</string>
+          <string>IR load value</string>
+        </entry>
+        <entry>
           <string>Label</string>
-          <string>IR_WE</string>
+          <string>DBUS_inter</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="-800" y="60"/>
+      <pos x="-1500" y="120"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -3188,6 +3126,97 @@ through a bus transceiver.</string>
       </elementAttributes>
       <pos x="-1480" y="-240"/>
     </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Description</string>
+          <string>stall CPU</string>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>Stall</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1860" y="-100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>IRQ_IN</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1760" y="140"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>IRQ_IN</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1800" y="-320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~IRQ_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1800" y="-360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>DriverInvSel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="-1760" y="-320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>CLRIRR.dig</elementName>
+      <elementAttributes/>
+      <pos x="-1520" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>BUS_D</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1540" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>IR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-800" y="60"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -3231,18 +3260,6 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-260"/>
     </wire>
     <wire>
-      <p1 x="-1800" y="-260"/>
-      <p2 x="-1780" y="-260"/>
-    </wire>
-    <wire>
-      <p1 x="-1740" y="-260"/>
-      <p2 x="-1720" y="-260"/>
-    </wire>
-    <wire>
-      <p1 x="-1700" y="-260"/>
-      <p2 x="-1680" y="-260"/>
-    </wire>
-    <wire>
       <p1 x="-1480" y="-260"/>
       <p2 x="-1360" y="-260"/>
     </wire>
@@ -3265,6 +3282,10 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-860" y="260"/>
       <p2 x="-840" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="-1540" y="260"/>
+      <p2 x="-1520" y="260"/>
     </wire>
     <wire>
       <p1 x="-300" y="-520"/>
@@ -3293,6 +3314,10 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-1140" y="-200"/>
       <p2 x="-1120" y="-200"/>
+    </wire>
+    <wire>
+      <p1 x="-1800" y="-200"/>
+      <p2 x="-1760" y="-200"/>
     </wire>
     <wire>
       <p1 x="-360" y="200"/>
@@ -3345,6 +3370,10 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-640" y="140"/>
       <p2 x="-620" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="-1800" y="140"/>
+      <p2 x="-1760" y="140"/>
     </wire>
     <wire>
       <p1 x="-400" y="-400"/>
@@ -3475,8 +3504,16 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-280"/>
     </wire>
     <wire>
+      <p1 x="-1800" y="-280"/>
+      <p2 x="-1760" y="-280"/>
+    </wire>
+    <wire>
       <p1 x="-560" y="-280"/>
       <p2 x="-500" y="-280"/>
+    </wire>
+    <wire>
+      <p1 x="-1420" y="280"/>
+      <p2 x="-1380" y="280"/>
     </wire>
     <wire>
       <p1 x="-760" y="280"/>
@@ -3507,10 +3544,6 @@ through a bus transceiver.</string>
       <p2 x="-1820" y="-540"/>
     </wire>
     <wire>
-      <p1 x="-1800" y="-220"/>
-      <p2 x="-1760" y="-220"/>
-    </wire>
-    <wire>
       <p1 x="-460" y="-220"/>
       <p2 x="-420" y="-220"/>
     </wire>
@@ -3525,6 +3558,14 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-1140" y="-220"/>
       <p2 x="-1120" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-1720" y="-220"/>
+      <p2 x="-1700" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-1700" y="-220"/>
+      <p2 x="-1680" y="-220"/>
     </wire>
     <wire>
       <p1 x="-1820" y="220"/>
@@ -3581,6 +3622,14 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-1140" y="-160"/>
       <p2 x="-1120" y="-160"/>
+    </wire>
+    <wire>
+      <p1 x="-1800" y="-160"/>
+      <p2 x="-1780" y="-160"/>
+    </wire>
+    <wire>
+      <p1 x="-1740" y="-160"/>
+      <p2 x="-1720" y="-160"/>
     </wire>
     <wire>
       <p1 x="-360" y="160"/>
@@ -3691,6 +3740,10 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-360"/>
     </wire>
     <wire>
+      <p1 x="-1800" y="-360"/>
+      <p2 x="-1760" y="-360"/>
+    </wire>
+    <wire>
       <p1 x="-1340" y="40"/>
       <p2 x="-1300" y="40"/>
     </wire>
@@ -3727,16 +3780,16 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-300"/>
     </wire>
     <wire>
-      <p1 x="-1800" y="-300"/>
-      <p2 x="-1760" y="-300"/>
-    </wire>
-    <wire>
       <p1 x="-580" y="-300"/>
       <p2 x="-540" y="-300"/>
     </wire>
     <wire>
       <p1 x="-1300" y="-300"/>
       <p2 x="-1260" y="-300"/>
+    </wire>
+    <wire>
+      <p1 x="-1540" y="300"/>
+      <p2 x="-1520" y="300"/>
     </wire>
     <wire>
       <p1 x="-860" y="300"/>
@@ -3751,14 +3804,6 @@ through a bus transceiver.</string>
       <p2 x="-1800" y="300"/>
     </wire>
     <wire>
-      <p1 x="-1280" y="300"/>
-      <p2 x="-1240" y="300"/>
-    </wire>
-    <wire>
-      <p1 x="-1540" y="300"/>
-      <p2 x="-1500" y="300"/>
-    </wire>
-    <wire>
       <p1 x="-380" y="300"/>
       <p2 x="-360" y="300"/>
     </wire>
@@ -3767,8 +3812,16 @@ through a bus transceiver.</string>
       <p2 x="-320" y="300"/>
     </wire>
     <wire>
-      <p1 x="-1720" y="-240"/>
-      <p2 x="-1700" y="-240"/>
+      <p1 x="-1800" y="-240"/>
+      <p2 x="-1780" y="-240"/>
+    </wire>
+    <wire>
+      <p1 x="-1740" y="-240"/>
+      <p2 x="-1720" y="-240"/>
+    </wire>
+    <wire>
+      <p1 x="-1700" y="-240"/>
+      <p2 x="-1680" y="-240"/>
     </wire>
     <wire>
       <p1 x="-860" y="-240"/>
@@ -3791,8 +3844,8 @@ through a bus transceiver.</string>
       <p2 x="-1360" y="-240"/>
     </wire>
     <wire>
-      <p1 x="-1700" y="-240"/>
-      <p2 x="-1680" y="-240"/>
+      <p1 x="-1280" y="240"/>
+      <p2 x="-1240" y="240"/>
     </wire>
     <wire>
       <p1 x="-660" y="240"/>
@@ -3803,28 +3856,12 @@ through a bus transceiver.</string>
       <p2 x="-1800" y="240"/>
     </wire>
     <wire>
-      <p1 x="-1280" y="240"/>
-      <p2 x="-1240" y="240"/>
-    </wire>
-    <wire>
-      <p1 x="-1540" y="240"/>
-      <p2 x="-1500" y="240"/>
-    </wire>
-    <wire>
       <p1 x="-1040" y="240"/>
       <p2 x="-1020" y="240"/>
     </wire>
     <wire>
       <p1 x="-360" y="240"/>
       <p2 x="-320" y="240"/>
-    </wire>
-    <wire>
-      <p1 x="-1800" y="-180"/>
-      <p2 x="-1780" y="-180"/>
-    </wire>
-    <wire>
-      <p1 x="-1740" y="-180"/>
-      <p2 x="-1720" y="-180"/>
     </wire>
     <wire>
       <p1 x="-860" y="-180"/>
@@ -3987,6 +4024,14 @@ through a bus transceiver.</string>
       <p2 x="-800" y="60"/>
     </wire>
     <wire>
+      <p1 x="-1800" y="-320"/>
+      <p2 x="-1780" y="-320"/>
+    </wire>
+    <wire>
+      <p1 x="-1740" y="-320"/>
+      <p2 x="-1720" y="-320"/>
+    </wire>
+    <wire>
       <p1 x="-860" y="-320"/>
       <p2 x="-820" y="-320"/>
     </wire>
@@ -4027,12 +4072,12 @@ through a bus transceiver.</string>
       <p2 x="-1060" y="20"/>
     </wire>
     <wire>
-      <p1 x="-1700" y="-260"/>
-      <p2 x="-1700" y="-240"/>
-    </wire>
-    <wire>
       <p1 x="-1700" y="-240"/>
       <p2 x="-1700" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-1700" y="-220"/>
+      <p2 x="-1700" y="-200"/>
     </wire>
     <wire>
       <p1 x="-580" y="-440"/>
@@ -4075,12 +4120,16 @@ through a bus transceiver.</string>
       <p2 x="-340" y="320"/>
     </wire>
     <wire>
-      <p1 x="-1720" y="-260"/>
+      <p1 x="-1720" y="-320"/>
       <p2 x="-1720" y="-240"/>
     </wire>
     <wire>
+      <p1 x="-1720" y="-220"/>
+      <p2 x="-1720" y="-160"/>
+    </wire>
+    <wire>
       <p1 x="-1720" y="-240"/>
-      <p2 x="-1720" y="-180"/>
+      <p2 x="-1720" y="-220"/>
     </wire>
     <wire>
       <p1 x="-1080" y="-80"/>
@@ -4099,12 +4148,16 @@ through a bus transceiver.</string>
       <p2 x="-700" y="40"/>
     </wire>
     <wire>
-      <p1 x="-1760" y="-220"/>
-      <p2 x="-1760" y="-200"/>
+      <p1 x="-1760" y="-200"/>
+      <p2 x="-1760" y="-180"/>
     </wire>
     <wire>
-      <p1 x="-1760" y="-300"/>
-      <p2 x="-1760" y="-280"/>
+      <p1 x="-1760" y="-280"/>
+      <p2 x="-1760" y="-260"/>
+    </wire>
+    <wire>
+      <p1 x="-1760" y="-360"/>
+      <p2 x="-1760" y="-340"/>
     </wire>
     <wire>
       <p1 x="-1120" y="0"/>
