@@ -1,6 +1,6 @@
 #0x44 ORL direct, #immed
 RF(T0, WE), BUS(ROM), BR(ONE)
-@INC "snippet\inc_pc_npch_jintskiplir.ds"
+@INC "snippet\inc_pc_srwr_npch.ds"
 RF(T1,WE), BUS(ROM)
 
 RF(T0), ALU(A),  SR(WE)

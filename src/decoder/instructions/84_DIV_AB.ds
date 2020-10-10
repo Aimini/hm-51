@@ -4,91 +4,106 @@ RF(IR, WE),BUS(ROM) # IR<-instruction
 RF(T0, WE), LI(0)     # T0 <- 0, prepare shift A into T0
 
 RF(B), ALU(A), WR(WE), BR(ZERO), JLT(0x01, DIV_ZERO_DIVISOR)
+RF(A, WE), ALU(RLC), BR(A7), JLT(0x01, DIV_ZERO_A)
 ##############################################################################
 # calculate
 ##############################################################################
 ############# 0
-RF(A, WE), ALU(RLC), BR(A7), JLT(0x01, DIV_ZERO_A)
+DIV_CALCULATE_S0:
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
-# if CY = 1, then jum   p to avoid load reuslt, we also need shift zero to quotient
-BR(ZERO), JBIT(DIV_CALCULATE_S1) 
-# if CY = 0, load result, need shift one to quotient
-RF(T0, WE), ALU(SUBB), BR(ONE)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S0) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S1)
 
-############# 1
+DIV_SUB_DIVISOR_S0:
+RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
+
+
 DIV_CALCULATE_S1:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S1) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S2)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S2) 
+DIV_SUB_DIVISOR_S1:
 RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
 
-############# 2
+
 DIV_CALCULATE_S2:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S2) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S3)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S3) 
+DIV_SUB_DIVISOR_S2:
 RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
 
-############# 3
+
 DIV_CALCULATE_S3:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S3) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S4)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S4) 
+DIV_SUB_DIVISOR_S3:
 RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
 
-############# 4
+
 DIV_CALCULATE_S4:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S4) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S5)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S5) 
+DIV_SUB_DIVISOR_S4:
 RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
 
-############# 5
+
 DIV_CALCULATE_S5:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S5) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S6)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S6) 
+DIV_SUB_DIVISOR_S5:
 RF(T0, WE), ALU(SUBB), BR(ONE)
+RF(A, WE), ALU(RLC), BR(A7)
 
-############# 6
+
 DIV_CALCULATE_S6:
-RF(A, WE), ALU(RLC), BR(A7)
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO),  JALUNF(DIV_SUB_DIVISOR_S6) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_CALCULATE_S7)
 
-BR(ZERO), JBIT(DIV_CALCULATE_S7) 
+DIV_SUB_DIVISOR_S6:
 RF(T0, WE), ALU(SUBB), BR(ONE)
-
-############# 7
-DIV_CALCULATE_S7:
 RF(A, WE), ALU(RLC), BR(A7)
+
+
+
+
+DIV_CALCULATE_S7:
 RF(T0, WE), ALU(RLC), BR(ZERO)
-RF(T0), ALU(SUBB),  BR(CY)
+# if CY = 0, load reuslt
+RF(T0), ALU(SUBB),  BR(ZERO), WR(WE),  JALUNF(DIV_SUB_DIVISOR_S7) 
+RF(A, WE), ALU(RLC), BR(A7), J(DIV_MOV_RESULT_SET_FLAG)
 
-BR(ZERO), JBIT(DIV_MOV_RESULT_SET_FLAG) 
-RF(T0, WE), ALU(SUBB), BR(ONE), WR(WE)
-RF(B, WE), ALU(B)
+DIV_SUB_DIVISOR_S7:
+RF(B, WE), ALU(B), BR(ONE)
 RF(A, WE), ALU(RLC), BR(ZERO)
-RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
-
+RF(PSW, WE), ALU(SETOVCLRCY),  J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
 ##############################################################################
 # MOV result
 ##############################################################################
 DIV_MOV_RESULT_SET_FLAG:
 RF(T0), ALU(A), WR(WE)
 RF(B, WE), ALU(B)
-RF(A, WE), ALU(RLC), BR(ZERO)
 RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
 ##############################################################################
 # A is zero
