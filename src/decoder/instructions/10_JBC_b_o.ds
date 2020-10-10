@@ -2,7 +2,7 @@
 @INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
 
 RF(T1), ALU(EXTB), BR(CY)
-JBIT(JBC_CLEAR_BIT), BR(ZERO)
+JBIT(JBC_CLEAR_BIT), BR(ZERO) #don't modify WR, it's contain bit index!
 
 #  jump to check interrupt
 LI(2), WR(WE), BR(ZERO), J(ADDC_PC_BEFORE_CHECK_INTERRUPT)
@@ -12,5 +12,4 @@ JBC_CLEAR_BIT:
 RF(T1), ALU(INSB), WR(WE)
 RF(SFR), ALU(B), RAM(WE), BR(ONE)
 
-RF(PCL, WE), ALU(INCC), SR(WE), BR(CY)                # PCL + 1,  STORE CARRY
-RF(PCH, WE), ALU(INCC), WR(WE), J(IRSEG_80)           # PCH + CY
+@INC "snippet\inc_pc_jsjmp.ds"
