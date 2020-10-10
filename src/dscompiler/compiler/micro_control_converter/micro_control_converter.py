@@ -23,7 +23,7 @@ from .alu_translator import ALUTranslator
 from .jump_translator import JumpTranslator
 from .load_immed_translator import LoadImmedTranslator
 from ..CTL_LUT.control_LUT import JUMPABS
-
+from ..CTL_LUT import ALULUTtools
 DEFAULT_TRANSLATOR = (ALUTranslator(), 
                       JumpTranslator(), LoadImmedTranslator())
 
@@ -139,9 +139,9 @@ class DecvecConverter:
                     no_jump = False
 
                     jtype = ctl.parameters[0]
-                    if jtype ==  'J': # no condtion jump, so copy itdirectly 
+                    if  ALULUTtools.is_uncondition(jtype): # no condtion jump, so copy itdirectly 
                         return True
-                    elif jtype in ('JGT', 'JEQ','JLT', 'JBIT', 'JALUF'):
+                    elif ALULUTtools.is_condtion(jtype):
                         # condition jump? we can't predict where it's going on
                         # so keep the code, try next microinstruction
                         break

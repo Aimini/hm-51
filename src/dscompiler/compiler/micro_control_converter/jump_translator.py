@@ -1,5 +1,6 @@
 from .empty_translator import empty_translator
 from ..CTL_LUT.control_LUT import JUMPABS
+from ..CTL_LUT import ALULUTtools
 class JumpTranslator(empty_translator):
     def translate(self, dt):
         r = []
@@ -12,13 +13,12 @@ class JumpTranslator(empty_translator):
 
         p0 = "" if len(dt.parameters) < 1 else dt.parameters[0]
         p1 = "" if len(dt.parameters) < 2 else dt.parameters[1]
-        if dt.value in ("J", "JBIT", "JALUF"):
-
-            addr_token = self.create_address(lineno, p0)
-        else:
+        if ALULUTtools.is_compare_jump(dt.value):
             addr_token = self.create_address(lineno, p1)
             immed_token = self.create_immed(lineno, p0)
             r.append(immed_token)
+        else:
+            addr_token = self.create_address(lineno, p0)
         r.append(addr_token)
 
         return r
