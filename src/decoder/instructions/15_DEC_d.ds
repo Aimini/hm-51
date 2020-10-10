@@ -1,4 +1,4 @@
-#0x05, INC direct
+#0x15, DEC direct
 RF(T0, WE), BUS(ROM), SR(WE)
 RF(T0),  ALU(SFR), RFSRCR(WE)
 RF(SFR), BUS(RAM), WR(WE)  # WR <- RAM[direct]

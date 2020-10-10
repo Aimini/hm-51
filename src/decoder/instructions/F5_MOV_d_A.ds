@@ -2,7 +2,4 @@
 RF(T0, WE), BUS(ROM), SR(WE)
 RF(T0), ALU(SFR), RFSRCR(WE)
 RF(A), ALU(A), WR(WE)
-RF(SFR), RAM(WE), ALU(B), BR(ONE)
-
-
-@INC "snippet\inc_pc_jintskiplir.ds"
+RF(SFR), RAM(WE), ALU(B), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

@@ -1,5 +1,5 @@
 ########### 0x90, MOV DPTR, #immed
 
 RF(DPH, WE), BUS(ROM), BR(ONE)
-@INC "snippet\inc_pc_wrsr.ds"
+@INC "snippet\inc_pc_srwr_npch.ds"
 RF(DPL, WE), BUS(ROM), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)

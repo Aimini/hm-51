@@ -1,0 +1,11 @@
+
+###################################################################
+# increase PC(assume PCH already is WR),load insruction to IR by the way
+# require:
+#   BR <- 1
+# leavel:
+#   SR <- PCL
+#   WR <- PCH
+###################################################################
+@INC "snippet\inc_pc_srwr_npch.ds"
+RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)
