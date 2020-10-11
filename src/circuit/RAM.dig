@@ -25,10 +25,6 @@
           <int>8</int>
         </entry>
         <entry>
-          <string>isProgramMemory</string>
-          <boolean>true</boolean>
-        </entry>
-        <entry>
           <string>Label</string>
           <string>RAM</string>
         </entry>

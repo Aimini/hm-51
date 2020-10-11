@@ -68,7 +68,7 @@ external int: TCON</string>
           <string>4,4</string>
         </entry>
       </elementAttributes>
-      <pos x="940" y="500"/>
+      <pos x="940" y="520"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -97,20 +97,6 @@ external int: TCON</string>
         </entry>
       </elementAttributes>
       <pos x="1060" y="380"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Const</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Value</string>
-          <long>0</long>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>4</int>
-        </entry>
-      </elementAttributes>
-      <pos x="1060" y="460"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -190,7 +176,7 @@ external int: TCON</string>
           <string>4,1,3</string>
         </entry>
       </elementAttributes>
-      <pos x="1300" y="560"/>
+      <pos x="1340" y="860"/>
     </visualElement>
     <visualElement>
       <elementName>Const</elementName>
@@ -204,7 +190,7 @@ external int: TCON</string>
           <int>3</int>
         </entry>
       </elementAttributes>
-      <pos x="1280" y="600"/>
+      <pos x="1320" y="900"/>
     </visualElement>
     <visualElement>
       <elementName>SFR_TCON.dig</elementName>
@@ -219,7 +205,7 @@ external int: TCON</string>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="580" y="340"/>
+      <pos x="1420" y="560"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -229,7 +215,7 @@ external int: TCON</string>
           <string>BUS_D</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="480"/>
+      <pos x="1460" y="700"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -239,7 +225,7 @@ external int: TCON</string>
           <string>~RST</string>
         </entry>
       </elementAttributes>
-      <pos x="580" y="380"/>
+      <pos x="1420" y="600"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -257,7 +243,7 @@ external int: TCON</string>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="580" y="440"/>
+      <pos x="1420" y="660"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -267,7 +253,7 @@ external int: TCON</string>
           <string>CLK</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="340"/>
+      <pos x="1460" y="560"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -285,7 +271,7 @@ external int: TCON</string>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="580" y="480"/>
+      <pos x="1420" y="700"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -295,7 +281,7 @@ external int: TCON</string>
           <string>~RST</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="380"/>
+      <pos x="1460" y="600"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -310,7 +296,7 @@ The SFR in the corresponding address will read the data from  the data bus.</str
           <string>~WE</string>
         </entry>
       </elementAttributes>
-      <pos x="580" y="540"/>
+      <pos x="1420" y="760"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -320,7 +306,7 @@ The SFR in the corresponding address will read the data from  the data bus.</str
           <string>~SFR_WE</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="540"/>
+      <pos x="1460" y="760"/>
     </visualElement>
     <visualElement>
       <elementName>In</elementName>
@@ -335,7 +321,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
           <string>~OE</string>
         </entry>
       </elementAttributes>
-      <pos x="580" y="580"/>
+      <pos x="1420" y="800"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -345,7 +331,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
           <string>~SFR_OE</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="580"/>
+      <pos x="1460" y="800"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -355,7 +341,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
           <string>ADDR_SFR</string>
         </entry>
       </elementAttributes>
-      <pos x="620" y="440"/>
+      <pos x="1460" y="660"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -369,7 +355,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="1420" y="360"/>
+      <pos x="1460" y="860"/>
     </visualElement>
     <visualElement>
       <elementName>SFR_CTL.dig</elementName>
@@ -395,7 +381,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[30]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[29]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -475,7 +461,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[37]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[36]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -536,7 +522,7 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[42]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[41]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -562,7 +548,701 @@ The SFR in the corresponding address will drive the data  bus.</string>
           <int>8</int>
         </entry>
       </elementAttributes>
-      <pos x="860" y="500"/>
+      <pos x="940" y="520"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>ADDR_SFR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="540"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>140</long>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="560"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_CTL.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="500"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="500"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation reference="../../../../visualElement[48]/elementAttributes/entry/rotation"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="520"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_TIMMER.dig</elementName>
+      <elementAttributes/>
+      <pos x="520" y="360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>BUS_D</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="400"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~RST</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="380"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>ADDR_SFR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="400"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>138</long>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_CTL.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation reference="../../../../visualElement[57]/elementAttributes/entry/rotation"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="380"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>ADDR_SFR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="820"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>141</long>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="840"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_CTL.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="780"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation reference="../../../../visualElement[62]/elementAttributes/entry/rotation"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="800"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_TIMMER.dig</elementName>
+      <elementAttributes/>
+      <pos x="520" y="640"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>BUS_D</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="680"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="640"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~RST</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="660"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>ADDR_SFR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="680"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Value</string>
+          <long>139</long>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="700"/>
+    </visualElement>
+    <visualElement>
+      <elementName>SFR_CTL.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="640"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_WE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="640"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation reference="../../../../visualElement[71]/elementAttributes/entry/rotation"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~SFR_OE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="660"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>1,1,1,1</string>
+        </entry>
+        <entry>
+          <string>Output Splitting</string>
+          <string>4</string>
+        </entry>
+      </elementAttributes>
+      <pos x="760" y="460"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~EINT0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="320" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>IE0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="460"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>IE1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="500"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>T0OV</string>
+        </entry>
+      </elementAttributes>
+      <pos x="640" y="420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>T1OV</string>
+        </entry>
+      </elementAttributes>
+      <pos x="640" y="700"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>T0OV</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="480"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>T1OV</string>
+        </entry>
+      </elementAttributes>
+      <pos x="740" y="520"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>8</string>
+        </entry>
+        <entry>
+          <string>Output Splitting</string>
+          <string>1,1,1,1,1,1,1,1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1320" y="300"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>TR0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1360" y="380"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>TR1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1360" y="420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>TR0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="480"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>TR1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="760"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>IT0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1360" y="300"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>IT1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1360" y="340"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Multiplexer</elementName>
+      <elementAttributes/>
+      <pos x="640" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>IT0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="380" y="1080"/>
+    </visualElement>
+    <visualElement>
+      <elementName>D_FF</elementName>
+      <elementAttributes/>
+      <pos x="420" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="380" y="1020"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="520" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>IE0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="720" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>~EINT1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="880" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Multiplexer</elementName>
+      <elementAttributes/>
+      <pos x="1220" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>IT1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="940" y="1080"/>
+    </visualElement>
+    <visualElement>
+      <elementName>D_FF</elementName>
+      <elementAttributes/>
+      <pos x="980" y="1020"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="940" y="1040"/>
+    </visualElement>
+    <visualElement>
+      <elementName>And</elementName>
+      <elementAttributes>
+        <entry>
+          <string>wideShape</string>
+          <boolean>true</boolean>
+        </entry>
+      </elementAttributes>
+      <pos x="1100" y="1000"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>IE1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1300" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>D_FF</elementName>
+      <elementAttributes/>
+      <pos x="420" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="400" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="360" y="940"/>
+    </visualElement>
+    <visualElement>
+      <elementName>D_FF</elementName>
+      <elementAttributes/>
+      <pos x="980" y="960"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="960" y="980"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Not</elementName>
+      <elementAttributes/>
+      <pos x="920" y="960"/>
     </visualElement>
   </visualElements>
   <wires>
@@ -573,6 +1253,218 @@ The SFR in the corresponding address will drive the data  bus.</string>
     <wire>
       <p1 x="800" y="640"/>
       <p2 x="820" y="640"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="640"/>
+      <p2 x="520" y="640"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="640"/>
+      <p2 x="300" y="640"/>
+    </wire>
+    <wire>
+      <p1 x="420" y="640"/>
+      <p2 x="440" y="640"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="960"/>
+      <p2 x="720" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="960"/>
+      <p2 x="420" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="960"/>
+      <p2 x="980" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="880" y="960"/>
+      <p2 x="920" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="1040" y="960"/>
+      <p2 x="1060" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="960"/>
+      <p2 x="1220" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="960"/>
+      <p2 x="1080" y="960"/>
+    </wire>
+    <wire>
+      <p1 x="1320" y="900"/>
+      <p2 x="1340" y="900"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="840"/>
+      <p2 x="820" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="840"/>
+      <p2 x="1080" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="840"/>
+      <p2 x="300" y="840"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="520"/>
+      <p2 x="300" y="520"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="520"/>
+      <p2 x="980" y="520"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="520"/>
+      <p2 x="760" y="520"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="460"/>
+      <p2 x="520" y="460"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="460"/>
+      <p2 x="1080" y="460"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="460"/>
+      <p2 x="760" y="460"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="780"/>
+      <p2 x="300" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="420" y="780"/>
+      <p2 x="480" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="400"/>
+      <p2 x="1080" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="400"/>
+      <p2 x="820" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="400"/>
+      <p2 x="520" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="400"/>
+      <p2 x="300" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="720"/>
+      <p2 x="520" y="720"/>
+    </wire>
+    <wire>
+      <p1 x="940" y="1040"/>
+      <p2 x="980" y="1040"/>
+    </wire>
+    <wire>
+      <p1 x="1040" y="1040"/>
+      <p2 x="1100" y="1040"/>
+    </wire>
+    <wire>
+      <p1 x="1260" y="980"/>
+      <p2 x="1300" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="980"/>
+      <p2 x="980" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="620" y="980"/>
+      <p2 x="640" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="980"/>
+      <p2 x="500" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="980"/>
+      <p2 x="520" y="980"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="660"/>
+      <p2 x="820" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="660"/>
+      <p2 x="1080" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="1420" y="660"/>
+      <p2 x="1460" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="660"/>
+      <p2 x="300" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="660"/>
+      <p2 x="520" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="1340" y="340"/>
+      <p2 x="1360" y="340"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="600"/>
+      <p2 x="820" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="940" y="600"/>
+      <p2 x="980" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="600"/>
+      <p2 x="1080" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="1420" y="600"/>
+      <p2 x="1460" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="540"/>
+      <p2 x="300" y="540"/>
+    </wire>
+    <wire>
+      <p1 x="800" y="860"/>
+      <p2 x="820" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="860"/>
+      <p2 x="1080" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="1360" y="860"/>
+      <p2 x="1460" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="1280" y="860"/>
+      <p2 x="1340" y="860"/>
+    </wire>
+    <wire>
+      <p1 x="980" y="480"/>
+      <p2 x="1080" y="480"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="480"/>
+      <p2 x="760" y="480"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="480"/>
+      <p2 x="520" y="480"/>
+    </wire>
+    <wire>
+      <p1 x="1420" y="800"/>
+      <p2 x="1460" y="800"/>
     </wire>
     <wire>
       <p1 x="1200" y="800"/>
@@ -595,24 +1487,8 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="1080" y="800"/>
     </wire>
     <wire>
-      <p1 x="580" y="480"/>
-      <p2 x="620" y="480"/>
-    </wire>
-    <wire>
-      <p1 x="980" y="480"/>
-      <p2 x="1080" y="480"/>
-    </wire>
-    <wire>
-      <p1 x="1220" y="580"/>
-      <p2 x="1300" y="580"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="580"/>
-      <p2 x="620" y="580"/>
-    </wire>
-    <wire>
-      <p1 x="1060" y="740"/>
-      <p2 x="1220" y="740"/>
+      <p1 x="280" y="800"/>
+      <p2 x="300" y="800"/>
     </wire>
     <wire>
       <p1 x="980" y="420"/>
@@ -623,20 +1499,56 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="820" y="420"/>
     </wire>
     <wire>
-      <p1 x="800" y="840"/>
-      <p2 x="820" y="840"/>
+      <p1 x="280" y="420"/>
+      <p2 x="300" y="420"/>
     </wire>
     <wire>
-      <p1 x="980" y="840"/>
-      <p2 x="1080" y="840"/>
+      <p1 x="620" y="420"/>
+      <p2 x="640" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="1340" y="420"/>
+      <p2 x="1360" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="740"/>
+      <p2 x="1220" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="740"/>
+      <p2 x="520" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="1080" y="1000"/>
+      <p2 x="1100" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1200" y="1000"/>
+      <p2 x="1220" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="960" y="1000"/>
+      <p2 x="1060" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="600" y="1000"/>
+      <p2 x="620" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="1000"/>
+      <p2 x="420" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1180" y="360"/>
+      <p2 x="1240" y="360"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="360"/>
+      <p2 x="520" y="360"/>
     </wire>
     <wire>
       <p1 x="940" y="360"/>
       <p2 x="980" y="360"/>
-    </wire>
-    <wire>
-      <p1 x="1340" y="360"/>
-      <p2 x="1420" y="360"/>
     </wire>
     <wire>
       <p1 x="1060" y="360"/>
@@ -647,16 +1559,52 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="820" y="360"/>
     </wire>
     <wire>
+      <p1 x="280" y="360"/>
+      <p2 x="300" y="360"/>
+    </wire>
+    <wire>
+      <p1 x="420" y="360"/>
+      <p2 x="440" y="360"/>
+    </wire>
+    <wire>
       <p1 x="960" y="680"/>
       <p2 x="1080" y="680"/>
     </wire>
     <wire>
-      <p1 x="1060" y="460"/>
-      <p2 x="1080" y="460"/>
+      <p1 x="500" y="680"/>
+      <p2 x="520" y="680"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="680"/>
+      <p2 x="300" y="680"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="940"/>
+      <p2 x="420" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="940"/>
+      <p2 x="360" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="940"/>
+      <p2 x="500" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="940"/>
+      <p2 x="640" y="940"/>
+    </wire>
+    <wire>
+      <p1 x="1240" y="300"/>
+      <p2 x="1320" y="300"/>
+    </wire>
+    <wire>
+      <p1 x="1340" y="300"/>
+      <p2 x="1360" y="300"/>
     </wire>
     <wire>
       <p1 x="1180" y="620"/>
-      <p2 x="1220" y="620"/>
+      <p2 x="1260" y="620"/>
     </wire>
     <wire>
       <p1 x="1060" y="620"/>
@@ -671,40 +1619,28 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="960" y="620"/>
     </wire>
     <wire>
-      <p1 x="1060" y="400"/>
-      <p2 x="1080" y="400"/>
+      <p1 x="1260" y="880"/>
+      <p2 x="1340" y="880"/>
     </wire>
     <wire>
-      <p1 x="800" y="400"/>
-      <p2 x="820" y="400"/>
+      <p1 x="280" y="560"/>
+      <p2 x="300" y="560"/>
     </wire>
     <wire>
-      <p1 x="1220" y="560"/>
-      <p2 x="1300" y="560"/>
+      <p1 x="1420" y="560"/>
+      <p2 x="1460" y="560"/>
     </wire>
     <wire>
-      <p1 x="1320" y="560"/>
-      <p2 x="1340" y="560"/>
+      <p1 x="280" y="500"/>
+      <p2 x="300" y="500"/>
     </wire>
     <wire>
-      <p1 x="800" y="660"/>
-      <p2 x="820" y="660"/>
+      <p1 x="420" y="500"/>
+      <p2 x="480" y="500"/>
     </wire>
     <wire>
-      <p1 x="980" y="660"/>
-      <p2 x="1080" y="660"/>
-    </wire>
-    <wire>
-      <p1 x="580" y="340"/>
-      <p2 x="620" y="340"/>
-    </wire>
-    <wire>
-      <p1 x="960" y="500"/>
-      <p2 x="980" y="500"/>
-    </wire>
-    <wire>
-      <p1 x="860" y="500"/>
-      <p2 x="940" y="500"/>
+      <p1 x="740" y="500"/>
+      <p2 x="760" y="500"/>
     </wire>
     <wire>
       <p1 x="1060" y="820"/>
@@ -723,40 +1659,60 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="1180" y="820"/>
     </wire>
     <wire>
-      <p1 x="800" y="600"/>
-      <p2 x="820" y="600"/>
+      <p1 x="280" y="820"/>
+      <p2 x="300" y="820"/>
     </wire>
     <wire>
-      <p1 x="940" y="600"/>
-      <p2 x="980" y="600"/>
+      <p1 x="940" y="1080"/>
+      <p2 x="1240" y="1080"/>
     </wire>
     <wire>
-      <p1 x="1060" y="600"/>
-      <p2 x="1080" y="600"/>
+      <p1 x="380" y="1080"/>
+      <p2 x="660" y="1080"/>
     </wire>
     <wire>
-      <p1 x="1280" y="600"/>
-      <p2 x="1300" y="600"/>
+      <p1 x="1420" y="760"/>
+      <p2 x="1460" y="760"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="760"/>
+      <p2 x="520" y="760"/>
     </wire>
     <wire>
       <p1 x="960" y="440"/>
       <p2 x="1080" y="440"/>
     </wire>
     <wire>
-      <p1 x="580" y="440"/>
-      <p2 x="620" y="440"/>
+      <p1 x="440" y="440"/>
+      <p2 x="520" y="440"/>
     </wire>
     <wire>
-      <p1 x="800" y="860"/>
-      <p2 x="820" y="860"/>
+      <p1 x="1180" y="1020"/>
+      <p2 x="1200" y="1020"/>
     </wire>
     <wire>
-      <p1 x="960" y="860"/>
-      <p2 x="1080" y="860"/>
+      <p1 x="960" y="1020"/>
+      <p2 x="980" y="1020"/>
     </wire>
     <wire>
-      <p1 x="580" y="540"/>
-      <p2 x="620" y="540"/>
+      <p1 x="480" y="1020"/>
+      <p2 x="520" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="1020"/>
+      <p2 x="420" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="1340" y="380"/>
+      <p2 x="1360" y="380"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="380"/>
+      <p2 x="300" y="380"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="380"/>
+      <p2 x="520" y="380"/>
     </wire>
     <wire>
       <p1 x="800" y="380"/>
@@ -771,16 +1727,24 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="1080" y="380"/>
     </wire>
     <wire>
-      <p1 x="580" y="380"/>
-      <p2 x="620" y="380"/>
+      <p1 x="1180" y="380"/>
+      <p2 x="1280" y="380"/>
     </wire>
     <wire>
-      <p1 x="1180" y="380"/>
-      <p2 x="1220" y="380"/>
+      <p1 x="1420" y="700"/>
+      <p2 x="1460" y="700"/>
     </wire>
     <wire>
       <p1 x="1060" y="700"/>
       <p2 x="1080" y="700"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="700"/>
+      <p2 x="300" y="700"/>
+    </wire>
+    <wire>
+      <p1 x="620" y="700"/>
+      <p2 x="640" y="700"/>
     </wire>
     <wire>
       <p1 x="960" y="380"/>
@@ -795,16 +1759,52 @@ The SFR in the corresponding address will drive the data  bus.</string>
       <p2 x="960" y="860"/>
     </wire>
     <wire>
-      <p1 x="1220" y="380"/>
-      <p2 x="1220" y="560"/>
+      <p1 x="960" y="1000"/>
+      <p2 x="960" y="1020"/>
     </wire>
     <wire>
-      <p1 x="1220" y="580"/>
-      <p2 x="1220" y="620"/>
+      <p1 x="480" y="460"/>
+      <p2 x="480" y="500"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="740"/>
+      <p2 x="480" y="780"/>
+    </wire>
+    <wire>
+      <p1 x="1280" y="380"/>
+      <p2 x="1280" y="860"/>
     </wire>
     <wire>
       <p1 x="1220" y="740"/>
       <p2 x="1220" y="800"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="700"/>
+      <p2 x="1060" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="1060" y="960"/>
+      <p2 x="1060" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1260" y="620"/>
+      <p2 x="1260" y="880"/>
+    </wire>
+    <wire>
+      <p1 x="620" y="980"/>
+      <p2 x="620" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1200" y="1000"/>
+      <p2 x="1200" y="1020"/>
+    </wire>
+    <wire>
+      <p1 x="400" y="980"/>
+      <p2 x="400" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="940"/>
+      <p2 x="500" y="980"/>
     </wire>
     <wire>
       <p1 x="980" y="360"/>
@@ -820,15 +1820,31 @@ The SFR in the corresponding address will drive the data  bus.</string>
     </wire>
     <wire>
       <p1 x="980" y="480"/>
-      <p2 x="980" y="500"/>
+      <p2 x="980" y="520"/>
     </wire>
     <wire>
-      <p1 x="1060" y="700"/>
-      <p2 x="1060" y="740"/>
+      <p1 x="660" y="980"/>
+      <p2 x="660" y="1080"/>
     </wire>
     <wire>
-      <p1 x="1340" y="360"/>
-      <p2 x="1340" y="560"/>
+      <p1 x="1080" y="960"/>
+      <p2 x="1080" y="1000"/>
+    </wire>
+    <wire>
+      <p1 x="1240" y="1000"/>
+      <p2 x="1240" y="1080"/>
+    </wire>
+    <wire>
+      <p1 x="1240" y="300"/>
+      <p2 x="1240" y="360"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="360"/>
+      <p2 x="440" y="440"/>
+    </wire>
+    <wire>
+      <p1 x="440" y="640"/>
+      <p2 x="440" y="720"/>
     </wire>
   </wires>
   <measurementOrdering/>
