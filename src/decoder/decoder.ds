@@ -18,25 +18,17 @@ J(STAGE_RESET_ALL)
 #           stage fetch
 # -------------------------------------
 STAGE_FETCH:
-RF(PCL),  ALU(A), SR(WE)
-RF(PCH),  ALU(A), WR(WE)
+RF(PCL),  ALU(A),  SR(WE)
+RF(PCH),  ALU(A),  WR(WE)
+STAGE_PC_SKIP_LOAD_PC:
 RF(IR,WE),BUS(ROM)
 
-# set parity flag
-RF(A),      ALU(PF),   BR(ALUDF)
-RF(PSW,WE), ALU(SETPF), BR(ONE) 
-
-@INC "snippet\inc_pc_srwr_npch.ds"
-
-RF(IR), J(0),MIPCSRC(DECVEC), BR(ZERO) # set BR to prepare increase PC
-
-STAGE_FETCH_SKIP_LOAD_IR:
 
 # set parity flag
 RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE) 
 #increase PC
-@INC "snippet\inc_pc_wrsr.ds"
+@INC "snippet\inc_pc_srwr.ds"
 
 ###
 # indstruction decode jump
@@ -64,7 +56,7 @@ IRSEG_F5: #--------------------
 
 IRSEG_F4: #--------------------
 #CPL A
-@INC "instructions\F4_CPL_A.ds"
+RF(A,WE), ALU(NA), J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
@@ -694,7 +686,7 @@ IRSEG_2: #--------------------
 
 
 IRSEG_0: #--------------------
-@INC "instructions\00_NOP.ds"
+J(STAGE_CHECK_INTERRUPT)
 #------------------------------
 
 
@@ -706,14 +698,10 @@ CSEG_ACALL_ADDR11:
 
 ADDC_PC_BEFORE_CHECK_INTERRUPT:
 RF(PCL, WE), ALU(ADDC), SR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
-RF(PCH, WE), ALU(INCC), WR(WE)
-RF(IR,WE), BUS(ROM), J(STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR)# PCH + CY
-
-INC_PC_BEFOR_INT_ASSUME_PCH_IN_WR:
-@INC "snippet\inc_pc_npch_jintskiplir.ds"
+RF(PCH, WE), ALU(INCC), WR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
 
 INC_PC_BEFORE_CHECK_INTERRUPT:
-@INC "snippet\inc_pc_jintskiplir.ds"
+@INC "snippet\inc_pc_srwr.ds"
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE
@@ -721,10 +709,48 @@ INC_PC_BEFORE_CHECK_INTERRUPT:
 # 3. J to interrupt vector
 ######################################################## 
 STAGE_CHECK_INTERRUPT:
-@INC "int_jump_to.ds", "STAGE_FETCH"
+#------------- check EA
+# 1. WR <- IE
+# 2. jump_if(IE < 0x80)
+RF(IE), ALU(A),  WR(WE), JLT(0x81, STAGE_FETCH)
 
-STAGE_CHECK_INTERRUPT_SKIP_LOAD_IR:
-@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_LOAD_IR"
+#------------- check IE
+# T0 <- IRQ
+RF(T0,WE),    BUS(IRR)
+# 1. T0 <- IE & IRR
+# 2. jump_if(IRR == 0)
+RF(T0,WE),    ALU(AND),   WR(WE), JLT(0x1, STAGE_FETCH)    
+
+#------------- 
+RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
+# 1. T0, WR <- GENIRRQN(IE & IRR, IP)
+# 2. jump_if(IE & IRR == 0)
+RF(T0,WE), ALU(GENIRRQN), WR(WE), JLT(0x1, STAGE_FETCH)
+# select the highest priority IRQ
+# T0, WR <-SELHIRRQN(IE&IRQ)
+RF(T0, WE), ALU(SELHIRRQN), WR(WE)
+RF(ISR, WE), ALU(ISRSET), IRR(CLR)
+RF(ISR), JGT(0x7F, STAGE_FETCH)
+
+### T0 <- SHIRQN(IRQ) (highest priority IRQ number)
+### NOW T0[1:0]  is the IRQ number, T0[2] is the priority, T0[3] indicates wheather there is a valid IRQ.
+#--------------------------
+
+
+## save PC
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCL),   ALU(A),   RAM(WE)
+RF(SP,WE), ALU(INC),  SR(WE)
+RF(PCH),   ALU(A),   RAM(WE)
+
+
+## load interrupt vector address to pc
+RF(T0,WE), ALU(IVADDR),  WR(WE)
+
+RF(PCH,WE), LI(0)
+RF(PCL,WE),ALU(B)   , J(STAGE_FETCH)
+
+
 ######################################################## 
 # reset all register and PC to 0
 ######################################################## 
