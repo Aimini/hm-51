@@ -1,5 +1,3 @@
 # 0x70 JNZ offset
-RF(A), ALUO(ZF), BR(ZF)
-JBIT(IRSEG_80),  BR(ONE, CPLQ)  #JUMP to SJMP if ZF
-
+RF(A), ALUO(ZF), BR(ONE), JALUNF(IRSEG_80)
 @INC "snippet\inc_pc_srwr_npch_jchkint.ds"
