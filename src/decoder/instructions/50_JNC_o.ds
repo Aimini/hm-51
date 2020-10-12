@@ -2,4 +2,4 @@
 RF(PSW), BR(A7)
 JBIT(IRSEG_80),  BR(ONE, CPLQ)  #JUMP to SJMP if ZF
 
-@INC "snippet\inc_pc_srwr_jchkint.ds"
+@INC "snippet\inc_pc_srwr_npch_jchkint.ds"

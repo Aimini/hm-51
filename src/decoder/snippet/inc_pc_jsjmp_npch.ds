@@ -1,10 +1,10 @@
-
 ###################################################################
-# increase PC, and load insruction to IR by the way
+# increase PC, then jump to execut SJMP
 # require:
 #   BR <- 1
 # leavel:
 #   SR <- PCL
 #   WR <- PCH
 ###################################################################
-@INC "snippet\inc_pc_srwr_endswith.ds","J(STAGE_CHECK_INTERRUPT_PCH_IN_SR)"
+RF(PCL,WE),ALU(INCC), WR(WE) , BR(CY), JALUNF(IRSEG_80)  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), SR(WE),J(IRSEG_80)      # PCH + CY

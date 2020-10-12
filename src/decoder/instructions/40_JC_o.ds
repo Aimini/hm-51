@@ -1,5 +1,5 @@
-# 0x60 JZ offset
+# 0x40 JC offset
 RF(PSW), BR(A7)
 JBIT(IRSEG_80),  BR(ONE)  #JUMP to SJMP if ZF
 
-@INC "snippet\inc_pc_srwr_jchkint.ds"
+@INC "snippet\inc_pc_srwr_npch_jchkint.ds"

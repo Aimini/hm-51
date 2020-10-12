@@ -5,6 +5,7 @@
 # 2. select IRQ with IP
 # 3. J to interrupt vector
 ######################################################## 
+
 #------------- check EA
 # 1. WR <- IE
 # 2. jump_if(IE < 0x80)
@@ -43,5 +44,6 @@ RF(PCH),   ALU(A),   RAM(WE)
 ## load interrupt vector address to pc
 RF(T0,WE), ALU(IVADDR),  WR(WE)
 
-RF(PCH,WE), LI(0)
-RF(PCL,WE),ALU(B)   , J(@0)
+
+RF(PCL,WE),ALU(B), WR(WE)
+RF(PCH,WE), LI(0), SR(WE), J(STAGE_PC_SKIP_LOAD_PC)

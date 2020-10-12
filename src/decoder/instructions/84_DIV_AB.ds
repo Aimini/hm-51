@@ -96,22 +96,22 @@ RF(A, WE), ALU(RLC), BR(A7), J(DIV_MOV_RESULT_SET_FLAG)
 DIV_SUB_DIVISOR_S7:
 RF(B, WE), ALU(B), BR(ONE)
 RF(A, WE), ALU(RLC), BR(ZERO)
-RF(PSW, WE), ALU(SETOVCLRCY),  J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), ALU(SETOVCLRCY),  J(STAGE_CHECK_INTERRUPT_PCH_IN_SR)
 ##############################################################################
 # MOV result
 ##############################################################################
 DIV_MOV_RESULT_SET_FLAG:
 RF(T0), ALU(A), WR(WE)
 RF(B, WE), ALU(B)
-RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_PCH_IN_SR)
 ##############################################################################
 # A is zero
 ##############################################################################
 DIV_ZERO_A:
 RF(B, WE), LI(0), BR(ZERO)
-RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_PCH_IN_SR)
 ##############################################################################
 # divided by zero
 ##############################################################################
 DIV_ZERO_DIVISOR:
-RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT)
+RF(PSW, WE), BR(CPLQ), ALU(SETOVCLRCY), J(STAGE_CHECK_INTERRUPT_PCH_IN_SR)

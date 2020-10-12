@@ -1,0 +1,11 @@
+
+###################################################################
+# increase PC, and skip load PCH if no carry from PCL
+# require:
+#   BR <- 1
+# leavel:
+#   SR <- PCL
+#   WR <- PCH
+###################################################################
+RF(PCL,WE),ALU(INCC), WR(WE) , BR(CY), JALUNF(STAGE_CHECK_INTERRUPT_PCH_IN_SR)  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), SR(WE),JALUNF(STAGE_CHECK_INTERRUPT_PCH_IN_SR)      # PCH + CY

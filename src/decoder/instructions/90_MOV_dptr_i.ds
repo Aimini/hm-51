@@ -2,4 +2,5 @@
 
 RF(DPH, WE), BUS(ROM), BR(ONE)
 @INC "snippet\inc_pc_srwr_npch.ds"
-RF(DPL, WE), BUS(ROM), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)
+RF(DPL, WE), BUS(ROM), BR(ONE)
+@INC "snippet\inc_pc_srwr_npch_jchkint.ds"
