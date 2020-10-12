@@ -33,7 +33,7 @@ def creat_jump_link(p, jump_count, order):
     """
     seg_str_list = list(range(jump_count))
 
-    for i in range(len(jmpords)):
+    for i, seg_no in enumerate(jmpords):
         rs = random.randrange(4)
         rn = random.randrange(8)
         RN = atl.RN(rs, rn)
@@ -67,7 +67,7 @@ def creat_jump_link(p, jump_count, order):
             {atl.crash()}
             '''
 
-        seg_str_list[i] = s
+        seg_str_list[seg_no] = s
 
 
     p += '\n'.join(seg_str_list)
