@@ -747,8 +747,9 @@ RF(PCH),   ALU(A),   RAM(WE)
 ## load interrupt vector address to pc
 RF(T0,WE), ALU(IVADDR),  WR(WE)
 
-RF(PCH,WE), LI(0)
-RF(PCL,WE),ALU(B)   , J(STAGE_FETCH)
+
+RF(PCL,WE),ALU(B),SR(WE)
+RF(PCH,WE), LI(0),WR(WE)  , J(STAGE_PC_SKIP_LOAD_PC)
 
 
 ######################################################## 
