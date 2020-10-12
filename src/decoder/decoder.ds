@@ -18,8 +18,8 @@ J(STAGE_RESET_ALL)
 #           stage fetch
 # -------------------------------------
 STAGE_FETCH:
-RF(PCL),  ALU(A),  SR(WE)
-RF(PCH),  ALU(A),  WR(WE)
+RF(PCL),  ALU(A),  WR(WE)
+RF(PCH),  ALU(A),  SR(WE)
 STAGE_PC_SKIP_LOAD_PC:
 RF(IR,WE),BUS(ROM)
 
@@ -697,8 +697,8 @@ CSEG_ACALL_ADDR11:
 @INC "instructions\x11_ACALL_a11.ds"
 
 ADDC_PC_BEFORE_CHECK_INTERRUPT:
-RF(PCL, WE), ALU(ADDC), SR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
-RF(PCH, WE), ALU(INCC), WR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
+RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
+RF(PCH, WE), ALU(INCC), SR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
 
 INC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_srwr.ds"
@@ -748,8 +748,8 @@ RF(PCH),   ALU(A),   RAM(WE)
 RF(T0,WE), ALU(IVADDR),  WR(WE)
 
 
-RF(PCL,WE),ALU(B),SR(WE)
-RF(PCH,WE), LI(0),WR(WE)  , J(STAGE_PC_SKIP_LOAD_PC)
+RF(PCL,WE),ALU(B), WR(WE)
+RF(PCH,WE), LI(0), SR(WE), J(STAGE_PC_SKIP_LOAD_PC)
 
 
 ######################################################## 

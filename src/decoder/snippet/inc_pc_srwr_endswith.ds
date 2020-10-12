@@ -6,5 +6,5 @@
 #   SR <- PCL
 #   WR <- PCH
 ###################################################################
-RF(PCL,WE),ALU(INCC), SR(WE), BR(CY)  # PCL + 1,  STORE CARRY
-RF(PCH,WE),ALU(INCC), WR(WE), @0       # PCH + CY
+RF(PCL,WE),ALU(INCC), WR(WE), BR(CY)  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), SR(WE), @0       # PCH + CY

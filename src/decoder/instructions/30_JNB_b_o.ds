@@ -2,8 +2,8 @@
 @INC "instructions\get_bit_byte_ends_with.ds", "BR(Q)"
 
 RF(T1), ALUO(EXTB), BR(CY), WR(WE), LI(1), JALUNF(__0)
-RF(PCL, WE), ALU(ADDC), SR(WE), BR(CY)            # PCL + CY + WR,  STORE CARRY
-RF(PCH, WE), ALU(INCC), WR(WE), J(STAGE_CHECK_INTERRUPT)# PCH + CY
+RF(PCL, WE), ALU(ADDC), BR(CY)            # PCL + CY + WR,  STORE CARRY
+RF(PCH, WE), ALU(INCC), J(STAGE_CHECK_INTERRUPT)# PCH + CY
 __0: # jump
-RF(PCL, WE), ALU(ADDC), SR(WE), BR(CY)     # PCL + CY + WR,  STORE CARRY
-RF(PCH, WE), ALU(INCC), WR(WE), J(IRSEG_80)# PCH + CY
+RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY)     # PCL + CY + WR,  STORE CARRY
+RF(PCH, WE), ALU(INCC), SR(WE), J(IRSEG_80)# PCH + CY

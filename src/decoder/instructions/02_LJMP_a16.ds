@@ -2,6 +2,6 @@
 RF(T0,WE),BUS(ROM), BR(ONE)
 @INC "snippet\inc_pc_srwr_npch.ds"
 
-RF(PCL,WE),BUS(ROM), SR(WE)
+RF(PCL,WE),BUS(ROM)
 RF(T0), ALU(A), WR(WE)
 RF(PCH, WE), ALU(B), J(STAGE_CHECK_INTERRUPT)

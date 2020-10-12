@@ -3805,7 +3805,7 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-300"/>
     </wire>
     <wire>
-      <p1 x="-580" y="-300"/>
+      <p1 x="-560" y="-300"/>
       <p2 x="-540" y="-300"/>
     </wire>
     <wire>
@@ -4081,7 +4081,7 @@ through a bus transceiver.</string>
       <p2 x="-1120" y="-320"/>
     </wire>
     <wire>
-      <p1 x="-560" y="-320"/>
+      <p1 x="-580" y="-320"/>
       <p2 x="-540" y="-320"/>
     </wire>
     <wire>
@@ -4106,7 +4106,7 @@ through a bus transceiver.</string>
     </wire>
     <wire>
       <p1 x="-580" y="-440"/>
-      <p2 x="-580" y="-300"/>
+      <p2 x="-580" y="-320"/>
     </wire>
     <wire>
       <p1 x="-360" y="280"/>
@@ -4117,7 +4117,7 @@ through a bus transceiver.</string>
       <p2 x="-560" y="-440"/>
     </wire>
     <wire>
-      <p1 x="-560" y="-320"/>
+      <p1 x="-560" y="-300"/>
       <p2 x="-560" y="-280"/>
     </wire>
     <wire>
