@@ -1,3 +1,3 @@
 # 0x60 JZ offset
-RF(A), ALUO(ZF), BR(ONE), JALUF(IRSEG_80)
+RF(A), ALUO(ZF), BR(ONE), BUS(ROM), WR(WE), JALUF(CSEG_SJUMP_OFFSET_IN_WR)
 @INC "snippet\inc_pc_srwr_npch_jchkint.ds"
