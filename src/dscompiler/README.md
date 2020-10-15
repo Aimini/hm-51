@@ -100,7 +100,7 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
  ```
  *directive @INC*
 
-  We only support one directive `@INC`, it's used to reuse code, this is the arguments meaning of `@ INC`:
+  `@INC` directive is used to reuse code, this is the arguments meaning of `@ INC`:
 
   ``` powershell
   @INC "filename","ph0","ph1",...,"phN"
@@ -153,6 +153,126 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
    - replace placeholder in the content.
    - paste it into the current file, replacing the line with `@INC`.
 
+ *directive @DECVEC*
+
+ This is an architecture specific directive, it's only useful in the current design and focuses on the decoding stage optimization.
+
+ In the typeical decode stage, we using `IR` to generate instruction vector addresses(kinda like interrupt vectors) and there are unconditional jump microcontrols in each vector that jump to the target code in execution stage. Each vector can contain 2 microinstruction(more precisely, each vector is located at address `(IR << 1) + 1`), so you usually copy two jump in there. This directive will help you doing this better and make some extra optimization.
+  ``` powershell
+ # start from 0x0000
+ J(STAGE_RESET) # 
+ J(INSTRUCTION_0)#  (0 << 1) + 1
+ J(INSTRUCTION_0)#
+ J(INSTRUCTION_1)#  (1 << 1) + 1
+ J(INSTRUCTION_1)
+ J(INSTRUCTION_1)#  (2 << 1) + 1
+ J(INSTRUCTION_1)
+ # ...
+
+ INSTRUCTION_00:
+ # ...
+ INSTRUCTION_01:
+ # ...
+  # ...
+ ```
+  When you are using this directive, the argument `n` should be provided to indicate how many vectors you need(typcially the number of instruction). There can only be `n` of `VEC` microcontrols after this directive, other microcontrols and jump label are not allowed.
+ 
+ for example:
+  ``` powershell
+ # start from 0x0000
+ J(STAGE_RESET) # 
+ #assume we have 10 instructions
+ @DECVEC "0xA"
+ VCE(INSTRUCTION_0)
+ # THERE_VEC_0:  # not allow
+ # RF(A), VCE(INSTRUCTION_0),# not allow too
+ VCE(INSTRUCTION_1)
+ # vector 2-9.........
+ VCE(INSTRUCTION_A)
+ 
+ INSTRUCTION_00:
+ # implemention of INSTRUCTION 0...
+ INSTRUCTION_01:
+ # implemention of INSTRUCTION 1...
+ # instrcution 2-9...
+ INSTRUCTION_0A:
+# implemention of INSTRUCTION 10
+ ```
+
+The real effect of this directive is to help you use the idle controls in the decode vector. As you can see, there nothing to do in vector except jump. We can suck some microinstructions from execution stage to there to reduce the total cycle of an instruction.
+
+ for example, this is the original text in the source file:
+  ``` powershell
+ # start from 0x0000
+ J(STAGE_RESET) # 
+ #assume we have 10 instructions
+ @DECVEC "0x3"
+ VCE(INSTRUCTION_0)
+ VCE(INSTRUCTION_1)
+ VCE(INSTRUCTION_2)
+ 
+ INSTRUCTION_00:
+ RF(A,WE), LI(0)
+ RF(B,WE), LI(1)
+ RF(C,WE), LI(2)
+ INSTRUCTION_01:
+ RF(A,WE), LI(0), J(NEXT)
+ RF(B,WE), LI(1)
+ RF(C,WE), LI(2)
+ INSTRUCTION_02:
+  RF(A,WE), LI(0), JBIT(NEXT)
+  RF(B,WE), LI(1)
+  RF(C,WE), LI(2)
+  NEXT:
+ ```
+  And this is the equivalent microinstructions after optimization. notice that how it do the optimization:
+  ``` powershell
+ # start from 0x0000
+ J(STAGE_RESET) # 
+ #assume we have 10 instructions
+ # -----instruction 1
+ RF(A,WE), LI(0), J(NEXT)
+ RF(B,WE), LI(1)
+  # ----- instruction 1
+ RF(A,WE), LI(0), J(INSTRUCTION_01__0)
+ RF(B,WE), LI(1)
+ # ----- instruction 2
+ RF(A,WE), LI(0), JBIT(NEXT)
+ RF(B,WE), LI(1), J(INSTRUCTION_02__1)
+ 
+ INSTRUCTION_00:
+ RF(A,WE), LI(0), J(NEXT)
+ INSTRUCTION_00__0: RF(B,WE), LI(1)
+ INSTRUCTION_00__1: RF(C,WE), LI(2)
+ INSTRUCTION_01:
+ RF(A,WE), LI(0)
+ INSTRUCTION_01__0: RF(B,WE), LI(1)
+ INSTRUCTION_01__1: RF(C,WE), LI(2)
+ INSTRUCTION_02:
+  RF(A,WE), LI(0), JBIT(NEXT)
+ INSTRUCTION_02__0: RF(B,WE), LI(1)
+ INSTRUCTION_02__1: RF(C,WE), LI(2)
+  NEXT:
+  NEXT:
+ ```
+ This is the case that optimization can't be performed:
+  ``` powershell
+ # start from 0x0000
+ J(STAGE_RESET) 
+
+@DECVEC "1"
+ VEC(INSTRUCTION_00) # <- I can't do anything, just jump to there
+ # J(INSTRUCTION_00)
+  # .... 
+
+ INSTRUCTION_00:
+ RF(A,WE), LI(0), JBIT(NEXT) # <- condtion jump!
+ RF(B,WE), JLT(0x80, NEXT)   # <- condtion jump too!
+ RF(C,WE), LI(2)
+ # .... 
+
+  NEXT:
+ ```
 
 ## Disassemble
  In the case you want to correct syntax errors or view the tokens of the composite-control is transalted, you can using the disassemble function of compile.py.
@@ -168,6 +288,7 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
  Using `-d` can dump more information about you decoder script, it's provide more powerful tool to inspect the control token conflicts or hardware desgin issues.
 
  ```
+ 
  compile.py -d <disassemble_file> -i <input_file> -o <ouput_file>
  ```
  
