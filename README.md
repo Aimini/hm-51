@@ -45,10 +45,10 @@
  python3 tools/test_all.py test/generate/ temp/
  ```
 
-## Hardware Behaviors and Resources 
 
 
-### don't assume what hardware doing
+
+## Don't assume what hardware doing
 In standard 8051 cpu, you might using some trick based on hardware behavior.
 
 For example, assume lower byte of 16-bit XRAM's address are connected to `P0`, higher byte is connected to `P2`, `R0 = 1`,`DPTR = 0xFF01`,`XRAM[1] = 3`,`XRAM[0xFF01] = 4`  what the result of `A` after the following code are executed?
@@ -65,24 +65,25 @@ You might say: Obviously, `MOV A, @DPTR` will make `A = 4` , but it's will also 
 
 What you should do is read this chapter to understand how to connect peripheral devices(XRAM, SFR, etc), the behavior of external components is up to you.
 
+### Logical Design and Resources of the Circuit
+I will intruduce the logic design and resources in the circuit simulation file, the hardware design's should see in another README.m file.
+
 ### interface
+Although there are some default peripherals in the design, but they are only for testing and may behave differently compared to other CPUs. So, there will introduce the interface of CORE.dig so that you can attach your components to it.
+
+However, if you are lazy or intreasted in peripherals, don't worry, It's not powerful but easy to use, you can see the details in there.
 
 ``` python
-      ╔════════════╗
-──/1──╢>CLKI   CLKO╟───/1───
-      ║            ║
-      ║          IO╟───/8───
-      ║            ║
-      ║     IRQ_CLR╟───/1───
-      ║     /IRQ_OE╟───/1───
-      ║     /SFR_WE╟───/1───
-      ║     /SFR_OE╟───/1───
-      ║   /XRAM_AWE╟───/1───
-      ║    /XRAM_OE╟───/1───
-      ║            ║
-      ║     Address╟──/16───
-      ║            ║
-      ╚════════════╝     
+      ╔════════════════╗
+──/1──╢>CLKI       CLKO╟───/1───
+──/1──╢/CLR          IO╟───/8───
+──/1──╢MC       /SFR_WE╟───/1───
+──/1──╢SW       /SFR_OE╟───/1───
+──/1──╢Go       IRR_CLR╟───/8───
+──/1──╢Stall    Address╟──/8───
+──/8──╢IRR_IN          ║
+      ║                ║
+      ╚════════════════╝     
 
 ```
   - CLKI
@@ -90,24 +91,31 @@ What you should do is read this chapter to understand how to connect peripheral 
   
   - CLKO
     - CPU's main clock, provide clock to peripherals(SFR).
-
+  - Run Control
+    - MC, manual clock, using this to step each microinstruction when SW is high. It's contain synchronization circuit, so it's suitable for manual operatation.
+    - SW, switch between manual clock or free run. It's contain synchronization circuit, so it's suitable for manual operatation.
+    - Go, let CORE leave stall state. It's contain synchronization circuit, so it's suitable for manual operatation.
+    - Stall, let CORE enter stall state immediately.
+    - 
  - IO Pin
-   -  output data when writing SFR/XRAM.
-   -  receive data when reading SRF/XRAM.
-   -  receive IRQs when checking interrupt.
-   -  output IRQ to when CPU wants you to clear this IRQ.
+   -  output data when writing SFR.
+   -  receive data when reading SRF.
   
 -  Control Pin
-   -  IRQ_CLR, clear IRQ according IO pin value.
-   -  IRQ_OE, IRQs output enable.
+   - IRR_IN, connect IRR to this so that CPU can check if there are interrupt happend.
+   -  IRR_CLRB, clear IRR bit according to thiscontrol.
    -  /SFR_WE, SFR write enable,active low, prepared for clocked chip.
    -  /SFR_OE, SFR output enable, active low.
    -  /XRAM_AWE, RAM write enable, active low, prepared for async chip.
-   -  /XRAM_OE, RAM output enable, active low.
    
  - Address Pin
-   - using all 16 bits when operating XRAM
-   - using higher 8 bits when operating SFR by RAM address.
+   - using to select SFR by RAM address.
+   - 
+### CORE resource
+ - RAM, 0x100 byte
+ - XRAM 0x10000 bytes
+ - ROM  0x10000 bytes
+ - SFR  A,B,SP,PSW,DPL,DPH,IE,IP 
 
 ### add SFR
  When adding SFR, the input/ouput pin of the device should be connected to the IO pin of CPU, the higher 8-bit of the address pin of the CPU will ouput the SFR address, and your device should check the address to ensure that the CPU is trying to operate it. 
@@ -130,44 +138,30 @@ What you should do is read this chapter to understand how to connect peripheral 
     ║          ║           ╚═╝ MD ─╢&╟────────────────────┘
     ║   /SFR_OE╟───/1────╢~╟───────╢ ║               
     ║          ║        0-7        ╚═╝               
-    ║          ║      ┌─────     ╔══════════╗                                        
-    ║   Address╟──/16─┥ 8-15     ║Comparator║                                            
-    ║          ║      └──────────╢ A       Q╟─ MD                                          
-    ╚══════════╝           0xE2──╢ B        ║                                          
-                                 ╚══════════╝      
+    ║          ║              ╔══════════╗                                        
+    ║          ║              ║Comparator║                                            
+    ║   Address╟───/8─────────╢ A       Q╟─ MD                                          
+    ╚══════════╝        0xE2──╢ B        ║                                          
+                              ╚══════════╝      
   ```
 
 
 
 
-### add XRAM
- XRAM is controlled by `Address`, `/XRAM_AWE` and `/XRAM_OE`. Remember, `/XRAM_AWE` is a short low pulse before rasing edge of `CLKO`, so an asynchronous SRAM chip is required.
-
-  ```
-    ╔══════════╗               ╔═════════╗
-    ║        IO╟─────/8────────╢IO       ║
-    ║   Address╟─────/16───────╢ADDR     ║ 
-    ║ /XRAM_AWE╟─────/1────────╢/WE      ║                   
-    ║  /XRAM_OE╟─────/1────────╢/OE      ║                                           
-    ╚══════════╝               ╚═════════╝                                          
-                                   
-  ```
 
 ### Interrupt
-  When `/IRQ_OE` is 0, you should output IRQ to IO BUS, `BUS[0]` should be the highest priority interrupt request, and `BUS[7]` should be the lowest priority interrupt request.
+  When `IRR_IN` should connect to IRR output, `IRR_IN[0]` should be the highest priority interrupt request, and `IRR_IN[7]` should be the lowest priority interrupt request.
 
-  At some point after the CPU accepts the interrupt, the CPU will set `IRQ_CLR` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits in the register at this time.
+  At some point after the CPU accepts the interrupt, the CPU will set `IRR_CLR[N]` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits `IRR[N]` in the register at this time.
 
-  If the CPU finds that the IRQ in `BUS[0]` is the highest priority interrupt request, then `BUS[0]` will output `0b00000001` when `IRQ_CLR` is 1. And, if the `BUS[1]` is the highest priority interrupt request, then `BUS[0]` will output `0b00000010`.
 
   ```
     ╔═════════════╗        ╔═════════╗
     ║          CLK╟───/8───╢>        ║
-    ║           IO╟───/8───╢   IRR   ║
-    ║      IRQ_CLR╟───/1───╢         ║
-    ║      /IRQ_OE╟───/1───╢         ║                           
-    ╚═════════════╝        ╚═════════╝                         
-                                   
+   ┌╢IRR_IN     IO╟───/8───╢   IRR  Q╟─┐
+   |║      IRR_CLR╟───/8───╢         ║ |                    
+   |╚═════════════╝        ╚═════════╝ |                      
+   └───────────────────────────────────┘                                   
   ```
   Here is an example of IRR logic.
 
@@ -175,9 +169,9 @@ What you should do is read this chapter to understand how to connect peripheral 
                                 ╔════════╗
     CLK ────────────────────────╢>CLK   Q╟─┐
     IRQ ───────────────┐  ╔═╗   ║ IRR[0] ║ |     
-            ╔═╗    ╔═╗ └──╢|╟───╢ D      ║ |     
-   IRQ_CLR ─╢&╟o───╢&╟────╢ ║   ╚════════╝ |                  
-    BUS[0] ─╢ ║  ┌─╢ ║    ╚═╝              | 
-            ╚═╝  | ╚═╝                     |                                       
+                   ╔═╗ └──╢|╟───╢ D      ║ |     
+  /IRR_CLR[N]──────╢&╟────╢ ║   ╚════════╝ |                  
+                 ┌─╢ ║    ╚═╝              | 
+                 | ╚═╝                     |                                       
                  └─────────────────────────┘        
   ```
