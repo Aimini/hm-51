@@ -14,8 +14,6 @@ from .named_parameters_lut import NamedParametersLUT
 from .value_paramters_LUT import ValueParametersLUT
 
 
-
-
 # one control have many parameters,
 # one parameter have many avaliable enum name
 # one encoding  enum name
@@ -48,7 +46,7 @@ BUS = NamedParametersLUT([
         'sh': 'SRC',
         'name': 'bus ouput driver',
         'len': 3,
-        'enum': ['ALUS', 'ALUDL', 'ALUDH','RAM', 'ROM',  'XRAM', 'IMMED', 'IRR']
+        'enum': ['ALUS', 'ALUDL', 'ALUDH', 'RAM', 'ROM',  'XRAM', 'IMMED', 'IRR']
     }
 ])
 
@@ -57,7 +55,7 @@ WR = NamedParametersLUT([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'al':True,
+        'al': True,
         'enum': ['', 'WE']
     }
 ])
@@ -67,7 +65,7 @@ SR = NamedParametersLUT([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'al':True,
+        'al': True,
         'enum': ['', 'WE']
     }
 ])
@@ -77,7 +75,7 @@ RFSRCR = NamedParametersLUT([
         'sh': 'WE',
         'name': 'write enable',
         'len': 1,
-        'al':True,
+        'al': True,
         'enum': ['', "WE"],
     }
 ])
@@ -87,7 +85,7 @@ BR = NamedParametersLUT([
         'name': 'input select',
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
-                 ['ALUDF', 'CY', 'ZF', 'PF'], "ALUDNF", 'A0', 'A7'],
+                 "ALUDNF", ['ALUDF', 'CY', 'ZF', 'PF'],  'A0', 'A7'],
     },
     {
         'sh': 'CPLQ',
@@ -201,7 +199,7 @@ JUMPABS = NamedParametersLUT([
         'name': 'jump type',
         'len': 3,
         'enum':  ['', 'J', 'JGT', 'JEQ',
-                  'JLT', 'JBIT', 'JALUF', 'JALUNF']
+                  'JLT', 'JALUNF', 'JALUF', 'JBIT']
     }
 ])
 
