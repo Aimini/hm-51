@@ -1,0 +1,3 @@
+# increase PC, you should set BR(ONE) before include this file
+RF(PCL,WE),ALU(INCC), BR(CY)  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), @0  # PCH + CY
