@@ -1,5 +1,18 @@
 # hm-51 Documention
 ---
+## Table of Cotents 
+  - [Introduction](#introduction)
+  - [Project Structure](#project-structure)
+  - [Check The Degin Before Anything](#check-the-degin-before-anything)
+    - [Environment](#environment)
+    - [Run test](#run-test)
+  - [Don't Assume What Will Hardware Doing](#dont-assume-what-will-hardware-doing)
+  - [Logical Design And Resources Of The Circuit](#logical-design-and-resources-of-the-circuit)
+    - [Interface](#interface)
+    - [Core resource](#core-resource)
+    - [Add SFR](#add-sfr)
+    - [Interrupt](#interrupt)
+    
 ## Introduction
  hm-51 is a digital circuit project about 8051 CPU. The ultimate goal of hm-51 is to use common logic chip to build a CPU that supports MSC-51 ISA. I focus on two targets:
 
@@ -7,7 +20,9 @@
   
    - Keeping the hardware design on a smaller scale, which means that if we want to implement it using real commercially available DIP digital logic chips, we will not get a giant circuit.
 
-  In fact, we only care about the correct behavior of the instructions. I have never considered it to be consistent with the standard hardware behavior. I also discarded many non-essential SFRs to keep the circuit compact. Therefore, before starting any software work, you should read the summary [Hardware Behaviors and Resources](##hardware-behaviors-and-resources).
+In fact, we only care about the correct behavior of the instructions. I have never considered it to be consistent with the standard hardware behavior. I also discarded many non-essential SFRs to keep the circuit compact. Therefore, before starting any software work, you should read the summary [Don't assume what hardware doing](#dont-assume-what-hardware-doing).
+
+The majority of this document is introduction of resources which in circuit simulation file. although the practical hardware is slightly differ to software simulation, I always put the hardware introduction into a separate file due to timing constraints and drive capabilities.
 
 ## Project Structure
   - **src**
@@ -22,12 +37,14 @@
     - **generate:** contain all *.A51 generate scripts.
     - **compile_verify.py:** used to compile-simulate-verify one .A51 file.
   - **tools**
-    - **py51:** a 8051 insturction simulator.
-    - **Digital:** a digital circuit desgin tool.
-    - **alugen.bat**
-    - **dscmp.bat**
-    - **test_all.bat**
-    - **test_one.bat**
+    - **testtools**
+      - **compile.py** implementation of compile the .A51 file
+      - **test_all.py** test all generate script in one folder
+      - **test_process.py**
+    - **51sim:** a 8051 insturction simulator.
+    - **Digital:** a visual digital circuit desgin tool.
+    - **alugen.bat** shortcut to generate ALUs' LUT file
+    - **dscmp.bat** shortcut to compile decoder script
 
 ## Check The Degin Before Anything
  If the hardware design is not correct, it may cause inexplicable problems, so you should first check the design to ensure that the hardware is working correctly.
@@ -35,6 +52,7 @@
 ### Environment
   - python 3.8.0
   - A51.exe/BL51.exe/OH51.exe(keil C51 tools)
+  - py51
  
   All other tools are provided in "tools" directory.
 
@@ -46,9 +64,7 @@
  ```
 
 
-
-
-## Don't assume what hardware doing
+## Don't Assume What Will Hardware Doing
 In standard 8051 cpu, you might using some trick based on hardware behavior.
 
 For example, assume lower byte of 16-bit XRAM's address are connected to `P0`, higher byte is connected to `P2`, `R0 = 1`,`DPTR = 0xFF01`,`XRAM[1] = 3`,`XRAM[0xFF01] = 4`  what the result of `A` after the following code are executed?
@@ -57,7 +73,7 @@ For example, assume lower byte of 16-bit XRAM's address are connected to `P0`, h
 MOVX A, @DPTR
 MOVX A, @R0
 ```
-You might say: Obviously, `MOV A, @DPTR` will make `A = 4` , but it's will also make `P0 = 0x01`,`P2 = 0xFF`. When we use `MOVX A, @R0`, it's only make `P0 = R0`,that is, `P0 = 1`, so the 16-bit address is also 0xFF01, which means `A = 4` too.
+You might say: it's Obvious, `MOV A, @DPTR` will make `A = 4` , but it's will also make `P0 = 0x01`,`P2 = 0xFF`. When we use `MOVX A, @R0`, it's only make `P0 = R0`,that is, `P0 = 1`, so the 16-bit address is also 0xFF01, which means `A = 4` too.
 
  But, in my design, `MOVX A, @DPTR` is just move data from external address according to DPTR's value,`P0` and `P1` are not exist in CPU core.
 
@@ -65,10 +81,10 @@ You might say: Obviously, `MOV A, @DPTR` will make `A = 4` , but it's will also 
 
 What you should do is read this chapter to understand how to connect peripheral devices(XRAM, SFR, etc), the behavior of external components is up to you.
 
-### Logical Design and Resources of the Circuit
-I will intruduce the logic design and resources in the circuit simulation file, the hardware design's should see in another README.m file.
+## Logical Design And Resources Of The Circuit
+I will intruduce the logic design and resources in the circuit simulation file, the hardware design's should see in another README.md file.
 
-### interface
+### Interface
 Although there are some default peripherals in the design, but they are only for testing and may behave differently compared to other CPUs. So, there will introduce the interface of CORE.dig so that you can attach your components to it.
 
 However, if you are lazy or intreasted in peripherals, don't worry, It's not powerful but easy to use, you can see the details in there.
@@ -96,28 +112,27 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
     - SW, switch between manual clock or free run. It's contain synchronization circuit, so it's suitable for manual operatation.
     - Go, let CORE leave stall state. It's contain synchronization circuit, so it's suitable for manual operatation.
     - Stall, let CORE enter stall state immediately.
-    - 
+  
  - IO Pin
    -  output data when writing SFR.
    -  receive data when reading SRF.
   
 -  Control Pin
    - IRR_IN, connect IRR to this so that CPU can check if there are interrupt happend.
-   -  IRR_CLRB, clear IRR bit according to thiscontrol.
+   -  IRR_CLRB, clear IRR bit according to this control.
    -  /SFR_WE, SFR write enable,active low, prepared for clocked chip.
    -  /SFR_OE, SFR output enable, active low.
-   -  /XRAM_AWE, RAM write enable, active low, prepared for async chip.
    
  - Address Pin
    - using to select SFR by RAM address.
-   - 
-### CORE resource
+
+### Core resource
  - RAM, 0x100 byte
  - XRAM 0x10000 bytes
  - ROM  0x10000 bytes
  - SFR  A,B,SP,PSW,DPL,DPH,IE,IP 
 
-### add SFR
+### Add SFR
  When adding SFR, the input/ouput pin of the device should be connected to the IO pin of CPU, the higher 8-bit of the address pin of the CPU will ouput the SFR address, and your device should check the address to ensure that the CPU is trying to operate it. 
 
   In the case of CPU operating you deivce, when `SFR_OE` is hight, your device must ouput the desired content to the IO pin, and when `SFR_WE` is high, your device should accept then value of the IO Pin.
@@ -172,6 +187,7 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
                    ╔═╗ └──╢|╟───╢ D      ║ |     
   /IRR_CLR[N]──────╢&╟────╢ ║   ╚════════╝ |                  
                  ┌─╢ ║    ╚═╝              | 
-                 | ╚═╝                     |                                       
+                 | ╚═╝                     |            
                  └─────────────────────────┘        
   ```
+
