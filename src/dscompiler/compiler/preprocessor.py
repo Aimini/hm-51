@@ -29,11 +29,22 @@ class Preprocessor():
     def __init__(self, file):
         self.file = pathlib.Path(file)
         self.filedir = self.file.parent
+        # the include file chain information of the current line
+        #  [LineInfo, LineInfo, ....]
         self._inc_chain_info = []
+        # all lines info
+        # each element in this list is a include file chain list which
+        # have the same meaning as self._inc_chain_info
+        # [
+        #   [LineInfo, LineInfo] #line 0
+        # ]
         self._all_lines_info = []
+        #final file
         self._outputfile = StringIO()
+        # provide information of directive of DEVVEC
         self._decveclineno = None
         self._decvecnum = None
+        # how many line we scanned
         self._linecnt = 0
 
     def decvecinfo(self):

@@ -100,7 +100,20 @@ class DecvecConverter:
         self.vec_lineno = vec_lineno
         self._vec_num = vec_num
         self.hl_microinstructions = hl_microinstructions
-        self.replacelines = {}
+        #record what will replace the VEC
+        # {
+        #   VECindex0 : { token0, token1}，
+        #   VECindex1 : { token0, token1}
+        #   ...
+        # }
+        self.replacelines = {} 
+
+        #record the jump marks that will be inserted into the target that in the VEC parameter.
+        # {
+        #   VECindex0 : { token0, token1}，
+        #   VECindex1 : { token0, token1}
+        #   ...
+        # }
         self.insertlines = {}
 
     def _is_only_vec_ctl(self, microinstrction):
@@ -163,7 +176,7 @@ class DecvecConverter:
         i = target_index
         insert_microinstructions = []
         while i < len(self.hl_microinstructions) and len(insert_microinstructions) < 2:
-            if self._is_any_ctl(self.hl_microinstructions[i][1]):# skip empty/jump mark only line
+            if self._is_any_ctl(self.hl_microinstructions[i][1]):# skip line only have empty/jump mark
                 cp = copy.deepcopy(self.hl_microinstructions[i])
                 cp[0] = current_lineno
                 insert_microinstructions.append(cp)
@@ -172,16 +185,17 @@ class DecvecConverter:
         # create target jump label  
         jumplabel =''.join(random.choices(string.ascii_uppercase, k=10))
         jumplabel +'_' + target_label
-        insertjumplabels = []
+        # record label name(string) we insert
+        insertjumplabels = [] 
         for x in range(2):
             labelinsertindex = target_index + 2 + x
             lineno = self.hl_microinstructions[labelinsertindex][0]
-            if self.insertlines.get(labelinsertindex,None) == None:
+            if self.insertlines.get(labelinsertindex) == None:
                 insertjumplabels.append(target_label+ '_'+ jumplabel  +  str(x) + '__' )
                 r = micro_control.MicroCTL(lineno, micro_control.JUMP_MARK, insertjumplabels[x])
                 self.insertlines[labelinsertindex] = [lineno, [r]]
             else:
-                insertlabel = self.insertlines.get(labelinsertindex)[1]
+                insertlabel = self.insertlines.get(labelinsertindex)[1]# already have name cause by another VEC directiver
                 insertjumplabels.append(insertlabel[0].value)
 
             
@@ -197,6 +211,11 @@ class DecvecConverter:
 
 
     def _find_jump_label(self, label_name):
+        '''
+        find the hl_microinstructions[index] that cantain label_name
+        return:
+            return the index if find otherwise is return -1
+        '''
         for i, (lineno, mcrioinstruction) in enumerate(self.hl_microinstructions):
             for ctl in mcrioinstruction:
                 if ctl.type == micro_control.JUMP_MARK and ctl.value == label_name:
@@ -206,13 +225,15 @@ class DecvecConverter:
     def result(self):
         if self.vec_lineno == None:
             return self.hl_microinstructions
-        
+
+        # find vec start index
         vecstartindex = 0
         for  i, (lineno, microinstruction) in enumerate(self.hl_microinstructions):
             if lineno >= self.vec_lineno:
                 vecstartindex = i
                 break
-
+        
+        # find the index of the target jump label in hl_microinstrcutions
         for n in range(self._vec_num):
             idx  = vecstartindex + n
             lineno, microinstruction = self.hl_microinstructions[idx]
@@ -221,18 +242,20 @@ class DecvecConverter:
             microctl = microinstruction[0]
             target_label = microctl.parameters[0]
             target_index = self._find_jump_label(target_label)
-            
+            # where is my label?
             if target_index == -1:
                 raise Exception("'VEC' paramater label {!r} not exists".format(target_label))
-            self._generate_vec_insert(target_label,idx, target_index)
+            self._generate_vec_insert(target_label, idx, target_index)
+        
+        # produce the final microinstrcution stream
         ret = []
         for i, info in  enumerate(self.hl_microinstructions):
-            if self.replacelines.get(i,None) != None:
+            if self.replacelines.get(i) != None:
                 for ins in self.replacelines.get(i):
                     for s in ins[1]:
                         assert(not isinstance(s, list))
                     ret.append(ins)
-            elif self.insertlines.get(i,None) != None:
+            elif self.insertlines.get(i) != None:
                 a= self.insertlines.get(i)
                 for s in a[1]:
                     assert(not isinstance(s, list))

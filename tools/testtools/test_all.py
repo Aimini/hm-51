@@ -17,7 +17,7 @@ import signal
 args = sys.argv[1:]
 #args = ['gen_test', 'temp']
 usage = '''
-test_one.py <script_dir> <temp_dir>
+test_all.py <script_dir> <temp_dir>
     scan all generate script file in <script_dir> and run it. the file name start with '__' will be ignored.
 
     script_dir: the directory contains all test generate script. 
@@ -56,8 +56,8 @@ def main(executor):
     tasks = []
     find_debug = False
     for filename in os.listdir(script_dir):
-        if filename == 'F8_FF_MOV_Rn_A.py':
-            find_debug = True
+        #if filename == '93_MOVC_A_A_DPTR.py':
+        find_debug = True
 
         if filename in ignored_file:
             continue
@@ -73,6 +73,7 @@ def main(executor):
             continue
         tsk = executor.submit(create_subprocess, fullpathname, temp_dir)
         tasks.append(tsk)
+
 
     
     def cancel_executor():
