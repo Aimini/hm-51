@@ -709,6 +709,7 @@ CSEG_AJMP_ADDR11:
 
 CSEG_ACALL_ADDR11:
 @INC "instructions\x11_ACALL_a11.ds"
+
 CSEG_SJUMP_OFFSET_IN_WR:
 @INC "snippet\sjmp_off_in_wr.ds"
 
@@ -732,6 +733,9 @@ INC_PC_BEFORE_CHECK_INTERRUPT:
 
 INC_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_srwr_npch_jchkint.ds"
+
+INC_PC_SKIP_PF_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_spf_jchkint.ds"
 
 INC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_srwr_spf_npch_jchkint.ds"

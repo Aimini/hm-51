@@ -1,4 +1,4 @@
 # 0x76-0X77, MOV @Ri, #immed
 RF(T0, WE), BUS(ROM)  # T0 <- immed
 @INC "snippet\load_ri_to_sr.ds"
-RF(T0), ALU(A), RAM(WE), BR(ONE), J(INC_PC_BEFORE_CHECK_INTERRUPT)  # A @0 RAM[direect](WR)
+RF(T0), ALU(A), RAM(WE), BR(ONE), J(INC_PC_SKIP_PF_BEFORE_CHECK_INTERRUPT)  # A @0 RAM[direect](WR)

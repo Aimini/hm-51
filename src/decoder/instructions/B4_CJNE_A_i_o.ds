@@ -4,6 +4,6 @@ RF(A), ALU(SUBB), WR(WE), BR(CY)    # WR <- A - #immed
 RF(PSW, WE), ALU(SETCY), BR(ZF)     # SETCY and ZF_B have same o
 
 
-BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_PCH_IN_SR_BEFORE_CHECK_INTERRUPT)
+BR(ONE), WR(WE), LI(1), JBIT(ADDC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT)
 # else excute PC + 1(BR) and execute a SJMP.
 @INC "snippet\inc_pc_jsjmp_npch.ds"

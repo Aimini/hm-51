@@ -1,0 +1,10 @@
+
+###################################################################
+# increase PC, and load insruction to IR by the way
+# require:
+#   BR <- 1
+# leavel:
+#   SR <- PCL
+#   WR <- PCH
+###################################################################
+@INC "snippet\inc_pc_srwr_endswith.ds","J(STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR)"
