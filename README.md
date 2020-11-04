@@ -1,17 +1,25 @@
 # hm-51 Documention
 ---
 ## Table of Cotents 
-  - [Introduction](#introduction)
-  - [Project Structure](#project-structure)
-  - [Check The Degin Before Anything](#check-the-degin-before-anything)
-    - [Environment](#environment)
-    - [Run test](#run-test)
-  - [Don't Assume What Will Hardware Doing](#dont-assume-what-will-hardware-doing)
-  - [Logical Design And Resources Of The Circuit](#logical-design-and-resources-of-the-circuit)
-    - [Interface](#interface)
-    - [Core resource](#core-resource)
-    - [Add SFR](#add-sfr)
-    - [Interrupt](#interrupt)
+- [# hm-51 Documention](#h1-idhm-51-documention-2866hm-51-documentionh1)
+- [Table of Cotents](#table-of-cotents)
+- [Introduction](#introduction)
+- [Project Structure](#project-structure)
+- [Check The Degin Before Anything](#check-the-degin-before-anything)
+  - [Environment](#environment)
+  - [Run test](#run-test)
+- [Don't Assume What Will Hardware Doing](#dont-assume-what-will-hardware-doing)
+- [Logical Design And Resources Of The Circuit](#logical-design-and-resources-of-the-circuit)
+  - [Interface](#interface)
+  - [Core resource](#core-resource)
+  - [Add SFR](#add-sfr)
+  - [Interrupt](#interrupt)
+  - [SFR and Peripherals](#sfr-and-peripherals)
+    - [P0, P1](#p0-p1)
+    - [TCON](#tcon)
+    - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
+    - [SCON](#scon)
+    - [SBUF](#sbuf)
     
 ## Introduction
  hm-51 is a digital circuit project about 8051 CPU. The ultimate goal of hm-51 is to use common logic chip to build a CPU that supports MSC-51 ISA. I focus on two targets:
@@ -191,3 +199,110 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
                  └─────────────────────────┘        
   ```
 
+
+### SFR and Peripherals
+ All available SFRs are listed in the following table, The internal SFR are marked in bold
+ and the SFRs that only implement part of standard function will included in parentheses.
+| Address |    0    |   1    |    2    |    3    |   4   | 5     | 6 | 7 |
+|:-------:|:-------:|:------:|:-------:|:-------:|:-----:|:------|:-:|:-:|
+|   F8    |         |        |         |         |       |       |   |   |
+|   F0    |  **B**  |        |         |         |       |       |   |   |
+|   E8    |         |        |         |         |       |       |   |   |
+|   E0    | **ACC** |        |         |         |       |       |   |   |
+|   D8    |         |        |         |         |       |       |   |   |
+|   D0    | **PSW** |        |         |         |       |       |   |   |
+|   C8    |         |        |         |         |       |       |   |   |
+|   C0    |         |        |         |         |       |       |   |   |
+|   B8    | **IP**  |        |         |         |       |       |   |   |
+|   B0    |         |        |         |         |       |       |   |   |
+|   A8    | **IE**  |        |         |         |       |       |   |   |
+|   A0    |         |        |         |         |       |       |   |   |
+|   98    | (SCON)  |  SBUF  |         |         |       |       |   |   |
+|   90    |  (P1)   |        |         |         |       |       |   |   |
+|   88    |  TCON   |        |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
+|   80    |  (P0)   | **SP** | **DPL** | **DPH** |       |       |   |   |
+
+
+#### P0, P1
+|      Bit      |  7  |  6  |  5  |  4  |  3  | 2   |  1  |  0  |
+|:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
+`P0` `P1` are connect to 8 digit 7-segment display.
+`P0`'s each bit was used to select the digit,
+ `P0[0]` coressponds to digtal 0(far right) and `P0[7]` is used to select digit 7 (far left).
+
+
+ P1 is used to light the segments in one digit, `P1[0]` to `P1[7]` are corresponding to `a~g, dp`.
+
+
+#### TCON
+|      Bit      |  7  |  6  |  5  |  4  |  3  |  2  |  1  |  0  |
+|:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|     Name      | TF1 | TR1 | TF0 | TR0 | IE1 | IT1 | IE0 | IT0 |
+| Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
+
+All bits in this TCON are readable and writable and it's function is consistent with the standand.
+  - IT0 : The interrupt type of external interrupt 0. When it is 0, the type is level trigger, otherwise, it is falling edge trigger.
+  - IE0 : Interrupt 0 flag, set to 1 when  external interrupt 0 occurred, automatically cleared when returning from the corresponding interrupt routine(return by RETI).
+  - IT1, IE1 : Same function as interrupt 0, just relevant to interrupt 1.
+
+  - TR0: Timmer0 enable bit, timmer0 only counts when it is 0.
+  - TF0: Timmer1 overflow bit, set when Timmer0 is overflows(set).
+  - TR1, TF1: Same function as Timmer0, just relevant to timmer1.
+
+#### TL0, TH0, TL1, TH1
+|      Bit      | 7 - 0 |
+|:-------------:|:-----:|
+| Accessibility |   W   |
+
+TLn and THn will form a 16-bit timmer named 'timmern', when you write value to TLn and THn, you are actully writing the reaload value for this timmern,
+and the timmern will automatically load the value when overflow or timmer is disabled.
+
+``` python
+MOV TL0, 0x00
+MOV TH0, 0xFF  # count from 0xFF00  to 0xFFFF, 0x100 cycle total.
+MOV TCON, 0x20 # eable timmer 0
+
+INT_TIMMER0:
+  #do something
+  reti
+```
+
+#### SCON
+|      Bit      | 7 | 6 | 5 | 4 | 3 | 2 |  1  |  0  |
+|:-------------:|:-:|:-:|:-:|:-:|:-:|:--|:---:|:---:|
+|     Name      | X | X | X | X | X | X | TI  | RI  |
+| Accessibility | X | X | X | X | X | X | R/W | R/W |
+
+This register is used to indicate SBUF's state. 
+  - RI: set when SBUF received a byte.
+  - TI: set when byte in SBUF was sent.
+  - 
+ notice: RI and TI won't be cleared by hardware.
+
+
+``` python
+# interrupt routine example
+INT_SERIAL:
+  JB  RI, SERIAL_REC:
+  JB  TI, SERIAL_SENT:
+  #opss! what's wrong here?
+SERIAL_REC:
+  #do something relate to recived byte
+  CLR RI 
+  reti
+
+SERIAL_SENT:
+  #do something relate to byte sent
+  CLR TI
+  reti
+```
+
+#### SBUF
+|      Bit      | 7 - 0 |
+|:-------------:|:-----:|
+| Accessibility |  R/W  |
+
+Writing a byte to SBUF will start the process of sending bytes via UART,
+ while reading SBUF will read the most recently received byte.
+ 
