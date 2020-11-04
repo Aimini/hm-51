@@ -1,7 +1,7 @@
 # hm-51 Documention
 ---
 ## Table of Cotents 
-- [# hm-51 Documention](#h1-idhm-51-documention-2866hm-51-documentionh1)
+- [# hm-51 Documention](#h1-idhm-51-documention-2920hm-51-documentionh1)
 - [Table of Cotents](#table-of-cotents)
 - [Introduction](#introduction)
 - [Project Structure](#project-structure)
@@ -20,7 +20,6 @@
     - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
     - [SCON](#scon)
     - [SBUF](#sbuf)
-    
 ## Introduction
  hm-51 is a digital circuit project about 8051 CPU. The ultimate goal of hm-51 is to use common logic chip to build a CPU that supports MSC-51 ISA. I focus on two targets:
 
@@ -173,7 +172,9 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
 
 
 ### Interrupt
-  When `IRR_IN` should connect to IRR output, `IRR_IN[0]` should be the highest priority interrupt request, and `IRR_IN[7]` should be the lowest priority interrupt request.
+  In the current design, the IRRs ordered by priority are IT0, TF0, IT1, TF1 and (RI | TI).
+
+  In principle, the `IRR_IN` should connect to IRR output, `IRR_IN[0]` should be the highest priority interrupt request, and `IRR_IN[7]` should be the lowest priority interrupt request.
 
   At some point after the CPU accepts the interrupt, the CPU will set `IRR_CLR[N]` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits `IRR[N]` in the register at this time.
 
