@@ -19,18 +19,26 @@ J(STAGE_RESET_ALL)
 # -------------------------------------
 STAGE_FETCH:
 RF(PCL),  ALU(A),  WR(WE)
-RF(PCH),  ALU(A),  SR(WE), J(STAGE_PC_SKIP_LOAD_PC)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_SET_PF)
 
 STAGE_FETCH_SKIP_LOAD_PCH:
-RF(PCL),  ALU(A),  WR(WE), J(STAGE_PC_SKIP_LOAD_PC)
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_SET_PF)
 
-STAGE_PC_SKIP_LOAD_PC:
-RF(IR,WE),BUS(ROM)
+STAGE_FETCH_SKIP_PF:
+RF(PCL),  ALU(A),  WR(WE)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE)
 
+STAGE_FETCH_SKIP_PF_SKIP_LOAD_PCH:
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE)
 
+STAGE_FETCH_SET_PF:
 # set parity flag
 RF(A),      ALU(PF),   BR(ALUDF)
-RF(PSW,WE), ALU(SETPF), BR(ONE) 
+RF(PSW,WE), ALU(SETPF), BR(ONE)
+
+STAGE_FETCH_LOAD_OPCODE:
+RF(IR,WE),BUS(ROM)
+
 #increase PC
 @INC "snippet\inc_pc_srwr_npch.ds"
 
@@ -38,6 +46,8 @@ RF(PSW,WE), ALU(SETPF), BR(ONE)
 # indstruction decode jump
 #####
 RF(IR), J(0),MIPCSRC(DECVEC), BR(ZERO) # set BR to prepare increase PC
+
+
 
 IRSEG_F8_FF: #-----------------
 # MOV Rn, A
