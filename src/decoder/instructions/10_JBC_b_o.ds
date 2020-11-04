@@ -7,7 +7,7 @@ RF(SFR), ALU(B), RAM(WE), BR(ONE)
 @INC "snippet\inc_pc_jsjmp.ds"
 
 JBC_B_O_NOJUMP:#  jump to check interrupt
-LI(2), WR(WE), BR(ZERO), J(ADDC_PC_BEFORE_CHECK_INTERRUPT)
+LI(2), WR(WE), BR(ZERO), J(ADDC_PC_SKIP_PF_BEFORE_CHECK_INTERRUPT)
 
 
 

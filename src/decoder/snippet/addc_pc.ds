@@ -1,0 +1,3 @@
+RF(PCL, WE), ALU(ADDC), WR(WE), BR(CY), JALUNF(@0)            # PCL + CY + WR,  STORE CARRY  # PCL + CY + WR,  STORE CARRY
+__0:
+RF(PCH, WE), ALU(INCC), SR(WE), J(@1)# PCH + CY
