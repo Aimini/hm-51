@@ -19,24 +19,24 @@ J(STAGE_RESET_ALL)
 # -------------------------------------
 STAGE_FETCH:
 RF(PCL),  ALU(A),  WR(WE)
-RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_SET_PF)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE)
 
 STAGE_FETCH_SKIP_LOAD_PCH:
-RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_SET_PF)
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE)
 
 STAGE_FETCH_SKIP_PF:
 RF(PCL),  ALU(A),  WR(WE)
-RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE_SKIP_PF)
 
 STAGE_FETCH_SKIP_PF_SKIP_LOAD_PCH:
-RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE)
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE_SKIP_PF)
 
-STAGE_FETCH_SET_PF:
+STAGE_FETCH_LOAD_OPCODE:
 # set parity flag
 RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE)
 
-STAGE_FETCH_LOAD_OPCODE:
+STAGE_FETCH_LOAD_OPCODE_SKIP_PF:
 RF(IR,WE),BUS(ROM)
 
 #increase PC
@@ -734,11 +734,16 @@ INC_PC_BEFORE_CHECK_INTERRUPT:
 # 3. J to interrupt vector
 ######################################################## 
 STAGE_CHECK_INTERRUPT:
-@INC "int_jump_to.ds", "STAGE_FETCH"
+@INC "int_jump_to.ds", "STAGE_FETCH",                      "STAGE_FETCH_LOAD_OPCODE"
 
 STAGE_CHECK_INTERRUPT_PCH_IN_SR:
-@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_LOAD_PCH"
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_LOAD_PCH",         "STAGE_FETCH_LOAD_OPCODE"
 
+STAGE_CHECK_INTERRUPT_SKIP_PF:
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_PF",               "STAGE_FETCH_LOAD_OPCODE_SKIP_PF"
+
+STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR:
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_PF_SKIP_LOAD_PCH", "STAGE_FETCH_LOAD_OPCODE_SKIP_PF"
 ######################################################## 
 # reset all register and PC to 0
 ######################################################## 

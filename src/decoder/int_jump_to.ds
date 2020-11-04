@@ -4,6 +4,11 @@
 # 1. check IE
 # 2. select IRQ with IP
 # 3. J to interrupt vector
+# parameter:
+#   @0 : jump destination when no of interrupt occurs, 
+#    SR(might be PCH, decided by instruction) will not be modified in this case.
+#   @1 : jump destination when interrupt occours, PC will
+#   stored in WR and SR
 ######################################################## 
 
 #------------- check EA
@@ -46,4 +51,4 @@ RF(T0,WE), ALU(IVADDR),  WR(WE)
 
 
 RF(PCL,WE),ALU(B), WR(WE)
-RF(PCH,WE), LI(0), SR(WE), J(STAGE_FETCH_SET_PF)
+RF(PCH,WE), LI(0), SR(WE), J(@1)
