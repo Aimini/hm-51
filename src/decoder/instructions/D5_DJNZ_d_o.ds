@@ -9,4 +9,11 @@ RF(SFR), RAM(WE), ALU(B)     # RAM[direct],T1, WR <- T1 - 1
 # check T1 == 0
 # if T1 == 0, jump to segment that execute PC + 1(BR) + 1(WR),
 RF(T1), BR(ONE), WR(WE), BUS(IMMED), JLT(0x01, ADDC_PC_BEFORE_CHECK_INTERRUPT)
+
+# it may change register A or PSW(SFR bit),
+# and SJMP will not pass through the process of set PF 
+# so we need do it there manually
+RF(A),      ALU(PF),   BR(ALUDF)
+RF(PSW,WE), ALU(SETPF), BR(ONE)
+
 @INC "snippet\inc_pc_jsjmp.ds"
