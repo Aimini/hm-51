@@ -4,6 +4,13 @@
 RF(T1), ALU(EXTB), BR(CY), JALUNF(JBC_B_O_NOJUMP)
 RF(T1), ALU(INSB), WR(WE), BR(CPLQ)
 RF(SFR), ALU(B), RAM(WE), BR(ONE)
+
+# it may change register A(SFR bit),
+# and SJMP will not pass through the process of set PF 
+# so we need do it there manually
+RF(A),      ALU(PF),   BR(ALUDF)
+RF(PSW,WE), ALU(SETPF), BR(ONE)
+
 @INC "snippet\inc_pc_jsjmp.ds"
 
 JBC_B_O_NOJUMP:#  jump to check interrupt

@@ -727,11 +727,14 @@ ADDC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
 
 
 
+INC_PC_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_jchkint.ds"
+
 INC_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\inc_pc_srwr_npch_jchkint.ds"
 
-INC_PC_BEFORE_CHECK_INTERRUPT:
-@INC "snippet\inc_pc_srwr_jchkint.ds"
+INC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_spf_npch_jchkint.ds"
 ######################################################## 
 #  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
 # 1. check IE
