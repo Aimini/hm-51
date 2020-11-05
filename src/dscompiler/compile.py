@@ -153,16 +153,22 @@ if __name__ == "__main__":
     except PreprocessError as e:
         for one in e.inc_chain_Info:
             print('File "{}", line {},'.format(str(one.file), one.row))
-            print("  ", one.str)
-            print('[preprocess error]', e.info, end= ' in @')
-            print(e.directive, end = '(')
-            print(', '.join("'" + _ + "'" for _ in e.args), end = ')')
+            if one.str[-1] in ('\n', '\r'):
+                print("  ", one.str, end = '')
+            else:
+                print("  ", one.str)
+        print('[preprocess error]', e.info, end= ' in @')
+        print(e.directive, end = '(')
+        print(', '.join("'" + _ + "'" for _ in e.args), end = ')')
     except CompileError as e:
         lineinfo = pre.getlineinfo(e.lineno)
         for one in lineinfo:
             print('File "{}", line {},'.format(str(one.file), one.row))
-            print("  ", one.str)
-            print(e.info)
+            if one.str[-1] in ('\n', '\r'):
+                print("  ", one.str, end = '')
+            else:
+                print("  ", one.str)
+        print(e.info)
          
 
         
