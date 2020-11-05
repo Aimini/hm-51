@@ -41,11 +41,12 @@ class Preprocessor():
         self._inc_chain_info = []
         # all lines info
         # each element in this list is a include file chain list which
-        # have the same meaning as self._inc_chain_info
+        # have the same meaning as self._inc_chain_info,
+        # the lineno start from 1
         # [
         #   [LineInfo, LineInfo] #line 0
         # ]
-        self._all_lines_info = []
+        self._all_lines_info = [None]
         #final file
         self._outputfile = StringIO()
         # provide information of directive of DEVVEC
