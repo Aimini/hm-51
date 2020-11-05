@@ -8,6 +8,7 @@ from compiler import parser
 from compiler.micro_control_converter.micro_control_converter import MicroControlConverter,DecvecConverter
 from compiler.micro_instruction_compiler import MicroinstrcutionCompiler
 from compiler.preprocessor import PreprocessError
+from compiler.compile_error import CompileError
 
 
 def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_lines):
@@ -156,7 +157,12 @@ if __name__ == "__main__":
             print('[preprocess error]', e.info, end= ' in @')
             print(e.directive, end = '(')
             print(', '.join("'" + _ + "'" for _ in e.args), end = ')')
-
+    except CompileError as e:
+        lineinfo = pre.getlineinfo(e.lineno)
+        for one in lineinfo:
+            print('File "{}", line {},'.format(str(one.file), one.row))
+            print("  ", one.str)
+            print(e.info)
          
 
         

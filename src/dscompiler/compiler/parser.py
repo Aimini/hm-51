@@ -8,6 +8,8 @@ import enum
 import tokenize
 import tokenize
 import json
+
+from compiler.compile_error import CompileError
 from  . import micro_control
 
 
@@ -210,18 +212,14 @@ class Parser:
                 # don't care
                 if t.type == tokenize.COMMENT or t.type == tokenize.ENCODING:
                     break
-
+                print(state)
                 state = state.next(t)
                 self.add(state, scanned_tokens)
                 if state == cstate.ERROR:
                     estr = json.dumps(t.string).strip('"')
-                    e = SyntaxError()
-                    e.msg = 'unexpect token "{}"'.format(estr)
-                    e.lineno = t.start[0]
-                    e.offset = t.start[1]
-                    e.text = t.line
-                    e.filename = ''
-                    raise e
+                    raise CompileError(
+                        t.start[0] - 1,
+                        'unexpect token "{}"'.format(estr))
                 # it does not consume any token
                 elif state.isnoconsume():
                     continue
