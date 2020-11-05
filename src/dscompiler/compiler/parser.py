@@ -127,7 +127,7 @@ class Parser:
 
     def dtoken_from_pytoken(self, pytoken, dtype):
         # line, type, name
-        return micro_control.MicroCTL(pytoken.start[0], dtype, pytoken.string)
+        return micro_control.MicroCTL(pytoken.start[0] - 1, dtype, pytoken.string)
 
     def add(self, state, appendtokens):
         """
