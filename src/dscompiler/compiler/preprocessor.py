@@ -1,10 +1,8 @@
 import os
-from ast import Str
 from io import StringIO
 import pathlib
 import shlex
-from typing import Sequence
-
+from typing import Iterable
 
 
 
@@ -20,6 +18,15 @@ class LineInfo:
         ret.row = self.row
         ret.file = self.file
         return ret
+
+        
+class PreprocessError(Exception):
+    def __init__(self, inc_chain_Info:Iterable[LineInfo], diretive, args ,info = ''):
+        self.directive = diretive
+        self.inc_chain_Info = inc_chain_Info
+        self.args = args
+        self.info = info
+
 class Preprocessor():
     """
     convert string like  '"s0","a+b","c+d"' to a list like ['s0', 'a+b', 'c+d']
@@ -87,11 +94,11 @@ class Preprocessor():
         for one in args:
             if one == ',':
                 if previous_split:
-                    raise Exception("unexpect ',' in directive")
+                    return PreprocessError(list(self._inc_chain_info), None, ret, "unexpect ','")
                 previous_split = True
             else:
                 if not previous_split:
-                    raise Exception(" directive arguments should split by  ','")
+                    return PreprocessError(list(self._inc_chain_info), None, ret," directive arguments should split by  ','")
                 previous_split = False
                 ret.append(one)
         return ret
@@ -99,12 +106,16 @@ class Preprocessor():
     def _directive(self, args):
         name = args[1]  # skip '@'
         args = self._filter_directive_args(args[2:])
+        if isinstance(args, PreprocessError):
+            args.directive = name
+            raise args
+
         if name == "INC":
             self._preprocess_include(args)
         elif name == "DECVEC":
             self._preprocess_decvec(args)
         else:
-            raise Exception("unknow directive {!r}".format(name))
+            raise PreprocessError(list(self._inc_chain_info), name, args, "unknow directive")
         
     def _preprocess_file(self, fileobj):
         for row, s in enumerate(fileobj.readlines()):

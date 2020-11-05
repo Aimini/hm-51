@@ -1,0 +1,4 @@
+@INC "t0.ds", "A"
+@INC "sub/t0.ds", ""  "A"   #lack of ','
+@INC "sub/t0.ds", "",, "A" # excess ','
+@DDDDDD  # what the hell are you?
