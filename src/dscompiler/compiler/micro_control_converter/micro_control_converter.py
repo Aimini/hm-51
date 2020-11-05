@@ -18,12 +18,16 @@
 import copy
 import random
 import string
+
+from .empty_translator import TranlatorError
 from .. import micro_control
 from .alu_translator import ALUTranslator
 from .jump_translator import JumpTranslator
 from .load_immed_translator import LoadImmedTranslator
 from ..CTL_LUT.control_LUT import JUMPABS
 from ..CTL_LUT import ALULUTtools
+from ..compile_error import CompileError
+
 DEFAULT_TRANSLATOR = (ALUTranslator(), 
                       JumpTranslator(), LoadImmedTranslator())
 
@@ -89,8 +93,8 @@ class MicroControlConverter:
                 if len(a) > 0:
                     self.hl_microinstructions.append([lineno, a])
 
-            except SyntaxError as e:
-                e.msg += " at line " + str(lineno)
+            except TranlatorError as e:
+                e.lineno = lineno
                 raise e
         return self.hl_microinstructions
 
@@ -236,15 +240,17 @@ class DecvecConverter:
         # find the index of the target jump label in hl_microinstrcutions
         for n in range(self._vec_num):
             idx  = vecstartindex + n
+            if idx >= len(self.hl_microinstructions):
+                raise CompileError(self.vec_lineno, "not enough 'VEC' for this diretive")
             lineno, microinstruction = self.hl_microinstructions[idx]
             if not self._is_only_vec_ctl(microinstruction):
-                raise Exception("the ctl follow @DECVEC directive must be 'VEC'")
+                raise CompileError(lineno, "the micro-control follow @DECVEC directive must be 'VEC'")
             microctl = microinstruction[0]
             target_label = microctl.parameters[0]
             target_index = self._find_jump_label(target_label)
             # where is my label?
             if target_index == -1:
-                raise Exception("'VEC' paramater label {!r} not exists".format(target_label))
+                raise CompileError(lineno, "'VEC' paramater label {!r} not exists".format(target_label))
             self._generate_vec_insert(target_label, idx, target_index)
         
         # produce the final microinstrcution stream
