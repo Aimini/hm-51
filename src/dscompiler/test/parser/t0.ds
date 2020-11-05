@@ -1,0 +1,3 @@
+RF(A,B) D() #lack comma
+RF(A,B), D(  #unclosed parenthese
+RF(A,B), D(()  #excess parenthese

@@ -1,7 +1,6 @@
-RF(A, B) D() #lack comma
-RF(A,B), D(  #unclosed parenthese
-RF(A,B), D(()  #excess parenthese
-JDDD::
-RF(A,B), D() # excess argument comma
+@INC "t0.ds"
+JDDD::     # doubled!
+JDC: RF(A,,B), D() # excess argument comma
 RF(A,B), D(), # excess micro-control splitter
         RF(A,B) 
+F()
