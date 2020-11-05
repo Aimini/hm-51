@@ -101,7 +101,7 @@ class cstate(enum.Enum):
                 return scls.CONVERT
             elif check_op(','):
                 return scls.NEXT_NAME
-                
+
         return scls.ERROR
         
     def isnoconsume(self):
@@ -192,7 +192,7 @@ class Parser:
             scanned_tokens.append(t)
             while True:
                 # don't care
-                if t.type == tokenize.COMMENT or t.type == tokenize.ENCODING:
+                if t.type in (tokenize.COMMENT, tokenize.ENCODING, tokenize.INDENT, tokenize.DEDENT):
                     break
                 state = state.next(t)
                 self.add(state, scanned_tokens)
