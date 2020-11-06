@@ -9,7 +9,6 @@
 - [Test table](#test-table)
 - [The test case](#the-test-case)
   - [create new test case](#create-new-test-case)
-  - [modify the TCR](#modify-the-tcr)
 
 
 
@@ -244,9 +243,3 @@ What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV 
  ```
 
  the generation script should generate a assembly file named XX.A51 and store it in the directory `<output_dir>`.
-
-### modify the TCR
-
-In some case you might want to change the compile program or change the verify porcess, you might to change the code of the TCR.
-
-You can view the source code of TCR in '/test/verify.py'.
