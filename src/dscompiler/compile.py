@@ -97,7 +97,7 @@ def compile_ds_to_file(fileobj,veclineno, vecnum, outfile, dis_file):
         infile :
             input file object, must be binary mode.
         outfile :
-            ouput filename.
+            output filename.
                 
         return:tuple(int, int)
             t[0] is bytes per line

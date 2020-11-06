@@ -13,7 +13,8 @@
     </entry>
     <entry>
       <string>Description</string>
-      <string>stop ouput clock if input S  is high. if go is 1, clock will ouput normally.</string>
+      <string>Stop output clock if  Stall  is high. 
+If this is a raising edge ocurres in Go, clock will output normally.</string>
     </entry>
     <entry>
       <string>Width</string>

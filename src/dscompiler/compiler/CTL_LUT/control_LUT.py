@@ -44,7 +44,7 @@ REGISTER_FILE = NamedParametersLUT([
 BUS = NamedParametersLUT([
     {
         'sh': 'SRC',
-        'name': 'bus ouput driver',
+        'name': 'bus output driver',
         'len': 3,
         'enum': ['ALUS', 'ALUDL', 'ALUDH', 'RAM', 'ROM',  'XRAM', 'IMMED', 'IRR']
     }

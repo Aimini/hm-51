@@ -1,7 +1,7 @@
 # hm-51 Documention
 ---
-## Table of Cotents 
-- [# hm-51 Documention](#h1-idhm-51-documention-2920hm-51-documentionh1)
+## Table of Cotents
+- [# hm-51 Documention](#h1-idhm-51-documention-2944hm-51-documentionh1)
 - [Table of Cotents](#table-of-cotents)
 - [Introduction](#introduction)
 - [Project Structure](#project-structure)
@@ -140,9 +140,9 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
  - SFR  A,B,SP,PSW,DPL,DPH,IE,IP 
 
 ### Add SFR
- When adding SFR, the input/ouput pin of the device should be connected to the IO pin of CPU, the higher 8-bit of the address pin of the CPU will ouput the SFR address, and your device should check the address to ensure that the CPU is trying to operate it. 
+ When adding SFR, the input/output pin of the device should be connected to the IO pin of CPU, the higher 8-bit of the address pin of the CPU will output the SFR address, and your device should check the address to ensure that the CPU is trying to operate it. 
 
-  In the case of CPU operating you deivce, when `SFR_OE` is hight, your device must ouput the desired content to the IO pin, and when `SFR_WE` is high, your device should accept then value of the IO Pin.
+  In the case of CPU operating you deivce, when `SFR_OE` is hight, your device must output the desired content to the IO pin, and when `SFR_WE` is high, your device should accept then value of the IO Pin.
 
   Howerver, no matter what, the device's read/write behavior is designed by you.
 

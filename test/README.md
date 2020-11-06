@@ -232,7 +232,7 @@ What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV 
   XX.py -o <output_dir>
  ```
 
- the generation script should generate a assembly file named XX.A51 and store it in the directory `<ouput_dir>`.
+ the generation script should generate a assembly file named XX.A51 and store it in the directory `<output_dir>`.
 
 ### modify the TCR
 

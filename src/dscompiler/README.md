@@ -288,7 +288,7 @@ The real effect of this directive is to help you use the idle controls in the de
   The compiler's will show syntax error base on preprocessd text, Uinsg the `-s` argument will let compiler dump the preprocessed text to target file:
 
   ```python
-  compile.py -s <preprocessed_file> -i <input_file> -o <ouput_file>
+  compile.py -s <preprocessed_file> -i <input_file> -o <output_file>
   ```
 
 ### view the machine code and MIPC
@@ -296,7 +296,7 @@ The real effect of this directive is to help you use the idle controls in the de
 
  ```
  
- compile.py -d <disassemble_file> -i <input_file> -o <ouput_file>
+ compile.py -d <disassemble_file> -i <input_file> -o <output_file>
  ```
  
  This is example of one microinstruction:
