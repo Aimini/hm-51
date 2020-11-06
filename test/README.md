@@ -1,6 +1,17 @@
-# Test Case Document
-
+# Test Case Document  <!-- omit in toc -->
 ---
+# Table of Content  <!-- omit in toc -->
+- [Hardware and simulator requirment](#hardware-and-simulator-requirment)
+  - [assertion](#assertion)
+  - [exit](#exit)
+  - [dump](#dump)
+- [Manual test instructions](#manual-test-instructions)
+- [Test table](#test-table)
+- [The test case](#the-test-case)
+  - [create new test case](#create-new-test-case)
+  - [modify the TCR](#modify-the-tcr)
+
+
 
 ## Hardware and simulator requirment
 
@@ -8,11 +19,11 @@ I recommend that you implement these SFRs' function in your hardware design and 
 
 | address | register |         function         |
 |:--------|----------|:------------------------:|
-| 0xFB    | DUMP     |      [dump](##dump)      |
-| 0xFC    | EXR      |      [exit](##exit)      |
-| 0xFD    | PAR0     | [assertion](##assertion) |
-| 0xFE    | PAR1     | [assertion](##assertion) |
-| 0xFF    | AFUNC    | [assertion](##assertion) |
+| 0xFB    | DUMP     |      [dump](#dump)      |
+| 0xFC    | EXR      |      [exit](#exit)      |
+| 0xFD    | PAR0     | [assertion](#assertion) |
+| 0xFE    | PAR1     | [assertion](#assertion) |
+| 0xFF    | AFUNC    | [assertion](#assertion) |
 
 
 ### assertion

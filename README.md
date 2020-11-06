@@ -1,8 +1,6 @@
-# hm-51 Documention
+# hm-51 Documention  <!-- omit in toc -->
 ---
-## Table of Cotents
-- [# hm-51 Documention](#h1-idhm-51-documention-2944hm-51-documentionh1)
-- [Table of Cotents](#table-of-cotents)
+## Table of Cotents  <!-- omit in toc -->
 - [Introduction](#introduction)
 - [Project Structure](#project-structure)
 - [Check The Degin Before Anything](#check-the-degin-before-anything)

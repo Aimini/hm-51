@@ -1,5 +1,20 @@
-# Decoder Script Compiler Document
+# Decoder Script Compiler Document <!-- omit in toc -->
 ---
+# Table of Content <!-- omit in toc -->
+- [Script Syntax](#script-syntax)
+  - [component control token](#component-control-token)
+  - [composite micro-controls](#composite-micro-controls)
+  - [jump label](#jump-label)
+  - [special jump label](#special-jump-label)
+  - [directive](#directive)
+- [Disassemble](#disassemble)
+  - [view the preprocessed file](#view-the-preprocessed-file)
+  - [view the machine code and MIPC](#view-the-machine-code-and-mipc)
+- [Change LUT](#change-lut)
+- [More detail](#more-detail)
+  - [add composite micro-controls](#add-composite-micro-controls)
+  - [add new directive](#add-new-directive)
+
 ## Script Syntax
  The script describes the hardware control signals corresponding to each MIPC(microinstruction program counter), each line contains a set of component control tokens to describe what this component should do during this cycle.
 

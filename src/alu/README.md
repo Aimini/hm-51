@@ -26,12 +26,12 @@ It contains an 8-bit operand input, denoted as `A` , a 1-bit operand `C` and a 4
 
 The number in first column are the upper nibble, the number in fisrt row  are the lower nibble.
 
-| encode |           0           |               1               |             2             |          3          |
-|:------:|:---------------------:|:-----------------------------:|:-------------------------:|:-------------------:|
-|   0    |  [ADJF](###0.-ADJF)   |    [IVADDR](###1.-IVADDR)     |     [CAA](###2.-CAA)      |  [SFR](###3.-SFR)   |
-|   1    |    [RR](###4.-RR)     |        [RL](###5.-RL)         |     [RRC](###6.-RRC)      |  [RLC](###7.-RLC)   |
-|   2    |   [INC](###8.-INC)    |       [DEC](###9.-DEC)        |   [BADDR](###10.-BADDR)   | [BIDX](###11.-BIDX) |
-|   3    | [SETCY](###12.-SETCY) | [SELHIRRQN](###13.-SELHIRRQN) | [ISRRETI](###14.-ISRRETI) | [SWAP](###15.-SWAP) |
+| encode |         0          |             1              |           2            |        3         |
+|:------:|:------------------:|:--------------------------:|:----------------------:|:----------------:|
+|   0    |  [ADJF](#0-adjf)   |    [IVADDR](#1-ivaddr)     |     [CAA](#2-caa)      |  [SFR](#3-sfr)   |
+|   1    |    [RR](#4-rr)     |        [RL](#5-rl)         |     [RRC](#6-rrc)      |  [RLC](#7-rlc)   |
+|   2    |   [INC](#8-inc)    |       [DEC](#9-dec)        |   [BADDR](#10-baddr)   | [BIDX](#11-bidx) |
+|   3    | [SETCY](#12-setcy) | [SELHIRRQN](#13-selhirrqn) | [ISRRETI](#14-isrreti) | [SWAP](#15-swap) |
 
 ## Description
 
@@ -45,7 +45,7 @@ Swap `A[6]` and `A[3]` .
 
 Usage:
 
-See function [SETPSWF](####9.-SETPSWF) to know how this example work.
+See function [SETPSWF](#9-setpswf) to know how this example work.
 
 ``` python
 # ADDC example
@@ -54,7 +54,7 @@ RF(T0), ALU(ADJF), BUS(ALU), WR(WE) # now OV at A[3], AC at A[6]
 RF(PSW, WE), ALU(SETPSWF), BUS(ALU)
 ```
 
-See function [DA](####1.-DA) to know how this example work.
+See function [DA](#1-da) to know how this example work.
 
 ``` python
 # DA example
@@ -149,7 +149,7 @@ Get bytes's direct address according bit address.
 |:-------:|:-------:|
 | A & 0x7 | A & 0x7 |
 
- For 8051, it's always lower 3-bit of the bit address. it's usually work with [BADDR](###10.-BADDR). To facilitate the implementation of [INSB](####6.-INSB) and [EXTB](####7.-EXTB) functions in ALUD, the target index is in both low nibble and high nibble.
+ For 8051, it's always lower 3-bit of the bit address. it's usually work with [BADDR](#10-baddr). To facilitate the implementation of [INSB](#6-insb) and [EXTB](#7-extb) functions in ALUD, the target index is in both low nibble and high nibble.
 
 ### 12. SETCY
 
@@ -165,7 +165,7 @@ Get bytes's direct address according bit address.
 
  Select the highest priority interrupt(not the interrupt number) from the input `A` .
 
- In short, you must using function [GENIRRQN](####8.-GENIRRQN) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRRQN` to get highest IRQ number and `IP` flag.
+ In short, you must using function [GENIRRQN](#8-genirrqn) to get the IRQ Number, IRQ flag and the IP flag, then using `SELHIRRQN` to get highest IRQ number and `IP` flag.
 
 | 7  | 6-3 | 2-0  |
 |:--:|:---:|:----:|
@@ -299,21 +299,21 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 
  **QL:**
 
-| encode |              0              |             1             |                   2                    |                3                 |
-|:------:|:---------------------------:|:-------------------------:|:--------------------------------------:|:--------------------------------:|
-|   0    |      [XOR](####0.-XOR)      |      [DA](####1.-DA)      |          [ADDC](####2.-ADDC)           |       [SUBB](####3.-SUBB)        |
-|   1    |        [A](####4.-A)        |      [Ri](####5.-Ri)      |          [INSB](####6.-INSB)           |       [XCHD](####7.-XCHD)        |
-|   2    | [GENIRRQN](####8.-GENIRRQN) | [SETPSWF](####9.-SETPSWF) | [ADDR11REPLACE](####10.-ADDR11REPLACE) | [SETOVCLRCY](####11.-SETOVCLRCY) |
-|   3    |       [B](####12.-B)        |     [Rn](####13.-Rn)      |         [SETPF](####14.-SETPF)         |       [INCC](####15.-INCC)       |
+| encode |            0             |           1           |                 2                  |              3               |
+|:------:|:------------------------:|:---------------------:|:----------------------------------:|:----------------------------:|
+|   0    |      [XOR](#0-xor)      |      [DA](#1-da)      |          [ADDC](#2-addc)           |       [SUBB](#3-subb)        |
+|   1    |        [A](#4-a)        |      [Ri](#5-ri)      |          [INSB](#6-insb)           |       [XCHD](#7-xchd)        |
+|   2    | [GENIRRQN](#8-genirrqn) | [SETPSWF](#9-setpswf) | [ADDR11REPLACE](#10-addr11replace) | [SETOVCLRCY](#11-setovclrcy) |
+|   3    |       [B](#12-b)        |     [Rn](#13-rn)      |         [SETPF](#14-setpf)         |       [INCC](#15-incc)       |
 
 **QH:**
 
-| encode |            0            |         1          |           2           |           3            |
-|:------:|:-----------------------:|:------------------:|:---------------------:|:----------------------:|
-|   0    |   [CPLB](####0.-CPLB)   | [DAF](####1.-DAF)  | [ADDCF](####2.-ADDCF) | [SUBBF](####3.-SUBBF)  |
-|   1    |     [PF](####4.-PF)     |  [OR](####5.-OR)   | [INSBF](####6.-INSBF) |  [EXTB](####7.-EXTB)   |
-|   2    | [ISRSET](####8.-ISRSET) |  [ZF](####9.-ZF)   |                       |                        |
-|   3    |  [ZF_B](####12.-ZF_B)   | [AND](####13.-AND) |   [NA](####14.-NA)    | [INCCF](####15.-INCCF) |
+| encode |          0          |       1        |         2         |         3          |
+|:------:|:-------------------:|:--------------:|:-----------------:|:------------------:|
+|   0    |   [CPLB](#0-cplb)   | [DAF](#1-daf)  | [ADDCF](#2-addcf) | [SUBBF](#3-subbf)  |
+|   1    |     [PF](#4-pf)     |  [OR](#5-or)   | [INSBF](#6-insbf) |  [EXTB](#7-extb)   |
+|   2    | [ISRSET](#8-isrset) |  [ZF](#9-zf)   |                   |                    |
+|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) |   [NA](#14-na)    | [INCCF](#15-inccf) |
 
 ## Description
 
@@ -337,7 +337,7 @@ See instruction `DA A` to get detail.
 |:--------:|
 | DA(A, B) |
 
-We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, it's essentially to perform two step conditional addition using to `A` . First additionneed to using `AC` flag, but it's in low part chip, that's why `CY` must at `B[3]` to `B[0]` rather than in original position `PSW[6]` (see [ADJF](###0.-ADJF) to know how could we transform `PSW` to `B` that used by this function). Second is in high part, so it's need output a carry signal, `AC` flag don't need to change position but need using carry signal from low part, so it's must work together with function [DAF](####1.-DAF).
+We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, it's essentially to perform two step conditional addition using to `A` . First additionneed to using `AC` flag, but it's in low part chip, that's why `CY` must at `B[3]` to `B[0]` rather than in original position `PSW[6]` (see [ADJF](#0-adjf) to know how could we transform `PSW` to `B` that used by this function). Second is in high part, so it's need output a carry signal, `AC` flag don't need to change position but need using carry signal from low part, so it's must work together with function [DAF](#1-daf).
 
 #### 2. ADDC
 
@@ -347,7 +347,7 @@ We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, 
 |:---------:|
 | A + B + C |
 
- Need output carry signal from low part chip to high part chip, see [ADDCF](####2.-ADDCF).
+ Need output carry signal from low part chip to high part chip, see [ADDCF](#2-addcf).
 
 #### 3. SUBB
 
@@ -357,7 +357,7 @@ We treat `B[3]` as `AC` , `B[7]` ac `CY` , according to instruction set manual, 
 |:---------:|
 | A - B - C |
 
- Need output borrow signal from low part chip to high part chip, see [ADDCF](####2.-ADDCF).
+ Need output borrow signal from low part chip to high part chip, see [ADDCF](#2-addcf).
 
 #### 4. A
 
@@ -391,7 +391,7 @@ Let `T = A` , Then let `T[B[2:0]] = C` , then `Q = T` .
 |:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|:--------------------------:|
 | B\[2:0\] == 7 ? C : A\[7\] | B\[2:0\] == 6 ? C : A\[6\] | B\[2:0\] == 5 ? C : A\[5\] | B\[2:0\] == 4 ? C : A\[4\] | B\[2:0\] == 3 ? C : A\[3\] | B\[2:0\] == 2 ? C : A\[2\] | B\[2:0\] == 1 ? C : A\[1\] | B\[2:0\] == 0 ? C : A\[0\] |
 
-Because the high part output must using `C` when B\[2:0\] >= 4, then we have function [INSBF](####6.-INSBF) to do this stuff.
+Because the high part output must using `C` when B\[2:0\] >= 4, then we have function [INSBF](#6-insbf) to do this stuff.
 
 #### 7. XCHD
 
@@ -416,7 +416,7 @@ RF(T1,WE), ALU(XCHD)
 
  Select the highest priority interrupt number in the high nibble and low nibble  respectively.
 
- See example in [SELHIRRQN](###13.-SELHIRRQN).
+ See example in [SELHIRRQN](#13-selhirrqn).
 
 | 7  | 6  | 5-4  | 3  | 2  | 1-0  |
 |:--:|:--:|:----:|:--:|:--:|:----:|
@@ -439,7 +439,7 @@ RF(T1,WE), ALU(XCHD)
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | A\[7\] | B\[6\] | A\[5\] | A\[4\] | A\[3\] | B\[3\] | A\[1\] | A\[0\] |
 
-It's usually used to set PSW flag when execute `ADDC` , `SUBB` , `ADD` instruction. See [ADJF](###0.-ADJF) to know how to use this function.
+It's usually used to set PSW flag when execute `ADDC` , `SUBB` , `ADD` instruction. See [ADJF](#0-adjf) to know how to use this function.
 
 #### 10. ADDR11REPLACE
 
@@ -455,7 +455,7 @@ This function was used to `AJMP` and `ACALL` , let's explain how it work. In ISA
 |:---------|:-------------|:------|
 | value    | A10-A8 xxxxx | A7-A0 |
 
-And when excute `AJMP` and `ACALL` we have a step `PC[10:0]= A[10:0]` , note `PC[15:8]` as `PCH` , `PC[7:0]` as `PCL` , then we get `PCL = A[7:0] = byte1` it's simply move `byte1` to `PCL` . For `PCH` , we have `PCH[2:0] = A[10:8]` , meaing we want `PCH[2:0]` = `byte0[7:5]` . That's seem can't work by this function, but if excute [SWAP](###15.-SWAP) to `byte0` , we have `_byte0[3:0] = byte0[7:4]` , it's meaing `_byte0[3:1] = byte0[7:5]` , and now, we can excute `ADDR11REPLACE` .
+And when excute `AJMP` and `ACALL` we have a step `PC[10:0]= A[10:0]` , note `PC[15:8]` as `PCH` , `PC[7:0]` as `PCL` , then we get `PCL = A[7:0] = byte1` it's simply move `byte1` to `PCL` . For `PCH` , we have `PCH[2:0] = A[10:8]` , meaing we want `PCH[2:0]` = `byte0[7:5]` . That's seem can't work by this function, but if excute [SWAP](#15-swap) to `byte0` , we have `_byte0[3:0] = byte0[7:4]` , it's meaing `_byte0[3:1] = byte0[7:5]` , and now, we can excute `ADDR11REPLACE` .
 
 ``` python
 # example
@@ -498,7 +498,7 @@ Use to set parity flag in `PSW` .
 |:-----:|
 | A + C |
 
- Obviously, it's need generate carry output, see [INCCF](####15.-INCCF).
+ Obviously, it's need generate carry output, see [INCCF](#15-inccf).
 
 ___
 
@@ -517,7 +517,7 @@ Q[A[2:0]] = ~Q[A[2:0]]
 |:-:|:-:|:-:|:-:|
 |CPLB(A, B)|
 
- The `A` must be the result of [BIDX](###11.-BIDX).
+ The `A` must be the result of [BIDX](#11-bidx).
 
 #### 1. DAF
 
@@ -561,7 +561,7 @@ if `A[3:0]` contains an odd number of 1s, then `PFL` is 1, if `A` contains an od
 
 #### 6. INSBF
 
-Cooperate with [INSB](####6.-INSB) function, it's simply transmit signal `C` from low part chip to high part chip.
+Cooperate with [INSB](#6-insb) function, it's simply transmit signal `C` from low part chip to high part chip.
 
 | 7-4 | 3 | 2-0 |
 |:---:|:-:|:---:|
@@ -576,7 +576,7 @@ Cooperate with [INSB](####6.-INSB) function, it's simply transmit signal `C` fro
 
 Let see how it work.
 
-Usually, the B is the result of [BIDX](###11.-BIDX), so `B[2:0]` and `B[6:4]` is the same value, they are both the bit index.
+Usually, the B is the result of [BIDX](#11-bidx), so `B[2:0]` and `B[6:4]` is the same value, they are both the bit index.
 
 In low part, `B[2:0] < 4` meaing the bix you want get is in `A[3:0]` , we get the bit from it, but the final output of bit is in `Q[7]` , so we need send the bit from low part chip to high part chip, which what you see at `Q[3]` .
 
@@ -588,7 +588,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
  In short, if `ISR` **can** accept current interrupt, the  **`Q[7]` is 0(be careful!)** , otherwise the **`Q[7]` is 1**. Current IRQ number are stored in `ISR[2:0]` .
 
- It should work with [ISRRETI](###14.-ISRRETI).
+ It should work with [ISRRETI](#14-isrreti).
 
 |     7-0      |
 |:------------:|
@@ -596,7 +596,7 @@ In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set
 
 *notice*
 
-`A` must be `ISR` . and `B` must be the result of `SELHIRRQN` (see example in [SELHIRRQN](###13.-SELHIRRQN)).
+`A` must be `ISR` . and `B` must be the result of `SELHIRRQN` (see example in [SELHIRRQN](#13-selhirrqn)).
 
 *detail*
 
@@ -623,7 +623,7 @@ if `A[3:0] == 0` , then `ZFL = 1` . If `A` is 0, then `ZF` is 1.
 
 #### 12. ZF_B
 
-Same as [ZF](####9.-ZF), but using B as operand. If `B[3:0] == 0` , then `ZFL = 1` . If `B` is 0, then `ZF` is 1.
+Same as [ZF](#9-zf), but using B as operand. If `B[3:0] == 0` , then `ZFL = 1` . If `B` is 0, then `ZF` is 1.
 
 | 7  | 6-4 |  3  | 2-0 |
 |:--:|:---:|:---:|:---:|

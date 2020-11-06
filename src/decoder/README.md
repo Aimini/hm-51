@@ -1,5 +1,15 @@
-# Decoder Script Document
+# Decoder Script Document  <!-- omit in toc -->
 ---
+# Table of Content  <!-- omit in toc -->
+- [Introduction](#introduction)
+- [Instruction Execute Flow](#instruction-execute-flow)
+  - [fetch](#fetch)
+  - [decode](#decode)
+  - [execute](#execute)
+  - [check interrupt](#check-interrupt)
+- [Stage Reset All](#stage-reset-all)
+- [Conventions](#conventions)
+
 ## Introduction
 
  One instruction consists of many micro instrcutions(MI), and an instruction execute only one MI in each clock cycle, each microinstruction cantain multiple micro-operations(MO) to control hardwares.
