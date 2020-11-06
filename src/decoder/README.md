@@ -59,3 +59,6 @@ According `IRQ` , register `ISR`  `IE`  `IP` to select highest priority `IRQ` an
 - leavel `PC+1` in `WR` and `SR` after increase `PC` . So that, for some instruction need to load data that after opcode, we don't need to load `PC` from `RF` to `WR` and `SR` again.
 
 - leavel 0 in `BR` for instruction that need using 0 or 1 in `BR`.
+
+ *Stage reset*
+- set `T3` to 0 and never modify it.
