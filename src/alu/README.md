@@ -1,5 +1,6 @@
 # Table of Content <!-- omit in toc -->
 - [Introduction](#introduction)
+- [Encode Constraints](#encode-constraints)
 - [ALUS](#alus)
   - [input and output](#input-and-output)
   - [encoding](#encoding)
@@ -8,9 +9,19 @@
   - [Input and output](#input-and-output-1)
   - [Encoding](#encoding-1)
   - [Description](#description-1)
+
+
 # Introduction
 
 This document contains descriptions of [ALUS](#ALUS) and [ALUD](#ALUD) functions.
+
+# Encode Constraints
+  For flag type (`ADDCF`, `SUBBF`, etc.) functions, we put it at ALUD-H naturally.
+  Nonetheless, due to some hardware trick,
+  there are some constraints for encoding some functions:
+
+  - `B`/`ZF_B`/`SETCY` must have same encoding, `ZF_B` shoud encoded at ALUD-H.
+  - `OR` shoud encoded at ALUD-H.
 
 # ALUS
 
