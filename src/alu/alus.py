@@ -44,7 +44,7 @@ def generate_by_op(ci, f, A):
         IRNQ = A & 0x7
         R = (IRNQ << 3) + 3
     elif f == 0x2: #CAA
-        if ci:
+        if ci == 0:
             R = A
 
     elif f == 0x3:  # SFR
