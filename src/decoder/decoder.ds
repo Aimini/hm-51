@@ -70,7 +70,7 @@ IRSEG_F5: #--------------------
 
 IRSEG_F4: #--------------------
 #CPL A
-RF(A,WE), ALU(NA), J(STAGE_CHECK_INTERRUPT)
+@INC "instructions\F4_CPL_A.ds"
 #------------------------------
 
 
