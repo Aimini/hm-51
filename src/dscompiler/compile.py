@@ -9,7 +9,6 @@ from compiler.micro_instruction_compiler import MicroinstrcutionCompiler
 
 def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_lines):
     mcidx = 0
-    hlidx = 0
     for idx, t in enumerate(source_lines):
         x = idx + 1
         write('{:>5d}: '.format(x))
@@ -19,7 +18,7 @@ def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_l
         while mcidx < len(machine_code_lines) and x == machine_code_lines[mcidx][0]:
             write('[{:0>4X}]'.format(mcidx))
             write(('{:0>' + str(bytes_len*2) + 'X} ').format(machine_code_lines[mcidx][1]))
-            write('\n')
+            write('\t')
             write(', '.join([_.simple_str() for _ in machine_code_lines[mcidx][2]]))
             write('\n')
             mcidx += 1
