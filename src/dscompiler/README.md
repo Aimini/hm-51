@@ -297,19 +297,19 @@ The real effect of this directive is to help you use the idle controls in the de
    17: RF(A),      ALU(PF),   BR(ALUDF)
 [0003]000000102886 RF(A), ALUSD(PF), BUS(ALUDH), BR(ALUDF) 
 ```
-The first line is the original text in preprocessed file, the second line  is addidtional information(hardware level) about the first line. 
+The first line is the original text in preprocessed file, the second line  is addidtional information(hardware level) of the micro-controls corresponding to the preceding line. 
 
 Here is the meaning of each part:
 ```
    17: RF(A),      ALU(PF),   BR(ALUDF)
    ^   ^------------+----------------^
-   |          original tokens     
+   |          original micro-controls     
 line number
   
 [0003]000000102886 RF(A), ALUSD(PF), BUS(ALUDH), BR(ALUDF) 
   ^       ^         ^-----------------+-----------------^
-  |       |                 hardware level tokens
-  |       |       (traslated from composite-control tokens)      
+  |       |                    micro-controls
+  |       |       (traslated from composite-micro-controls)      
   |  machine code
  MIPC
 ```
@@ -336,4 +336,5 @@ Let's go.
   
  You can view more details in the comment of the class `empty_translator`, there are also some examples for reference: `alu_translator`,`load_immed_translator`, etc.
 
-<!-- ### add new marco -->
+### add new directive
+All instructions are processed in `compiler.preprocessor`. Add a custom process in the `_directive` method.

@@ -44,10 +44,10 @@ The ultimate goal is that you can determine whether the hardware design is corre
 
 We first implement the following four instructions:
 
-   - MOV direct, #immed
-   - MOV direct, direct
-   - MOV @Ri, #immed
-   - MOV direct, @Ri
+   - 0x75: MOV direct, #immed
+   - 0x85: MOV direct, direct
+   - 0x76: MOV @Ri, #immed
+   - 0x86: MOV direct, @Ri
   
  *why `MOV direct, #immed` and `MOV direct,direct`?*
 
@@ -239,4 +239,4 @@ What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV 
 
 In some case you might want to change the compile program or change the verify porcess, you might to change the code of the TCR.
 
-You can view the source code of TCR in '/test/compile_verify.py'.
+You can view the source code of TCR in '/test/verify.py'.
