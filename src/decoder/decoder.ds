@@ -710,9 +710,6 @@ CSEG_AJMP_ADDR11:
 CSEG_ACALL_ADDR11:
 @INC "instructions\x11_ACALL_a11.ds"
 
-CSEG_SJUMP_OFFSET_IN_WR:
-@INC "snippet\sjmp_off_in_wr.ds"
-
 ADDC_PC_BEFORE_CHECK_INTERRUPT:
 @INC "snippet\addc_pc.ds","__0", "STAGE_CHECK_INTERRUPT_PCH_IN_SR"
 
