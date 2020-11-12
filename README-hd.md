@@ -9,10 +9,28 @@
   - [Drive Capability](#drive-capability)
     - [decoder](#decoder)
     - [data bus](#data-bus)
+- [Hardware Resources](#hardware-resources)
+  - [Interrupt](#interrupt)
+  - [SFR map](#sfr-map)
+  - [TCON](#tcon)
+  - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
+  - [SCON](#scon)
+  - [SBUF](#sbuf)
+- [Modules' pictures](#modules-pictures)
+  - [Clock Generator](#clock-generator-1)
+  - [MIPC and Decoder](#mipc-and-decoder)
+  - [RF](#rf)
+  - [ALU ,WR and BR](#alu-wr-and-br)
+  - [SR, RAM, ROM and XRAM](#sr-ram-rom-and-xram)
+  - [MISC](#misc)
+  - [SCON,TCON](#scontcon)
+  - [Serial Receiver(SBUF)](#serial-receiversbuf)
+  - [Serial Transmitter(SBUF)](#serial-transmittersbuf)
+  - [Timmer(TL0, TL1, TH0, TH1)](#timmertl0-tl1-th0-th1)
   
 ## Introduction
   As I mentioned before, the hardware design is up to you. You can put all the components on a large PCB, or divide the design into small modules and then connect them together. So that I'll only disscuss tow major technical points in detail.
-  <!-- If you are not interasted build one by youself and just want to what it's looks like, go to the section[]. -->
+  If you are not interasted build one by youself and just want to what it's looks like, go to the section [Modules' pictures](#modules-pictures).
  
  Since it's my first time to design hardware, I chose the latter option for more convenience troubleshooting.
 
@@ -215,3 +233,138 @@ IOL = min(24000,  8000, 24000)u = 8000u
 IrOH = -4000u + 350u = -3650u
 IrOL = 8000u + -5110u = 2890u
 ```
+## Hardware Resources
+### Interrupt
+
+   The IRRs is ordered by priority as IT0, TF0, IT1, TF1, TI, RI.
+   
+   **NOTICE:** TI and RI are assigned to seperate interrupt numbers, which will be cleared by hardware.
+
+
+### SFR map
+ All available SFRs are listed in the following table, The internal SFR are marked in bold
+ and the SFRs that only implement part of standard function will included in parentheses.
+| Address |    0    |   1    |    2    |    3    |   4   | 5     | 6 | 7 |
+|:-------:|:-------:|:------:|:-------:|:-------:|:-----:|:------|:-:|:-:|
+|   F8    |         |        |         |         |       |       |   |   |
+|   F0    |  **B**  |        |         |         |       |       |   |   |
+|   E8    |         |        |         |         |       |       |   |   |
+|   E0    | **ACC** |        |         |         |       |       |   |   |
+|   D8    |         |        |         |         |       |       |   |   |
+|   D0    | **PSW** |        |         |         |       |       |   |   |
+|   C8    |         |        |         |         |       |       |   |   |
+|   C0    |         |        |         |         |       |       |   |   |
+|   B8    | **IP**  |        |         |         |       |       |   |   |
+|   B0    |         |        |         |         |       |       |   |   |
+|   A8    | **IE**  |        |         |         |       |       |   |   |
+|   A0    |         |        |         |         |       |       |   |   |
+|   98    | (SCON)  |  SBUF  |         |         |       |       |   |   |
+|   90    |         |        |         |         |       |       |   |   |
+|   88    | (TCON)  |        |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
+|   80    |         | **SP** | **DPL** | **DPH** |       |       |   |   |
+
+
+
+
+
+### TCON
+|      Bit      |  7  |  6  |  5  |  4  |  3  |  2  |  1  |  0  |
+|:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|     Name      | TF1 | TR1 | TF0 | TR0 | IE1 | IT1 | IE0 | IT0 |
+| Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
+
+All bits in this TCON are readable and writable and it's function is consistent with the standand.
+  - IT0 : The interrupt type of external interrupt 0. When it is 0, the type is level trigger, otherwise, it is falling edge trigger.
+  - IE0 : Interrupt 0 flag, set to 1 when  external interrupt 0 occurred, automatically cleared when returning from the corresponding interrupt routine(return by RETI).
+  - IT1, IE1 : Same function as interrupt 0, just relevant to interrupt 1.
+
+  - TR0: Timmer0 enable bit, timmer0 only counts when it is 0.
+  - TF0: Timmer1 overflow bit, set when Timmer0 is overflows(set).
+  - TR1, TF1: Same function as Timmer0, just relevant to timmer1.
+
+### TL0, TH0, TL1, TH1
+|      Bit      | 7 - 0 |
+|:-------------:|:-----:|
+| Accessibility |   W   |
+
+TLn and THn will form a 16-bit timmer named 'timmern', when you write value to TLn and THn, you are actully writing the reaload value for this timmern,
+and the timmern will automatically load the value when overflow or timmer is disabled.
+
+``` python
+MOV TL0, 0x00
+MOV TH0, 0xFF  # count from 0xFF00  to 0xFFFF, 0x100 cycle total.
+MOV TCON, 0x20 # eable timmer 0
+
+INT_TIMMER0:
+  #do something
+  reti
+```
+
+### SCON
+|      Bit      | 7 | 6 | 5 | 4 | 3 | 2 |  1  |  0  |
+|:-------------:|:-:|:-:|:-:|:-:|:-:|:--|:---:|:---:|
+|     Name      | X | X | X | X | X | X | TI  | RI  |
+| Accessibility | X | X | X | X | X | X | R/W | R/W |
+
+This register is used to indicate SBUF's state. 
+  - RI: set when SBUF received a byte.
+  - TI: set when byte in SBUF was sent.
+  - 
+ notice: RI and TI won't be cleared by hardware.
+
+
+``` python
+# interrupt routine example
+INT_SERIAL:
+  JB  RI, SERIAL_REC:
+  JB  TI, SERIAL_SENT:
+  #opss! what's wrong here?
+SERIAL_REC:
+  #do something relate to recived byte
+  CLR RI 
+  reti
+
+SERIAL_SENT:
+  #do something relate to byte sent
+  CLR TI
+  reti
+```
+
+### SBUF
+|      Bit      | 7 - 0 |
+|:-------------:|:-----:|
+| Accessibility |  R/W  |
+
+Writing a byte to SBUF will start the process of sending bytes via UART,
+ while reading SBUF will read the most recently received byte.
+ 
+ ## Modules' pictures
+ ### Clock Generator
+ ![](doc_assets/pic/mod-CLK-GEN.JPG)
+
+ ### MIPC and Decoder
+ ![](doc_assets/pic/mod-MIPC-decoder.JPG)
+
+  ### RF
+ ![](doc_assets/pic/mod-RF.JPG)
+
+ ### ALU ,WR and BR
+ ![](doc_assets/pic/mod-ALU-BR.JPG)
+
+ ### SR, RAM, ROM and XRAM
+ ![](doc_assets/pic/mod-RAMROMXRAM.JPG)
+ 
+  ### MISC
+ ![](doc_assets/pic/mod-MISC.JPG)
+
+  ### SCON,TCON
+ ![](doc_assets/pic/mod-SCON-TCON.JPG)
+
+ ### Serial Receiver(SBUF)
+ ![](doc_assets/pic/mod-SBUF-r.JPG)
+
+ ### Serial Transmitter(SBUF)
+ ![](doc_assets/pic/mod-SBUF-t.JPG)
+
+  ### Timmer(TL0, TL1, TH0, TH1)
+ ![](doc_assets/pic/mod-Timmer.JPG)
