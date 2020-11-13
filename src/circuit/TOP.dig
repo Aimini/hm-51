@@ -3452,6 +3452,101 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
       <elementAttributes/>
       <pos x="-520" y="880"/>
     </visualElement>
+    <visualElement>
+      <elementName>RAMDualPort</elementName>
+      <elementAttributes>
+        <entry>
+          <string>AddrBits</string>
+          <int>24</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>PCtrace</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>16</int>
+        </entry>
+      </elementAttributes>
+      <pos x="-580" y="-180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-600" y="-120"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Const</elementName>
+      <elementAttributes/>
+      <pos x="-600" y="-100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Counter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Bits</string>
+          <int>24</int>
+        </entry>
+        <entry>
+          <string>inverterConfig</string>
+          <inverterConfig>
+            <string>clr</string>
+          </inverterConfig>
+        </entry>
+      </elementAttributes>
+      <pos x="-780" y="-220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>CLK</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-800" y="-200"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>~CLR</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-820" y="-180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>PC</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-600" y="-160"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -3549,6 +3644,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-520" y="520"/>
       <p2 x="-440" y="520"/>
+    </wire>
+    <wire>
+      <p1 x="-1020" y="-140"/>
+      <p2 x="-580" y="-140"/>
     </wire>
     <wire>
       <p1 x="-1600" y="140"/>
@@ -3687,6 +3786,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
       <p2 x="-1920" y="540"/>
     </wire>
     <wire>
+      <p1 x="-600" y="-160"/>
+      <p2 x="-580" y="-160"/>
+    </wire>
+    <wire>
       <p1 x="-1020" y="160"/>
       <p2 x="-920" y="160"/>
     </wire>
@@ -3765,6 +3868,14 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-1940" y="560"/>
       <p2 x="-1920" y="560"/>
+    </wire>
+    <wire>
+      <p1 x="-820" y="-180"/>
+      <p2 x="-800" y="-180"/>
+    </wire>
+    <wire>
+      <p1 x="-640" y="-180"/>
+      <p2 x="-580" y="-180"/>
     </wire>
     <wire>
       <p1 x="-1940" y="820"/>
@@ -3875,6 +3986,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
       <p2 x="-1920" y="580"/>
     </wire>
     <wire>
+      <p1 x="-800" y="-200"/>
+      <p2 x="-780" y="-200"/>
+    </wire>
+    <wire>
       <p1 x="-1620" y="840"/>
       <p2 x="-1600" y="840"/>
     </wire>
@@ -3969,6 +4084,14 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-1940" y="600"/>
       <p2 x="-1920" y="600"/>
+    </wire>
+    <wire>
+      <p1 x="-1020" y="-220"/>
+      <p2 x="-780" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-720" y="-220"/>
+      <p2 x="-640" y="-220"/>
     </wire>
     <wire>
       <p1 x="-1060" y="860"/>
@@ -4069,6 +4192,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-2140" y="-100"/>
       <p2 x="-2120" y="-100"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-100"/>
+      <p2 x="-580" y="-100"/>
     </wire>
     <wire>
       <p1 x="-2200" y="740"/>
@@ -4185,6 +4312,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-540" y="240"/>
       <p2 x="-480" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="-600" y="-120"/>
+      <p2 x="-580" y="-120"/>
     </wire>
     <wire>
       <p1 x="-2140" y="-120"/>
@@ -4707,8 +4838,12 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
       <p2 x="-760" y="720"/>
     </wire>
     <wire>
-      <p1 x="-1020" y="20"/>
-      <p2 x="-1020" y="140"/>
+      <p1 x="-1020" y="-220"/>
+      <p2 x="-1020" y="-140"/>
+    </wire>
+    <wire>
+      <p1 x="-1020" y="-140"/>
+      <p2 x="-1020" y="20"/>
     </wire>
     <wire>
       <p1 x="-1020" y="300"/>
@@ -4727,6 +4862,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
       <p2 x="-1020" y="160"/>
     </wire>
     <wire>
+      <p1 x="-1020" y="20"/>
+      <p2 x="-1020" y="140"/>
+    </wire>
+    <wire>
       <p1 x="-640" y="540"/>
       <p2 x="-640" y="560"/>
     </wire>
@@ -4737,6 +4876,10 @@ e0159020900,60356000000,60357000000,60350000000,60355000000,60351000000,60352000
     <wire>
       <p1 x="-640" y="-60"/>
       <p2 x="-640" y="0"/>
+    </wire>
+    <wire>
+      <p1 x="-640" y="-220"/>
+      <p2 x="-640" y="-180"/>
     </wire>
     <wire>
       <p1 x="-1280" y="540"/>
