@@ -2,9 +2,7 @@ import sys
 def print_dec_vec():
     for x in range(256):
         print("# ---- 0x{:0>2X} ---- ".format(x))
-        if x == 0:
-            SEG_NAME = 'STAGE_CHECK_INTERRUPT'
-        elif x & 0xF == 1:
+        if x & 0xF == 1:
             if (x >> 4) & 1:
                 SEG_NAME = 'CSEG_ACALL_ADDR11'
             else:
@@ -23,8 +21,8 @@ def print_dec_vec():
             else:
                 SEG_NAME = f"IRSEG_{x:X}"
 
-        for _ in range(2):
-            print(f"J({SEG_NAME})")
+        for _ in range(1):
+            print(f"VEC({SEG_NAME})")
 
 print("gen")
 with open("decoder_template.ds",mode="w+") as fh:
