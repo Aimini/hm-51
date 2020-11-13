@@ -17,19 +17,19 @@ import signal
 args = sys.argv[1:]
 #args = ['gen_test', 'temp']
 usage = '''
-test_all.py <script_dir> <temp_dir>
+test_all.py <script_dir> <temp_dir> <thread_count>
     scan all generate script file in <script_dir> and run it. the file name start with '__' will be ignored.
 
     script_dir: the directory contains all test generate script. 
     temp_dir: the temporary directory.
 '''
-if len(args) < 2:
+if len(args) < 3:
     print(usage)
     exit(1)
 
 script_dir = args[0]  # pathlib.Path(sys.argv[1])
 temp_dir = args[1]  # pathlib.Path(sys.argv[2])
-
+executor_cnt = int(args[2])
 print_lock = threading.Lock()
 
 ignored_file = {'__51util.py', '__asmconst.py', '__asmutil.py', '__numutil.py', '__util.py',
@@ -99,7 +99,7 @@ def main(executor):
     print('total test:', len(tasks))
 
 if __name__ == '__main__':
-    executor = ThreadPoolExecutor(max_workers=5)
+    executor = ThreadPoolExecutor(max_workers=executor_cnt)
     main(executor)
 
     
