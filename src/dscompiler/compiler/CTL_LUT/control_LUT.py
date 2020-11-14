@@ -77,6 +77,13 @@ RFSRCR = NamedParametersLUT([
         'len': 1,
         'al': True,
         'enum': ['', "WE"],
+    },
+    {
+        'sh': '__1',
+        'name': 'just for algin 8 bit for control relative to RF',
+        'len': 1,
+        'al': False,
+        'enum': ['AFASFASFAFF', "GGGGGGGGGGGGGG"],
     }
 ])
 BR = NamedParametersLUT([
@@ -236,16 +243,16 @@ MIPCSRC = NamedParametersLUT([
 DEFAULT_CTL_LUT = {
     'IMMED': IMMED,
     'ADDRESS': ADDRESS,
-    'BR': BR,
+    'JUMPABS': JUMPABS,
+    'MIPCSRC': MIPCSRC,
     'RF': REGISTER_FILE,
     'RFSRCR': RFSRCR,
-    'IRR': IRR,
-    'WR': WR,
     'SR': SR,
     'RAM': RAM,
     'XRAM': XRAM,
+    'BR': BR,
+    'WR': WR,
     'ALUSD': ALUSD,
     'BUS': BUS,
-    'JUMPABS': JUMPABS,
-    'MIPCSRC': MIPCSRC
+    'IRR': IRR,
 }
