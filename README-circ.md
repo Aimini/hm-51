@@ -5,6 +5,16 @@
 - [Introductions](#introductions)
 - [Don't Assume What Will Hardware Doing](#dont-assume-what-will-hardware-doing)
 - [Logical Design And Resources Of The Circuit](#logical-design-and-resources-of-the-circuit)
+  - [Interface](#interface)
+  - [Core resource](#core-resource)
+  - [Add SFR](#add-sfr)
+  - [Interrupt](#interrupt)
+  - [SFR and Peripherals](#sfr-and-peripherals)
+    - [P0, P1](#p0-p1)
+    - [TCON](#tcon)
+    - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
+    - [SCON](#scon)
+    - [SBUF](#sbuf)
 
 ## Introductions
 The majority of this document is the introduction of resources which in circuit simulation file. although the practical hardware is slightly differ to software simulation, I always put the hardware introduction into a [README-hd.md](README-hd.md) due to timing constraints and drive capabilities.
@@ -216,7 +226,7 @@ INT_TIMMER0:
 This register is used to indicate SBUF's state. 
   - RI: set when SBUF received a byte.
   - TI: set when byte in SBUF was sent.
-  - 
+
  notice: RI and TI won't be cleared by hardware.
 
 
@@ -244,4 +254,6 @@ SERIAL_SENT:
 
 Writing a byte to SBUF will start the process of sending bytes via UART,
  while reading SBUF will read the most recently received byte.
+ There is a buffer in serial receive port, the SBUF will pop out the 
+ most top data in buffer when each time you read it.
  
