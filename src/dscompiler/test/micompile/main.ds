@@ -1,0 +1,7 @@
+RF(A,B)  #A and B are conflict!
+@INC "t0.ds"
+JDDD:     
+JDDD:      # duplicate jump label!
+RF(A), D() # excess micro-control splitter
+RF(A,GGG)    # unknow parameter
+F(GGG)     # unknow micro-control!

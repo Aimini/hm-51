@@ -27,7 +27,7 @@ def enum_input(callback):
      To enumerate all the numbers x in [0 ~ 2 ^ 13) x.
      treat x as a binary number, 
      then ci = x [0](1-bit), a = x [8:1](8-bit), f = [12:9](4-bit)   
-     invoke callback(ci,f,a) to generate ouput
+     invoke callback(ci,f,a) to generate output
     """
     for ci in range(2**1):
         for f in range(2**4):

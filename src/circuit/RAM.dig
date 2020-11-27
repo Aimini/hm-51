@@ -11,10 +11,6 @@
         <alpha>255</alpha>
       </awt-color>
     </entry>
-    <entry>
-      <string>Description</string>
-      <string>stop ouput clock if input S  is high. if go is 1, clock will ouput normally.</string>
-    </entry>
   </attributes>
   <visualElements>
     <visualElement>

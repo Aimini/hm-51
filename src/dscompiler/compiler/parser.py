@@ -8,6 +8,8 @@ import enum
 import tokenize
 import tokenize
 import json
+
+from compiler.compile_error import CompileError
 from  . import micro_control
 
 
@@ -52,8 +54,6 @@ class cstate(enum.Enum):
                 return scls.NAME
             if is_lineend:
                 return scls.START
-            else:
-                return scls.ERROR
         elif self == scls.NAME:
             if is_op:
                 if tstr == ',':
@@ -62,26 +62,18 @@ class cstate(enum.Enum):
                     return scls.JUMP_MARK
                 elif tstr == '(':
                     return scls.PARAMETER_LIST_BEGIN
-                else:
-                    return scls.ERROR
             elif is_lineend:
                 return scls.CONTROL_LINEEND
-            else:
-                return scls.ERROR
         elif self == scls.CONTROL_LINEEND:
             return scls.CONVERT
         elif self == scls.CONTROL:
             if is_name:
                 return scls.NAME
-            else:
-                return scls.ERROR
         elif self == scls.JUMP_MARK:
             if is_name:
                 return scls.NAME
             elif is_lineend:
                 return scls.CONVERT
-            else:
-                return scls.ERROR
         elif self == scls.PARAMETER_LIST_BEGIN:
             if is_name or is_number:
                 return scls.GET_ONE_PARAMETER
@@ -90,8 +82,6 @@ class cstate(enum.Enum):
         elif self == scls.NEXT_NAME:
             if is_name:
                 return scls.NAME
-            else:
-                return scls.ERROR
         elif self == scls.CONVERT:
             return scls.START
 
@@ -101,25 +91,19 @@ class cstate(enum.Enum):
                 return scls.PARAMETER_LIST_END
             elif is_name or is_number:
                 return scls.GET_ONE_PARAMETER
-            else:
-                return scls.ERROR
         elif self == scls.GET_ONE_PARAMETER:
             if check_op(','):
                 return scls.PAR_SEPERATE
             elif check_op(')'):
                 return scls.PARAMETER_LIST_END
-            else:
-                return scls.ERROR
         elif self == scls.PARAMETER_LIST_END:
             if is_lineend:
                 return scls.CONVERT
             elif check_op(','):
                 return scls.NEXT_NAME
-            else:
-                return scls.ERROR
-        else:
-            return scls.ERROR
 
+        return scls.ERROR
+        
     def isnoconsume(self):
         scls = type(self)
         return self in (scls.CONVERT, scls.CONTROL_LINEEND)
@@ -208,20 +192,15 @@ class Parser:
             scanned_tokens.append(t)
             while True:
                 # don't care
-                if t.type == tokenize.COMMENT or t.type == tokenize.ENCODING:
+                if t.type in (tokenize.COMMENT, tokenize.ENCODING, tokenize.INDENT, tokenize.DEDENT):
                     break
-
                 state = state.next(t)
                 self.add(state, scanned_tokens)
                 if state == cstate.ERROR:
                     estr = json.dumps(t.string).strip('"')
-                    e = SyntaxError()
-                    e.msg = 'unexpect token "{}"'.format(estr)
-                    e.lineno = t.start[0]
-                    e.offset = t.start[1]
-                    e.text = t.line
-                    e.filename = ''
-                    raise e
+                    raise CompileError(
+                        t.start[0],
+                        'unexpect token "{}"'.format(estr))
                 # it does not consume any token
                 elif state.isnoconsume():
                     continue

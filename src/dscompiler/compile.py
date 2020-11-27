@@ -1,10 +1,14 @@
 import optparse
 import os
+from os import sep
+from shlex import quote
 import sys
 from compiler import preprocessor
 from compiler import parser
 from compiler.micro_control_converter.micro_control_converter import MicroControlConverter,DecvecConverter
 from compiler.micro_instruction_compiler import MicroinstrcutionCompiler
+from compiler.preprocessor import PreprocessError
+from compiler.compile_error import CompileError
 
 
 def dissassemble(write, bytes_len, source_lines, machine_code_lines, hl_dtoken_lines):
@@ -93,7 +97,7 @@ def compile_ds_to_file(fileobj,veclineno, vecnum, outfile, dis_file):
         infile :
             input file object, must be binary mode.
         outfile :
-            ouput filename.
+            output filename.
                 
         return:tuple(int, int)
             t[0] is bytes per line
@@ -124,30 +128,48 @@ if __name__ == "__main__":
     op, ar = arg_parser.parse_args()
 
     infile = op.input
+    outfile = op.output
+    dis_file = op.dis_file
+    
     pre = preprocessor.Preprocessor(infile)
-    preprocessed_file = pre.result()
-    if op.preprocess_file != None:
-        with open(op.preprocess_file, "w") as fh:
-            fh.write(preprocessed_file.read())
-            preprocessed_file.seek(0)
-            fh.close()
 
     try:
-        outfile = op.output
-        dis_file = op.dis_file
+        preprocessed_file = pre.result()
+        if op.preprocess_file != None:
+            with open(op.preprocess_file, "w") as fh:
+                fh.write(preprocessed_file.read())
+                preprocessed_file.seek(0)
+                fh.close()
 
         if outfile == None:
             outfile = os.path.splitext(infile)[0] + '.bin'
-        veclineno, vecnum =     pre.decvecinfo()
+
+        veclineno, vecnum = pre.decvecinfo()
         bl, l = compile_ds_to_file(preprocessed_file,veclineno, vecnum, outfile, dis_file)
         kb = (bl * l)/1024
         print("line bytes:", bl)
         print("lines:", l)
         print("size:", kb, "KB")
-    except SyntaxError as e:
-        # lineinfo = pre.getlineinfo(e.lineno - 1)
-        #e.filename = lineinfo[0].file
-        print(e)
-        #for one in lineinfo:
-         #   print('File "{}", line {},'.format(str(one.file), one.row))
-         #   print("  ", one.str)
+    except PreprocessError as e:
+        for one in e.inc_chain_Info:
+            print('File "{}", line {},'.format(str(one.file), one.row))
+            if one.str[-1] in ('\n', '\r'):
+                print("  ", one.str, end = '')
+            else:
+                print("  ", one.str)
+        print('[preprocess error]', e.info, end= ' in @')
+        print(e.directive, end = '(')
+        print(', '.join("'" + _ + "'" for _ in e.args), end = ')')
+    except CompileError as e:
+        lineinfo = pre.getlineinfo(e.lineno)
+        for one in lineinfo:
+            print('File "{}", line {},'.format(str(one.file), one.row))
+            if one.str[-1] in ('\n', '\r'):
+                print("  ", one.str, end = '')
+            else:
+                print("  ", one.str)
+        print(e.info)
+         
+
+        
+        

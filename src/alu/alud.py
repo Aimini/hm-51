@@ -4,12 +4,12 @@ import argparse
 ## 2019-12-18 23:10:18
 ## AI
 ## genrate double operands ALU LUT(some function using A only)
-## AT28C64 chips have 13bit input, 8 bit ouput, for
+## AT28C64 chips have 13bit input, 8 bit output, for
 ## support 8 + 8 = 16 bit input, I split it's to two 4-bit part, low and high
 ## 1 bit for fi(flag in), 4bit for operand A nibble, 4bit for operaend B nibble and 4bit for function select
 ## high -> low
 ## fi | f[3:0] | b[3:0] | a[3:0]
-# for ouput, we using treat it as two 4-bit ouput. For function that must send info from low
+# for output, we using treat it as two 4-bit output. For function that must send info from low
 # part to high part alu(ADDC, SUBB, etc.), the high nibble is used to sent flag(carry, ov, etc),
 # oterwise, the high nibble is used to encode another function.
 ## high -> low
@@ -19,7 +19,7 @@ import argparse
 # for example :
 #    EXTB A,B - extract bit filed A[B] to Q[7] ,Q[6:0] are always 0.
 #   for low part:
-#       bus ouput(Q[3:0]) is always zero, and co(Q[7]) is extracted bit from lower part,
+#       bus output(Q[3:0]) is always zero, and co(Q[7]) is extracted bit from lower part,
 #　     if B < 4, co is A[B], otherwise, co is zero.
 #   for high part:
 #       Q[2:0] is zero, if B < 4, co is A[B], Q[3] take the value from low part's co.
@@ -32,7 +32,7 @@ def enum_input(callback):
      To enumerate all the numbers x in [0 ~ 2 ^ 13) x.
      treat x as a binary number, 
      then a = x[3:0](4-bit), b = x[7:4](4-bit), f = x[11:8](4-bit), ci = x[12](1-bit)   
-     invoke callback(ci,f,b, a) to generate  low part ouput
+     invoke callback(ci,f,b, a) to generate  low part output
     '''
     for ci in range(2**1):
         for f in range(2**4):
@@ -140,7 +140,7 @@ def generate_low_by_op(ci, f,  b, a):
         # if B = 1, Q = 0 000 0000, CO = 0
         # if B = 3, Q = 1 000 0000, CO = 1
         # in low part we just care of A in range [3:0],
-        # and beacause of ouput bit is in Q[7], we must send extracted bit
+        # and beacause of output bit is in Q[7], we must send extracted bit
         # to high part by using co.
         co = get_bit(b, a & 7)
         RH = co << 3

@@ -20,7 +20,7 @@ from . import micro_control
 from .CTL_LUT.named_parameters_lut import NamedParametersLUT
 from .CTL_LUT.value_paramters_LUT import ValueParametersLUT
 from .CTL_LUT.control_LUT import DEFAULT_CTL_LUT
-
+from .compile_error import CompileError
 class machine_code:
     '''
     provide mechanism to insert value to target bit index with excepted bit-len
@@ -56,12 +56,13 @@ class machine_code:
         """
 
         if value > 2**size or value < 0:
-                raise SyntaxError("encoding value {} to bit to fit size {}".format(value, size))
+                raise CompileError(None, "encoding value {} to bit to fit size {}".format(value, size))
+                
 
         for i in range(size):
             x = i + pos
             if self.users[x] is not None:
-                raise SyntaxError("inserted value {} conflict with {}".format(user, self.users[x]))
+                raise CompileError(None, "inserted value {} conflict with {}".format(user, self.users[x]))
             if (1 << x) & self.value:
                 self.value ^= (1 << x)
             self.users[x] = user
@@ -95,7 +96,7 @@ class MicroinstrcutionCompiler:
             if label in self._special_labels:
                 self.jump_table[label].append(address)
             else:
-                raise SyntaxError(
+                return CompileError(None, 
                             'duplicate jump label "{}"'.format(label))
 
 
@@ -155,7 +156,8 @@ class MicroinstrcutionCompiler:
         """
         control_parameter_LUTs = self.CTL_LUT.get(dt.value)
         if control_parameter_LUTs is None:
-            raise SyntaxError('unkonw control name "{}"'.format(dt.value))
+            
+            raise CompileError(None, 'unkonw control name "{}"'.format(dt.value))
 
         for i, p in enumerate(dt.parameters):
             if isinstance(control_parameter_LUTs, NamedParametersLUT):
@@ -170,10 +172,10 @@ class MicroinstrcutionCompiler:
                     dt.parameters[i] = encoding
             
             if place_info is None:
-                raise SyntaxError('unkonw control parameter "{}"'.format(p))
+                raise CompileError(None, 'unkonw control parameter "{}"'.format(p))
 
             if not isinstance(encoding, int):
-                raise SyntaxError('unkonw control parameter "{}"'.format(p))
+                raise CompileError(None, 'unkonw control parameter "{}"'.format(p))
 
             mc.insert(encoding, place_info[0], place_info[1], dt)
 
@@ -213,7 +215,10 @@ class MicroinstrcutionCompiler:
 
                 # check jump mark
                 if one_dtoken.type == micro_control.JUMP_MARK:
-                    self.addjumpaddr(v, pc)
+                    e = self.addjumpaddr(v, pc) 
+                    if isinstance(e, CompileError):
+                        e.lineno = lineno
+                        raise e
                 else:
                     a.append(one_dtoken)
 
@@ -260,7 +265,7 @@ class MicroinstrcutionCompiler:
             try:
                 code = self.convert_one_line(one, pc)
                 machine_code_lines.append([lineno, code, one])
-            except SyntaxError as e:
-                e.msg = e.msg + " at line " + str(lineno)
+            except CompileError as e:
+                e.lineno = lineno
                 raise e
         return machine_code_lines, microprogram

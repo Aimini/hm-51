@@ -12,7 +12,7 @@ def enum_input(callback):
      then state = x[3:0](4-bit), counter = x[7:4](4-bit),
     sample_bits = x[10:8](3-bit), sample_enable = x[11](1-bit) 
     rx_enalbe = x[12](1-bit)  
-     invoke callback(ci,f,b, a) to generate  low part ouput
+     invoke callback(ci,f,b, a) to generate  low part output
     '''
     for rx_enable in range(2**1):
         for sample_enable in range(2**1):
@@ -98,7 +98,7 @@ def gen_to_file(fname):
 
 usage = """
 usage:
-    receiver.py <ouput_file>
+    receiver.py <output_file>
 """
 
 if len(sys.argv) < 2:

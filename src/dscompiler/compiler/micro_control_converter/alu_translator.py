@@ -1,4 +1,4 @@
-from .empty_translator import empty_translator
+from .empty_translator import TranlatorError, empty_translator
 from ..CTL_LUT import control_LUT
 import copy
 
@@ -45,8 +45,7 @@ class ALUTranslator(empty_translator):
             return
 
         # ALU control but have unknow parameter
-        raise SyntaxError(
-            'unsupport ALU control for "{}"'.format(dt.simple_str()))
+        raise TranlatorError('unsupport ALU control for "{}"'.format(dt.simple_str()))
 
     def translate(self, dt):
         """translate ALU(SOME_FUNTION), BUS(ALU)

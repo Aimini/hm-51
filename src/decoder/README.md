@@ -1,5 +1,15 @@
-# Decoder Script Document
+# Decoder Script Document  <!-- omit in toc -->
 ---
+# Table of Content  <!-- omit in toc -->
+- [Introduction](#introduction)
+- [Instruction Execute Flow](#instruction-execute-flow)
+  - [fetch](#fetch)
+  - [decode](#decode)
+  - [execute](#execute)
+  - [check interrupt](#check-interrupt)
+- [Stage Reset All](#stage-reset-all)
+- [Conventions](#conventions)
+
 ## Introduction
 
  One instruction consists of many micro instrcutions(MI), and an instruction execute only one MI in each clock cycle, each microinstruction cantain multiple micro-operations(MO) to control hardwares.
@@ -49,3 +59,6 @@ According `IRQ` , register `ISR`  `IE`  `IP` to select highest priority `IRQ` an
 - leavel `PC+1` in `WR` and `SR` after increase `PC` . So that, for some instruction need to load data that after opcode, we don't need to load `PC` from `RF` to `WR` and `SR` again.
 
 - leavel 0 in `BR` for instruction that need using 0 or 1 in `BR`.
+
+ *Stage reset*
+- set `T3` to 0 and never modify it.

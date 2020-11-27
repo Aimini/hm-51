@@ -1,6 +1,9 @@
 from abc import abstractmethod
 from .. import micro_control 
-
+from ..compile_error import CompileError
+class TranlatorError(CompileError):
+    def __init__(self, info):
+        super().__init__(None, info)
 
 class empty_translator():
     """

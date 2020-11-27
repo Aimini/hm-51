@@ -1,5 +1,20 @@
-# Decoder Script Compiler Document
+# Decoder Script Compiler Document <!-- omit in toc -->
 ---
+# Table of Content <!-- omit in toc -->
+- [Script Syntax](#script-syntax)
+  - [component control token](#component-control-token)
+  - [composite micro-controls](#composite-micro-controls)
+  - [jump label](#jump-label)
+  - [special jump label](#special-jump-label)
+  - [directive](#directive)
+- [Disassemble](#disassemble)
+  - [view the preprocessed file](#view-the-preprocessed-file)
+  - [view the machine code and MIPC](#view-the-machine-code-and-mipc)
+- [Change LUT](#change-lut)
+- [More detail](#more-detail)
+  - [add composite micro-controls](#add-composite-micro-controls)
+  - [add new directive](#add-new-directive)
+
 ## Script Syntax
  The script describes the hardware control signals corresponding to each MIPC(microinstruction program counter), each line contains a set of component control tokens to describe what this component should do during this cycle.
 
@@ -36,17 +51,16 @@
   ```
 
 
-### composite-control token
- Composite-control tokens are looks like normal tokens, but it perform an higher level of abstraction(provides a simpler way of writing). A composite-control tokens can be translated into one or more component control tokens.
+### composite micro-controls
+ Composite micro-controls are looks like normal micro-controls, but it perform an higher level of abstraction(provides a simpler way of writing). A composite micro-controls can be translated into one or more micro-controls.
  
- For example,  `LI(0x80)` means that you want to using the immediate value 0x80 to drive the bus. Obviously, you want the `IMMED` component to drive the bus, so it's best to convert it to `BUS(IMMED), IMMED(0x80)`.
+ For example,  `LI(0x80)` means that you want to using the immediate value 0x80 to drive the bus. Obviously, you want the `IMMED` micro-controls to drive the bus, so it's best to convert it to `BUS(IMMED), IMMED(0x80)`.
 
  See [this](###-add-composite-control-translator) for how to add customer composite-control token.
 
 
 ### jump label
  When you need to get the MIPC value corresponding to a line of microinstructions (usually a jump token), using the jump label can let the compiler help you get these (not easy to manually calculate) values.
-
  The jump label starts with its name, followed by a colon:
 
  ```python
@@ -85,8 +99,16 @@ The jump label is ensstianlly a number, it's the value of the MIPC corresponding
  
  In the decoder script, you will use a large number of jump tokens to decode the opcode. Jump labels can provide meaningful name for code segments.
 
+  ### special jump label
+  There is a spcial jump label '__0', if it's occoured as mocrio-controls parameter, it's means the next nearest '__0' label.
 
-
+  ```python
+  J(__0) # jump to LI(1)!
+  __0:
+  LI(1)
+  __0:
+  LI(2)
+  ```
 ### directive
  The directive starts with '@', followed by the directive name. No space is allowed between '@' and the name, the space after the name separates the directive name and the arguments. The arguments are separated by commas, all arguments are string literals:
 
@@ -281,7 +303,7 @@ The real effect of this directive is to help you use the idle controls in the de
   The compiler's will show syntax error base on preprocessd text, Uinsg the `-s` argument will let compiler dump the preprocessed text to target file:
 
   ```python
-  compile.py -s <preprocessed_file> -i <input_file> -o <ouput_file>
+  compile.py -s <preprocessed_file> -i <input_file> -o <output_file>
   ```
 
 ### view the machine code and MIPC
@@ -289,7 +311,7 @@ The real effect of this directive is to help you use the idle controls in the de
 
  ```
  
- compile.py -d <disassemble_file> -i <input_file> -o <ouput_file>
+ compile.py -d <disassemble_file> -i <input_file> -o <output_file>
  ```
  
  This is example of one microinstruction:
@@ -316,7 +338,7 @@ line number
 ## Change LUT
  The LUT is used to define the component and its control pins, include describe the name of the component, the function encoding and bit index of the control pins.
 
- Please refer to the comments in the file "/src/compiler/control_LUT.py" for more details.
+ Please refer to the comments in the file "/src/compiler/CTL_LUT/control_LUT.py" for more details.
 
 ## More detail
 
@@ -324,17 +346,17 @@ Wanna to add new directive or add composite-control tokens?
 
 Let's go.
 
-### add composite-control translator
+### add composite micro-controls
 
- Open file `/src/dscompiler/hl_dtoken_converter.py`, there, you can see a useless(abstract) class named `empty_translator`, you should write a class that inherits from it.
+ Open package located in `/src/dscompiler/compiler/micro_control_converter`, there, you can see a useless(abstract) class named `empty_translator`, you should write a class that inherits from it.
 
- It provides some memember functions for creating hardware level dtokens. You should pay attention to the following three functions:
+ It provides some memember functions for creating hardware level micro-control(class microCTL). You should pay attention to the following three functions:
 
-  - prepare(): invoke it before scanning each line of dtokens.
-  - scan(dtoken): invoke it for each dtoken in the line, use to get infomation from this line.
-  - translate(dtoken): invoke it again for each dtoken in the line, use to return new dtoken.
+  - prepare(): invoke it before scanning each line of microCTL.
+  - scan(microCTL): invoke it for each microCTL in the line, use to get infomation from this line.
+  - translate(microCTL): invoke it again for each microCTL in the line, use to return new microCTL.
   
  You can view more details in the comment of the class `empty_translator`, there are also some examples for reference: `alu_translator`,`load_immed_translator`, etc.
 
 ### add new directive
-All instructions are processed in `compiler.preprocessor`. Add a custom process in the `_directive` method.
+All instructions are processed in ``/src/dscompiler/compiler/compiler.preprocessor`. Add a custom process in the `_directive` method.

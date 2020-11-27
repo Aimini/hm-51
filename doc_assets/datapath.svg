@@ -1,0 +1,1534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- 由 Microsoft Visio, SVG Export 生成 绘图3.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="11.6929in" height="16.0354in"
+		viewBox="0 0 841.89 1154.55" xml:space="preserve" color-interpolation-filters="sRGB" class="st35">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false">
+		<v:userDefs>
+			<v:ud v:nameU="msvSubprocessMaster" v:prompt="" v:val="VT4(Rectangle)"/>
+			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {visibility:visible}
+		.st2 {fill:#5b9bd5;fill-opacity:0.25;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.25}
+		.st3 {fill:#ffffff;stroke:#40709c;stroke-width:0.75}
+		.st4 {fill:#41719c;font-family:Calibri;font-size:1.16666em;font-stretch:semi-expanded}
+		.st5 {font-size:1em}
+		.st6 {fill:none}
+		.st7 {stroke:#000000;stroke-width:0.25}
+		.st8 {fill:#000000;font-family:Calibri;font-size:1.00001em}
+		.st9 {fill:none;stroke:none;stroke-width:0.25}
+		.st10 {fill:#5b9bd5;font-family:Calibri;font-size:1.16666em}
+		.st11 {marker-end:url(#mrkr4-117);stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st12 {fill:#5b9bd5;fill-opacity:1;stroke:#5b9bd5;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st13 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st14 {fill:#4f88bb;font-family:Calibri;font-size:1.00001em}
+		.st15 {fill:none;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.22}
+		.st16 {fill:#5b9bd5;filter:url(#filter_2);font-family:Calibri;font-size:1.00001em;opacity:0.219608}
+		.st17 {fill:none;stroke:#000000;stroke-width:0.25}
+		.st18 {stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:4.5}
+		.st19 {fill:#4f88bb;font-family:Calibri;font-size:1.5em}
+		.st20 {marker-end:url(#mrkr4-117);marker-start:url(#mrkr4-182);stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st21 {fill:#7ca9da}
+		.st22 {stroke:#4a80b0;stroke-linecap:butt;stroke-width:1.25}
+		.st23 {stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st24 {stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.25}
+		.st25 {fill:#4a80b0;font-family:Calibri;font-size:1.00001em}
+		.st26 {fill:#4a80b0;font-family:Calibri;font-size:1.5em}
+		.st27 {fill:#5b9bd5;fill-opacity:0.22;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.22}
+		.st28 {fill:#5b9bd5;stroke:#c7c8c8;stroke-width:0.25}
+		.st29 {fill:#feffff;font-family:Calibri;font-size:1.00001em}
+		.st30 {fill:#4f88bb;font-family:Calibri;font-size:0.75em}
+		.st31 {fill:#4f88bb;font-family:Calibri;font-size:0.833336em}
+		.st32 {fill:#feffff;font-family:Calibri;font-size:1.16666em}
+		.st33 {fill:#4f88bb;font-family:Calibri;font-size:1.16666em}
+		.st34 {fill:#feffff;font-family:Calibri;font-size:0.833336em}
+		.st35 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Patterns_And_Gradients">
+		<linearGradient id="grad0-20" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(90 0.5 0.5)">
+			<stop offset="0.01" stop-color="#ffffff" stop-opacity="1"/>
+			<stop offset="0.5" stop-color="#fefefe" stop-opacity="1"/>
+			<stop offset="1" stop-color="#ffffff" stop-opacity="1"/>
+		</linearGradient>
+		<linearGradient id="grad0-24" x1="0" y1="0" x2="1" y2="0" gradientTransform="rotate(270 0.5 0.5)">
+			<stop offset="0" stop-color="#fefefe" stop-opacity="1"/>
+			<stop offset="1" stop-color="#ffffff" stop-opacity="1"/>
+		</linearGradient>
+	</defs>
+	<defs id="Markers">
+		<g id="lend4">
+			<path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr4-117" class="st12" v:arrowType="4" v:arrowSize="2" v:setback="7.04" refX="-7.04" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(-3.52,-3.52) "/>
+		</marker>
+		<marker id="mrkr4-182" class="st12" v:arrowType="4" v:arrowSize="2" v:setback="6.68" refX="6.68" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(3.52) "/>
+		</marker>
+	</defs>
+	<defs id="Filters">
+		<filter id="filter_2">
+			<feGaussianBlur stdDeviation="2"/>
+		</filter>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<v:userDefs>
+			<v:ud v:nameU="msvThemeOrder" v:val="VT0(0):26"/>
+		</v:userDefs>
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="容器" v:index="0"/>
+		<v:layer v:name="连接线" v:index="1"/>
+		<v:layer v:name="电气" v:index="2"/>
+		<v:layer v:name="批注" v:index="3"/>
+		<v:layer v:name="流道段" v:index="4"/>
+		<g id="group55-1" transform="translate(244.717,-808.104)" v:mID="55" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(ContainerStyleDefaults)"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Container)"/>
+				<v:ud v:nameU="msvSDContainerMargin" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="msvSDContainerResize" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerLocked" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoRibbon" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerStyleCount" v:prompt="" v:val="VT0(14):26"/>
+				<v:ud v:nameU="msvSDContainerRequiredCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="msvSDContainerExcludedCategories" v:prompt="" v:val="VT4(DoNotContain)"/>
+				<v:ud v:nameU="msvSDHeadingStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDHeadingStyleCount" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="HeadingSide" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingSpan" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingAlign" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="RTL" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="FnForceContrast" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="HColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="HColor2" v:prompt="" v:val="VT5(#fefefe)"/>
+				<v:ud v:nameU="HColor3" v:prompt="" v:val="VT5(#e9e9e9)"/>
+				<v:ud v:nameU="HColor4" v:prompt="" v:val="VT5(#efefef)"/>
+				<v:ud v:nameU="BColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BColor2" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="Embellishment" v:prompt="" v:val="VT0(2):26"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+			</v:userDefs>
+			<title>普通</title>
+			<g id="group56-2" v:mID="56" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Corner6" v:prompt="" v:val="VT0(0.19685039370079):24"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.56</title>
+				<g id="shape57-3" v:mID="57" v:groupContext="shape" v:layerMember="0" transform="translate(2.83465,2.83465)">
+					<title>工作表.57</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="OffsetX10" v:prompt="" v:val="VT0(0.039370078740157):24"/>
+						<v:ud v:nameU="OffsetY10" v:prompt="" v:val="VT0(-0.039370078740157):24"/>
+						<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+						<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					</v:userDefs>
+					<g id="shadow57-4" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1"/>
+				</g>
+				<g id="shape56-8" v:mID="56" v:groupContext="groupContent" v:layerMember="0">
+					<g id="shadow56-9" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1">
+						<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1059.54 L54.43 1059.54 L0 1059.54 L0 1154.55 Z"
+								class="st2"/>
+					</g>
+					<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1059.54 L54.43 1059.54 L0 1059.54 L0 1154.55 Z"
+							class="st3"/>
+				</g>
+			</g>
+			<g id="group58-13" transform="translate(0,-52.4948)" v:mID="58" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Heading)"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Inset" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsideRadius" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsetXInt" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="HTxtMargin" v:prompt="" v:val="VT0(0.059055118110236):24"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="SquareCorners7" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Offset" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding8" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+					<v:ud v:nameU="InsetX9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="InsetY9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY11" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Width12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="msvSDContainerHeadingEdge" v:prompt="" v:val="VT4(Bottom)"/>
+					<v:ud v:nameU="HLineVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HFillVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(30):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#feffff)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.58</title>
+				<desc>Register File 16x8</desc>
+				<g id="shape59-14" v:mID="59" v:groupContext="shape" v:layerMember="0">
+					<title>工作表.59</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+						<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+						<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+						<v:ud v:nameU="BowHeight7" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):3"/>
+						<v:ud v:nameU="AnchorPt7" v:prompt="" v:val="VT0(0.64439796587927):24"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):29"/>
+						<v:ud v:nameU="AnchorPt7" v:prompt="" v:val="VT0(0.99872867454068):24"/>
+					</v:userDefs>
+					<g id="shadow59-15" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279"
+							v:shadowType="1" transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1"/>
+				</g>
+				<g id="shape58-21" v:mID="58" v:groupContext="groupContent" v:layerMember="0">
+					<v:textBlock v:margins="rect(4,6,4,6)" v:tabSpace="42.5197"/>
+					<v:textRect cx="54.4252" cy="1133.29" width="108.86" height="42.5197"/>
+					<text x="16.27" y="1129.09" class="st4" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>Register File<v:newlineChar/><tspan
+								x="39.38" dy="1.2em" class="st5">16</tspan>x8</text>				</g>
+			</g>
+		</g>
+		<g id="group78-27" transform="translate(453.303,-625.571)" v:mID="78" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(ContainerStyleDefaults)"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Container)"/>
+				<v:ud v:nameU="msvSDContainerMargin" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="msvSDContainerResize" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerLocked" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoRibbon" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerStyleCount" v:prompt="" v:val="VT0(14):26"/>
+				<v:ud v:nameU="msvSDContainerRequiredCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="msvSDContainerExcludedCategories" v:prompt="" v:val="VT4(DoNotContain)"/>
+				<v:ud v:nameU="msvSDHeadingStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDHeadingStyleCount" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="HeadingSide" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingSpan" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingAlign" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="RTL" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="FnForceContrast" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="HColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="HColor2" v:prompt="" v:val="VT5(#fefefe)"/>
+				<v:ud v:nameU="HColor3" v:prompt="" v:val="VT5(#e9e9e9)"/>
+				<v:ud v:nameU="HColor4" v:prompt="" v:val="VT5(#efefef)"/>
+				<v:ud v:nameU="BColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BColor2" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="Embellishment" v:prompt="" v:val="VT0(2):26"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+			</v:userDefs>
+			<title>普通.78</title>
+			<g id="group79-28" v:mID="79" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Corner6" v:prompt="" v:val="VT0(0.19685039370079):24"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.79</title>
+				<g id="shape80-29" v:mID="80" v:groupContext="shape" v:layerMember="0" transform="translate(2.83465,2.83465)">
+					<title>工作表.80</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="OffsetX10" v:prompt="" v:val="VT0(0.039370078740157):24"/>
+						<v:ud v:nameU="OffsetY10" v:prompt="" v:val="VT0(-0.039370078740157):24"/>
+						<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+						<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					</v:userDefs>
+					<g id="shadow80-30" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1"/>
+				</g>
+				<g id="shape79-34" v:mID="79" v:groupContext="groupContent" v:layerMember="0">
+					<g id="shadow79-35" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1">
+						<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1083.37 L54.43 1083.37 L0 1083.37 L0 1154.55 Z"
+								class="st2"/>
+					</g>
+					<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1083.37 L54.43 1083.37 L0 1083.37 L0 1154.55 Z"
+							class="st3"/>
+				</g>
+			</g>
+			<g id="group81-39" transform="translate(0,-45.6732)" v:mID="81" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Heading)"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Inset" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsideRadius" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsetXInt" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="HTxtMargin" v:prompt="" v:val="VT0(0.059055118110236):24"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="SquareCorners7" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Offset" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding8" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+					<v:ud v:nameU="InsetX9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="InsetY9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY11" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Width12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="msvSDContainerHeadingEdge" v:prompt="" v:val="VT4(Bottom)"/>
+					<v:ud v:nameU="HLineVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HFillVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(30):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#feffff)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.81</title>
+				<desc>IRAM</desc>
+				<g id="shape82-40" v:mID="82" v:groupContext="shape" v:layerMember="0">
+					<title>工作表.82</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+						<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+						<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+						<v:ud v:nameU="BowHeight7" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):3"/>
+						<v:ud v:nameU="AnchorPt7" v:prompt="" v:val="VT0(0.64439796587927):24"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):29"/>
+					</v:userDefs>
+					<g id="shadow82-41" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279"
+							v:shadowType="1" transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1"/>
+				</g>
+				<g id="shape81-46" v:mID="81" v:groupContext="groupContent" v:layerMember="0">
+					<v:textBlock v:margins="rect(4,6,4,6)" v:tabSpace="42.5197"/>
+					<v:textRect cx="54.4252" cy="1141.8" width="108.86" height="25.5118"/>
+					<text x="37.27" y="1146" class="st4" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRAM</text>				</g>
+			</g>
+		</g>
+		<g id="group86-50" transform="translate(453.303,-557.575)" v:mID="86" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(ContainerStyleDefaults)"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Container)"/>
+				<v:ud v:nameU="msvSDContainerMargin" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="msvSDContainerResize" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerLocked" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoRibbon" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerStyleCount" v:prompt="" v:val="VT0(14):26"/>
+				<v:ud v:nameU="msvSDContainerRequiredCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="msvSDContainerExcludedCategories" v:prompt="" v:val="VT4(DoNotContain)"/>
+				<v:ud v:nameU="msvSDHeadingStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDHeadingStyleCount" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="HeadingSide" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingSpan" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingAlign" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="RTL" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="FnForceContrast" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="HColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="HColor2" v:prompt="" v:val="VT5(#fefefe)"/>
+				<v:ud v:nameU="HColor3" v:prompt="" v:val="VT5(#e9e9e9)"/>
+				<v:ud v:nameU="HColor4" v:prompt="" v:val="VT5(#efefef)"/>
+				<v:ud v:nameU="BColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BColor2" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="Embellishment" v:prompt="" v:val="VT0(2):26"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+			</v:userDefs>
+			<title>普通.86</title>
+			<g id="group87-51" v:mID="87" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Corner6" v:prompt="" v:val="VT0(0.19685039370079):24"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.87</title>
+				<g id="shape88-52" v:mID="88" v:groupContext="shape" v:layerMember="0" transform="translate(2.83465,2.83465)">
+					<title>工作表.88</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="OffsetX10" v:prompt="" v:val="VT0(0.039370078740157):24"/>
+						<v:ud v:nameU="OffsetY10" v:prompt="" v:val="VT0(-0.039370078740157):24"/>
+						<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+						<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					</v:userDefs>
+					<g id="shadow88-53" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1"/>
+				</g>
+				<g id="shape87-57" v:mID="87" v:groupContext="groupContent" v:layerMember="0">
+					<g id="shadow87-58" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1">
+						<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1101.83 L54.43 1101.83 L0 1101.83 L0 1154.55 Z"
+								class="st2"/>
+					</g>
+					<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1101.83 L54.43 1101.83 L0 1101.83 L0 1154.55 Z"
+							class="st3"/>
+				</g>
+			</g>
+			<g id="group89-62" transform="translate(0,-27.2126)" v:mID="89" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Heading)"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Inset" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsideRadius" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsetXInt" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="HTxtMargin" v:prompt="" v:val="VT0(0.059055118110236):24"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="SquareCorners7" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Offset" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding8" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+					<v:ud v:nameU="InsetX9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="InsetY9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY11" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Width12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="msvSDContainerHeadingEdge" v:prompt="" v:val="VT4(Bottom)"/>
+					<v:ud v:nameU="HLineVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HFillVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(30):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#feffff)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.89</title>
+				<desc>XRAM</desc>
+				<g id="shape90-63" v:mID="90" v:groupContext="shape" v:layerMember="0">
+					<title>工作表.90</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+						<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+						<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+						<v:ud v:nameU="BowHeight7" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):3"/>
+						<v:ud v:nameU="AnchorPt7" v:prompt="" v:val="VT0(0.64439796587927):24"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):29"/>
+					</v:userDefs>
+					<g id="shadow90-64" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279"
+							v:shadowType="1" transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1"/>
+				</g>
+				<g id="shape89-69" v:mID="89" v:groupContext="groupContent" v:layerMember="0">
+					<v:textBlock v:margins="rect(4,6,4,6)" v:tabSpace="42.5197"/>
+					<v:textRect cx="54.4252" cy="1141.8" width="108.86" height="25.5118"/>
+					<text x="35.21" y="1146" class="st4" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>XRAM</text>				</g>
+			</g>
+		</g>
+		<g id="group93-73" transform="translate(453.303,-491.244)" v:mID="93" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT4(ContainerStyleDefaults)"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Container)"/>
+				<v:ud v:nameU="msvSDContainerMargin" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="msvSDContainerResize" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerLocked" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerNoRibbon" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvSDContainerStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDContainerStyleCount" v:prompt="" v:val="VT0(14):26"/>
+				<v:ud v:nameU="msvSDContainerRequiredCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="msvSDContainerExcludedCategories" v:prompt="" v:val="VT4(DoNotContain)"/>
+				<v:ud v:nameU="msvSDHeadingStyle" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="msvSDHeadingStyleCount" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="HeadingSide" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingSpan" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="HeadingAlign" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="RTL" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="FnForceContrast" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="HColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="HColor2" v:prompt="" v:val="VT5(#fefefe)"/>
+				<v:ud v:nameU="HColor3" v:prompt="" v:val="VT5(#e9e9e9)"/>
+				<v:ud v:nameU="HColor4" v:prompt="" v:val="VT5(#efefef)"/>
+				<v:ud v:nameU="BColor1" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="BColor2" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="Embellishment" v:prompt="" v:val="VT0(2):26"/>
+				<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+				<v:ud v:nameU="LineColor" v:prompt="" v:val="VT5(#d5d5d5)"/>
+			</v:userDefs>
+			<title>普通.93</title>
+			<g id="group94-74" v:mID="94" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Corner6" v:prompt="" v:val="VT0(0.19685039370079):24"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.94</title>
+				<g id="shape95-75" v:mID="95" v:groupContext="shape" v:layerMember="0" transform="translate(2.83465,2.83465)">
+					<title>工作表.95</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="OffsetX10" v:prompt="" v:val="VT0(0.039370078740157):24"/>
+						<v:ud v:nameU="OffsetY10" v:prompt="" v:val="VT0(-0.039370078740157):24"/>
+						<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+						<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#1f477d)"/>
+						<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					</v:userDefs>
+					<g id="shadow95-76" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1"/>
+				</g>
+				<g id="shape94-80" v:mID="94" v:groupContext="groupContent" v:layerMember="0">
+					<g id="shadow94-81" v:groupContext="shadow" v:shadowOffsetX="0.3456" v:shadowOffsetY="-1.9728" v:shadowType="1"
+							transform="matrix(1,0,0,1,0.3456,1.9728)" class="st1">
+						<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1101.83 L54.43 1101.83 L0 1101.83 L0 1154.55 Z"
+								class="st2"/>
+					</g>
+					<path d="M0 1154.55 L54.43 1154.55 L108.85 1154.55 L108.85 1101.83 L54.43 1101.83 L0 1101.83 L0 1154.55 Z"
+							class="st3"/>
+				</g>
+			</g>
+			<g id="group96-85" transform="translate(0,-27.2126)" v:mID="96" v:groupContext="group" v:layerMember="0">
+				<v:userDefs>
+					<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Heading)"/>
+					<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HSpan" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+					<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Inset" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsideRadius" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="InsetXInt" v:prompt="" v:val="VT0(0):24"/>
+					<v:ud v:nameU="HTxtMargin" v:prompt="" v:val="VT0(0.059055118110236):24"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+					<v:ud v:nameU="SquareCorners7" v:prompt="" v:val="VT0(3):26"/>
+					<v:ud v:nameU="Offset" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Rounding8" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+					<v:ud v:nameU="InsetX9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="InsetY9" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY11" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="OffsetY12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="Width12" v:prompt="" v:val="VT0(0):26"/>
+					<v:ud v:nameU="msvSDContainerHeadingEdge" v:prompt="" v:val="VT4(Bottom)"/>
+					<v:ud v:nameU="HLineVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="HFillVisible" v:prompt="" v:val="VT0(0):5"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="FillPatternIn" v:prompt="" v:val="VT0(30):26"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#96afcf)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#1f477d)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#000000)"/>
+					<v:ud v:nameU="HorzAlign" v:prompt="" v:val="VT0(1):26"/>
+					<v:ud v:nameU="HTxtWidth" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+					<v:ud v:nameU="FillForegndIn" v:prompt="" v:val="VT5(#c7c7c7)"/>
+					<v:ud v:nameU="FillBkgndIn" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BaseColor" v:prompt="" v:val="VT5(#ffffff)"/>
+					<v:ud v:nameU="BackFillColor" v:prompt="" v:val="VT5(#4f88bb)"/>
+					<v:ud v:nameU="BackLineColor" v:prompt="" v:val="VT5(#41719c)"/>
+					<v:ud v:nameU="BackCharColor" v:prompt="" v:val="VT5(#feffff)"/>
+					<v:ud v:nameU="DarkerColor" v:prompt="" v:val="VT5(#41719c)"/>
+				</v:userDefs>
+				<title>工作表.96</title>
+				<desc>ROM</desc>
+				<g id="shape97-86" v:mID="97" v:groupContext="shape" v:layerMember="0">
+					<title>工作表.97</title>
+					<v:userDefs>
+						<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeColors" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="msvThemeEffects" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="CStyle" v:prompt="" v:val="VT0(1):26"/>
+						<v:ud v:nameU="Rounding" v:prompt="" v:val="VT0(0):1"/>
+						<v:ud v:nameU="SquareCorners" v:prompt="" v:val="VT0(3):26"/>
+						<v:ud v:nameU="HLeft" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(2.9527559055118):24"/>
+						<v:ud v:nameU="Hidden" v:prompt="" v:val="VT0(0):5"/>
+						<v:ud v:nameU="BowHeight7" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):3"/>
+						<v:ud v:nameU="AnchorPt7" v:prompt="" v:val="VT0(0.64439796587927):24"/>
+						<v:ud v:nameU="HSide" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HAlign" v:prompt="" v:val="VT0(0):26"/>
+						<v:ud v:nameU="HRight" v:prompt="" v:val="VT0(1.511811023622):1"/>
+						<v:ud v:nameU="Offset7" v:prompt="" v:val="VT0(0.0052083333333333):29"/>
+					</v:userDefs>
+					<g id="shadow97-87" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279"
+							v:shadowType="1" transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1"/>
+				</g>
+				<g id="shape96-92" v:mID="96" v:groupContext="groupContent" v:layerMember="0">
+					<v:textBlock v:margins="rect(4,6,4,6)" v:tabSpace="42.5197"/>
+					<v:textRect cx="54.4252" cy="1141.8" width="108.86" height="25.5118"/>
+					<text x="38.56" y="1146" class="st4" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>ROM</text>				</g>
+			</g>
+		</g>
+		<g id="shape53-96" v:mID="53" v:groupContext="shape" transform="translate(452.453,-731.02)">
+			<title>工作表.53</title>
+			<desc>ALU</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="41.3858" cy="1083.69" width="82.78" height="141.732"/>
+			<path d="M82.46 1067.96 L82.77 1067.96 L82.77 1068.17 L82.77 1099.2 L64.74 1111.26 L0 1154.55 L0 1099.2 L23.36 1083.58
+						 L0.31 1068.17 L0 1068.17 L0 1067.96 L0 1012.82 L64.59 1056.01 L82.46 1067.96 Z" class="st6"/>
+			<path d="M82.46 1067.96 L82.77 1068.17" class="st7"/>
+			<path d="M82.46 1067.96 L82.77 1067.96 L82.77 1068.17 L82.77 1099.2 L64.74 1111.26 L0 1154.55 L0 1099.2 L23.36 1083.58
+						 L0.31 1068.17 L0 1068.17 L0 1067.96 L0 1012.82 L64.59 1056.01 L82.46 1067.96" class="st7"/>
+			<path d="M0.31 1068.17 L0 1067.96" class="st7"/>
+			<path d="M46.72 1067.96 L46.4 1068.17" class="st7"/>
+			<text x="36.97" y="1087.29" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>ALU</text>		</g>
+		<g id="shape54-103" v:mID="54" v:groupContext="shape" transform="translate(253.221,-841.89)">
+			<title>工作表.54</title>
+			<desc>SELECT</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1149.45" width="56.41" height="10.2047"/>
+			<rect x="0" y="1144.35" width="56.4094" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>SELECT</text>		</g>
+		<g id="shape60-106" v:mID="60" v:groupContext="shape" transform="translate(253.221,-817.795)">
+			<title>工作表.60</title>
+			<desc>D</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>D</text>		</g>
+		<g id="shape61-109" v:mID="61" v:groupContext="shape" transform="translate(299.993,-841.89)">
+			<title>工作表.61</title>
+			<desc>Q</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="31.65" y="1153.65" class="st10" v:langID="2052"><v:paragraph v:horizAlign="2"/><v:tabList/>Q</text>		</g>
+		<g id="shape71-112" v:mID="71" v:groupContext="shape" v:layerMember="1" transform="translate(353.568,-837.638)">
+			<title>动态连接线</title>
+			<desc>RFQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="49.3805" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L91.72 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="39.3286" y="1140.26" width="20.1039" height="14.4001" class="st13"/>
+			<text x="39.33" y="1151.06" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>RFQ</text>		</g>
+		<g id="shape72-120" v:mID="72" v:groupContext="shape" transform="translate(241.664,-743.528)">
+			<title>矩形</title>
+			<desc>WR</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1137.65" width="56.41" height="33.8031"/>
+			<g id="shadow72-121" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1">
+				<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st15"/>
+				<text x="19.61" y="1141.25" class="st16" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>WR</text>			</g>
+			<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st17"/>
+			<text x="19.61" y="1141.25" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>WR</text>		</g>
+		<g id="shape73-128" v:mID="73" v:groupContext="shape" transform="translate(244.15,-621.85)">
+			<title>矩形.73</title>
+			<desc>SR</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1137.65" width="56.41" height="33.8031"/>
+			<g id="shadow73-129" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1">
+				<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st15"/>
+				<text x="22.19" y="1141.25" class="st16" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>SR</text>			</g>
+			<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st17"/>
+			<text x="22.19" y="1141.25" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>SR</text>		</g>
+		<g id="shape74-136" v:mID="74" v:groupContext="shape" v:layerMember="1" transform="translate(298.074,-767.516)">
+			<title>动态连接线.74</title>
+			<desc>WRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="77.1273" cy="1161.64" width="60" height="22.4037"/>
+			<path d="M0 1161.64 L147.21 1161.64" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="64.4942" y="1154.44" width="25.2661" height="14.4001" class="st13"/>
+			<text x="64.49" y="1165.24" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>WRQ</text>		</g>
+		<g id="shape75-143" v:mID="75" v:groupContext="shape" v:layerMember="1" transform="translate(300.56,-631.665)">
+			<title>动态连接线.75</title>
+			<desc>SRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="76.2193" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L44.32 1147.46 A2.3622 2.3622 0 0 1 49.05 1147.46 L145.4 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="66.1674" y="1140.26" width="20.1039" height="14.4001" class="st13"/>
+			<text x="66.17" y="1151.06" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>SRQ</text>		</g>
+		<g id="shape76-150" v:mID="76" v:groupContext="shape" v:layerMember="1" transform="translate(706.961,-1006.74)">
+			<title>动态连接线.76</title>
+			<path d="M7.09 1154.55 L7.09 1728.3" class="st18"/>
+		</g>
+		<g id="shape77-153" v:mID="77" v:groupContext="shape" v:layerMember="1" transform="translate(713.888,-1000.06)">
+			<title>动态连接线.77</title>
+			<desc>DATA BUS</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-331.77" cy="1147.46" width="90" height="29.6036"/>
+			<path d="M0 1147.46 L-663.54 1147.46" class="st18"/>
+			<rect v:rectContext="textBkgnd" x="-368.947" y="1136.66" width="74.3555" height="21.5999" class="st13"/>
+			<text x="-368.95" y="1152.86" class="st19" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>DATA BUS</text>		</g>
+		<g id="shape83-158" v:mID="83" v:groupContext="shape" transform="translate(461.807,-634.075)">
+			<title>工作表.83</title>
+			<desc>Address</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1149.45" width="56.41" height="10.2047"/>
+			<rect x="0" y="1144.35" width="56.4094" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>Address</text>		</g>
+		<g id="shape85-161" v:mID="85" v:groupContext="shape" transform="translate(508.579,-634.075)">
+			<title>工作表.85</title>
+			<desc>IO</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="28.27" y="1153.65" class="st10" v:langID="2052"><v:paragraph v:horizAlign="2"/><v:tabList/>IO</text>		</g>
+		<g id="shape91-164" v:mID="91" v:groupContext="shape" transform="translate(461.807,-566.079)">
+			<title>工作表.91</title>
+			<desc>Address</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1149.45" width="56.41" height="10.2047"/>
+			<rect x="0" y="1144.35" width="56.4094" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>Address</text>		</g>
+		<g id="shape92-167" v:mID="92" v:groupContext="shape" transform="translate(508.579,-566.079)">
+			<title>工作表.92</title>
+			<desc>IO</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="28.27" y="1153.65" class="st10" v:langID="2052"><v:paragraph v:horizAlign="2"/><v:tabList/>IO</text>		</g>
+		<g id="shape98-170" v:mID="98" v:groupContext="shape" transform="translate(461.807,-499.748)">
+			<title>工作表.98</title>
+			<desc>Address</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1149.45" width="56.41" height="10.2047"/>
+			<rect x="0" y="1144.35" width="56.4094" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>Address</text>		</g>
+		<g id="shape99-173" v:mID="99" v:groupContext="shape" transform="translate(508.579,-499.748)">
+			<title>工作表.99</title>
+			<desc>O</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="31.8" y="1153.65" class="st10" v:langID="2052"><v:paragraph v:horizAlign="2"/><v:tabList/>O</text>		</g>
+		<g id="shape100-176" v:mID="100" v:groupContext="shape" v:layerMember="1" transform="translate(563.113,-631.665)">
+			<title>动态连接线.100</title>
+			<path d="M6.68 1147.46 L7.04 1147.46 L144.74 1147.46" class="st20"/>
+		</g>
+		<g id="shape101-184" v:mID="101" v:groupContext="shape" v:layerMember="1" transform="translate(562.154,-563.669)">
+			<title>动态连接线.101</title>
+			<path d="M6.68 1147.46 L7.04 1147.46 L145.7 1147.46" class="st20"/>
+		</g>
+		<g id="shape102-191" v:mID="102" v:groupContext="shape" v:layerMember="1" transform="translate(562.154,-497.339)">
+			<title>动态连接线.102</title>
+			<path d="M0 1147.46 L145.46 1147.46" class="st11"/>
+		</g>
+		<g id="shape103-196" v:mID="103" v:groupContext="shape" v:layerMember="2" transform="translate(404.787,1725.6) rotate(180)">
+			<title>集线器</title>
+			<v:custProps>
+				<v:cp v:nameU="Label" v:lbl="标签" v:type="0" v:format="@" v:sortKey="" v:invis="false" v:ask="false" v:langID="2052"
+						v:val="VT4()"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="CH1" v:val="VT0(5):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(集线器。)"/>
+			</v:userDefs>
+			<path d="M0 1141.8 A12.7559 12.7559 0 0 1 25.51 1141.8 A12.7559 12.7559 0 1 1 0 1141.8 Z" class="st21"/>
+			<path d="M17.86 1150.47 L12.76 1150.47" class="st22"/>
+			<path d="M17.86 1133.12 L12.76 1133.12" class="st22"/>
+			<path d="M12.76 1141.8 L7.65 1141.8" class="st22"/>
+			<path d="M12.76 1131.59 L12.76 1152" class="st22"/>
+			<path d="M0 1141.8 A12.7559 12.7559 0 0 1 25.51 1141.8 A12.7559 12.7559 0 1 1 0 1141.8" class="st22"/>
+		</g>
+		<g id="shape104-203" v:mID="104" v:groupContext="shape" v:layerMember="1" transform="translate(340.157,-760.176)">
+			<title>动态连接线.104</title>
+			<path d="M7.09 1154.55 L7.09 1352.66" class="st23"/>
+		</g>
+		<g id="shape107-206" v:mID="107" v:groupContext="shape" v:layerMember="1" transform="translate(387.172,-554.871)">
+			<title>动态连接线.107</title>
+			<path d="M0 1147.46 L-39.75 1147.46" class="st23"/>
+		</g>
+		<g id="shape108-209" v:mID="108" v:groupContext="shape" v:layerMember="1" transform="translate(387.172,-572.324)">
+			<title>动态连接线.108</title>
+			<path d="M0 1147.46 L-30.63 1147.46" class="st23"/>
+		</g>
+		<g id="shape109-212" v:mID="109" v:groupContext="shape" v:layerMember="1" transform="translate(349.499,-638.395)">
+			<title>动态连接线.109</title>
+			<path d="M7.09 1154.55 L7.09 1213.44" class="st23"/>
+		</g>
+		<g id="shape110-215" v:mID="110" v:groupContext="shape" v:layerMember="1" transform="translate(453.303,-563.669)">
+			<title>动态连接线.110</title>
+			<path d="M0 1147.46 L-56.69 1147.46" class="st24"/>
+		</g>
+		<g id="shape111-218" v:mID="111" v:groupContext="shape" v:layerMember="1" transform="translate(453.303,-497.339)">
+			<title>动态连接线.111</title>
+			<path d="M0 1147.46 L-18.4 1147.46" class="st24"/>
+		</g>
+		<g id="shape112-221" v:mID="112" v:groupContext="shape" v:layerMember="1" transform="translate(427.465,-504.567)">
+			<title>动态连接线.112</title>
+			<path d="M7.09 1154.55 L7.09 1088.36" class="st24"/>
+		</g>
+		<g id="shape113-224" v:mID="113" v:groupContext="shape" v:layerMember="2" transform="translate(321.82,-631.665)">
+			<title>总线宽度</title>
+			<desc>8</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>8</text>		</g>
+		<g id="shape114-228" v:mID="114" v:groupContext="shape" v:layerMember="2" transform="translate(320.969,-753.343)">
+			<title>总线宽度.114</title>
+			<desc>8</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>8</text>		</g>
+		<g id="shape115-232" v:mID="115" v:groupContext="shape" v:layerMember="2" transform="translate(411.874,-563.658)">
+			<title>总线宽度.115</title>
+			<desc>16</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="16.89" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-6.08" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>16</text>		</g>
+		<g id="shape116-236" v:mID="116" v:groupContext="shape" v:layerMember="1" transform="translate(535.225,-808.68)">
+			<title>动态连接线.116</title>
+			<path d="M0 1161.44 L171.85 1161.82" class="st11"/>
+		</g>
+		<g id="shape117-241" v:mID="117" v:groupContext="shape" v:layerMember="2" transform="translate(602.362,-998.646)">
+			<title>总线宽度.117</title>
+			<desc>8</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1169.9" width="15.2" height="23.6036"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-4.56" y="1175.29" class="st26" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>8</text>		</g>
+		<g id="shape150-245" v:mID="150" v:groupContext="shape" v:layerMember="1" transform="translate(501.327,-755.433)">
+			<title>动态连接线.150</title>
+			<desc>ALUF</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="50.9691" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L94.9 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="38.3684" y="1140.26" width="25.2013" height="14.4001" class="st13"/>
+			<text x="38.37" y="1151.06" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>ALUF</text>		</g>
+		<g id="shape151-252" v:mID="151" v:groupContext="shape" transform="translate(397.134,-939.224)">
+			<title>矩形.151</title>
+			<desc>BR</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1137.65" width="56.41" height="33.8031"/>
+			<g id="shadow151-253" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1">
+				<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st15"/>
+				<text x="21.68" y="1141.25" class="st16" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>BR</text>			</g>
+			<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st17"/>
+			<text x="21.68" y="1141.25" class="st8" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>BR</text>		</g>
+		<g id="shape170-260" v:mID="170" v:groupContext="shape" v:layerMember="1" transform="translate(453.543,-949.039)">
+			<title>动态连接线.170</title>
+			<path d="M0 1147.46 L40.36 1147.46" class="st23"/>
+		</g>
+		<g id="shape171-263" v:mID="171" v:groupContext="shape" v:layerMember="1" transform="translate(500.949,-956.085)">
+			<title>动态连接线.171</title>
+			<desc>BRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-7.08661" cy="1210.06" width="60" height="22.4037"/>
+			<path d="M-7.07 1154.55 L-7.1 1258.53" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="-17.6455" y="1202.86" width="21.1176" height="14.4001" class="st13"/>
+			<text x="-17.65" y="1213.66" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>BRQ</text>		</g>
+		<g id="shape172-270" v:mID="172" v:groupContext="shape" transform="translate(1407.63,164.213) rotate(90)">
+			<title>梯形</title>
+			<desc>MUX</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.7832" cy="1134.78" width="79.57" height="39.5433"/>
+			<g id="shadow172-271" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,1.97279,-0.345598)" class="st1">
+				<path d="M0 1154.55 L79.57 1154.55 L56.89 1115.01 L22.68 1115.01 L0 1154.55 Z" class="st27"/>
+			</g>
+			<path d="M0 1154.55 L79.57 1154.55 L56.89 1115.01 L22.68 1115.01 L0 1154.55 Z" class="st28"/>
+			<text x="27.69" y="1138.38" class="st29" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>MUX</text>		</g>
+		<g id="shape173-276" v:mID="173" v:groupContext="shape" v:layerMember="2" transform="translate(374.827,-835.654)">
+			<title>总线宽度.173</title>
+			<desc>8</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>8</text>		</g>
+		<g id="shape174-280" v:mID="174" v:groupContext="shape" v:layerMember="2" transform="translate(467.717,-949.039)">
+			<title>总线宽度.174</title>
+			<desc>1</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
+		<g id="shape175-284" v:mID="175" v:groupContext="shape" v:layerMember="2" transform="translate(521.051,-754.866)">
+			<title>总线宽度.175</title>
+			<desc>1</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
+		<g id="shape176-288" v:mID="176" v:groupContext="shape" v:layerMember="1" transform="translate(363.645,-949.039)">
+			<title>动态连接线.176</title>
+			<path d="M0 1147.46 L26.45 1147.46" class="st11"/>
+		</g>
+		<g id="shape212-293" v:mID="212" v:groupContext="shape" v:layerMember="1" transform="translate(187.74,-991.374)">
+			<title>动态连接线.212</title>
+			<desc>BRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="25.0616" y="1156.24" width="15.8379" height="10.7998" class="st13"/>
+			<text x="25.06" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>BRQ</text>		</g>
+		<g id="shape213-300" v:mID="213" v:groupContext="shape" v:layerMember="1" transform="translate(187.74,-982.303)">
+			<title>动态连接线.213</title>
+			<desc>/BRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="23.3236" y="1156.24" width="19.314" height="10.7998" class="st13"/>
+			<text x="23.32" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>/BRQ</text>		</g>
+		<g id="shape214-307" v:mID="214" v:groupContext="shape" v:layerMember="1" transform="translate(187.436,-973.232)">
+			<title>动态连接线.214</title>
+			<desc>0</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="30.6998" y="1156.24" width="4.56152" height="10.7998" class="st13"/>
+			<text x="30.7" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>0</text>		</g>
+		<g id="shape215-314" v:mID="215" v:groupContext="shape" v:layerMember="1" transform="translate(187.436,-964.161)">
+			<title>动态连接线.215</title>
+			<desc>1</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="30.6998" y="1156.24" width="4.56152" height="10.7998" class="st13"/>
+			<text x="30.7" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
+		<g id="shape224-321" v:mID="224" v:groupContext="shape" v:layerMember="1" transform="translate(187.391,-954.861)">
+			<title>动态连接线.224</title>
+			<desc>ALUF</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="23.5301" y="1156.24" width="18.9009" height="10.7998" class="st13"/>
+			<text x="23.53" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>ALUF</text>		</g>
+		<g id="shape225-328" v:mID="225" v:groupContext="shape" v:layerMember="1" transform="translate(187.391,-945.79)">
+			<title>动态连接线.225</title>
+			<desc>/ALUF</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.7921" y="1156.24" width="22.377" height="10.7998" class="st13"/>
+			<text x="21.79" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>/ALUF</text>		</g>
+		<g id="shape226-335" v:mID="226" v:groupContext="shape" v:layerMember="1" transform="translate(187.087,-936.719)">
+			<title>动态连接线.226</title>
+			<desc>RFQ[0]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="20.4012" y="1156.24" width="25.1587" height="10.7998" class="st13"/>
+			<text x="20.4" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>RFQ[0]</text>		</g>
+		<g id="shape227-342" v:mID="227" v:groupContext="shape" v:layerMember="1" transform="translate(187.087,-927.648)">
+			<title>动态连接线.227</title>
+			<desc>RFQ[7]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="20.4012" y="1156.24" width="25.1587" height="10.7998" class="st13"/>
+			<text x="20.4" y="1164.34" class="st30" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>RFQ[7]</text>		</g>
+		<g id="shape228-349" v:mID="228" v:groupContext="shape" transform="translate(73.8425,-865.63)">
+			<title>矩形.228</title>
+			<desc>RFSRCREG</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1137.65" width="56.41" height="33.8031"/>
+			<g id="shadow228-350" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1">
+				<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st15"/>
+				<text x="6.79" y="1134.05" class="st16" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>RFSRCRE<tspan
+							x="24.42" dy="1.2em" class="st5">G</tspan></text>			</g>
+			<rect x="0" y="1120.75" width="56.4094" height="33.8031" class="st17"/>
+			<text x="6.79" y="1134.05" class="st8" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>RFSRCRE<tspan
+						x="24.42" dy="1.2em" class="st5">G</tspan></text>		</g>
+		<g id="shape229-359" v:mID="229" v:groupContext="shape" v:layerMember="1" transform="translate(130.252,-875.445)">
+			<title>动态连接线.229</title>
+			<path d="M0 1147.46 L21.63 1147.46" class="st11"/>
+		</g>
+		<g id="shape231-364" v:mID="231" v:groupContext="shape" v:layerMember="1" transform="translate(217.736,-838.488)">
+			<title>动态连接线.231</title>
+			<path d="M0 1147.46 L19.94 1147.46" class="st11"/>
+		</g>
+		<g id="shape232-369" v:mID="232" v:groupContext="shape" v:layerMember="1" transform="translate(51.0236,-816.596)">
+			<title>动态连接线.232</title>
+			<path d="M0 1147.46 L186.65 1147.46" class="st11"/>
+		</g>
+		<g id="shape233-374" v:mID="233" v:groupContext="shape" v:layerMember="2" transform="translate(137.339,-875.445)">
+			<title>总线宽度.233</title>
+			<desc>4</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
+		<g id="shape234-378" v:mID="234" v:groupContext="shape" transform="translate(1313.15,257.102) rotate(90)">
+			<title>梯形.234</title>
+			<desc>MUX</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="26.3622" cy="1134.78" width="52.73" height="39.5433"/>
+			<g id="shadow234-379" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,1.97279,-0.345598)" class="st1">
+				<path d="M0 1154.55 L52.72 1154.55 L37.7 1115.01 L15.03 1115.01 L0 1154.55 Z" class="st27"/>
+			</g>
+			<path d="M0 1154.55 L52.72 1154.55 L37.7 1115.01 L15.03 1115.01 L0 1154.55 Z" class="st28"/>
+			<text x="14.27" y="1138.38" class="st29" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>MUX</text>		</g>
+		<g id="shape235-384" v:mID="235" v:groupContext="shape" v:layerMember="1" transform="translate(87.765,-847.559)">
+			<title>动态连接线.235</title>
+			<desc>decoder</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="35.4167" cy="1147.46" width="50" height="20.0036"/>
+			<path d="M0 1147.46 L63.79 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="18.693" y="1141.46" width="33.4476" height="12.0001" class="st13"/>
+			<text x="18.69" y="1150.46" class="st31" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>decoder</text>		</g>
+		<g id="shape237-391" v:mID="237" v:groupContext="shape" v:layerMember="1" transform="translate(198.142,-863.433)">
+			<title>动态连接线.237</title>
+			<path d="M0 1147.46 L19.95 1147.46" class="st23"/>
+		</g>
+		<g id="shape238-394" v:mID="238" v:groupContext="shape" v:layerMember="1" transform="translate(210.65,-870.874)">
+			<title>动态连接线.238</title>
+			<path d="M7.09 1154.55 L7.09 1179.64" class="st23"/>
+		</g>
+		<g id="shape240-397" v:mID="240" v:groupContext="shape" v:layerMember="1" transform="translate(42.5197,-1006.97)">
+			<title>动态连接线.240</title>
+			<path d="M7.09 1154.55 L7.09 1523.73" class="st18"/>
+		</g>
+		<g id="shape241-400" v:mID="241" v:groupContext="shape" v:layerMember="1" transform="translate(51.0236,-875.445)">
+			<title>动态连接线.241</title>
+			<path d="M0 1147.46 L15.78 1147.46" class="st11"/>
+		</g>
+		<g id="shape242-405" v:mID="242" v:groupContext="shape" v:layerMember="1" transform="translate(47.9709,-753.343)">
+			<title>动态连接线.242</title>
+			<path d="M0 1147.46 L186.65 1147.46" class="st11"/>
+		</g>
+		<g id="shape243-410" v:mID="243" v:groupContext="shape" v:layerMember="1" transform="translate(50.4567,-631.665)">
+			<title>动态连接线.243</title>
+			<path d="M0 1147.46 L186.65 1147.46" class="st11"/>
+		</g>
+		<g id="shape244-415" v:mID="244" v:groupContext="shape" v:layerMember="2" transform="translate(209.764,-851.244)">
+			<title>总线宽度.244</title>
+			<desc>4</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
+		<g id="shape245-419" v:mID="245" v:groupContext="shape" v:layerMember="2" transform="translate(137.339,-848.409)">
+			<title>总线宽度.245</title>
+			<desc>4</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>4</text>		</g>
+		<g id="group246-423" transform="translate(332.15,-943.423)" v:mID="246" v:groupContext="group" v:layerMember="2">
+			<v:custProps>
+				<v:cp v:nameU="Input" v:lbl="输入数目" v:type="1" v:format="2;3;4;5" v:sortKey="2" v:langID="2052" v:val="VT4(2)"/>
+				<v:cp v:nameU="Type" v:lbl="门类型" v:type="1" v:format="OR;AND;NOR;NAND;XOR;XNOR" v:sortKey="1" v:langID="2052"
+						v:val="VT4(AND)"/>
+				<v:cp v:nameU="Out" v:lbl="输出数目" v:type="1" v:format="1;2;3" v:sortKey="3" v:langID="2052" v:val="VT4(1)"/>
+				<v:cp v:nameU="Type" v:lbl="" v:prompt="" v:type="0" v:format="" v:sortKey="" v:invis="false" v:ask="false"
+						v:langID="0" v:cal="0" v:val="VT4(XOR)"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="SubType" v:val="VT0(1):26"/>
+				<v:ud v:nameU="Margin" v:val="VT0(0.059055118110236):24"/>
+				<v:ud v:nameU="LimitHeight" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(表示各种形式的逻辑门。)"/>
+				<v:ud v:nameU="SubType" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="Margin" v:prompt="" v:val="VT0(0.088213582677165):1"/>
+			</v:userDefs>
+			<title>逻辑门 2</title>
+			<g id="shape247-424" v:mID="247" v:groupContext="shape" v:layerMember="2" transform="translate(0,-6.35138)">
+				<title>工作表.247</title>
+				<path d="M0 1141.85 L25.41 1141.85" class="st22"/>
+				<path d="M0 1154.55 L25.41 1154.55" class="st22"/>
+				<path d="M50.81 1148.2 L25.41 1148.2" class="st22"/>
+			</g>
+			<g id="shape248-429" v:mID="248" v:groupContext="shape" v:layerMember="2" transform="translate(8.89193,0)">
+				<title>工作表.248</title>
+				<v:userDefs>
+					<v:ud v:nameU="X" v:val="VT0(0.029527559055118):24"/>
+					<v:ud v:nameU="X" v:prompt="" v:val="VT0(0.044106791338583):1"/>
+				</v:userDefs>
+				<path d="M33.03 1141.85 A34.2094 20.9588 0 0 1 9.91 1154.55 L0 1154.55 A49.0138 30.0289 -180 0 0 -0 1129.15 L9.91
+							 1129.15 A33.7512 20.6781 0 0 1 33.03 1141.85 Z" class="st21"/>
+				<path d="M33.03 1141.85 A34.2094 20.9588 0 0 1 9.91 1154.55 L0 1154.55 A49.0138 30.0289 -180 0 0 -0 1129.15 L9.91
+							 1129.15 A33.7512 20.6781 0 0 1 33.03 1141.85" class="st22"/>
+				<path d="M-3.3 1154.55 A49.0138 30.0289 -180 0 0 -3.3 1129.15" class="st22"/>
+			</g>
+			<g id="shape249-433" v:mID="249" v:groupContext="shape" v:layerMember="2" transform="translate(0,4.23425)">
+				<title>工作表.249</title>
+			</g>
+			<g id="shape250-435" v:mID="250" v:groupContext="shape" v:layerMember="2" transform="translate(34.4024,-3.19209)">
+				<title>工作表.250</title>
+			</g>
+			<g id="shape251-437" v:mID="251" v:groupContext="shape" v:layerMember="2" transform="translate(8.89193,0)">
+				<title>工作表.251</title>
+			</g>
+		</g>
+		<g id="shape252-439" v:mID="252" v:groupContext="shape" v:layerMember="1" transform="translate(278.605,-942.79)">
+			<title>动态连接线.252</title>
+			<path d="M0 1147.46 L56.17 1147.46" class="st23"/>
+		</g>
+		<g id="shape253-442" v:mID="253" v:groupContext="shape" v:layerMember="1" transform="translate(319.762,-955.343)">
+			<title>动态连接线.253</title>
+			<path d="M0.5 1147.46 L13.67 1147.46" class="st23"/>
+		</g>
+		<g id="shape255-445" v:mID="255" v:groupContext="shape" transform="translate(159.449,-417.756)">
+			<title>矩形.255</title>
+			<desc>SFR logic</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.2047" cy="1133.4" width="56.41" height="42.3071"/>
+			<g id="shadow255-446" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,0.345598,1.97279)" class="st1">
+				<rect x="0" y="1112.24" width="56.4094" height="42.3071" class="st27"/>
+			</g>
+			<rect x="0" y="1112.24" width="56.4094" height="42.3071" class="st28"/>
+			<text x="17.97" y="1129.2" class="st32" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>SFR <tspan x="15.05"
+						dy="1.2em" class="st5">logic</tspan></text>		</g>
+		<g id="shape256-452" v:mID="256" v:groupContext="shape" v:layerMember="1" transform="translate(87.874,-440.09)">
+			<title>动态连接线.256</title>
+			<desc>SRQ</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="35.7874" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L64.53 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="25.7356" y="1140.26" width="20.1039" height="14.4001" class="st13"/>
+			<text x="25.74" y="1151.06" class="st14" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>SRQ</text>		</g>
+		<g id="shape261-459" v:mID="261" v:groupContext="shape" v:layerMember="1" transform="translate(88.6154,-422.515)">
+			<title>动态连接线.261</title>
+			<desc>decoder</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="35.4167" cy="1147.46" width="70" height="24.8035"/>
+			<path d="M0 1147.46 L63.79 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="12.0037" y="1139.06" width="46.8262" height="16.8" class="st13"/>
+			<text x="12" y="1151.66" class="st33" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>decoder</text>		</g>
+		<g id="shape263-466" v:mID="263" v:groupContext="shape" transform="translate(461.807,-652.535)">
+			<title>工作表.263</title>
+			<desc>CS</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="22.5354" cy="1149.45" width="45.08" height="10.2047"/>
+			<rect x="0" y="1144.35" width="45.0709" height="10.2047" class="st9"/>
+			<text x="4" y="1153.65" class="st10" v:langID="1033"><v:paragraph/><v:tabList/>CS</text>		</g>
+		<g id="shape264-469" v:mID="264" v:groupContext="shape" v:layerMember="1" transform="translate(379.821,-651.402)">
+			<title>动态连接线.264</title>
+			<desc>CSIRAM</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="36.7414" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L66.44 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="17.414" y="1140.26" width="38.6546" height="14.4001" class="st13"/>
+			<text x="17.41" y="1151.06" class="st14" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>CSIRAM</text>		</g>
+		<g id="shape265-476" v:mID="265" v:groupContext="shape" v:layerMember="1" transform="translate(215.858,-447.176)">
+			<title>动态连接线.265</title>
+			<desc>CSIRAM</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="36.7414" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L66.44 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="17.414" y="1140.26" width="38.6546" height="14.4001" class="st13"/>
+			<text x="17.41" y="1151.06" class="st14" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>CSIRAM</text>		</g>
+		<g id="shape267-483" v:mID="267" v:groupContext="shape" v:layerMember="1" transform="translate(215.858,-431.823)">
+			<title>动态连接线.267</title>
+			<desc>SFRxWE</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="36.7414" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L66.44 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="17.1034" y="1140.26" width="39.2758" height="14.4001" class="st13"/>
+			<text x="17.1" y="1151.06" class="st14" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>SFRxWE</text>		</g>
+		<g id="shape268-490" v:mID="268" v:groupContext="shape" v:layerMember="1" transform="translate(215.858,-415.428)">
+			<title>动态连接线.268</title>
+			<desc>SFRxOE</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="36.7414" cy="1147.46" width="60" height="22.4037"/>
+			<path d="M0 1147.46 L66.44 1147.46" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="18.4687" y="1140.26" width="36.5452" height="14.4001" class="st13"/>
+			<text x="18.47" y="1151.06" class="st14" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>SFRxOE</text>		</g>
+		<g id="shape269-497" v:mID="269" v:groupContext="shape" v:layerMember="2" transform="translate(171.975,-813.773)">
+			<title>总线宽度.269</title>
+			<desc>8</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1166.3" width="10.8" height="16.4037"/>
+			<path d="M14.17 1136.83 L0 1158.09" class="st22"/>
+			<text x="-3.04" y="1169.89" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>8</text>		</g>
+		<g id="shape283-501" v:mID="283" v:groupContext="shape" v:layerMember="1" transform="translate(562.154,-427.366)">
+			<title>动态连接线.283</title>
+			<path d="M0 1147.46 L147.1 1147.46" class="st11"/>
+		</g>
+		<g id="shape285-506" v:mID="285" v:groupContext="shape" v:layerMember="1" transform="translate(458.448,-474.466)">
+			<title>动态连接线.285</title>
+			<desc>IRR[0]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[0]</text>		</g>
+		<g id="shape286-513" v:mID="286" v:groupContext="shape" v:layerMember="1" transform="translate(458.448,-465.395)">
+			<title>动态连接线.286</title>
+			<desc>IRR[1]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[1]</text>		</g>
+		<g id="shape287-520" v:mID="287" v:groupContext="shape" v:layerMember="1" transform="translate(458.144,-456.324)">
+			<title>动态连接线.287</title>
+			<desc>IRR[2]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[2]</text>		</g>
+		<g id="shape288-527" v:mID="288" v:groupContext="shape" v:layerMember="1" transform="translate(458.144,-447.253)">
+			<title>动态连接线.288</title>
+			<desc>IRR[3]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[3]</text>		</g>
+		<g id="shape289-534" v:mID="289" v:groupContext="shape" v:layerMember="1" transform="translate(458.099,-437.953)">
+			<title>动态连接线.289</title>
+			<desc>IRR[4]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[4]</text>		</g>
+		<g id="shape290-541" v:mID="290" v:groupContext="shape" v:layerMember="1" transform="translate(458.099,-428.882)">
+			<title>动态连接线.290</title>
+			<desc>IRR[5]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[5]</text>		</g>
+		<g id="shape291-548" v:mID="291" v:groupContext="shape" v:layerMember="1" transform="translate(457.795,-419.811)">
+			<title>动态连接线.291</title>
+			<desc>IRR[6]</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="21.9195" y="1156.24" width="22.1221" height="10.7998" class="st13"/>
+			<text x="21.92" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IRR[6]</text>		</g>
+		<g id="shape292-555" v:mID="292" v:groupContext="shape" v:layerMember="1" transform="translate(457.795,-410.74)">
+			<title>动态连接线.292</title>
+			<desc>0</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.9805" cy="1161.64" width="45" height="18.8036"/>
+			<path d="M0 1161.35 L58.92 1161.86" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="30.6998" y="1156.24" width="4.56152" height="10.7998" class="st13"/>
+			<text x="30.7" y="1164.34" class="st30" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>0</text>		</g>
+		<g id="shape293-562" v:mID="293" v:groupContext="shape" transform="translate(1677.16,680.315) rotate(90)">
+			<title>三角形</title>
+			<desc>TRI BUFFER</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.7832" cy="1141.37" width="79.57" height="26.3622"/>
+			<g id="shadow293-563" v:groupContext="shadow" v:shadowOffsetX="0.345598" v:shadowOffsetY="-1.97279" v:shadowType="1"
+					transform="matrix(1,0,0,1,1.97279,-0.345598)" class="st1">
+				<path d="M79.57 1154.55 L39.78 1115.01 L0 1154.55 L79.57 1154.55 Z" class="st27"/>
+			</g>
+			<path d="M79.57 1154.55 L39.78 1115.01 L0 1154.55 L79.57 1154.55 Z" class="st28"/>
+			<text x="33.37" y="1138.37" class="st34" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>TRI<v:newlineChar/><tspan
+						x="24.1" dy="1.2em" class="st5">BUFFER</tspan></text>		</g>
+		<g id="shape301-569" v:mID="301" v:groupContext="shape" v:layerMember="2" transform="translate(301.999,-944.7)">
+			<title>总线宽度.301</title>
+			<desc>1</desc>
+			<v:userDefs>
+				<v:ud v:nameU="CH" v:val="VT0(0):26"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visDescription" v:val="VT4(总线宽度指示器。放置在白色总线形状的上方，并在总线上键入线的数目。)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(1,1,1,1)" v:tabSpace="42.5197" v:verticalAlign="0"/>
+			<v:textRect cx="0" cy="1165.3" width="10.8" height="16.4037"/>
+			<path d="M10.2 1141.8 L0 1157.1" class="st22"/>
+			<text x="-3.04" y="1168.9" class="st25" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>1</text>		</g>
+		<g id="shape302-573" v:mID="302" v:groupContext="shape" v:layerMember="1" transform="translate(313.335,-991.316)">
+			<title>动态连接线.302</title>
+			<desc>decoder</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.08661" cy="1169" width="50" height="20.0036"/>
+			<path d="M7.09 1154.55 L7.09 1183.45" class="st23"/>
+			<rect v:rectContext="textBkgnd" x="-9.63711" y="1163" width="33.4476" height="12.0001" class="st13"/>
+			<text x="-9.64" y="1172" class="st31" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>decoder</text>		</g>
+	</g>
+</svg>

@@ -22,7 +22,7 @@ special address to excute assert function.
   2: assert v0 = v1, 
   3: assert v0 &lt; v1)
 
-If assert  failed(F is high) when CLK falling edge, CLKO will ouput low.</string>
+If assert  failed(F is high) when CLK falling edge, CLKO will output low.</string>
     </entry>
   </attributes>
   <visualElements>

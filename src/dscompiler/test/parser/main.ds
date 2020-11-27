@@ -1,0 +1,6 @@
+@INC "t0.ds"
+JDDD::     # doubled!
+JDC: RF(A,,B), D() # excess argument comma
+RF(A,B), D(), # excess micro-control splitter
+        RF(A,B) 
+F()

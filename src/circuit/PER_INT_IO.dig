@@ -313,7 +313,7 @@ The SFR in the corresponding address will read the data from  the data bus.</str
       <elementAttributes>
         <entry>
           <string>Description</string>
-          <string>ouput enable.
+          <string>output enable.
 The SFR in the corresponding address will drive the data  bus.</string>
         </entry>
         <entry>
