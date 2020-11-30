@@ -27,6 +27,9 @@
   - [Serial Receiver(SBUF)](#serial-receiversbuf)
   - [Serial Transmitter(SBUF)](#serial-transmittersbuf)
   - [Timmer(TL0, TL1, TH0, TH1)](#timmertl0-tl1-th0-th1)
+  - [Prototype](#prototype)
+  - [output of the test program](#output-of-the-test-program)
+- [Some Problems](#some-problems)
   
 ## Introduction
   As I mentioned before, the hardware design is up to you. You can put all the components on a large PCB, or divide the design into small modules and then connect them together. So that I'll only disscuss tow major technical points in detail.
@@ -62,7 +65,7 @@ By the way, the NAND gate will add some delay to `/RAM_WE_PULSE`, although there
 **notice:** The delay time from datasheets may come from different test conditions, and the realatic conditions are also differ to datasheets, but it still give us a theorical reference numeral, there won't be giant different between pratical and paper.
 
 Exploring timing constraints will provide us with information about the highest CPU frequency, because we have the `CLKA` signal from SRAM chip, I divided the timming into two portion: 
-  - `Tp` : minimum popagation delay from device output to data bus
+  - `Tp` : maximum popagation delay from device output to data bus
   - `Ts` : minimum setup time of device read data from data bus
 
 And will also get other timming:
@@ -90,7 +93,7 @@ For my design, if you have glimpse of the ALU design, you will know that signifc
 
   ![](doc_assets/timming-Tp.svg)
 
-  Now we get `Tp = 561` and there is an abnormal case, the data path to BR will be the maximum delay path if there is not SFR connected, let's mark it as `Tbr = 623`.
+  Now we get `Tp = 561` and there is an special case, the data path to BR will be the maximum delay path if there is not SFR connected, let's mark it as `Tbr = 623`.
   
   For setup up time , we have:
   ![](doc_assets/timming-Ts.svg)
@@ -368,3 +371,12 @@ Writing a byte to SBUF will start the process of sending bytes via UART,
 
   ### Timmer(TL0, TL1, TH0, TH1)
  ![](doc_assets/pic/mod-Timmer.JPG)
+
+ ### Prototype
+ ![](doc_assets/pic/prototype.JPG)
+
+ ### output of the test program
+ ![](doc_assets/pic/test-output.JPG)
+
+ ## Some Problems
+When I plug in the T0 and T1 modules, the CPU will work abnormally. It seems that it's a problem with the drive capacity of the data bus. I would recommand your guys to use the 74HC series.
