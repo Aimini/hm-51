@@ -37,15 +37,7 @@ RF(A),      ALU(PF),   BR(ALUDF)
 RF(PSW,WE), ALU(SETPF), BR(ONE)
 
 STAGE_FETCH_LOAD_OPCODE_SKIP_PF:
-RF(IR,WE),BUS(ROM), BR(ONE)
-
-#increase PC
-@INC "snippet\inc_pc_srwr_npch.ds"
-
-###
-# indstruction decode jump
-#####
-RF(IR), J(0),MIPCSRC(DECVEC), BR(ZERO) # set BR to prepare increase PC
+RF(IR,WE),BUS(ROM), BR(ONE), J(0), MIPCSRC(DECVEC)
 
 
 

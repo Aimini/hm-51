@@ -22,9 +22,11 @@ def print_dec_vec():
                 SEG_NAME = f"IRSEG_{x:X}"
 
         for _ in range(1):
-            print(f"VEC({SEG_NAME})")
+            print(f"""
+RF(PCL,WE),ALU(INCC), WR(WE) , BR(CY), JALUNF({SEG_NAME})  # PCL + 1,  STORE CARRY
+RF(PCH,WE),ALU(INCC), SR(WE),  BR(ZERO), J({SEG_NAME})      # PCH + CY""")
 
 print("gen")
-with open("decoder_template.ds",mode="w+") as fh:
+with open("decode_vector.ds",mode="w+") as fh:
     sys.stdout = fh
     print_dec_vec()
