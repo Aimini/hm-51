@@ -51,3 +51,8 @@ class empty_translator():
         r = micro_control.MicroCTL(lineno, micro_control.PAR_CONTROL, "BUS")
         r.parameters = [sel]
         return r
+
+    def create_prom(self, lineno):
+        r = micro_control.MicroCTL(lineno, micro_control.PAR_CONTROL, "PROGRAMMINGROM")
+        r.parameters = ["ACTIVE"]
+        return r

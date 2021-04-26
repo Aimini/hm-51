@@ -78,14 +78,17 @@ RFSRCR = NamedParametersLUT([
         'al': True,
         'enum': ['', "WE"],
     },
-    {
-        'sh': '__1',
-        'name': 'just for algin 8 bit for control relative to RF',
-        'len': 1,
-        'al': False,
-        'enum': ['AFASFASFAFF', "GGGGGGGGGGGGGG"],
-    }
 ])
+PROGRAMMINGROM = NamedParametersLUT([
+    {
+        'sh': 'WE',
+        'name': 'enable programming ROM signal',
+        'len': 1,
+        'enum': ['', "ACTIVE"],
+    },
+])
+
+
 BR = NamedParametersLUT([
     {
         'sh': 'SRC',
@@ -247,6 +250,7 @@ DEFAULT_CTL_LUT = {
     'MIPCSRC': MIPCSRC,
     'RF': REGISTER_FILE,
     'RFSRCR': RFSRCR,
+    'PROGRAMMINGROM':PROGRAMMINGROM,
     'SR': SR,
     'RAM': RAM,
     'XRAM': XRAM,

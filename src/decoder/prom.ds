@@ -1,0 +1,36 @@
+###########################################################
+# programm the internal rom
+# start address should be puted on RAM[0](L) and RAM[1](H)
+# size of datas should be puted on RAM[2]
+# Data should be puted from RAM [3]
+# data size shouldn't exceed 64
+#
+# modified register: A, B
+############################################################
+
+# s
+LI(0),SR(WE)
+RF(T1, WE), BUS(RAM)
+LI(1),SR(WE)
+RF(T2, WE), BUS(RAM)
+
+RF(T1, WE), JGT(0, LOAD_DATA_SIZE), ALU(DEC)
+LOAD_DATA_SIZE:
+RF(T2,WE), ALU(DEC)
+
+# load data size
+RF(A, WE), LI(2)
+
+# set start address of datas (-1)
+RF(B, WE), LI(2)
+
+
+PROGRAMMING_ROM_BYTE:
+PROROM(), RF(A),     ALU(ZF), BR(ZF)
+PROROM(), RF(A, WE), ALU(DEC), JBIT(@0)  # check whether size(A) is 0 now
+PROROM(), RF(B, WE), ALU(INC), SR(WE)
+PROROM(), RF(T0, WE), BUS(RAM)
+PROROM(), RF(T1, WE), ALU(INCC), WR(WE), BR(CY)
+PROROM(), RF(T2, WE), ALU(INCC), SR(WE)
+PROROM(WE, CE),RF(T0), ALU(A), BR(ONE), J(PROGRAMMING_ROM_BYTE)
+

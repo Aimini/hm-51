@@ -24,12 +24,13 @@ from .. import micro_control
 from .alu_translator import ALUTranslator
 from .jump_translator import JumpTranslator
 from .load_immed_translator import LoadImmedTranslator
+from .program_rom_translator import PROMTranslator
 from ..CTL_LUT.control_LUT import JUMPABS
 from ..CTL_LUT import ALULUTtools
 from ..compile_error import CompileError
 
 DEFAULT_TRANSLATOR = (ALUTranslator(), 
-                      JumpTranslator(), LoadImmedTranslator())
+                      JumpTranslator(), LoadImmedTranslator(), PROMTranslator())
 
 
 
