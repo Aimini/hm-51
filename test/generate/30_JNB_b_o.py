@@ -72,7 +72,7 @@ def creat_one_test_seg(order, seg_no, target, addr, bit_idx, value):
 def creat_jump_link( jump_count, order):
     jmpords = list(range(jump_count))
     random.shuffle(jmpords)
-    start =random.choice(jmpords)
+    start = jmpords[0]
 
     all_seg_str_list = list(range(jump_count))
     for idx, seg_no in enumerate(jmpords):
@@ -88,7 +88,7 @@ def creat_jump_link( jump_count, order):
             target = f'JMP_SEG_END_{order}'
         
         r = creat_one_test_seg(order, seg_no, target, addr, bit_idx, value)
-        all_seg_str_list[idx] = r
+        all_seg_str_list[seg_no] = r
 
     all_seg_str_list.insert(0,f'SJMP JMP_SEG_{order}_{start}')
     all_seg_str_list.append(f'JMP_SEG_END_{order}:')
