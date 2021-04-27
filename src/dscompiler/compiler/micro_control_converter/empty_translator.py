@@ -52,7 +52,7 @@ class empty_translator():
         r.parameters = [sel]
         return r
 
-    def create_prom(self, lineno):
-        r = micro_control.MicroCTL(lineno, micro_control.PAR_CONTROL, "PROGRAMMINGROM")
-        r.parameters = ["ACTIVE"]
+    def create_loadprr(self, lineno):
+        r = micro_control.MicroCTL(lineno, micro_control.PAR_CONTROL, "PRR")
+        r.parameters = ["WE"]
         return r

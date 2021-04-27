@@ -155,12 +155,12 @@ def generate_low_by_op(ci, f,  b, a):
         RL = (0xb & a) | ((~0xb) & (b >> 1))
         RH = 8 if a == 0 else 0 # send ZF to high part
 
-    elif f == 0xA:# ADDR11REPLACE A, B / CYANDBIT
+    elif f == 0xA:# ADDR11REPLACE /~A
         # asume A = PCH[3:0], B = IR[7:4]
         # according to instruction set manual, we have PC[10:8] = IR[7:5]
         # namely, A[2:0] = B[3:1]
         RL = (a & 0x8) | ((b) >> 1)
-
+        RH = ~a
     elif f == 0xB: # SETOVCLRCY
         #clear cy now
         RL = (a & 0xB) | (ci << 2)
@@ -173,9 +173,9 @@ def generate_low_by_op(ci, f,  b, a):
         RL = (a & 0x7) | (b & 0x8) # Rn IR, PSW
         RH = a & b #AND
 
-    elif f == 0xE: # SETPF/ NA
+    elif f == 0xE: # SETPF/ PSWPRF
         RL = (a & 0xE) | ci
-        RH = ~a
+        RH = (a << 2) & 0x8
     elif f == 0xF: #INCC / INCCF
         RH,RL = get_flag_add(a,0,ci)
 
@@ -273,7 +273,7 @@ def generate_high_by_op(ci, f, b, a):
         # ADDR11REPLACE A (PCH), B(SWAPED IR)
         # don't care in high part
         RL = a
-
+        RH = ~a
     elif f == 0xB:  # SETOVCLRCY
         # SET OV now
         RL = a & 0x7
@@ -287,9 +287,9 @@ def generate_high_by_op(ci, f, b, a):
         RL = b & 0x1 #RS1
         RH = a & b
 
-    elif f == 0xE:  #SETPF / NA
+    elif f == 0xE:  #SETPF / PSWPRF
         RL = a
-        RH =  ~a
+        RH = ci << 3
     elif f == 0xF: #INCC / INCCF
         RH,RL = get_flag_add(a,0,ci)
     v =  ((RH & 0xF) << 4) | (RL& 0xF)

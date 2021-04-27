@@ -79,12 +79,13 @@ RFSRCR = NamedParametersLUT([
         'enum': ['', "WE"],
     },
 ])
-PROGRAMMINGROM = NamedParametersLUT([
+PRR = NamedParametersLUT([
     {
         'sh': 'WE',
-        'name': 'enable programming ROM signal',
+        'name': 'load bits(reuse IMMED[0:2]) to PRR, which control programming of ROM ',
         'len': 1,
-        'enum': ['', "ACTIVE"],
+        'al' : True,
+        'enum': ['', "WE"],
     },
 ])
 
@@ -95,7 +96,7 @@ BR = NamedParametersLUT([
         'name': 'input select',
         'len': 3,
         'enum': ['Q', 'NQ', 'ZERO', 'ONE',
-                 "ALUDNF", ['ALUDF', 'CY', 'ZF', 'PF'],  'A0', 'A7'],
+                 "PRB", ['ALUDF', 'CY', 'ZF', 'PF'],  'A0', 'A7'],
     },
     {
         'sh': 'CPLQ',
@@ -147,8 +148,8 @@ ALUDH = NamedParametersLUT([
         'enum': [
             'CPLB', 'DAF', 'ADDCF', 'SUBBF',
             'PF', 'OR',  'INSBF',  'EXTB',
-            'ISRSET',   'ZF',    '',      '',
-            'ZF_B',    'AND',   'NA', 'INCCF']
+            'ISRSET',   'ZF',    'NA',      '',
+            'ZF_B',    'AND',   'PSWPRF', 'INCCF']
     }
 ])
 
@@ -250,7 +251,7 @@ DEFAULT_CTL_LUT = {
     'MIPCSRC': MIPCSRC,
     'RF': REGISTER_FILE,
     'RFSRCR': RFSRCR,
-    'PROGRAMMINGROM':PROGRAMMINGROM,
+    'PRR':PRR,
     'SR': SR,
     'RAM': RAM,
     'XRAM': XRAM,
