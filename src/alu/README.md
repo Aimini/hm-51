@@ -22,6 +22,7 @@ This document contains descriptions of [ALUS](#ALUS) and [ALUD](#ALUD) functions
 
   - `B`/`ZF_B`/`SETCY` must have same encoding, `ZF_B` shoud encoded at ALUD-H.
   - `OR` shoud encoded at ALUD-H.
+  - `SETPF`/`PSWPRF` must have same encoding.
 
 # ALUS
 
@@ -310,8 +311,8 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 
  **QL:**
 
-| encode |            0             |           1           |                 2                  |              3               |
-|:------:|:------------------------:|:---------------------:|:----------------------------------:|:----------------------------:|
+| encode |            0            |           1           |                 2                  |              3               |
+|:------:|:-----------------------:|:---------------------:|:----------------------------------:|:----------------------------:|
 |   0    |      [XOR](#0-xor)      |      [DA](#1-da)      |          [ADDC](#2-addc)           |       [SUBB](#3-subb)        |
 |   1    |        [A](#4-a)        |      [Ri](#5-ri)      |          [INSB](#6-insb)           |       [XCHD](#7-xchd)        |
 |   2    | [GENIRRQN](#8-genirrqn) | [SETPSWF](#9-setpswf) | [ADDR11REPLACE](#10-addr11replace) | [SETOVCLRCY](#11-setovclrcy) |
@@ -323,8 +324,8 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 |:------:|:-------------------:|:--------------:|:-----------------:|:------------------:|
 |   0    |   [CPLB](#0-cplb)   | [DAF](#1-daf)  | [ADDCF](#2-addcf) | [SUBBF](#3-subbf)  |
 |   1    |     [PF](#4-pf)     |  [OR](#5-or)   | [INSBF](#6-insbf) |  [EXTB](#7-extb)   |
-|   2    | [ISRSET](#8-isrset) |  [ZF](#9-zf)   |                   |                    |
-|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) |   [NA](#14-na)    | [INCCF](#15-inccf) |
+|   2    | [ISRSET](#8-isrset) |  [ZF](#9-zf)   |   [NA](#10-na)    |                    |
+|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) | [NA](#14-pswprf)  | [INCCF](#15-inccf) |
 
 ## Description
 
@@ -631,7 +632,13 @@ if `A[3:0] == 0` , then `ZFL = 1` . If `A` is 0, then `ZF` is 1.
 | 7  | 6-4 |  3  | 2-0 |
 |:--:|:---:|:---:|:---:|
 | ZF |  X  | ZFL |  X  |
+#### 10. NA
 
+`Q` equal to logic not `A` .
+
+| 7-0 |
+|:---:|
+| ~A  |
 #### 12. ZF_B
 
 Same as [ZF](#9-zf), but using B as operand. If `B[3:0] == 0` , then `ZFL = 1` . If `B` is 0, then `ZF` is 1.
@@ -648,13 +655,15 @@ Same as [ZF](#9-zf), but using B as operand. If `B[3:0] == 0` , then `ZFL = 1` .
 |:-----:|
 | A & B |
 
-#### 14. NA
+#### 14. PSWPRF
 
-`Q` equal to logic not `A` .
+get bit `PSW[1]`
 
-| 7-0 |
-|:---:|
-| ~A  |
+| 7  | 6-0 |
+|:--:|:---:|
+| A\[1\] |  X  |
+
+`PSW[1]` is User definable bit, but in my design, it's used to calling ROM programming process.
 
 #### 15. INCCF
 
