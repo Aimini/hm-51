@@ -42,15 +42,15 @@ def gen(re, se, sbs, cnt, s):
     #  | 0 1 2... 8 9...14 15| 0 1 2... 8 9...14 15| 0 1 2... 8 9...14 15|  ....| 0 1 2... 8 9...14 15| 0 1 2... 8 9...14 15|
     #  |_-_-_-..._-_-..._-_- |_-_-_-..._-_-..._-_- |_-_-_-..._-_-..._-_- |  ....|_-_-_-..._-_-..._-_- |_-_-_-..._-_-..._-_- |
     # --S_PRE|----S_SBIT-----|--------S_D0---------|--------S_D1---------|  ....|--------S_D7---------|-------S_STOP--------|
-    #        ^      ^                     ^                     ^                            ^                            ^
-    #        |      |                     |                     |                            |                            |
-    #           sample here          sample here            sample here                 sample here                  back to S_PRE
-    #                                                                                   RX_END here
+    #        ^      ^                     ^                     ^                            ^^                            ^
+    #        |      |                     |                     |                            |+------------+               |
+    #           sample here          sample here            sample here                 sample here  write FIFO here  back to S_PRE
+    #                                                                                   
     next_state = s
     cycle_count_en = 0
     shift_en = 0
     rx_bit = 0
-    rec_end = 0
+    _w_fifo = 1
 
     if re:
         rx_count1 = bin(sbs).count('1')
@@ -61,8 +61,8 @@ def gen(re, se, sbs, cnt, s):
         if not (S_PRE <= s and s <= S_DEND):
             next_state = S_PRE
 
-        if s == S_D7 and cnt == 9 and se:
-            rec_end = 1
+        if s == S_D7 and cnt == 10 and se:
+            _w_fifo = 0
 
         if se:
             if s == S_PRE:
@@ -81,7 +81,7 @@ def gen(re, se, sbs, cnt, s):
     else:
         next_state = S_PRE
 
-    return next_state | (cycle_count_en << 4) | (shift_en << 5) | (rx_bit << 6) | (rec_end << 7)
+    return next_state | (cycle_count_en << 4) | (_w_fifo << 5) | (rx_bit << 6) | (shift_en << 7)
 
 
 def gen_to_file(fname):

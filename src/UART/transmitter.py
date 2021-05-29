@@ -15,64 +15,57 @@ def enum_input(callback):
      invoke callback(ci,f,b, a) to generate  low part output
     '''
     for head_bit in range(2**1):
-        for _sbuf_le in range(2**1):
+        for _fifo_ef in range(2**1):
             for sample_it in range(2**1):
                 for next_frame in range(2**1):
                     for state_reg in range(2**4):
-                            callback(head_bit, _sbuf_le,sample_it,next_frame,state_reg)
+                            callback(head_bit, _fifo_ef,sample_it,next_frame,state_reg)
 
 
-S_PRE = 0
-S_WAIT_SAMPLE = 1# wait to sync with sample_it signal
-S_SBIT = 6
-S_D0 = 7
-S_D1 = 8
-S_D2 = 9
-S_D3 = 10
-S_D4 = 11
-S_D5 = 12
-S_D6 = 13
-S_D7 = 14
-S_DEND = 15 # must be 15 bcz hardware using it to generate TX_END signal
-def gen(head_bit,_sbuf_le,sample_it,next_frame,state_reg):
+S_IDLE = 0
+S_D = [1 + (x << 1) for x in range(0,8)]
+S_SBIT = 2
+S_DEND = 4
+
+ALL_STATE = [S_IDLE, S_SBIT, *S_D, S_DEND]
+
+def gen(head_bit,_fifo_ef,sample_it,next_frame,state_reg):
     cnt_bin_str = bin(state_reg)[2:].zfill(4)
     s = int(cnt_bin_str[::-1],2)
 
     next_state = s
-    s0 = 0
-    s1 = 0
+    _fifo_ren = 1
     tx_ing = 0
     TX = 1
-
-    if s == S_SBIT:
-        tx_ing = 1
-        TX = 0 #start_bit
-    elif S_D0 <= s and s <= S_D7:
-        tx_ing = 1
-        TX = head_bit
-    elif s == S_DEND:
-        tx_ing = 1
-        TX = 1
-
-    if _sbuf_le == 0:
-        s0 = 1
-        s1 = 1
-        # load data and
-        if sample_it:
-            next_state = S_SBIT
-        else:
-            next_state = S_WAIT_SAMPLE
+    
+    if s not in ALL_STATE:
+        next_state = S_IDLE
     else:
-        if s == S_WAIT_SAMPLE:
-            if sample_it:
+        ## generate tx_ing and TX
+        if s == S_SBIT:
+            tx_ing = 1
+            TX = 0 #start_bit
+        elif s in S_D:
+            tx_ing = 1
+            TX = head_bit
+        elif s == S_DEND:
+            tx_ing = 1
+            TX = 1
+
+        if (s  == S_IDLE and sample_it) or  (s == S_DEND and next_frame):
+            if _fifo_ef == 1:
+                _fifo_ren = 0
+                # load data and
                 next_state = S_SBIT
-        if next_frame:
-            next_state = s + 1
-            if S_D0<= s <=S_DEND:
-                s1 = 1
+            else:
+                next_state = S_IDLE
+        else:
+            if next_frame:
+                next_state = ALL_STATE[(ALL_STATE.index(s) + 1) % len(ALL_STATE)]
+                
         
 
-    return next_state | (s0 << 4) | (s1 << 5) | (tx_ing << 6) | (TX << 7)
+    return next_state | (_fifo_ren << 4) | (tx_ing << 5) | (TX << 6)
 
 
 def gen_to_file(fname):
