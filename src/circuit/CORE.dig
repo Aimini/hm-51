@@ -365,7 +365,7 @@ d015c000000,a8815b000000,814b22067f,88050000000,148348000000,88050000000,1483490
         </entry>
         <entry>
           <string>Output Splitting</string>
-          <string>8,12,3,1,4,1,1,1,1,1,1,1,3,1,1,4,3,1</string>
+          <string>8,12,3,1, 4,1,1,1,1, 1, 1,1,1,4, 3,1,3,1</string>
         </entry>
       </elementAttributes>
       <pos x="-1160" y="-480"/>
@@ -2087,7 +2087,7 @@ through a bus transceiver.</string>
           <string>~WR_WE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-200"/>
+      <pos x="-1120" y="-280"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2107,7 +2107,7 @@ through a bus transceiver.</string>
           <string>BR_SRC</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-240"/>
+      <pos x="-1120" y="-200"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2117,7 +2117,7 @@ through a bus transceiver.</string>
           <string>RAM_WE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-280"/>
+      <pos x="-1120" y="-260"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2127,7 +2127,7 @@ through a bus transceiver.</string>
           <string>ALUSD_FUNC</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-180"/>
+      <pos x="-1120" y="-220"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2187,7 +2187,7 @@ through a bus transceiver.</string>
           <string>XRAM_WE</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-260"/>
+      <pos x="-1120" y="-240"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2197,7 +2197,7 @@ through a bus transceiver.</string>
           <string>IRQ_CAI</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-140"/>
+      <pos x="-1120" y="-320"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2207,7 +2207,7 @@ through a bus transceiver.</string>
           <string>BR_CPLQ</string>
         </entry>
       </elementAttributes>
-      <pos x="-1120" y="-220"/>
+      <pos x="-1120" y="-180"/>
     </visualElement>
     <visualElement>
       <elementName>Splitter</elementName>
@@ -3127,16 +3127,6 @@ through a bus transceiver.</string>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
-          <string>NetName</string>
-          <string>~PRRWE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1120" y="-320"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
           <string>rotation</string>
           <rotation rotation="2"/>
         </entry>
@@ -3175,6 +3165,16 @@ through a bus transceiver.</string>
       </elementAttributes>
       <pos x="-380" y="-200"/>
     </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>~PRRWE</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1120" y="-140"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
@@ -3210,16 +3210,16 @@ through a bus transceiver.</string>
       <p2 x="-1360" y="-260"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-260"/>
-      <p2 x="-1120" y="-260"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-260"/>
       <p2 x="-820" y="-260"/>
     </wire>
     <wire>
       <p1 x="-380" y="-260"/>
       <p2 x="-360" y="-260"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-260"/>
+      <p2 x="-1120" y="-260"/>
     </wire>
     <wire>
       <p1 x="-420" y="260"/>
@@ -3270,16 +3270,16 @@ through a bus transceiver.</string>
       <p2 x="-1760" y="-200"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-200"/>
-      <p2 x="-1120" y="-200"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-200"/>
       <p2 x="-820" y="-200"/>
     </wire>
     <wire>
       <p1 x="-380" y="-200"/>
       <p2 x="-360" y="-200"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-200"/>
+      <p2 x="-1120" y="-200"/>
     </wire>
     <wire>
       <p1 x="-1020" y="200"/>
@@ -3322,12 +3322,12 @@ through a bus transceiver.</string>
       <p2 x="-1820" y="-140"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-140"/>
-      <p2 x="-1120" y="-140"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-140"/>
       <p2 x="-820" y="-140"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-140"/>
+      <p2 x="-1120" y="-140"/>
     </wire>
     <wire>
       <p1 x="-580" y="140"/>
@@ -3490,12 +3490,12 @@ through a bus transceiver.</string>
       <p2 x="-1360" y="-280"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-280"/>
-      <p2 x="-1120" y="-280"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-280"/>
       <p2 x="-820" y="-280"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-280"/>
+      <p2 x="-1120" y="-280"/>
     </wire>
     <wire>
       <p1 x="-560" y="-280"/>
@@ -3538,16 +3538,16 @@ through a bus transceiver.</string>
       <p2 x="-1700" y="-220"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-220"/>
-      <p2 x="-1120" y="-220"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-220"/>
       <p2 x="-820" y="-220"/>
     </wire>
     <wire>
       <p1 x="-380" y="-220"/>
       <p2 x="-360" y="-220"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-220"/>
+      <p2 x="-1120" y="-220"/>
     </wire>
     <wire>
       <p1 x="-1700" y="-220"/>
@@ -3610,12 +3610,12 @@ through a bus transceiver.</string>
       <p2 x="-1720" y="-160"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-160"/>
-      <p2 x="-1120" y="-160"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-160"/>
       <p2 x="-820" y="-160"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-160"/>
+      <p2 x="-1120" y="-160"/>
     </wire>
     <wire>
       <p1 x="-360" y="160"/>
@@ -3826,16 +3826,16 @@ through a bus transceiver.</string>
       <p2 x="-1360" y="-240"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-240"/>
-      <p2 x="-1120" y="-240"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-240"/>
       <p2 x="-820" y="-240"/>
     </wire>
     <wire>
       <p1 x="-380" y="-240"/>
       <p2 x="-360" y="-240"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-240"/>
+      <p2 x="-1120" y="-240"/>
     </wire>
     <wire>
       <p1 x="-1280" y="240"/>
@@ -3858,12 +3858,12 @@ through a bus transceiver.</string>
       <p2 x="-320" y="240"/>
     </wire>
     <wire>
-      <p1 x="-1140" y="-180"/>
-      <p2 x="-1120" y="-180"/>
-    </wire>
-    <wire>
       <p1 x="-840" y="-180"/>
       <p2 x="-820" y="-180"/>
+    </wire>
+    <wire>
+      <p1 x="-1140" y="-180"/>
+      <p2 x="-1120" y="-180"/>
     </wire>
     <wire>
       <p1 x="-1320" y="-500"/>
