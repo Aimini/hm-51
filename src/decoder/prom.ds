@@ -1,13 +1,23 @@
 ###########################################################
 # programm the internal rom
+# SFR[0x7F] should be 0xAA to trigger this process.
+#
 # start address should be puted on RAM[0](L) and RAM[1](H)
 # size of datas should be puted on RAM[2]
 # Data should be puted from RAM [3]
 # data size shouldn't exceed 64
 #
-# modified register: A, B
+# modified register: A, B, T0
+# 
 ############################################################
+RF(T0, WE), SR(WE), LI(0xF7)
+RF(T0),  ALU(SFR), RFSRCR(WE)
+RF(SFR), BUS(RAM), WR(WE)
+RF(T0,WE), ALU(B)
+RF(T0), JEQ(0xAA,  __0)
+J(STAGE_FETCH_SKIP_PF)
 
+__0:
 LI(1),SR(WE)
 RF(T1, WE), BUS(RAM)
 LI(2),SR(WE)
