@@ -9,6 +9,7 @@ class test_process():
     F_NEW_ASM = "FGEN_NEW_ASM"
     F_NEW_HEX = "FGEN_NEW_HEX"
     F_SIM_INSTRUCTION = "FSIM_INSTRUCTION"
+    F_DUMP_DATA_BUS = "F_DUMP_DATA_BUS"
     F_SIM_CIRCUIT = "FSIM_CIRCUIT"
     F_VERIFY = "F_VERIFY"
 
@@ -25,7 +26,7 @@ class test_process():
             [test_process.F_NEW_HEX, 'compile', self.compile],
             [test_process.F_SIM_INSTRUCTION, 'instruction simulate', self.simulate_instruction],
             [test_process.F_SIM_CIRCUIT, 'circuit simulate', self.simulate_hardware],
-            [test_process.F_VERIFY, 'verify', self.verify]
+            [test_process.F_VERIFY, 'verify', self.verify],
         ]
         
         self.output = bytearray()
@@ -83,14 +84,19 @@ class test_process():
     def simulate_hardware(self):
         rom_file = self.hexfile
         self.simulate_hardware_dump_file_template = self.tempdir / (rom_file.stem + ".simulate_hardware.dump-%d.txt")
+        self.dump_data_bus_file = self.tempdir / (rom_file.stem + ".data_bus.bin")
         simulator_exe = pathlib.Path(R"tools\Digitalc.jar")
         cirucit_file = pathlib.Path(R"src\circuit\TOP.dig")
         ds_file = pathlib.Path(R"eeprom-bin\decoder.bin")
-        returncode = self._run_subprocess(['java', '-jar', simulator_exe,
+
+        cmd = ['java', '-jar', simulator_exe,
                                      '-c',cirucit_file, 
                                      '-d',ds_file,
                                      '-r', rom_file,
-                                     '-F',self.simulate_hardware_dump_file_template])
+                                     '-F',self.simulate_hardware_dump_file_template]
+        if self.F_DUMP_DATA_BUS in self.flags:
+            cmd.extend(('-B', self.dump_data_bus_file))
+        returncode = self._run_subprocess(cmd)
         return returncode
 
     def verify(self):
@@ -134,6 +140,10 @@ if __name__ == "__main__":
         '-V', '--verify', dest='verify', action='store_const', const=True, default=False,
         help='verify the output of the instructions simulation and circuit simulation, the dump'
         'file of the simulation should in output directory')
+    arg_parser.add_argument(
+        '-B', '--data-bus', dest='data_bus', action='store_const', const=True, default=False,
+        help='dump data_bus'
+        'file of the simulation should in output directory')
 
     arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file')
     arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir')
@@ -151,6 +161,8 @@ if __name__ == "__main__":
         t.addflag(test_process.F_SIM_CIRCUIT)
     if args.verify:
         t.addflag(test_process.F_VERIFY)
+    if args.data_bus:
+        t.addflag(test_process.F_DUMP_DATA_BUS)
     ec = t.run()
     print(t.output.decode('utf8'))
     print("program exit with code {}.".format(ec))

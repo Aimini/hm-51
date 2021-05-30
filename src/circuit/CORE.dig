@@ -1886,7 +1886,7 @@ through a bus transceiver.</string>
         </entry>
         <entry>
           <string>Label</string>
-          <string>IO_SFR</string>
+          <string>BUS_D</string>
         </entry>
         <entry>
           <string>Bits</string>
@@ -1908,20 +1908,6 @@ through a bus transceiver.</string>
         </entry>
       </elementAttributes>
       <pos x="-1280" y="120"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>BUS_SFRD</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1280" y="180"/>
     </visualElement>
     <visualElement>
       <elementName>NAnd</elementName>
@@ -2315,11 +2301,6 @@ through a bus transceiver.</string>
       <pos x="-1300" y="-100"/>
     </visualElement>
     <visualElement>
-      <elementName>BUS_TRAN.dig</elementName>
-      <elementAttributes/>
-      <pos x="-1820" y="-540"/>
-    </visualElement>
-    <visualElement>
       <elementName>Tunnel</elementName>
       <elementAttributes>
         <entry>
@@ -2328,104 +2309,6 @@ through a bus transceiver.</string>
         </entry>
       </elementAttributes>
       <pos x="-1140" y="-40"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>SFR_HIT</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-540"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>RF_SFR</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-520"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>RAM_WE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-500"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>~RAM_OE</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-480"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>ADDR_RAM</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-460"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>BUS_D</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-440"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Tunnel</elementName>
-      <elementAttributes>
-        <entry>
-          <string>rotation</string>
-          <rotation rotation="2"/>
-        </entry>
-        <entry>
-          <string>NetName</string>
-          <string>BUS_SFRD</string>
-        </entry>
-      </elementAttributes>
-      <pos x="-1840" y="-420"/>
     </visualElement>
     <visualElement>
       <elementName>RAMSinglePortSel</elementName>
@@ -2513,7 +2396,7 @@ through a bus transceiver.</string>
           <string>BUS_D</string>
         </entry>
       </elementAttributes>
-      <pos x="-1540" y="120"/>
+      <pos x="-1280" y="180"/>
     </visualElement>
     <visualElement>
       <elementName>Out</elementName>
@@ -2562,24 +2445,6 @@ through a bus transceiver.</string>
         </entry>
       </elementAttributes>
       <pos x="-920" y="40"/>
-    </visualElement>
-    <visualElement>
-      <elementName>Out</elementName>
-      <elementAttributes>
-        <entry>
-          <string>Description</string>
-          <string>IR load value</string>
-        </entry>
-        <entry>
-          <string>Label</string>
-          <string>DBUS_inter</string>
-        </entry>
-        <entry>
-          <string>Bits</string>
-          <int>8</int>
-        </entry>
-      </elementAttributes>
-      <pos x="-1500" y="120"/>
     </visualElement>
     <visualElement>
       <elementName>Tunnel</elementName>
@@ -2810,7 +2675,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2824,7 +2689,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2838,7 +2703,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2852,7 +2717,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2866,7 +2731,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2880,7 +2745,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2894,7 +2759,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2908,7 +2773,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2922,7 +2787,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2936,7 +2801,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2950,7 +2815,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2964,7 +2829,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2978,7 +2843,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -2992,7 +2857,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3006,7 +2871,7 @@ through a bus transceiver.</string>
       <elementAttributes>
         <entry>
           <string>rotation</string>
-          <rotation reference="../../../../visualElement[217]/elementAttributes/entry/rotation"/>
+          <rotation reference="../../../../visualElement[207]/elementAttributes/entry/rotation"/>
         </entry>
         <entry>
           <string>NetName</string>
@@ -3258,10 +3123,6 @@ through a bus transceiver.</string>
       <p2 x="-1380" y="-520"/>
     </wire>
     <wire>
-      <p1 x="-1840" y="-520"/>
-      <p2 x="-1820" y="-520"/>
-    </wire>
-    <wire>
       <p1 x="-1480" y="-200"/>
       <p2 x="-1340" y="-200"/>
     </wire>
@@ -3288,10 +3149,6 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-360" y="200"/>
       <p2 x="-320" y="200"/>
-    </wire>
-    <wire>
-      <p1 x="-1840" y="-460"/>
-      <p2 x="-1820" y="-460"/>
     </wire>
     <wire>
       <p1 x="-1520" y="-460"/>
@@ -3530,10 +3387,6 @@ through a bus transceiver.</string>
       <p2 x="-820" y="-540"/>
     </wire>
     <wire>
-      <p1 x="-1840" y="-540"/>
-      <p2 x="-1820" y="-540"/>
-    </wire>
-    <wire>
       <p1 x="-1720" y="-220"/>
       <p2 x="-1700" y="-220"/>
     </wire>
@@ -3568,10 +3421,6 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-660" y="220"/>
       <p2 x="-620" y="220"/>
-    </wire>
-    <wire>
-      <p1 x="-1840" y="-480"/>
-      <p2 x="-1820" y="-480"/>
     </wire>
     <wire>
       <p1 x="-1620" y="-480"/>
@@ -3636,10 +3485,6 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-1620" y="-420"/>
       <p2 x="-1600" y="-420"/>
-    </wire>
-    <wire>
-      <p1 x="-1840" y="-420"/>
-      <p2 x="-1820" y="-420"/>
     </wire>
     <wire>
       <p1 x="-1140" y="-420"/>
@@ -3882,10 +3727,6 @@ through a bus transceiver.</string>
       <p2 x="-260" y="-500"/>
     </wire>
     <wire>
-      <p1 x="-1840" y="-500"/>
-      <p2 x="-1820" y="-500"/>
-    </wire>
-    <wire>
       <p1 x="-1300" y="-500"/>
       <p2 x="-1260" y="-500"/>
     </wire>
@@ -3894,12 +3735,12 @@ through a bus transceiver.</string>
       <p2 x="-1500" y="180"/>
     </wire>
     <wire>
-      <p1 x="-1280" y="180"/>
-      <p2 x="-1240" y="180"/>
-    </wire>
-    <wire>
       <p1 x="-360" y="180"/>
       <p2 x="-320" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="-1280" y="180"/>
+      <p2 x="-1240" y="180"/>
     </wire>
     <wire>
       <p1 x="-1580" y="-440"/>
@@ -3912,10 +3753,6 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-400" y="-440"/>
       <p2 x="-360" y="-440"/>
-    </wire>
-    <wire>
-      <p1 x="-1840" y="-440"/>
-      <p2 x="-1820" y="-440"/>
     </wire>
     <wire>
       <p1 x="-1140" y="-440"/>
@@ -3948,10 +3785,6 @@ through a bus transceiver.</string>
     <wire>
       <p1 x="-1740" y="-120"/>
       <p2 x="-1700" y="-120"/>
-    </wire>
-    <wire>
-      <p1 x="-1540" y="120"/>
-      <p2 x="-1500" y="120"/>
     </wire>
     <wire>
       <p1 x="-1280" y="120"/>
