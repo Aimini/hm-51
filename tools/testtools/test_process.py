@@ -87,8 +87,10 @@ class test_process():
         cirucit_file = pathlib.Path(R"src\circuit\TOP.dig")
         ds_file = pathlib.Path(R"eeprom-bin\decoder.bin")
         returncode = self._run_subprocess(['java', '-jar', simulator_exe,
-                                     cirucit_file, ds_file, rom_file,
-                                     self.simulate_hardware_dump_file_template])
+                                     '-c',cirucit_file, 
+                                     '-d',ds_file,
+                                     '-r', rom_file,
+                                     '-F',self.simulate_hardware_dump_file_template])
         return returncode
 
     def verify(self):

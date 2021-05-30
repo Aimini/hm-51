@@ -51,7 +51,7 @@ The hardware design is hignly perosnalized, you can check the file [README-hd.md
  copy the following content to terminal:
 
  ```
- python3 tools/test_all.py test/generate/ temp/
+ python3 tools/testtools/test_all.py test/generate/ temp/ 4
  ```
 
 
