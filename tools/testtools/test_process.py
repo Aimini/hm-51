@@ -2,7 +2,9 @@ import subprocess
 import sys
 import pathlib
 from compile import compile
+import databus2py
 import argparse
+
 
 
 class test_process():
@@ -85,6 +87,7 @@ class test_process():
         rom_file = self.hexfile
         self.simulate_hardware_dump_file_template = self.tempdir / (rom_file.stem + ".simulate_hardware.dump-%d.txt")
         self.dump_data_bus_file = self.tempdir / (rom_file.stem + ".data_bus.bin")
+        self.dump_data_bus_py_file = self.tempdir / (rom_file.stem + ".data_bus.py")
         simulator_exe = pathlib.Path(R"tools\Digitalc.jar")
         cirucit_file = pathlib.Path(R"src\circuit\TOP.dig")
         ds_file = pathlib.Path(R"eeprom-bin\decoder.bin")
@@ -96,7 +99,10 @@ class test_process():
                                      '-F',self.simulate_hardware_dump_file_template]
         if self.F_DUMP_DATA_BUS in self.flags:
             cmd.extend(('-B', self.dump_data_bus_file))
+
         returncode = self._run_subprocess(cmd)
+        if returncode == 0 and self.F_DUMP_DATA_BUS in self.flags:
+            databus2py.convert(self.dump_data_bus_file, self.dump_data_bus_py_file)
         return returncode
 
     def verify(self):
@@ -145,8 +151,8 @@ if __name__ == "__main__":
         help='dump data_bus'
         'file of the simulation should in output directory')
 
-    arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file')
-    arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir')
+    arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file', required=True)
+    arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir', required=True)
 
     args = arg_parser.parse_args()
 
