@@ -1,13 +1,14 @@
 import sys
+import base64
 
 def convert(dbfile, pyfile):
     s = ""
     with open(dbfile,"rb") as dbfile:
         with open(pyfile, "w") as pyfile:
-            s = str(dbfile.read())
-            pyfile.write('DATA_BUS = ')
-            pyfile.write(s)
-
+            s = dbfile.read()
+            res = base64.b64encode(s)
+            pyfile.write('DATA = ')
+            pyfile.write(repr(res))
 
 if __name__ == "__main__":
     usage = """
