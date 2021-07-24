@@ -325,7 +325,7 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 |   0    |   [CPLB](#0-cplb)   | [DAF](#1-daf)  | [ADDCF](#2-addcf) | [SUBBF](#3-subbf)  |
 |   1    |     [PF](#4-pf)     |  [OR](#5-or)   | [INSBF](#6-insbf) |  [EXTB](#7-extb)   |
 |   2    | [ISRSET](#8-isrset) |  [ZF](#9-zf)   |   [NA](#10-na)    |                    |
-|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) | [NA](#14-pswprf)  | [INCCF](#15-inccf) |
+|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) | [PSWPRF](#14-pswprf)  | [INCCF](#15-inccf) |
 
 ## Description
 

@@ -28,15 +28,16 @@
  Let's see what should we do in each stage.
 
 ### fetch
-
+* load PC to WR,SR
 * set parity flag(PF) in `PSW` according to `A`'s value .
 * fetch instruction opcode from `ROM` to `IR`.
-* increase `PC`.
-
+  
+I put increasing `PC` to decode stage.
 ### decode
 
- it is essentially a big jump branch. Just like binary search, it's according `IR` 's value jump to corresponding address(we using jump mark in script). Manually writing these jumps is tedious, you can use "/src/decoder/gen_template.py" to generate a template file containing these jump codes.
+it is essentially like a interrupt vector, when decode a opcode, I use `(IR << 1) + 1` to generate first microinstruction's address of each instruction. Obviously a vector only can support 2 microinstruction so I put execution stage in other places and jump to there in decode vector. It happens to that increasing PC stage only need 2 microinstruction, so I put increasing `PC` in decode stage.
 
+  increase `PC`.
 ### execute
 
  That is the most important part, and we should do appropriate things to make the behavior of the instruction consistent with that described in the instruction set manual.
@@ -55,7 +56,7 @@ According `IRQ` , register `ISR`  `IE`  `IP` to select highest priority `IRQ` an
 
  For shrink some instruction cycle, The decoder script is follow the following conventions:
 
- *Stage fetch*
+ *Stage decode*
 - leavel `PC+1` in `WR` and `SR` after increase `PC` . So that, for some instruction need to load data that after opcode, we don't need to load `PC` from `RF` to `WR` and `SR` again.
 
 - leavel 0 in `BR` for instruction that need using 0 or 1 in `BR`.
