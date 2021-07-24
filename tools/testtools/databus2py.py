@@ -1,12 +1,12 @@
 import sys
 import base64
-
+import lzma
 def convert(dbfile, pyfile):
     s = ""
     with open(dbfile,"rb") as dbfile:
         with open(pyfile, "w") as pyfile:
             s = dbfile.read()
-            res = base64.b64encode(s)
+            res = base64.b64encode(lzma.compress(s))
             pyfile.write('DATA = ')
             pyfile.write(repr(res))
 
