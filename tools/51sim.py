@@ -33,7 +33,6 @@ args = parser.parse_args()
 
 
 run_flag = True
-dump_count = 0
 
 
 vm = create_stand51()
@@ -52,6 +51,7 @@ def dump_core(core: core51, fh):
         i += 1
         if i % 16 == 0:
             fh.write('\n')
+    fh.write(';')
 
 
 def normal_stop():
@@ -126,12 +126,10 @@ def install_my_sfr(core: core51):
     }
 
     obj = core.sfr_extend(my_sfr)
-
+    
+    fh = open(args.dump_file_template, "w")
     def dump_core_to_template_file():
-        global dump_count
-        with open(args.dump_file_template % dump_count, "w") as fh:
             dump_core(core, fh)
-            dump_count += 1
 
     obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
     obj["EXR"].set_listener.append(lambda mem_obj, new_value: normal_stop())

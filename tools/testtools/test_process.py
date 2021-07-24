@@ -76,16 +76,16 @@ class test_process():
         rom_file = self.hexfile
         simulator_exe = pathlib.Path(R"tools\51sim.py")
 
-        self.simulate_instruction_dump_file_template = self.tempdir / \
-            (rom_file.stem + ".simulate_instruction.dump-%d.txt")
+        self.simulate_instruction_dump_file = self.tempdir / \
+            (rom_file.stem + ".simulate_instruction.dump.txt")
         returncode = self._run_subprocess(['python', simulator_exe,
                                      '-i', rom_file,
-                                     '-d', self.simulate_instruction_dump_file_template])
+                                     '-d', self.simulate_instruction_dump_file])
         return returncode
 
     def simulate_hardware(self):
         rom_file = self.hexfile
-        self.simulate_hardware_dump_file_template = self.tempdir / (rom_file.stem + ".simulate_hardware.dump-%d.txt")
+        self.simulate_hardware_dump_file = self.tempdir / (rom_file.stem + ".simulate_hardware.dump.txt")
         self.dump_data_bus_file = self.tempdir / (rom_file.stem + ".data_bus.bin")
         self.dump_data_bus_py_file = self.tempdir / (rom_file.stem + ".data_bus.py")
         simulator_exe = pathlib.Path(R"tools\Digitalc.jar")
@@ -96,7 +96,7 @@ class test_process():
                                      '-c',cirucit_file, 
                                      '-d',ds_file,
                                      '-r', rom_file,
-                                     '-F',self.simulate_hardware_dump_file_template]
+                                     '-F',self.simulate_hardware_dump_file]
         if self.F_DUMP_DATA_BUS in self.flags:
             cmd.extend(('-B', self.dump_data_bus_file))
 
@@ -106,25 +106,42 @@ class test_process():
         return returncode
 
     def verify(self):
-        count = 0
-        while True:
-            fsname = str(self.simulate_instruction_dump_file_template) % count
-            fhname = str(self.simulate_hardware_dump_file_template) % count
-            if not pathlib.Path(fsname).exists() and not pathlib.Path(fhname).exists():
-                return 0
+        fsname = self.simulate_instruction_dump_file
+        fhname = self.simulate_hardware_dump_file
+        if not pathlib.Path(fsname).exists() and not pathlib.Path(fhname).exists():
+            return 0
 
-            fs = open(fsname)
-            fh = open(fhname)
-            sresult = [int(_, 0) for _ in fs.read().split()]
-            hresult = [int(_, 0) for _ in fh.read().split()]
+        fs = open(fsname).read()
+        fh = open(fhname).read()
+        all_sresult = [_ for _ in fs.split(';') if len(_)]
+        all_hresult = [_ for _ in fh.split(';') if len(_)]
+
+
+
+        for i, simulation_dump in enumerate(all_sresult):
+            sresult = [int(_, 0) for _ in simulation_dump.split()]
+            hresult = [int(_, 0) for _ in   all_hresult[i].split()]
+            
+            
+
 
             if sresult != hresult:
-                print("verify failed:")
-                print(f"\t{fsname}")
-                print(f"\t{fhname}")
+                def search_nth_dump(fname,fcontents:str):
+                    nth_semicolon = 0
+                    previous_split_lineno = 1
+                    for linesub1, line_str in enumerate(fcontents.splitlines()):
+                        if line_str.find(';') != -1:
+                            if nth_semicolon == i:
+                                print(f'  from File "{str(fname)}", line {previous_split_lineno}.')
+                                return
+                            previous_split_lineno = linesub1 + 1 
+                            nth_semicolon += 1
+                
+                print(f"verify failed at {i + 1}th dump:")
+                search_nth_dump(fsname, fs)
+                search_nth_dump(fhname, fh)
                 return -1
 
-            count += 1
         return 0
 
 
