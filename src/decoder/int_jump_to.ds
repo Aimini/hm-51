@@ -14,20 +14,21 @@
 #------------- check EA
 # 1. WR <- IE
 # 2. jump_if(IE < 0x80)
-RF(IE), ALU(A),  WR(WE), JLT(0x81, @0)
+RF(IE), BUS(IRR),  WR(WE), JLT(0x81, @0)
 
 #------------- check IE
-# T0 <- IRQ
-RF(T0,WE),    BUS(IRR)
+# jump_if(IRR == 0)
+ALUO(ZF_B),    JALUF(@0)
 # 1. T0 <- IE & IRR
 # 2. jump_if(IRR == 0)
-RF(T0,WE),    ALU(AND),   WR(WE), JLT(0x1, @0)    
+RF(IE),    ALU(AND),   WR(WE)   
 
+ALUO(ZF_B),    JALUF(@0)
 #------------- 
-RF(IP),    ALU(A),       WR(WE)       # get  PMIRQ(MIRQ masked with IP)
 # 1. T0, WR <- GENIRRQN(IE & IRR, IP)
 # 2. jump_if(IE & IRR == 0)
-RF(T0,WE), ALU(GENIRRQN), WR(WE), JLT(0x1, @0)
+RF(IP), ALU(GENIRRQN), WR(WE)
+RF(T0, WE), ALU(B)
 # select the highest priority IRQ
 # T0, WR <-SELHIRRQN(IE&IRQ)
 RF(T0, WE), ALU(SELHIRRQN), WR(WE)

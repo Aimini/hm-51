@@ -147,7 +147,7 @@ def generate_low_by_op(ci, f,  b, a):
 
     elif f == 0x8: # GENIRRQN/ ISRSET
         # IRQN2IRQ A
-        RL = get_irqn(a,b)
+        RL = get_irqn(b,a)
         RH = b
     elif f == 0x9: # SETPSWF A (PSW),B/ ZF
         # just replace A's OV AC CY from B
@@ -243,7 +243,7 @@ def generate_high_by_op(ci, f, b, a):
     
     elif f == 0x8:  # GENIRRQN/ISRSET
         # generate low nibble IRQN
-        RL = get_irqn(a & 7, b) # only need a[2:0]
+        RL = get_irqn(b, a & 7) # only need a[2:0]
 
         # ISRSETN
         ISR = a
