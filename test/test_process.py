@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file',
         required=True,
-         help='python script file name in submodule "' + auto_tester_pkgname + '" that can get a "ams_test" object, we only need the name of file, so path like ../xx/test.py, a/b/test.hex, will all fine')
+         help='python script file name in submodule "' + auto_tester_pkgname_py + '" that can get a "ams_test" object, we only need the name of file, so path like ../xx/test.py, a/b/test.hex, will all fine')
     arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir', required=True)
 
     args = arg_parser.parse_args()

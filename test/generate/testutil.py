@@ -137,11 +137,6 @@ class asm_test:
         """
         self.iterx(self.rsfr(), f)
 
-    def iterx_is(self, f):
-        """
-        cross iter iram and SFR, see iterx in asm_test
-        """
-        self.iterx(self.ris(), f)
     
     def iter_ri(self, rsf, rif):
         """
@@ -214,5 +209,4 @@ def create_test():
     #arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir', default='.')
     #op = arg_parser.parse_args(sys.argv[1:])
     #ofilepath = pathlib.Path(op.output_dir) / (pathlib.Path(sys.argv[0]).stem + ".A51")
-    print("hello")
     return asm_test()

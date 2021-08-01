@@ -5,6 +5,4 @@
 ##########################################################
 from .common.INS_XXX_A_d import INS_XXX_A_D
 
-a = INS_XXX_A_D("ADDC")
-p = a.gen(0, 17)
-p = a.p
+p = INS_XXX_A_D("ADDC").gen(0, 17)

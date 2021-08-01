@@ -5,7 +5,7 @@
 #########################################################
 
 from .. import testutil as u
-from asmconst import *
+from .. asmconst import *
 
 
 p = u.create_test()
