@@ -5,7 +5,7 @@ from compile import compile
 import databus2py
 import argparse
 from testconfig import auto_tester_pkgname_py, sim_51
-
+import sys
 class test_process():
     F_NEW_ASM = "FGEN_NEW_ASM"
     F_NEW_HEX = "FGEN_NEW_HEX"
@@ -14,7 +14,7 @@ class test_process():
     F_SIM_CIRCUIT = "FSIM_CIRCUIT"
     F_VERIFY = "F_VERIFY"
 
-    def __init__(self, gen_filename_str, temp_dir_str):
+    def __init__(self, gen_filename_str, temp_dir_str, output_file = sys.stdout):
         self.filestem = pathlib.Path(gen_filename_str).stem
         self.tempdir = pathlib.Path(temp_dir_str)
         self.asmfile = self.tempdir / (self.filestem + ".A51")
@@ -29,17 +29,15 @@ class test_process():
             [test_process.F_VERIFY, 'verify', self.verify],
         ]
         
-        self.output = bytearray()
+        self.output = output_file
 
     def addflag(self, flag):
         self.flags.append(flag)
         return self
 
     def _run_subprocess(self, cmd):
-        s = subprocess.run(cmd, capture_output=True)
-        self.output.extend(s.stdout)
-        self.output.extend(b'\n')
-        self.output.extend(s.stderr)
+        s = subprocess.run(cmd,stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='utf8')
+        print(s.stdout,file=self.output)
         return s.returncode
 
     def run(self):
@@ -47,11 +45,11 @@ class test_process():
             if flag not in self.flags:
                 continue
 
-            print(f">>>>>>>>>>>>> {name}")
+            print(f">>>>>>>>>>>>> {name}", file=self.output)
             rt = call()
 
             if rt != 0:
-                print(f"error occur at {name} stage.")
+                print(f"error occur at {name} stage.", file=self.output)
                 return rt
         return 0
             
@@ -68,7 +66,7 @@ class test_process():
         filename = self.asmfile
         hexfile = self.hexfile
 
-        returncode = compile(filename, hexfile)
+        returncode = compile(filename, hexfile, self.output)
         return returncode
 
     def simulate_instruction(self):
@@ -131,12 +129,12 @@ class test_process():
                     for linesub1, line_str in enumerate(fcontents.splitlines()):
                         if line_str.find(';') != -1:
                             if nth_semicolon == i:
-                                print(f'  from File "{str(fname)}", line {previous_split_lineno}.')
+                                print(f'  from File "{str(fname)}", line {previous_split_lineno}.', file=self.output)
                                 return
                             previous_split_lineno = linesub1 + 1 
                             nth_semicolon += 1
                 
-                print(f"verify failed at {i + 1}th dump:")
+                print(f"verify failed at {i + 1}th dump:", file=self.output)
                 search_nth_dump(fsname, fs)
                 search_nth_dump(fhname, fh)
                 return -1
@@ -173,7 +171,6 @@ if __name__ == "__main__":
     arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir', required=True)
 
     args = arg_parser.parse_args()
-
     t = test_process(args.script_file, args.output_dir)
     if args.genearte_assemble:
         t.addflag(test_process.F_NEW_ASM)
@@ -188,6 +185,5 @@ if __name__ == "__main__":
     if args.data_bus:
         t.addflag(test_process.F_DUMP_DATA_BUS)
     ec = t.run()
-    print(t.output.decode('utf8'))
     print("program exit with code {}.".format(ec))
     exit(ec)

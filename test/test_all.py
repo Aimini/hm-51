@@ -4,8 +4,7 @@
 
 import asyncio
 import sys
-import pathlib
-import os
+import io
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from test_process import test_process
@@ -39,16 +38,17 @@ ignored_tester_name = {}
 
 
 def create_subprocess(tester_name, temp_dir):
-    tp = test_process(tester_name, temp_dir)
+    output_file = io.StringIO()
+    tp = test_process(tester_name, temp_dir, output_file)
     tp.addflag(test_process.F_NEW_ASM).addflag(test_process.F_NEW_HEX)\
     .addflag(test_process.F_SIM_INSTRUCTION).addflag(test_process.F_SIM_CIRCUIT)\
     .addflag(test_process.F_VERIFY)
 
+    
     with print_lock:
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print('>>>> test:{}'.format(tester_name))
+        print('>>>> begin test: {}'.format(tester_name))
 
-    return tp.run(), tester_name, tp.output
+    return tp.run(), tester_name, output_file
 
 
 def main(executor):
@@ -90,8 +90,8 @@ def main(executor):
             cancel_executor()
             print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
             print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-            print(output.decode('utf-8'))
-            print('error at file {!r}'.format(filename))
+            print(output.getvalue())
+            print('error at file "{}\\{}.py"'.format(auto_tester_pkgname,filename))
             break
     print('total test:', len(tasks))
 

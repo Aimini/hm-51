@@ -32,7 +32,7 @@ class trysubp():
             return self
 
 
-def compile(inputfile_str, outputfile_str):
+def compile(inputfile_str, outputfile_str, output_file = sys.stdout):
     inputfile = pathlib.Path(inputfile_str)
     outputfile = pathlib.Path(outputfile_str)
     tempdir = outputfile.parent
@@ -53,11 +53,23 @@ def compile(inputfile_str, outputfile_str):
     os.mkdir(BL_abs_temp_dir_str)
     evn_BL51 = os.environ.copy()
     evn_BL51["TMP"] = BL_abs_temp_dir_str
-    rp = trysubp(f"{A51} {inputfile} OBJECT({objfile})")\
-        .chain(f"{BL51} {objfile} TO {absfile}", env=evn_BL51)\
-        .chain(f"{OH51} {absfile}  HEXfile({hexfile})")
+    cmds = (
+        (f"{A51} {inputfile} OBJECT({objfile})",),
+        (f"{BL51} {objfile} TO {absfile}", evn_BL51),
+        (f"{OH51} {absfile}  HEXfile({hexfile})",)
+    )
+    for c in cmds:
+        cmd = c[0]
+        env = None
+        if len(c) == 2:
+            env = c[1]
 
-    return rp.returncode
+        p = subprocess.run(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='utf-8')
+        print(p.stdout, file=output_file)
+        if p.returncode != 0:
+            return p.returncode
+
+    return 0
 
 
 
