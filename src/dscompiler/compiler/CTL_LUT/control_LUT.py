@@ -149,7 +149,7 @@ ALUDH = NamedParametersLUT([
             'CPLB', 'DAF', 'ADDCF', 'SUBBF',
             'PF', 'OR',  'INSBF',  'EXTB',
             'ISRSET',   'ZF',    'NA',      '',
-            'ZF_B',    'AND',   'PSWPRF', 'INCCF']
+            'ZF_B',    'AND',   '', 'INCCF']
     }
 ])
 
