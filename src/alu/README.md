@@ -22,7 +22,6 @@ This document contains descriptions of [ALUS](#ALUS) and [ALUD](#ALUD) functions
 
   - `B`/`ZF_B`/`SETCY` must have same encoding, `ZF_B` shoud encoded at ALUD-H.
   - `OR` shoud encoded at ALUD-H.
-  - `SETPF`/`PSWPRF` must have same encoding.
 
 # ALUS
 
@@ -325,7 +324,7 @@ The number in first column is the upper nibble in `S` , the number in fisrt row 
 |   0    |   [CPLB](#0-cplb)   | [DAF](#1-daf)  | [ADDCF](#2-addcf) | [SUBBF](#3-subbf)  |
 |   1    |     [PF](#4-pf)     |  [OR](#5-or)   | [INSBF](#6-insbf) |  [EXTB](#7-extb)   |
 |   2    | [ISRSET](#8-isrset) |  [ZF](#9-zf)   |   [NA](#10-na)    |                    |
-|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) | [PSWPRF](#14-pswprf)  | [INCCF](#15-inccf) |
+|   3    |  [ZF_B](#12-zf_b)   | [AND](#13-and) |    [(NONE)](#14-none) | [INCCF](#15-inccf) |
 
 ## Description
 
@@ -449,7 +448,7 @@ RF(T1,WE), ALU(XCHD)
 
 |   7    |   6    |   5    |   4    |   3    |   2    |   1    |   0    |
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| A\[7\] | B\[6\] | A\[5\] | A\[4\] | A\[3\] | B\[3\] | A\[1\] | A\[0\] |
+| B\[7\] | B\[6\] | A\[5\] | A\[4\] | A\[3\] | B\[3\] | A\[1\] | A\[0\] |
 
 It's usually used to set PSW flag when execute `ADDC` , `SUBB` , `ADD` instruction. See [ADJF](#0-adjf) to know how to use this function.
 
@@ -655,15 +654,8 @@ Same as [ZF](#9-zf), but using B as operand. If `B[3:0] == 0` , then `ZFL = 1` .
 |:-----:|
 | A & B |
 
-#### 14. PSWPRF
+#### 14. NONE
 
-get bit `PSW[1]`
-
-| 7  | 6-0 |
-|:--:|:---:|
-| A\[1\] |  X  |
-
-`PSW[1]` is User definable bit, but in my design, it's used to calling ROM programming process.
 
 #### 15. INCCF
 
