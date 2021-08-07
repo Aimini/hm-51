@@ -4,7 +4,7 @@ import pathlib
 from compile import compile
 import databus2py
 import argparse
-from testconfig import auto_tester_pkgname_py, sim_51
+from testconfig import sim_51
 import sys
 class test_process():
     F_NEW_ASM = "FGEN_NEW_ASM"
@@ -14,8 +14,9 @@ class test_process():
     F_SIM_CIRCUIT = "FSIM_CIRCUIT"
     F_VERIFY = "F_VERIFY"
 
-    def __init__(self, gen_filename_str, temp_dir_str, output_file = sys.stdout):
-        self.filestem = pathlib.Path(gen_filename_str).stem
+    def __init__(self, module_path, gen_file_str, temp_dir_str, output_file = sys.stdout):
+        self.module_path = module_path
+        self.filestem = pathlib.Path(gen_file_str).stem
         self.tempdir = pathlib.Path(temp_dir_str)
         self.asmfile = self.tempdir / (self.filestem + ".A51")
         self.hexfile = self.tempdir / (self.filestem + ".hex")
@@ -56,7 +57,7 @@ class test_process():
             
 
     def genasm(self):
-        mod = importlib.import_module(auto_tester_pkgname_py + '.' + self.filestem)
+        mod = importlib.import_module(self.module_path + '.' + self.filestem)
         f = open(self.tempdir /(self.filestem +".A51"), "w")
         f.write(mod.p.get_content_str())
         f.close()
@@ -164,14 +165,15 @@ if __name__ == "__main__":
         '-B', '--data-bus', dest='data_bus', action='store_const', const=True, default=False,
         help='dump data_bus'
         'file of the simulation should in output directory')
-
+    arg_parser.add_argument('-m', '--module-path', action='store', type=str, dest='module_path',
+         help='the path of module where to earch the script_file. required if you need to generate ASM file.')
     arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file',
         required=True,
-         help='python script file name in submodule "' + auto_tester_pkgname_py + '" that can get a "ams_test" object, we only need the name of file, so path like ../xx/test.py, a/b/test.hex, will all fine')
+         help='python script file name in given "--module-path"  that can get a "ams_test" object, we only need the name of file, so path like ../xx/test.py, a/b/test.hex, will all fine')
     arg_parser.add_argument('-o', '--output-dir', action='store', type=str, dest='output_dir', required=True)
 
     args = arg_parser.parse_args()
-    t = test_process(args.script_file, args.output_dir)
+    t = test_process(args.module_path, args.script_file, args.output_dir)
     if args.genearte_assemble:
         t.addflag(test_process.F_NEW_ASM)
     if args.generate_hex:

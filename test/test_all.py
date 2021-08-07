@@ -11,12 +11,12 @@ from test_process import test_process
 import pkgutil
 import threading
 import signal
-from testconfig import auto_tester_pkgname
+from testconfig import auto_tester_pkgname, auto_tester_pkgname_py
 
 
 
 usage = '''
-test_all.py <script_dir> <temp_dir> <thread_count>
+test_all.py  <temp_dir> <thread_count>
     scan all generate script file in <script_dir> and run it. the file name start with '__' will be ignored.
 
     script_dir: the directory contains all test generate script. 
@@ -39,7 +39,7 @@ ignored_tester_name = {}
 
 def create_subprocess(tester_name, temp_dir):
     output_file = io.StringIO()
-    tp = test_process(tester_name, temp_dir, output_file)
+    tp = test_process(auto_tester_pkgname_py, tester_name, temp_dir, output_file)
     tp.addflag(test_process.F_NEW_ASM).addflag(test_process.F_NEW_HEX)\
     .addflag(test_process.F_SIM_INSTRUCTION).addflag(test_process.F_SIM_CIRCUIT)\
     .addflag(test_process.F_VERIFY)
