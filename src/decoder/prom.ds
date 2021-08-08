@@ -10,14 +10,7 @@
 # modified register: A, B, T0
 # 
 ############################################################
-RF(T0, WE), SR(WE), LI(0xF7)
-RF(T0),  ALU(SFR), RFSRCR(WE)
-RF(SFR), BUS(RAM), WR(WE)
-RF(T0,WE), ALU(B)
-RF(T0), JEQ(0xAA,  __0)
-J(STAGE_FETCH_SKIP_PF)
 
-__0:
 LI(1),SR(WE)
 RF(T1, WE), BUS(RAM)
 LI(2),SR(WE)
@@ -34,7 +27,7 @@ RF(A, WE), BUS(RAM)
 # set start address of datas (-1)
 RF(B, WE), LI(2)
 
-PRR(PMODE)
+PRR(ACTIVE)
 PROGRAMMING_ROM_BYTE:
 RF(A),     ALU(ZF), JALUF(PROGRAMMING_ROM_END) # check whether size(A) is 0 now
 RF(A, WE), ALU(DEC)    
@@ -43,11 +36,9 @@ RF(T0, WE), BUS(RAM), BR(ONE)
 RF(T1, WE), ALU(INCC), WR(WE), BR(CY)
 RF(T2, WE), ALU(INCC), SR(WE)
  #data that output from RF-ALU to data bus is slow, so we need extra cycle
-PRR(PMODE, WE, CE),RF(T0), ALU(A)
-PRR(PMODE),      RF(T0), ALU(A), J(PROGRAMMING_ROM_BYTE)
+PRR(ACTIVE, WE, CE),RF(T0), ALU(A)
+PRR(ACTIVE),      RF(T0), ALU(A), J(PROGRAMMING_ROM_BYTE)
 PROGRAMMING_ROM_END:
-PRR(CE)
-WR(WE), LI(0xFD) #clear PRF
-RF(PSW, WE), ALU(AND),J(@0)
+PRR(CE),J(@0)
 
 
