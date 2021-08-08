@@ -75,7 +75,19 @@ def assert_core(par0reg, par1reg, function_val):
     if function_val == 4:
             raise Exception("user actively requested a crash.")
 
+ADDR_SIZE = 0
+ADDR_PCL = 1
+ADDR_PCH = 2
+ADDR_CHUCK = 3
 
+def uf_programROM(core):
+    print(hex(vPC))
+    size = int(core.IRAM[ADDR_SIZE])
+    PC = (int(core.IRAM[ADDR_PCH])<< 8) + int(core.IRAM[ADDR_PCL])
+    for i in range(len(core.ROM), PC + size):
+        core.ROM.append(0)
+    for i in range(size):
+        core.ROM[PC + i] = int(core.IRAM[ADDR_CHUCK + i])
 
 def assert_and_dump_test(core):
     a = random.getrandbits(8)
@@ -137,7 +149,7 @@ def install_my_sfr(core: core51):
 
 
 install_my_sfr(vm)
-
+vm.reserved_instruction = uf_programROM
 
 # for _ in range(3):
 #     assert_and_dump_test(vm)
