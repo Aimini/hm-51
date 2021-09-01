@@ -2,6 +2,8 @@
 # 2021-08-08 14:21:32
 # AI
 # test programming ROM function
+# this test code are only suit for the simulator,
+# the real hardware has timing constraints.
 #########################################################
 
 import random
@@ -11,19 +13,35 @@ from ..asmconst import *
 from ..numutil import numutil as ntl
 
 p = u.create_test()
-
-D_SIZE = D_00
-D_PCL = D_01
-D_PCH = D_02
-addr_DATA_CHUCK = 3
+tWC = 5000
+D_tWCL = D_1B
+D_tWCH = D_1C
+D_SIZE = D_1D
+D_PCL = D_1E
+D_PCH = D_1F
+addr_DATA_CHUCK = 0x20
 
 # 0x1000 - 0xFEFF are reserved for test_code
-test_addresses = (0, 64, 0xFF00)
-test_block_size = ntl.bound(6)  # 64
-test_block_size = list(test_block_size)
-test_block_size.remove(0)
-# print(test_block_size)
+test_addresses = (0, 128, 0xFF00)
+test_block_size = [1,2, 64, 100, 127, 128]
+test_block_size.append(128)
 
+# print(test_block_size)
+def micro_program(code):
+    return f'''
+    {atl.move(SFR_A, atl.I(code))}
+    {atl.move(SFR_B, atl.I(0xFF ^ code))}
+    DB 0xA5
+    '''
+
+def programmingPage():
+    return micro_program(0x00)
+
+def enableSDP():
+    return micro_program(0x01)
+    
+def disableSDP():
+    return micro_program(0x02)
 
 def write_one_chuck(p, block_size):
     data = list(range(block_size))
@@ -36,16 +54,22 @@ def write_one_chuck(p, block_size):
         p += atl.move(D_PCL , atl.I(start_addr & 0xFF))
         p += atl.move(D_PCH , atl.I(start_addr >> 8))
         
+        p += "MOV R0, #0x20"
         for i, d in enumerate(data):
-            p += atl.move(atl.D(addr_DATA_CHUCK + i), atl.I(d))
+            p += atl.move("@R0", atl.I(d))
+            p += "INC R0"
 
-        p += 'DB 0xA5'
-
+        p += 'LCALL ROM_PROGRAMMING_PAGE'
+        
+        p += f'MOV DPTR, #{ntl.sx4(start_addr)}' 
         for i, d in enumerate(data):
             p += f"""
-                MOV DPTR, #{ntl.sx4(start_addr + i)} 
+                ;;;  ----------- {i} -------
+                ;;assert ROM[{i + start_addr}] == {d}
+                
                 CLR A
                 MOVC A, @A+DPTR
+                INC DPTR
                 """
             p += atl.aste(SFR_A, atl.I(d))
 
@@ -60,8 +84,9 @@ def write_one_byte_no_align64(p, start_address, data_size):
         p += atl.move(D_SIZE,atl.I(1))  # block size
         p += atl.move(D_PCL, atl.I(addr & 0xFF))
         p += atl.move(D_PCH, atl.I(addr >> 8))
-        p += atl.move(atl.D(addr_DATA_CHUCK), atl.I(d))
-        p += 'DB 0xA5'
+        p += atl.move('R0', atl.I(addr_DATA_CHUCK))
+        p += atl.move('@R0', atl.I(d))
+        p += 'LCALL ROM_PROGRAMMING_PAGE'
 
     for i, d in enumerate(data):
         p += f"""
@@ -75,15 +100,24 @@ def write_one_byte_no_align64(p, start_address, data_size):
 p.is_prepend_clear_iram = False
 p.is_prepend_clear_reg = False
 p.is_append_dump = False
-p += """
+p += f"""
 CSEG AT 0x0
-MOV PSW, #0x02
-MOV DPTR,#0xFF00
+MOV     PSW, #0x02
+MOV     DPTR,#0xFF00
+;; load tWC
+MOV     {D_tWCL}, #{tWC & 0xFF}
+MOV     {D_tWCH}, #{tWC >> 8}
 LJMP TEST_CODE
+
 CSEG AT 0x01000
+ROM_PROGRAMMING_PAGE:
+{programmingPage()}
+RET
 TEST_CODE:
 """
+p += disableSDP()
 for block_size in test_block_size:
     write_one_chuck(p, block_size)
 
 write_one_byte_no_align64(p, 0, 256)
+

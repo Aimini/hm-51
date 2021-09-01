@@ -75,20 +75,34 @@ def assert_core(par0reg, par1reg, function_val):
     if function_val == 4:
             raise Exception("user actively requested a crash.")
 
-ADDR_SIZE = 0
-ADDR_PCL = 1
-ADDR_PCH = 2
-ADDR_CHUCK = 3
-
+ADDR_SIZE = 0x1D
+ADDR_PCL = 0x1E
+ADDR_PCH = 0x1F
+ADDR_CHUCK = 0x20
+ROM_LOCK = True
 def uf_programROM(core):
-    print(hex(vPC))
-    size = int(core.IRAM[ADDR_SIZE])
-    PC = (int(core.IRAM[ADDR_PCH])<< 8) + int(core.IRAM[ADDR_PCL])
-    for i in range(len(core.ROM), PC + size):
-        core.ROM.append(0)
-    for i in range(size):
-        core.ROM[PC + i] = int(core.IRAM[ADDR_CHUCK + i])
-
+    if int(core.PSW) & 2 == 0:
+        return
+    if int(core.A) ^ int(core.B) != 0xFF:
+        return
+        
+    # print(hex(vPC))
+    global ROM_LOCK
+    valA = int(core.A)
+    if valA == 0:
+        if ROM_LOCK:
+            return
+        size = int(core.IRAM[ADDR_SIZE])
+        PC = (int(core.IRAM[ADDR_PCH])<< 8) + int(core.IRAM[ADDR_PCL])
+        for i in range(len(core.ROM), PC + size):
+            core.ROM.append(0)
+        for i in range(size):
+            core.ROM[PC + i] = int(core.IRAM[ADDR_CHUCK + i])
+    elif valA == 1:
+        ROM_LOCK = True
+    elif valA == 2:
+        ROM_LOCK = False
+        
 def assert_and_dump_test(core):
     a = random.getrandbits(8)
     b = random.getrandbits(8)
@@ -139,8 +153,10 @@ def install_my_sfr(core: core51):
 
     obj = core.sfr_extend(my_sfr)
     
-    fh = open(args.dump_file_template, "w")
+    fh = None
     def dump_core_to_template_file():
+            if fh is None:
+                open(args.dump_file_template, "w")
             dump_core(core, fh)
 
     obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
