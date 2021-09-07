@@ -96,10 +96,12 @@ CJNE R0, #SEQ_HANDSHAKE_LEN, HAND_SHAKE_NEXT
 ;;;;;;; ----------- user commands
 USER_COMMANDS:
 LCALL READ_UART_WAIT_LONG
-; cmd code in R2
+; cmd code in R3
 MOV  A, R5
 MOV  R3, A
 CJNE A, #00, OP_NEXT0
+
+
 ;;  0 -- programming a data chuck
 ; get size, store in 0x17
 LCALL READ_UART_WAIT_SHORT
@@ -120,14 +122,21 @@ LOAD_DATA_ARRAY:
 
 
 OP_NEXT0:
-    CJNE    A, #01, OP_NEXT1
-    ;; 1 -- disable SDP
-    JMP INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
+    CJNE    A, #01, OP_NEXT2
+    
+    
+    ;; 1 -- programming byte-address pair
+    LCALL READ_UART_WAIT_SHORT
+    MOV A, R5
+    MOV 0x1D, A
+    JZ  INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
+    ; A *= 3
+    RL  A
+    ADD A, R5
+    MOV R0, A
+    MOV R1, #0x1E
+    JMP LOAD_DATA_ARRAY
 
-OP_NEXT1:
-    CJNE    A, #02, OP_NEXT2
-    ; 2 -- enable SDP
-    JMP INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
 
 OP_NEXT2: 
     CJNE A, #03, OP_NEXT3
@@ -164,7 +173,7 @@ OP_NEXT3:
     ; load length
     LCALL READ_UART_WAIT_SHORT
     ECHO_NEXT_CHAR:
-        MOV A, R5
+        MOV A, R3
         JZ  USER_COMMANDS
         LCALL READ_UART_WAIT_LONG ; wait longer
         JNB TI, $

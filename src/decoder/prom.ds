@@ -29,8 +29,7 @@ RF(B), ALU(XOR), WR(WE)
 ALU(ZF_B), JALUNF(@0)
 
 RF(A), JEQ(0x00, UF_ROM_PROGRAMMING_PAGE)
-RF(A), JEQ(0x01, UF_ROM_ENABLE_SDP)
-RF(A), JEQ(0x02, UF_ROM_DISABLE_SDP)
+RF(A), JEQ(0x01, UF_ROM_PROGRAMMING_BYTE_ADDR_PAIR)
 J(@0)
 
 UF_ROM_PROGRAMMING_PAGE:
@@ -52,7 +51,7 @@ RF(B, WE), LI(0x1F)
 
 PRR(ACTIVE)
 ROM_PROGRAMMING_BYTE_OF_PAGE:
-RF(A, WE), ALU(DEC), JLT(0x1, ROM_PROGRAMMING_PAGE_END)    
+RF(A, WE), ALU(DEC), JLT(0x1, ROM_PROGRAMMING_END)    
 RF(B, WE), ALU(INC), SR(WE)
 RF(T0, WE), BUS(RAM), BR(ONE)
 RF(T1, WE), ALU(INCC), WR(WE), BR(CY)
@@ -60,85 +59,34 @@ RF(T2, WE), ALU(INCC), SR(WE)
  #data that output from RF-ALU to data bus is slow, so we need extra cycle
 RF(T0), ALU(A), PRR(ACTIVE, WE, CE)
 RF(T0), ALU(A), PRR(ACTIVE),  J(ROM_PROGRAMMING_BYTE_OF_PAGE)
-ROM_PROGRAMMING_PAGE_END:
+
+
+
+
+UF_ROM_PROGRAMMING_BYTE_ADDR_PAIR:
+# size
+LI(0x1D),  SR(WE)
+RF(A, WE), BUS(RAM)
+# start from 0x1E, the pattern is  DATA PCL PCH
+RF(B, WE), LI(0x1D)
+
+PRR(ACTIVE)
+ROM_WRITE_ONE_OF_BYTE_PAIR:
+RF(A, WE), ALU(DEC), JLT(0x1, ROM_PROGRAMMING_END)    
+RF(B, WE), ALU(INC), SR(WE)
+RF(T0, WE), BUS(RAM) 
+RF(B, WE), ALU(INC), SR(WE)
+WR(WE), BUS(RAM) 
+RF(B, WE), ALU(INC), SR(WE)
+SR(WE), BUS(RAM)
+ #data that output from RF-ALU to data bus is slow, so we need extra cycle
+RF(T0), ALU(A), PRR(ACTIVE, WE, CE)
+RF(T0), ALU(A), PRR(ACTIVE),  J(ROM_WRITE_ONE_OF_BYTE_PAIR)
+
+
+
+ROM_PROGRAMMING_END:
 PRR(CE), J(ROM_WAIT_tWC)
-
-
-
-UF_ROM_ENABLE_SDP:
-PRR(ACTIVE)
-
-# ROM[0x5555] = 0xAA
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0xAA), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-# ROM[0x2AAA] = 0x55
-LI(0xAA), WR(WE)
-LI(0x2A), SR(WE)
-LI(0x55), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-# ROM[0x5555] = 0xA0
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0xA0), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE) 
-PRR(CE), J(ROM_WAIT_tWC) 
-
-
-
-
-UF_ROM_DISABLE_SDP:
-PRR(ACTIVE)
-# ROM[0x5555] = 0xAA
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0xAA), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-# ROM[0x2AAA] = 0x55
-LI(0xAA), WR(WE)
-LI(0x2A), SR(WE)
-LI(0x55), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-# ROM[0x5555] = 0x80
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0x80), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-
-# ROM[0x5555] = 0xAA
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0xAA), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-# ROM[0x2AAA] = 0x55
-LI(0xAA), WR(WE)
-LI(0x2A), SR(WE)
-LI(0x55), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)            #latch data
-
-
-# ROM[0x5555] = 0x20
-LI(0x55), WR(WE)
-LI(0x55), SR(WE)
-LI(0x20), RF(T0, WE)
-RF(T0), ALU(A), PRR(ACTIVE, WE, CE)    #latch address
-RF(T0), ALU(A), PRR(ACTIVE)
-PRR(CE), J(ROM_WAIT_tWC) 
 
 ROM_WAIT_tWC:
 LI(0x1B), SR(WE)

@@ -9,13 +9,18 @@ from time import time
 RETRY_HANDSHAKE = 5
 RETRY_PROGRAMMING_A_PAGEF_AILED = 5
 
-ROM_PAGE_SIZE = 128
 SEQ_HANDSHAKE = (0xFF,0xA5,0x5A,0xCC)
+
+ROM_PAGE_SIZE = 128
+ROM_SEQ_DISALBE_SDP =(
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x80, 0x5555),
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x20, 0x5555))
+ROM_SEQ_ENALBE_SDP = (
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0xA0, 0x5555))
 ROM_tWC = 5000 #5000 us
 
 OPCODE_PROGRAMMING_PAGE = 0
-OPCODE_ENABLE_SDP = 1
-OPCODE_DISABLE_SDP = 2
+OPCODE_PROGRAMMING_BYTE_ADDR_PAIR = 1
 OPCODE_READ_BLOCK = 3
 OPCODE_ECHO  = 4
 OPCODE_EXIT  = 5
@@ -204,13 +209,19 @@ class AbstractProtocolCodec:
             self.send_int8(b)
         self.send_int16(self._tWC)
 
-    @opcode_verifier(OPCODE_DISABLE_SDP)
-    def disableSDP(self):
+    @opcode_verifier(OPCODE_PROGRAMMING_BYTE_ADDR_PAIR)
+    def programming_byte_address_pair(self, seq):
+        self.send_int8(len(seq))
+        for data, addr in seq:
+            self.send_int8(data)
+            self.send_int16(addr)
         self.send_int16(self._tWC)
 
-    @opcode_verifier(OPCODE_ENABLE_SDP)
+    def disableSDP(self):
+        self.programming_byte_address_pair(ROM_SEQ_DISALBE_SDP)
+
     def enableSDP(self):
-        self.send_int16(self._tWC)
+        self.programming_byte_address_pair(ROM_SEQ_ENALBE_SDP)
 
     def expect_block(self, start_address, data):
         self.send_int8(OPCODE_READ_BLOCK)

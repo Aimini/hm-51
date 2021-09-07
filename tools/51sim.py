@@ -1,6 +1,7 @@
 from random import expovariate
 import sys
 import importlib.util
+from typing import Tuple
 
 py51path = '../Code/py51'
 sys.path.append(py51path)
@@ -80,6 +81,11 @@ ADDR_PCL = 0x1E
 ADDR_PCH = 0x1F
 ADDR_CHUCK = 0x20
 ROM_LOCK = True
+SEQ_DISALBE_SDP =(
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x80, 0x5555),
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x20, 0x5555))
+SEQ_ENALBE_SDP = (
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0xA0, 0x5555))
 def uf_programROM(core):
     if int(core.PSW) & 2 == 0:
         return
@@ -99,9 +105,21 @@ def uf_programROM(core):
         for i in range(size):
             core.ROM[PC + i] = int(core.IRAM[ADDR_CHUCK + i])
     elif valA == 1:
-        ROM_LOCK = True
-    elif valA == 2:
-        ROM_LOCK = False
+        size = int(core.IRAM[ADDR_SIZE])
+        writing_seq = []
+        for i in range(size):
+            offset = i*3 + ADDR_SIZE + 1
+            data = int(core.IRAM[offset])
+            PC = (int(core.IRAM[offset + 2])<< 8) + int(core.IRAM[offset + 1])
+            writing_seq.append((data, PC))
+        
+        writing_seq = tuple(writing_seq)
+
+        if writing_seq == SEQ_DISALBE_SDP:
+            ROM_LOCK = False
+        elif writing_seq == SEQ_ENALBE_SDP:
+            ROM_LOCK = True
+ 
         
 def assert_and_dump_test(core):
     a = random.getrandbits(8)
