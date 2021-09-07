@@ -67,59 +67,53 @@ def disableSDP():
     s = write_byte_addr_pair(SEQ_DISALBE_SDP)
     return s + micro_program(0x01)
 
+def write_one_block(p, start_address, data):
+    block_size = len(data)
+    p += atl.move(D_SIZE, atl.I(block_size))  # block size
+    p += atl.move(D_PCL , atl.I(start_address & 0xFF))
+    p += atl.move(D_PCH , atl.I(start_address >> 8))
 
-def write_one_chuck(p, block_size):
+    p += "MOV R0, #0x20"
+    for i in data:
+        p += atl.move("@R0", atl.I(i))
+        p += "INC R0"
+
+    p += 'LCALL ROM_PROGRAMMING_PAGE'
+
+def verify_one_block(p, start_address, data):
+    p += f'MOV DPTR, #{start_address}'
+    for i, d in enumerate(data):
+        p += f"""
+            ;;;  ----------- {i} -------
+            ;;assert ROM[{i + start_address}] == {d}
+            
+            CLR A
+            MOVC A, @A+DPTR
+            INC DPTR
+            """
+        p += atl.aste(SFR_A, atl.I(d))
+
+
+def write_one_gen_chuck(p, block_size):
     data = list(range(block_size))
-    random.shuffle(data)
     for start_addr in test_addresses:
         p += f'\n\n;; ------------------------------------------------ size: {ntl.sx2(block_size)} address: {ntl.sx2(start_addr)}'
         
+        random.shuffle(data)
+        write_one_block(p, start_addr, data)
+        verify_one_block(p, start_addr, data)
         
-        p += atl.move(D_SIZE, atl.I(block_size))  # block size
-        p += atl.move(D_PCL , atl.I(start_addr & 0xFF))
-        p += atl.move(D_PCH , atl.I(start_addr >> 8))
-        
-        p += "MOV R0, #0x20"
-        for i, d in enumerate(data):
-            p += atl.move("@R0", atl.I(d))
-            p += "INC R0"
-
-        p += 'LCALL ROM_PROGRAMMING_PAGE'
-        
-        p += f'MOV DPTR, #{ntl.sx4(start_addr)}' 
-        for i, d in enumerate(data):
-            p += f"""
-                ;;;  ----------- {i} -------
-                ;;assert ROM[{i + start_addr}] == {d}
-                
-                CLR A
-                MOVC A, @A+DPTR
-                INC DPTR
-                """
-            p += atl.aste(SFR_A, atl.I(d))
 
 
-def write_one_byte_no_align64(p, start_address, data_size):
+def write_one_byte_gen_no_align64(p, start_address, data_size):
     data = list(range(data_size))
     random.shuffle(data)
 
     p += f'\n\n;; ------------------------------------------------ size: {ntl.sx2(data_size)} address: {ntl.sx2(start_address)}'
     for i, d in enumerate(data):
-        addr = start_address + i
-        p += atl.move(D_SIZE,atl.I(1))  # block size
-        p += atl.move(D_PCL, atl.I(addr & 0xFF))
-        p += atl.move(D_PCH, atl.I(addr >> 8))
-        p += atl.move('R0', atl.I(addr_DATA_CHUCK))
-        p += atl.move('@R0', atl.I(d))
-        p += 'LCALL ROM_PROGRAMMING_PAGE'
+        write_one_block(p, start_address + i, [d])
 
-    for i, d in enumerate(data):
-        p += f"""
-            MOV DPTR, #{ntl.sx4(start_address + i)} ;block size
-            CLR A
-            MOVC A, @A+DPTR
-            """
-        p += atl.aste(SFR_A, atl.I(d))
+    verify_one_block(p, start_address, data)
 
 
 p.is_prepend_clear_iram = False
@@ -142,7 +136,12 @@ TEST_CODE:
 """
 p += disableSDP()
 for block_size in test_block_size:
-    write_one_chuck(p, block_size)
+    write_one_gen_chuck(p, block_size)
 
-write_one_byte_no_align64(p, 0, 256)
+write_one_byte_gen_no_align64(p, 0, 256)
 
+write_one_block(p, 0x64, [0x55])
+p += enableSDP()
+verify_one_block(p,0x64, [0x55] )
+write_one_block(p, 0x64, [0xAA])
+verify_one_block(p,0x64, [0x55] )
