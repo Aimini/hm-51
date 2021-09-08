@@ -1,53 +1,101 @@
 ###########################################################
-# programm the internal rom
-# SFR[0x7F] should be 0xAA to trigger this process.
+# provide user defined functions
+#  condtion to activating
+#   - PSW[1] should be 1
+#   - opcode of function should in A, and the one's complement of function's opcode should in B
 #
-# start address should be puted on RAM[0](L) and RAM[1](H)
-# size of datas should be puted on RAM[2]
-# Data should be puted from RAM [3]
-# data size shouldn't exceed 64
+# 0x00 programming block of data into ROM
+#       time(us) of tWC should be puted on RAM[0x1B](LOW) and RAM[0x1C](HIGH)
+#       size of datas should be puted on RAM[0x1D]
+#       start address should be puted on RAM[0x1E](LOW) and RAM[0x1F](HIGH)
+#       Data should be puted from RAM [0x20]
+#       data size shouldn't exceed 64
+#       
+#       modified register: A, B, T0
 #
-# modified register: A, B, T0
-# 
-############################################################
-RF(T0, WE), SR(WE), LI(0xF7)
-RF(T0),  ALU(SFR), RFSRCR(WE)
-RF(SFR), BUS(RAM), WR(WE)
-RF(T0,WE), ALU(B)
-RF(T0), JEQ(0xAA,  __0)
-J(STAGE_FETCH_SKIP_PF)
+# 0x01 enable  SDP of ROM
+#       time(us) of tWC should be puted on RAM[0x1B](LOW) and RAM[0x1C](HIGH)
+#
+# 0x02 disable SDP of ROM
+#       time(us) of tWC should be puted on RAM[0x1B](LOW) and RAM[0x1C](HIGH)
+###########################################################
+# check bit PSW[1]
+LI(0x11), RF(T0, WE)
+RF(PSW), ALU(A), WR(WE)
+RF(T0), ALU(EXTB), JALUNF(@0)
+# check if A == ~B
+RF(A), ALU(NA), WR(WE) 
+RF(B), ALU(XOR), WR(WE)
+ALU(ZF_B), JALUNF(@0)
 
-__0:
-LI(1),SR(WE)
+RF(A), JEQ(0x00, UF_ROM_PROGRAMMING_PAGE)
+RF(A), JEQ(0x01, UF_ROM_PROGRAMMING_BYTE_ADDR_PAIR)
+J(@0)
+
+UF_ROM_PROGRAMMING_PAGE:
+LI(0x1E),SR(WE)
 RF(T1, WE), BUS(RAM)
-LI(2),SR(WE)
+LI(0x1F),SR(WE)
 RF(T2, WE), BUS(RAM)
 
 RF(T1, WE), JGT(0, LOAD_DATA_SIZE), ALU(DEC)
-RF(T2,WE), ALU(DEC)
+RF(T2,WE),  ALU(DEC)
 
 LOAD_DATA_SIZE:
 # load data size
-LI(0),SR(WE)
+LI(0x1D),  SR(WE)
 RF(A, WE), BUS(RAM)
 
 # set start address of datas (-1)
-RF(B, WE), LI(2)
+RF(B, WE), LI(0x1F)
 
-PRR(PMODE)
-PROGRAMMING_ROM_BYTE:
-RF(A),     ALU(ZF), JALUF(PROGRAMMING_ROM_END) # check whether size(A) is 0 now
-RF(A, WE), ALU(DEC)    
+PRR(ACTIVE)
+ROM_PROGRAMMING_BYTE_OF_PAGE:
+RF(A, WE), ALU(DEC), JLT(0x1, ROM_PROGRAMMING_END)    
 RF(B, WE), ALU(INC), SR(WE)
 RF(T0, WE), BUS(RAM), BR(ONE)
 RF(T1, WE), ALU(INCC), WR(WE), BR(CY)
 RF(T2, WE), ALU(INCC), SR(WE)
  #data that output from RF-ALU to data bus is slow, so we need extra cycle
-PRR(PMODE, WE, CE),RF(T0), ALU(A)
-PRR(PMODE),      RF(T0), ALU(A), J(PROGRAMMING_ROM_BYTE)
-PROGRAMMING_ROM_END:
-PRR(CE)
-WR(WE), LI(0xFD) #clear PRF
-RF(PSW, WE), ALU(AND),J(@0)
+RF(T0), ALU(A), PRR(ACTIVE, WE, CE)
+RF(T0), ALU(A), PRR(ACTIVE),  J(ROM_PROGRAMMING_BYTE_OF_PAGE)
 
 
+
+
+UF_ROM_PROGRAMMING_BYTE_ADDR_PAIR:
+# size
+LI(0x1D),  SR(WE)
+RF(A, WE), BUS(RAM)
+# start from 0x1E, the pattern is  DATA PCL PCH
+RF(B, WE), LI(0x1D)
+
+PRR(ACTIVE)
+ROM_WRITE_ONE_OF_BYTE_PAIR:
+RF(A, WE), ALU(DEC), JLT(0x1, ROM_PROGRAMMING_END)    
+RF(B, WE), ALU(INC), SR(WE)
+RF(T0, WE), BUS(RAM) 
+RF(B, WE), ALU(INC), SR(WE)
+WR(WE), BUS(RAM) 
+RF(B, WE), ALU(INC), SR(WE)
+SR(WE), BUS(RAM)
+ #data that output from RF-ALU to data bus is slow, so we need extra cycle
+RF(T0), ALU(A), PRR(ACTIVE, WE, CE)
+RF(T0), ALU(A), PRR(ACTIVE),  J(ROM_WRITE_ONE_OF_BYTE_PAIR)
+
+
+
+ROM_PROGRAMMING_END:
+PRR(CE), J(ROM_WAIT_tWC)
+
+ROM_WAIT_tWC:
+LI(0x1B), SR(WE)
+RF(A, WE), BUS(RAM)
+LI(0x1C),SR(WE)
+RF(B, WE), BUS(RAM)
+ROM_WAIT_tWC_COUNT_DOWN:
+# count down
+# 257 cycles 
+RF(A,WE), ALU(DEC),  JGT(0x00, ROM_WAIT_tWC_COUNT_DOWN)
+RF(B,WE), ALU(DEC),  JGT(0x00, ROM_WAIT_tWC_COUNT_DOWN)
+J(@0)

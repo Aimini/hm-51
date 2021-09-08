@@ -1,6 +1,7 @@
 from random import expovariate
 import sys
 import importlib.util
+from typing import Tuple
 
 py51path = '../Code/py51'
 sys.path.append(py51path)
@@ -75,8 +76,51 @@ def assert_core(par0reg, par1reg, function_val):
     if function_val == 4:
             raise Exception("user actively requested a crash.")
 
+ADDR_SIZE = 0x1D
+ADDR_PCL = 0x1E
+ADDR_PCH = 0x1F
+ADDR_CHUCK = 0x20
+ROM_LOCK = True
+SEQ_DISALBE_SDP =(
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x80, 0x5555),
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0x20, 0x5555))
+SEQ_ENALBE_SDP = (
+    (0xAA, 0x5555),(0x55, 0x2AAA),(0xA0, 0x5555))
+def uf_programROM(core):
+    if int(core.PSW) & 2 == 0:
+        return
+    if int(core.A) ^ int(core.B) != 0xFF:
+        return
+        
+    # print(hex(vPC))
+    global ROM_LOCK
+    valA = int(core.A)
+    if valA == 0:
+        if ROM_LOCK:
+            return
+        size = int(core.IRAM[ADDR_SIZE])
+        PC = (int(core.IRAM[ADDR_PCH])<< 8) + int(core.IRAM[ADDR_PCL])
+        for i in range(len(core.ROM), PC + size):
+            core.ROM.append(0)
+        for i in range(size):
+            core.ROM[PC + i] = int(core.IRAM[ADDR_CHUCK + i])
+    elif valA == 1:
+        size = int(core.IRAM[ADDR_SIZE])
+        writing_seq = []
+        for i in range(size):
+            offset = i*3 + ADDR_SIZE + 1
+            data = int(core.IRAM[offset])
+            PC = (int(core.IRAM[offset + 2])<< 8) + int(core.IRAM[offset + 1])
+            writing_seq.append((data, PC))
+        
+        writing_seq = tuple(writing_seq)
 
-
+        if writing_seq == SEQ_DISALBE_SDP:
+            ROM_LOCK = False
+        elif writing_seq == SEQ_ENALBE_SDP:
+            ROM_LOCK = True
+ 
+        
 def assert_and_dump_test(core):
     a = random.getrandbits(8)
     b = random.getrandbits(8)
@@ -127,8 +171,10 @@ def install_my_sfr(core: core51):
 
     obj = core.sfr_extend(my_sfr)
     
-    fh = open(args.dump_file_template, "w")
+    fh = None
     def dump_core_to_template_file():
+            if fh is None:
+                open(args.dump_file_template, "w")
             dump_core(core, fh)
 
     obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
@@ -137,7 +183,7 @@ def install_my_sfr(core: core51):
 
 
 install_my_sfr(vm)
-
+vm.reserved_instruction = uf_programROM
 
 # for _ in range(3):
 #     assert_and_dump_test(vm)
