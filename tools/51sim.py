@@ -157,7 +157,7 @@ def assert_and_dump_test(core):
                 raise e
     dump_core(core, sys.stdout)
 
-
+dump_fh = None
 def install_my_sfr(core: core51):
     p0 = "ASTPAR0"
     p1 = "ASTPAR1"
@@ -171,11 +171,12 @@ def install_my_sfr(core: core51):
 
     obj = core.sfr_extend(my_sfr)
     
-    fh = None
+   
     def dump_core_to_template_file():
-            if fh is None:
-                open(args.dump_file_template, "w")
-            dump_core(core, fh)
+        global dump_fh
+        if dump_fh is None:
+            dump_fh = open(args.dump_file_template, "w")
+        dump_core(core, dump_fh)
 
     obj["DUMPR"].set_listener.append(lambda mem_obj, new_value: dump_core_to_template_file())
     obj["EXR"].set_listener.append(lambda mem_obj, new_value: normal_stop())
@@ -189,15 +190,15 @@ vm.reserved_instruction = uf_programROM
 #     assert_and_dump_test(vm)
 
 
-with open(args.input_file) as fh:
-    data = hex_decoder.decode_ihex(fh.read())
+with open(args.input_file) as rom_fh:
+    data = hex_decoder.decode_ihex(rom_fh.read())
     vm.load_rom(data)
 
 vm.reset()
 while run_flag:
     vPC = int(vm.PC)
-    try:
-        vm.step(1)
-    except Exception as e:
-        str(e)
-        raise Exception(str(e) + " at PC[{:0>4X}]".format(vPC))
+    # try:
+    vm.step(1)
+    # except Exception as e:
+    #     str(e)
+    #     raise Exception(str(e) + " at PC[{:0>4X}]".format(vPC))
