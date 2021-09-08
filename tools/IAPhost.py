@@ -333,7 +333,7 @@ class DumpProtocolCodec(AbstractProtocolCodec):
         return True
 
 def write_continuous_segment(device:AbstractProtocolCodec, start_addr, datas, retry):
-    print(">>>> writing at 0x{:0>4X}-0x{:0>4X}, 0x{:0>4X} bytes...".format(start_addr, start_addr + len(datas) - 1, len(datas)))
+    print(">> writing at 0x{:0>4X}-0x{:0>4X}, 0x{:0>4X} bytes...".format(start_addr, start_addr + len(datas) - 1, len(datas)))
      
     buffer = bytearray()
     page_address = start_addr
@@ -360,6 +360,8 @@ def write_continuous_segment(device:AbstractProtocolCodec, start_addr, datas, re
 
             buffer.clear()
             page_address = start_addr
+
+    print('[OK]')
     return None
 
 def check_block(device, start, data):
@@ -372,22 +374,28 @@ def check_block(device, start, data):
         exit(-1)
 
 def programming_file(device:AbstractProtocolCodec, data: Union[Dict, Iterable[int]], retry = 5):
+    print(">> disable SDP")
     device.disableSDP()
+    print("[OK]")
+
     if isinstance(data, Dict):
         for start_address, segment in data.items():
             write_continuous_segment(device, start_address, segment, retry)
 
-        for start_address, segment in data.items():
-            check_block(device, start_address, segment)
-      
-
     else:
         data = list(data)
         write_continuous_segment(device, 0, data, retry)
+
+    print(">> enable SDP")
+    device.enableSDP()
+    print("[OK]")
+
+    if isinstance(data, Dict):
+        for start_address, segment in data.items():
+            check_block(device, start_address, segment)
+    else:
         check_block(device, 0, data)
 
-    device.enableSDP()
-        
 def main():
     argparser = argparse.ArgumentParser(
         description="a toolbox contain 7400 tester, AT28C programmer and"
