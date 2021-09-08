@@ -1,11 +1,37 @@
-;;------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; CALL CONVENTIOIN
 ;   R1 - R3 arg or variable
 ;  R4, R5 RETURN
 ;   R6,R7 countdown
 ;   A is always temp
 ;   the callee should store and recovery the R2-R5
-;;-----------------------------
+; 
+; This file provides IAP function and allows you 
+; to program ROM via UART. This function should be
+; called explicitly at startup:
+;           CALL 0xFF00
+;
+; And for this program, if we wait too long for
+; no data comes from host, we will return to the user
+; program. to determine a proper tick,  we provide a small
+; piece code named TEST_WAIT_UART. to get expected tick:
+;   - modify the TEST_WAIT_UART_EXPECT_US to time that
+;           you want to wait(in us)
+;   - use the simulator(tools/Digital.exe) to load the 
+;        src/circuit/TOP_IAP_test.dig and this program
+;   - run the program until the CPU be halted
+;   - get the R6, R7, the expected count will be
+;       (0xFFFF - R7 << 8 + R6)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; set this flag to enable the function to get the
+;; count of timeout( coressponding to the expect time you want
+;; to want                                                
+TEST_WAIT_UART_FLAG EQU 0
+TEST_WAIT_UART_EXPECT_US EQU 6000
+ 
+;-----------------------------------------------------------
 
 ;PSW     DATA    D0H
 ;ACC     DATA    E0H
@@ -18,21 +44,15 @@
 TUARTL  DATA    9AH
 TUARTH  DATA    9BH
 
+DBGR    DATA    0xFF
+DBGPAR1 DATA    0xFE
+DBGPAR0 DATA    0xFD
+    
+DBGR_HALT_PROGRAM   EQU 0x04
+DBGR_START_TIMMER   EQU 0x05
 
 ; RI     BIT     98H
 ; REN    BIT     9CH
-
-;
-CSEG AT 0x0000
-MOV SP, #7
-CALL 0xFF00
-MOV 0xFF, #4
-JMP $
-
-CSEG AT 0xFF00
-JMP START_ISP
-SEQ_HANDSHAKE:      DB 0xFF,0xA5,0x5A,0xCC
-SEQ_HANDSHAKE_LEN  EQU $ - SEQ_HANDSHAKE
 
 
 LOAD_C16 MACRO   L, H, num
@@ -43,13 +63,77 @@ LOAD_C16 MACRO   L, H, num
 LOAD_TIMER MACRO TL, TH, tick
     LOAD_C16 TL, TH,  (0xFFFF - tick + 1)
     ENDM
+    
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;
+;;;;;         START of the program
+;;;;;
+CSEG AT 0x0000
+MOV SP, #7
 
-;; if the time that we wait for SBUF is bigger or equal to it
-;; we will deem this case as timeout so that we go to 
+IF TEST_WAIT_UART_FLAG <> 0
+    CLR 0x20.0
+    LOAD_C16 DBGPAR0, DBGPAR1, TEST_WAIT_UART_EXPECT_US
+    MOV     DBGR, #DBGR_START_TIMMER
+    CALL    TEST_WAIT_UART_INIT
+ELSE
+    CALL 0xFF00
+ENDIF
+
+
+MOV DBGR, #DBGR_HALT_PROGRAM
+JMP $
+
+TEST_WAIT_UART_INIT:
+    LOAD_C16 R6,R7, 0xFFFF
+    JMP TEST_WAIT_UART
+    
+TEST_WAIT_UART:
+JNB     P3.0, TEST_WAIT_UART_COUNTDOWN
+MOV     R5, SBUF
+CLR     P3.0
+RET
+
+TEST_WAIT_UART_COUNTDOWN:
+;; COUNT_DONW -= -1
+MOV     A, R6
+ORL     A, R7
+JZ      TEST_WAIT_UART_TIMEOUT
+
+
+MOV     A, R6
+DEC     R6
+JNZ     TEST_WAIT_UART
+
+DEC     R7
+JMP     TEST_WAIT_UART
+
+TEST_WAIT_UART_TIMEOUT:
+RET
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;
+;;;;;           IAP
+;;;;;
+CSEG AT 0xFF00
+JMP START_ISP
+
+;-----------------------------------------------------------
+
+SEQ_HANDSHAKE:      DB 0xFF,0xA5,0x5A,0xCC
+SEQ_HANDSHAKE_LEN  EQU $ - SEQ_HANDSHAKE
+
+;; when we wait the data of SBUF, we will use a R6,R7 as 
+;; a 16 bit counter,as the counter count down to 0,
+;; we will deem such case as timeout so that we go to 
 ;; user program directly wait 
-WAIT_HANDSHAKE_MAX_COUNT EQU 100 ; for comman case
-WAIT_CMD_MAX_COUNT       EQU 5000 ;for CMD
+WAIT_SHORT_MAX_COUNT EQU 16 ; for comman case . around 1ms
+WAIT_LONG_MAX_COUNT  EQU 85 ;for CMD    .around 6ms
 
+;-----------------------------------------------------------
 
 START_ISP:
 ;; ----------- INITAL UART
@@ -64,7 +148,6 @@ SETB REN
 
 
 MOV  DPTR,   #SEQ_HANDSHAKE
-
 
 HAND_SHAKE_INITIALIING:
 CLR A
@@ -205,11 +288,11 @@ INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM:
     JMP    USER_COMMANDS 
 
 READ_UART_WAIT_SHORT:
-    LOAD_C16 R6,R7, WAIT_HANDSHAKE_MAX_COUNT
+    LOAD_C16 R6,R7, WAIT_SHORT_MAX_COUNT
     JMP READ_UART
 
 READ_UART_WAIT_LONG:
-    LOAD_C16 R6,R7, WAIT_HANDSHAKE_MAX_COUNT
+    LOAD_C16 R6,R7, WAIT_LONG_MAX_COUNT
     JMP  READ_UART
 
 READ_UART:
