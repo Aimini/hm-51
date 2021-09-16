@@ -237,10 +237,10 @@ class AbstractProtocolCodec:
         r = self.expect_intn_array(data)
         return None if r is None else r
 
-    def echo(self, data):
+    def echo(self, data:int):
         self.send_int8(OPCODE_ECHO)
-        self.send_intn_array(data, 1, 1)
-        self.expect_intn_array(data)
+        self.send_int8(data)
+        self.expect_int8(data)
         
     def exit(self):
         self.send_int8(OPCODE_EXIT)

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; CALL CONVENTIOIN
-;   R1 - R3 arg or variable
+;   R0 - R3 arg or variable
 ;  R4, R5 RETURN
 ;   R6,R7 countdown
 ;   A is always temp
@@ -27,7 +27,7 @@
 
 ;; set this flag to enable the function to get the
 ;; count of timeout( coressponding to the expect time you want
-;; to want                                                
+;; to want                                                                             
 TEST_WAIT_UART_FLAG EQU 0
 TEST_WAIT_UART_EXPECT_US EQU 6000
  
@@ -123,21 +123,40 @@ JMP START_ISP
 
 ;-----------------------------------------------------------
 
+MICPROGRAM_DATA_START_ADDR  EQU 0x1D 
+MICPROGRAM_COUNTDOWN_LOW    EQU 0x1B
+MICPROGRAM_COUNTDOWN_HIGH   EQU 0x1C
+
+MICPROGRAM_OPCODE_WRITE_PAGE            EQU 0
+MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR  EQU 1
+ 
 SEQ_HANDSHAKE:      DB 0xFF,0xA5,0x5A,0xCC
 SEQ_HANDSHAKE_LEN  EQU $ - SEQ_HANDSHAKE
 
+USR_CMD_WRITE_PAGE              EQU MICPROGRAM_OPCODE_WRITE_PAGE
+USR_CMD_WRITE_BYTE_ADDR_PAIR    EQU MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR
+USR_CMD_READ_BLOCK              EQU 3
+USR_CMD_READ_ECHO               EQU 4
+    
 ;; when we wait the data of SBUF, we will use a R6,R7 as 
 ;; a 16 bit counter,as the counter count down to 0,
 ;; we will deem such case as timeout so that we go to 
 ;; user program directly wait 
-WAIT_SHORT_MAX_COUNT EQU 16 ; for comman case . around 1ms
-WAIT_LONG_MAX_COUNT  EQU 85 ;for CMD    .around 6ms
-
+WAIT_HANDSHAKE_MAX_COUNT EQU 5000 ; for comman case . around 10ms
+WAIT_SHORT_MAX_COUNT EQU 10000 ; for comman case . around 10ms
+;; when the host didn't enable SDP accidently, we will use this
+;; to trgger
+;;       countdown, size, data0,addr0   , data1,addr1   , data2,addr2  ,   
+SEQ_SDP: DB 0x88, 0x13,  0x3, 0xaa,0x55,0x55, 0x55,0xaa,0x2a, 0xa0,0x55,0x55
+SEQ_SDP_SIZE            EQU $ - SEQ_SDP
+SEQ_SDP_RAM_START_ADDR  EQU MICPROGRAM_COUNTDOWN_LOW
+SEQ_SDP_OPCODE          EQU MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR    
 ;-----------------------------------------------------------
 
 START_ISP:
 ;; ----------- INITAL UART
 ; set timmer of uart, max baud rate of 62500 at 1 Mhz of CPU clock
+
 LOAD_TIMER TUARTL,TUARTH, 1
 ;enable receiving
 SETB REN 
@@ -159,7 +178,7 @@ HAND_SHAKE_NEXT:
 ;; check if the code that I received is consistent with the number in SEQ HANDSHAKE
 
 
-LCALL READ_UART_WAIT_SHORT
+ACALL READ_UART_WAIT_HANDSHAKE
 MOV  A, R0
 MOVC A, @A+DPTR
 XRL  A, R5
@@ -178,26 +197,26 @@ CJNE R0, #SEQ_HANDSHAKE_LEN, HAND_SHAKE_NEXT
 
 ;;;;;;; ----------- user commands
 USER_COMMANDS:
-LCALL READ_UART_WAIT_LONG
+ACALL READ_UART_WAIT_LONG
 ; cmd code in R3
 MOV  A, R5
 MOV  R3, A
-CJNE A, #00, OP_NEXT0
+CJNE A, #USR_CMD_WRITE_PAGE, OP_NEXT0
 
 
 ;;  0 -- programming a data chuck
 ; get size, store in 0x17
-LCALL READ_UART_WAIT_SHORT
-MOV 0x1D, R5
+ACALL READ_UART_WAIT_SHORT
+MOV MICPROGRAM_DATA_START_ADDR, R5
 ; need to read  2(start_address) + size
 ; from 0x17 to 0x17  + 2 + size
 MOV R0, 5
 INC R0
 INC R0
-MOV R1, #0x1E
+MOV R1, #(MICPROGRAM_DATA_START_ADDR + 1)
 
 LOAD_DATA_ARRAY:
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     MOV @R1, 5
     INC R1
     DJNZ R0, LOAD_DATA_ARRAY
@@ -205,32 +224,32 @@ LOAD_DATA_ARRAY:
 
 
 OP_NEXT0:
-    CJNE    A, #01, OP_NEXT2
+    CJNE    A, #USR_CMD_WRITE_BYTE_ADDR_PAIR, OP_NEXT2
     
     
     ;; 1 -- programming byte-address pair
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     MOV A, R5
-    MOV 0x1D, A
+    MOV MICPROGRAM_DATA_START_ADDR, A
     JZ  INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
     ; A *= 3
     RL  A
     ADD A, R5
     MOV R0, A
-    MOV R1, #0x1E
+    MOV R1, #(MICPROGRAM_DATA_START_ADDR + 1)
     JMP LOAD_DATA_ARRAY
 
 
 OP_NEXT2: 
-    CJNE A, #03, OP_NEXT3
+    CJNE A, #USR_CMD_READ_BLOCK, OP_NEXT3
     ; 3 -- read block
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     MOV DPL,R5
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     MOV DPH,R5
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     MOV R4,5
-    LCALL READ_UART_WAIT_SHORT
+    ACALL READ_UART_WAIT_SHORT
     ;; MOV R5,R5
     READ_NEXT_BYTE_FROM_ROM:
         MOV     A, R4
@@ -251,28 +270,23 @@ OP_NEXT2:
 
 
 OP_NEXT3:
-    CJNE A, #4, OP_NEXT4
+    CJNE A, #USR_CMD_READ_ECHO, OP_NEXT4
     ;; 4 -- just echo
     ; load length
-    LCALL READ_UART_WAIT_SHORT
-    ECHO_NEXT_CHAR:
-        MOV A, R3
-        JZ  USER_COMMANDS
-        LCALL READ_UART_WAIT_LONG ; wait longer
-        JNB TI, $
-        MOV SBUF, A
-        DEC R5
-        JMP ECHO_NEXT_CHAR
+    ACALL READ_UART_WAIT_SHORT
+    JNB TI, $
+    MOV SBUF, R5
+    JMP USER_COMMANDS
 
 OP_NEXT4:
     JMP    EXIT_PROGRAM
 
 INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM:
     ;; load delay of tWC 
-    LCALL READ_UART_WAIT_SHORT
-    MOV 0x1B, R5
-    LCALL READ_UART_WAIT_SHORT
-    MOV 0x1C, R5
+    ACALL READ_UART_WAIT_SHORT
+    MOV MICPROGRAM_COUNTDOWN_LOW, R5
+    ACALL READ_UART_WAIT_SHORT
+    MOV MICPROGRAM_COUNTDOWN_HIGH, R5
     MOV  A, R3
     CPL  A
     MOV  B, A
@@ -286,19 +300,24 @@ INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM:
     CPL A
     MOV SBUF, A
     JMP    USER_COMMANDS 
+    
 
 READ_UART_WAIT_SHORT:
     LOAD_C16 R6,R7, WAIT_SHORT_MAX_COUNT
     JMP READ_UART
 
-READ_UART_WAIT_LONG:
-    LOAD_C16 R6,R7, WAIT_LONG_MAX_COUNT
-    JMP  READ_UART
+READ_UART_WAIT_LONG EQU READ_UART_WAIT_SHORT
+
+READ_UART_WAIT_HANDSHAKE:
+    LOAD_C16 R6,R7, WAIT_HANDSHAKE_MAX_COUNT
+    JMP READ_UART
+
+
 
 READ_UART:
     WAIT_UART_UNTIL_TIMEOUT:
         ; COUNTDOWN = WAIT_HANDSHAKE_MAX_COUNT;
-        JNB   RI, READ_UART_COUNTDOWN
+        JNB     RI, READ_UART_COUNTDOWN
         MOV     R5, SBUF
         CLR     RI
         RET
@@ -307,7 +326,7 @@ READ_UART:
         ;; COUNT_DONW -= -1
         MOV     A, R6
         ORL     A, R7
-        JZ      EXIT_PROGRAM
+        JZ      EXIT_PROGRAM_FROM_READ_UART
 
 
         MOV     A, R6
@@ -318,16 +337,40 @@ READ_UART:
         JMP     WAIT_UART_UNTIL_TIMEOUT
 
 
-
+EXIT_PROGRAM_FROM_READ_UART:
+    ;; need to blance the stack
+    POP ACC
+    POP ACC
 EXIT_PROGRAM:
+;;; enable SDP automatically
+    MOV R0,     #SEQ_SDP_RAM_START_ADDR
+    MOV R1,     #SEQ_SDP_SIZE
+    MOV DPTR,   #SEQ_SDP
+    AUTO_DISABLE_SDP:
+        CLR  A
+        MOVC A, @A+DPTR
+        MOV	@R0, A
+        INC DPTR
+        INC R0
+        DJNZ    R1, AUTO_DISABLE_SDP
+
+    CLR A
+    MOV  A, #(0xFF - SEQ_SDP_OPCODE)
+    MOV  B, A
+    CPL  A
+    SETB PSW.1
+    DB 0xA5
+        
+;; Clear SBUF
     CLR  REN
     EXIT_PROGRAMCLR_RI:
         CLR  RI
         JB   RI, EXIT_PROGRAMCLR_RI
+        
     CLR A
     MOV B, A
     MOV DPL, A
-    MOV DPL, A
+    MOV DPH, A
     MOV PSW, A
     RET
 END
