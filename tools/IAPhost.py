@@ -390,6 +390,18 @@ def programming_file(device:AbstractProtocolCodec, data: Union[Dict, Iterable[in
     device.enableSDP()
     print("[OK]")
 
+    # check if SDP enabled
+    if isinstance(data, Dict):
+            for start_address, segment in data.items():
+                test_data = [0xFF ^ _ for _ in segment[0:1]]
+                device.programming_page(start_address, test_data)
+                device.expect_block(start_address, segment[0:1])
+                break
+    else:
+        test_data = [0xFF ^ _ for _ in segment[0:1]]
+        device.programming_page(start_address, test_data)
+        device.expect_block(start_address, data[0:1])
+        
     if isinstance(data, Dict):
         for start_address, segment in data.items():
             check_block(device, start_address, segment)
