@@ -161,10 +161,17 @@ class AbstractProtocolCodec:
         return self.expect_intn(val, 4)
 
     def expect_intn_array(self, data: Iterable[int], intbytes=1):
+        buf = [] # for debug
+        error_addr = []
         for i, val in enumerate(data):
-            if not self.expect_intn(val, intbytes):
-                return i
-        return None
+            r = self.expect_intn(val, intbytes)
+            buf.append(self._rval)
+            if not r:
+                error_addr.append(i)
+        if  len(error_addr):        
+            return error_addr
+        else:
+            return None
 
 
 
@@ -228,7 +235,7 @@ class AbstractProtocolCodec:
         self.send_int16(start_address)
         self.send_int16(len(data))
         r = self.expect_intn_array(data)
-        return r if r is None else start_address + r
+        return None if r is None else r
 
     def echo(self, data):
         self.send_int8(OPCODE_ECHO)
@@ -332,34 +339,41 @@ class DumpProtocolCodec(AbstractProtocolCodec):
         self.received_stream.write(d)
         return True
 
+
+class ProgrammingROMException(Exception):
+    pass
+
 def write_continuous_segment(device:AbstractProtocolCodec, start_addr, datas, retry):
     print(">> writing at 0x{:0>4X}-0x{:0>4X}, 0x{:0>4X} bytes...".format(start_addr, start_addr + len(datas) - 1, len(datas)))
      
     buffer = bytearray()
+    pc = start_addr
     page_address = start_addr
 
     for offset, d  in enumerate(datas):
         buffer.append(d)
-        start_addr += 1
+        pc += 1
 
-        if start_addr % ROM_PAGE_SIZE == 0 or \
+        if pc % ROM_PAGE_SIZE == 0 or \
          offset == len(datas) - 1 and len(buffer) != 0:
-            while True:
+            print(f"0x{page_address:0>4X}", end=' ')
+            while True :
                 device.programming_page(start_addr=page_address, data=buffer)
-                failed_address = device.expect_block(page_address, buffer)
-                if failed_address is None:
+                failed_offset = device.expect_block(page_address, buffer)
+                if failed_offset is None:
                     break
                 else:
-                    print("[ERROR] get wrong byte at", failed_address)
+                    print(f"[ERROR] get unexpected byte at:", end=' ')
+                    for offset in failed_offset:
+                        print(f"0x{page_address + offset:0>4X}", end=' ')
+                    print()
                     
                 retry -= 1
                 if retry == 0:
-                    print("[ERROR] already retry", retry, "times, give up.")
-                    exit(-2)
-                    # return start_addr, offset
+                    raise ProgrammingROMException(f" already retry {retry}  times, give up.")
 
             buffer.clear()
-            page_address = start_addr
+            page_address = pc
 
     print('[OK]')
     return None
@@ -370,25 +384,34 @@ def check_block(device, start, data):
     if failed_address is None:
         print("[OK]")
     else:
-        print("[ERROR] get wrong byte at", failed_address)
-        exit(-1)
+        for addr in failed_address:
+            print(f"[ERROR] get unexpected byte at 0x{addr:0>4X}")
+            exit(-1)
 
 def programming_file(device:AbstractProtocolCodec, data: Union[Dict, Iterable[int]], retry = 5):
     print(">> disable SDP")
     device.disableSDP()
     print("[OK]")
+    f_programming_error = False
+    try:
+        if isinstance(data, Dict):
+            for start_address, segment in data.items():
+                # if start_address == 0x165D:
+                    write_continuous_segment(device, start_address, segment, retry)
+        else:
+            data = list(data)
+            write_continuous_segment(device, 0, data, retry)
 
-    if isinstance(data, Dict):
-        for start_address, segment in data.items():
-            write_continuous_segment(device, start_address, segment, retry)
+    except ProgrammingROMException:
+        f_programming_error = True
+    finally:
+        print(">> enable SDP")
+        device.enableSDP()
+        print("[OK]")
 
-    else:
-        data = list(data)
-        write_continuous_segment(device, 0, data, retry)
-
-    print(">> enable SDP")
-    device.enableSDP()
-    print("[OK]")
+    if f_programming_error:
+        print("[ERROR] error occoured while programming.")
+        exit(-2)
 
     # check if SDP enabled
     if isinstance(data, Dict):
@@ -441,7 +464,7 @@ def main():
     print(">> connecting device...")
     if  p.sent_bytes_dump_file is None and  p.expected_received_bytes_dump_file is None:
         print("chose a real device.")
-        s = Serial(port = p.port,baudrate = p.baudrate, timeout = p.timeout)    
+        s = Serial(port = p.port,baudrate = p.baudrate, timeout = 0.001)    
         s = ByteIOProtocolCodec(s, ROM_tWC, p.timeout)
         
     
