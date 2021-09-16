@@ -466,7 +466,7 @@ def main():
 
         
     else:
-        if  pathlib.Path(p.file).suffix in ('hex', 'ihex'):
+        if  pathlib.Path(p.file).suffix in ('.hex', '.ihex'):
             print('load ihex file "{}"'.format(p.file))
             with open(p.file, 'r') as f:
                 data = decode_ihex(f.read())
