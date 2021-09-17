@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from io import BytesIO
 import pathlib
 from typing import Dict, Iterable, Union
 from serial import Serial, SerialException
@@ -11,6 +12,12 @@ RETRY_PROGRAMMING_A_PAGEF_AILED = 5
 
 SEQ_HANDSHAKE = (0xFF,0xA5,0x5A,0xCC)
 
+IMP_OPCODE_WRITE_PAGE = 0
+IMP_OPCODE_WRITE_BYTE_ADDR_PAIR = 1
+IMP_DATA_START_ADDR = 0x1B
+IMP_PSW_FLAG_MATCH = 0xAB
+
+
 ROM_PAGE_SIZE = 128
 ROM_SEQ_DISALBE_SDP =(
     (0xAA, 0x5555),(0x55, 0x2AAA),(0x80, 0x5555),
@@ -19,8 +26,7 @@ ROM_SEQ_ENALBE_SDP = (
     (0xAA, 0x5555),(0x55, 0x2AAA),(0xA0, 0x5555))
 ROM_tWC = 5000 #5000 us
 
-OPCODE_PROGRAMMING_PAGE = 0
-OPCODE_PROGRAMMING_BYTE_ADDR_PAIR = 1
+OPCODE_INTERNAL_MICRO_PROGRAM = 0
 OPCODE_READ_BLOCK = 3
 OPCODE_ECHO  = 4
 OPCODE_EXIT  = 5
@@ -98,17 +104,7 @@ def decode_ihex(text):
 
     return segment_data
 
-def opcode_verifier(opcode):
-    def wrapper(process_call):
-        def wrapper(self, *args, **kwargs):
-            self.send_int8(opcode)
-            ret = process_call(self, *args, **kwargs)
-            self.expect_int8(0xFF ^ opcode)
-            return ret
 
-        return wrapper
-
-    return wrapper
 
 
 class ProtocolCodecTimeoutException(Exception):
@@ -173,7 +169,8 @@ class AbstractProtocolCodec:
         else:
             return None
 
-
+    def bulid_dump_protcol(self):
+        return DumpProtocolCodec(self._tWC, BytesIO(), BytesIO())
 
     def handshake_knockdoor(self, code0, code1):
         while True:
@@ -208,21 +205,39 @@ class AbstractProtocolCodec:
             if self.handshake_seq(seq[2:]):
                 return
 
-    @opcode_verifier(OPCODE_PROGRAMMING_PAGE)
-    def programming_page(self, start_addr, data):
-        self.send_int8(len(data))
-        self.send_int16(start_addr)
-        for b in data:
-            self.send_int8(b)
-        self.send_int16(self._tWC)
+    def _invoke_internal_microprogram(self, mp_opocde, data):
+        self.send_int8(OPCODE_INTERNAL_MICRO_PROGRAM)
+        self.send_int8(IMP_PSW_FLAG_MATCH)
+        self.send_int8(mp_opocde)
+        self.send_int8(0xFF - mp_opocde)
+        self.send_int8(IMP_DATA_START_ADDR)
+        self.send_intn_array(data, lenbytes=1, intbytes=1)
+        self.expect_int8(0xFF - mp_opocde)
 
-    @opcode_verifier(OPCODE_PROGRAMMING_BYTE_ADDR_PAIR)
+    def programming_page(self, start_addr, data):
+        t = self.bulid_dump_protcol()
+        t.send_int16(self._tWC)
+        t.send_int8(len(data))
+        t.send_int16(start_addr)
+        for b in data:
+            t.send_int8(b)
+        self._invoke_internal_microprogram(
+            IMP_OPCODE_WRITE_PAGE,
+            t.sent_stream.getvalue())
+
     def programming_byte_address_pair(self, seq):
-        self.send_int8(len(seq))
+        t = self.bulid_dump_protcol()
+        t.send_int16(self._tWC)
+        t.send_int8(len(seq))
         for data, addr in seq:
-            self.send_int8(data)
-            self.send_int16(addr)
-        self.send_int16(self._tWC)
+            t.send_int8(data)
+            t.send_int16(addr)
+
+        self._invoke_internal_microprogram(
+            IMP_OPCODE_WRITE_BYTE_ADDR_PAIR,
+            t.sent_stream.getvalue())
+            
+        
 
     def disableSDP(self):
         self.programming_byte_address_pair(ROM_SEQ_DISALBE_SDP)

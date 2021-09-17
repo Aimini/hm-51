@@ -122,19 +122,12 @@ CSEG AT 0xFF00
 JMP START_ISP
 
 ;-----------------------------------------------------------
-
-MICPROGRAM_DATA_START_ADDR  EQU 0x1D 
-MICPROGRAM_COUNTDOWN_LOW    EQU 0x1B
-MICPROGRAM_COUNTDOWN_HIGH   EQU 0x1C
-
-MICPROGRAM_OPCODE_WRITE_PAGE            EQU 0
-MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR  EQU 1
- 
 SEQ_HANDSHAKE:      DB 0xFF,0xA5,0x5A,0xCC
 SEQ_HANDSHAKE_LEN  EQU $ - SEQ_HANDSHAKE
-
-USR_CMD_WRITE_PAGE              EQU MICPROGRAM_OPCODE_WRITE_PAGE
-USR_CMD_WRITE_BYTE_ADDR_PAIR    EQU MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR
+    
+INTERNAL_MICRO_PSW_FLAG_MATCH   EQU 0xAB
+    
+USR_CMD_INTERNAL_MICRO_PROGRAM  EQU 0
 USR_CMD_READ_BLOCK              EQU 3
 USR_CMD_READ_ECHO               EQU 4
     
@@ -149,8 +142,8 @@ WAIT_SHORT_MAX_COUNT EQU 10000 ; for comman case . around 10ms
 ;;       countdown, size, data0,addr0   , data1,addr1   , data2,addr2  ,   
 SEQ_SDP: DB 0x88, 0x13,  0x3, 0xaa,0x55,0x55, 0x55,0xaa,0x2a, 0xa0,0x55,0x55
 SEQ_SDP_SIZE            EQU $ - SEQ_SDP
-SEQ_SDP_RAM_START_ADDR  EQU MICPROGRAM_COUNTDOWN_LOW
-SEQ_SDP_OPCODE          EQU MICPROGRAM_OPCODE_WRITE_BYTE_ADDR_PAIR    
+SEQ_SDP_RAM_START_ADDR  EQU 0x1B
+SEQ_SDP_OPCODE          EQU 1    
 ;-----------------------------------------------------------
 
 START_ISP:
@@ -195,49 +188,51 @@ CLR TI
 INC R0
 CJNE R0, #SEQ_HANDSHAKE_LEN, HAND_SHAKE_NEXT
 
+
+
 ;;;;;;; ----------- user commands
 USER_COMMANDS:
 ACALL READ_UART_WAIT_LONG
 ; cmd code in R3
 MOV  A, R5
 MOV  R3, A
-CJNE A, #USR_CMD_WRITE_PAGE, OP_NEXT0
+CJNE A, #USR_CMD_INTERNAL_MICRO_PROGRAM, OP_NEXT2
 
 
-;;  0 -- programming a data chuck
-; get size, store in 0x17
-ACALL READ_UART_WAIT_SHORT
-MOV MICPROGRAM_DATA_START_ADDR, R5
-; need to read  2(start_address) + size
-; from 0x17 to 0x17  + 2 + size
-MOV R0, 5
-INC R0
-INC R0
-MOV R1, #(MICPROGRAM_DATA_START_ADDR + 1)
+    ;;  0 -- call internal ROM's micro_program
+    ; get size, store in 0x17
+    ACALL READ_UART_WAIT_SHORT  ;;; get PSW.1
+    CLR PSW.1
+    CJNE R5, #INTERNAL_MICRO_PSW_FLAG_MATCH,  CALL_INTERNAL_MICRO_PROGRAM_GET_A
+    SETB PSW.1
 
-LOAD_DATA_ARRAY:
-    ACALL READ_UART_WAIT_SHORT
-    MOV @R1, 5
-    INC R1
-    DJNZ R0, LOAD_DATA_ARRAY
-    JMP INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
+    CALL_INTERNAL_MICRO_PROGRAM_GET_A:
+    ACALL READ_UART_WAIT_SHORT ;;; get A, but need to be stored at first
+    MOV R3, 5
+    ACALL READ_UART_WAIT_SHORT ;;; get B
+    MOV B, R5
+    ACALL READ_UART_WAIT_SHORT ;;; get start address of data
+    MOV R1, 5
+    ACALL READ_UART_WAIT_SHORT ;;; get size of data
+    MOV R0, 5
 
-
-OP_NEXT0:
-    CJNE    A, #USR_CMD_WRITE_BYTE_ADDR_PAIR, OP_NEXT2
+    LOAD_DATA_ARRAY:
+        ACALL READ_UART_WAIT_SHORT
+        MOV @R1, 5
+        INC R1
+        DJNZ R0, LOAD_DATA_ARRAY
+        
+    MOV A, R3
+    DB  0xA5
+    CLR PSW.1
     
-    
-    ;; 1 -- programming byte-address pair
-    ACALL READ_UART_WAIT_SHORT
-    MOV A, R5
-    MOV MICPROGRAM_DATA_START_ADDR, A
-    JZ  INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM
-    ; A *= 3
-    RL  A
-    ADD A, R5
-    MOV R0, A
-    MOV R1, #(MICPROGRAM_DATA_START_ADDR + 1)
-    JMP LOAD_DATA_ARRAY
+    ;; give feedback to host
+    JNB TI, $
+    MOV A, R3
+    CPL A
+    MOV SBUF, A
+    JMP    USER_COMMANDS 
+
 
 
 OP_NEXT2: 
@@ -281,25 +276,7 @@ OP_NEXT3:
 OP_NEXT4:
     JMP    EXIT_PROGRAM
 
-INVOKE_INTERNAL_EEPROM_MCRIO_PROGRAM:
-    ;; load delay of tWC 
-    ACALL READ_UART_WAIT_SHORT
-    MOV MICPROGRAM_COUNTDOWN_LOW, R5
-    ACALL READ_UART_WAIT_SHORT
-    MOV MICPROGRAM_COUNTDOWN_HIGH, R5
-    MOV  A, R3
-    CPL  A
-    MOV  B, A
-    MOV  A, R3
-    SETB PSW.1
-    DB  0xA5
-    CLR  PSW.1
-    ;; give feedback to host
-    JNB TI, $
-    MOV A, R3
-    CPL A
-    MOV SBUF, A
-    JMP    USER_COMMANDS 
+
     
 
 READ_UART_WAIT_SHORT:
