@@ -403,20 +403,16 @@ def check_block(device, start, data):
             print(f"[ERROR] get unexpected byte at 0x{addr:0>4X}")
             exit(-1)
 
-def programming_file(device:AbstractProtocolCodec, data: Union[Dict, Iterable[int]], retry = 5):
+def programming_file(device:AbstractProtocolCodec, data: Dict[int,Iterable], retry = 5):
     print(">> disable SDP")
     device.disableSDP()
     print("[OK]")
+
     f_programming_error = False
     try:
-        if isinstance(data, Dict):
-            for start_address, segment in data.items():
-                # if start_address == 0x165D:
-                    write_continuous_segment(device, start_address, segment, retry)
-        else:
-            data = list(data)
-            write_continuous_segment(device, 0, data, retry)
-
+        for start_address, segment in data.items():
+            # if start_address == 0x165D:
+                write_continuous_segment(device, start_address, segment, retry)
     except ProgrammingROMException:
         f_programming_error = True
     finally:
@@ -429,22 +425,15 @@ def programming_file(device:AbstractProtocolCodec, data: Union[Dict, Iterable[in
         exit(-2)
 
     # check if SDP enabled
-    if isinstance(data, Dict):
-            for start_address, segment in data.items():
-                test_data = [0xFF ^ _ for _ in segment[0:1]]
-                device.programming_page(start_address, test_data)
-                device.expect_block(start_address, segment[0:1])
-                break
-    else:
+    for start_address, segment in data.items():
         test_data = [0xFF ^ _ for _ in segment[0:1]]
         device.programming_page(start_address, test_data)
-        device.expect_block(start_address, data[0:1])
-        
-    if isinstance(data, Dict):
-        for start_address, segment in data.items():
-            check_block(device, start_address, segment)
-    else:
-        check_block(device, 0, data)
+        device.expect_block(start_address, segment[0:1])
+        break
+
+    for start_address, segment in data.items():
+        check_block(device, start_address, segment)
+
 
 def main():
     argparser = argparse.ArgumentParser(
@@ -503,6 +492,7 @@ def main():
 
     print(">> proramming the ROM...")
     data = None
+
     if p.test:
         start_address = p.test[0]
         end_address = p.test[1]
@@ -513,8 +503,6 @@ def main():
             data.append((i) % 256)
         data = {start_address : data}
         
-
-        
     else:
         if  pathlib.Path(p.file).suffix in ('.hex', '.ihex'):
             print('load ihex file "{}"'.format(p.file))
@@ -523,7 +511,7 @@ def main():
         else:
             print('load binary file "{}"'.format(p.file))
             with open(p.file, "rb") as f:
-                data = f.read()
+                data = {0 : f.read()}
 
     programming_file(s, data)
     s.exit()
