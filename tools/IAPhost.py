@@ -172,7 +172,7 @@ class AbstractProtocolCodec:
     def bulid_dump_protcol(self):
         return DumpProtocolCodec(self._tWC, BytesIO(), BytesIO())
 
-    def handshake_knockdoor(self, code0, code1):
+    def handshake_knockdoor(self, code0):
         while True:
             # S: hello? anyone here?
             self.send_int8(code0)
@@ -180,14 +180,6 @@ class AbstractProtocolCodec:
                 # C: sure, I'm here
                 # S: fine, next question!
                 break
-        
-        self.send_int8(code1)
-        while True:
-            if self.expect_int8(0xFF ^ code1):
-                return True
-            if self._rval == 0xFF ^code0:
-                continue
-            return False
                 
 
     def handshake_seq(self, seq):
@@ -199,11 +191,8 @@ class AbstractProtocolCodec:
     
 
     def handshake(self, seq):
-        while True:
-            while not self.handshake_knockdoor(seq[0],seq[1]):
-                pass
-            if self.handshake_seq(seq[2:]):
-                return
+            self.handshake_knockdoor(seq[0])
+            self.handshake_seq(seq[1:])
 
     def _invoke_internal_microprogram(self, mp_opocde, data):
         self.send_int8(OPCODE_INTERNAL_MICRO_PROGRAM)

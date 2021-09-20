@@ -122,9 +122,12 @@ CSEG AT 0xFF00
 JMP START_ISP
 
 ;-----------------------------------------------------------
+
 SEQ_HANDSHAKE:      DB 0xFF,0xA5,0x5A,0xCC
 SEQ_HANDSHAKE_LEN  EQU $ - SEQ_HANDSHAKE
-    
+HANDSHAKE_TOLERABLE_MISMATCH EQU 100 ;; when handshaking, how many unexpected responses that you can tolerate
+
+
 INTERNAL_MICRO_PSW_FLAG_MATCH   EQU 0xAB
     
 USR_CMD_INTERNAL_MICRO_PROGRAM  EQU 0
@@ -160,22 +163,25 @@ SETB REN
 
 
 MOV  DPTR,   #SEQ_HANDSHAKE
-
-HAND_SHAKE_INITIALIING:
 CLR A
 MOV PSW, A
 MOV R0,  A
+MOV R1,  #HANDSHAKE_TOLERABLE_MISMATCH
 
-HAND_SHAKE_NEXT:
 ; handshake
 ;; check if the code that I received is consistent with the number in SEQ HANDSHAKE
+HAND_SHAKE_NEXT:
+MOV A, R1
+JNZ     HAND_SHAKE_RETRY
+JMP     EXIT_PROGRAM
 
-
+HAND_SHAKE_RETRY:
 ACALL READ_UART_WAIT_HANDSHAKE
 MOV  A, R0
 MOVC A, @A+DPTR
 XRL  A, R5
-JNZ HAND_SHAKE_INITIALIING
+DEC  R1
+JNZ HAND_SHAKE_NEXT
 ;; to tell the host that I received the correct number,
 ;; send back its One's complement
 MOV A, R5
@@ -186,6 +192,7 @@ CLR TI
 ;; reset countdown after succes
 ; verify next number
 INC R0
+MOV R1,  #HANDSHAKE_TOLERABLE_MISMATCH
 CJNE R0, #SEQ_HANDSHAKE_LEN, HAND_SHAKE_NEXT
 
 
