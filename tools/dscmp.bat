@@ -1,1 +1,2 @@
 src\dscompiler\compile.py -i src\decoder\decoder.ds -o eeprom-bin\decoder.bin -d temp\decoder.disa -s temp\decoder.pre.ds
+src\dscompiler\compile.py -i src\decoder\decoderIAP.ds -o eeprom-bin\decoderIAP.bin -d temp\decoderIAP.disa -s temp\decoderIAP.pre.ds

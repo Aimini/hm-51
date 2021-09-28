@@ -1,0 +1,770 @@
+############################
+# parameters:
+# @0: the PCL value after rest
+# @1: the PCH value after rest
+###############
+###########################################################
+# fetch:
+# - IR <- opcode
+# - PC++
+# - JUMP to excute stage segment according to opcode
+# execute:
+# -
+# IR might be changed after excute stage#
+############################################################
+J(STAGE_RESET_ALL)
+##############################################
+# decoder vector
+##############################################
+
+@INC "decode_vector.ds"
+
+# -------------------------------------
+#           stage fetch
+# -------------------------------------
+STAGE_FETCH:
+RF(PCL),  ALU(A),  WR(WE)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE)
+
+STAGE_FETCH_SKIP_LOAD_PCH:
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE)
+
+STAGE_FETCH_SKIP_PF:
+RF(PCL),  ALU(A),  WR(WE)
+RF(PCH),  ALU(A),  SR(WE), J(STAGE_FETCH_LOAD_OPCODE_SKIP_PF)
+
+STAGE_FETCH_SKIP_PF_SKIP_LOAD_PCH:
+RF(PCL),  ALU(A),  WR(WE), J(STAGE_FETCH_LOAD_OPCODE_SKIP_PF)
+
+STAGE_FETCH_LOAD_OPCODE:
+# set parity flag
+RF(A),      ALU(PF),   BR(ALUDF)
+RF(PSW,WE), ALU(SETPF), BR(ONE)
+
+STAGE_FETCH_LOAD_OPCODE_SKIP_PF:
+RF(IR,WE),BUS(ROM), BR(ONE), J(0), MIPCSRC(DECVEC)
+
+
+
+IRSEG_F8_FF: #-----------------
+# MOV Rn, A
+@INC "instructions\F8_FF_MOV_Rn_A.ds"
+#------------------------------
+
+
+IRSEG_F6_F7: #------------------
+# MOV @Ri, A
+@INC "instructions\F6_F7_MOV_Ri_A.ds"
+#------------------------------
+
+
+
+IRSEG_F5: #--------------------
+# MOV direct, A
+@INC "instructions\F5_MOV_d_A.ds"
+#------------------------------
+
+
+IRSEG_F4: #--------------------
+#CPL A
+@INC "instructions\F4_CPL_A.ds"
+#------------------------------
+
+
+IRSEG_F2_F3: #-----------------
+@INC "instructions\F2_F3_MOVX_Ri_A.ds"
+#------------------------------
+
+
+
+IRSEG_F0: #--------------------
+@INC "instructions\F0_MOVX_DPTR_A.ds"
+#------------------------------
+
+
+
+IRSEG_E8_EF: #-----------------
+
+@INC "instructions\E8_EF_MOV_A_Rn.ds"
+#------------------------------
+
+
+
+IRSEG_E6_E7: #----------------
+@INC "instructions\E6_E7_MOV_A_Ri.ds"
+#------------------------------
+
+
+
+IRSEG_E5: #--------------------
+@INC "instructions\E5_MOV_A_d.ds"
+#------------------------------
+
+
+IRSEG_E4: #--------------------
+@INC "instructions\E4_CLR_A.ds"
+#------------------------------
+
+
+
+IRSEG_E2_E3: #-----------------
+@INC "instructions\E2_E3_MOVX_A_Ri.ds"
+#------------------------------
+
+
+
+IRSEG_E0: #--------------------
+@INC "instructions\E0_MOVX_A_DPTR.ds"
+#------------------------------
+
+
+
+IRSEG_D8_DF: #-----------------
+
+@INC "instructions\D8_DF_DJNZ_Rn_o.ds"
+#------------------------------
+
+
+IRSEG_D6_D7: #-----------------
+@INC "instructions\D6_D7_XCHD_A_Ri.ds"
+#------------------------------
+
+
+IRSEG_D5: #--------------------
+@INC "instructions\D5_DJNZ_d_o.ds"
+#------------------------------
+
+
+IRSEG_D4: #--------------------
+@INC "instructions\D4_DA_A.ds"
+#------------------------------
+
+
+IRSEG_D3: #--------------------
+# SETB C
+@INC "instructions\D3_SETB_C.ds"
+#------------------------------
+
+
+IRSEG_D2: #--------------------
+# SETB bit
+@INC "instructions\D2_SETB_b.ds"
+#------------------------------
+
+
+
+IRSEG_D0: #--------------------
+@INC "instructions\D0_POP_d.ds"
+#------------------------------
+
+
+
+IRSEG_C8_CF: #-----------------
+# XCH A, Rn
+@INC "instructions\C8_CF_XCH_A_Rn.ds"
+#------------------------------
+
+
+
+IRSEG_C6_C7: #-----------------
+
+@INC "instructions\C6_C7_XCH_A_Ri.ds"
+#------------------------------
+
+
+IRSEG_C5: #--------------------
+# XCH A, direct
+@INC "instructions\C5_XCH_A_d.ds"
+#------------------------------
+
+
+IRSEG_C4: #--------------------
+@INC "instructions\C4_SWAP_A.ds"
+#------------------------------
+
+
+IRSEG_C3: #--------------------
+@INC "instructions\C3_CLR_C.ds"
+#------------------------------
+
+
+IRSEG_C2: #--------------------
+# CLR bit
+@INC "instructions\C2_CLR_b.ds"
+#------------------------------
+
+
+IRSEG_C0: #--------------------
+# PUSH direct
+@INC "instructions\C0_PUSH_d.ds"
+#------------------------------
+
+
+IRSEG_B8_BF: #-----------------
+
+@INC "instructions\B8_BF_CJNE_Rn_i_o.ds"
+#------------------------------
+
+
+IRSEG_B6_B7: #-----------------
+# CJNE @Ri, #immed, offset
+@INC "instructions\B6_B7_CJNE_Ri_i_o.ds"
+#------------------------------
+
+
+IRSEG_B5: #--------------------
+# CJNE A, direct, offset
+@INC "instructions\B5_CJNE_A_d_o.ds"
+#------------------------------
+
+
+IRSEG_B4: #--------------------
+@INC "instructions\B4_CJNE_A_i_o.ds"
+#------------------------------
+
+
+IRSEG_B3: #--------------------
+#CLP C
+@INC "instructions\B3_CPL_C.ds"
+#------------------------------
+
+
+IRSEG_B2: #--------------------
+# CPL bit
+@INC "instructions\B2_CPL_b.ds"
+#------------------------------
+
+
+IRSEG_B0: #--------------------
+@INC "instructions\B0_ANL_C_nb.ds"
+#------------------------------
+
+
+IRSEG_A8_AF: #-----------------
+@INC "instructions\A8_AF_MOV_Rn_d.ds"
+#------------------------------
+
+
+
+IRSEG_A6_A7: #----------------
+@INC "instructions\A6_A7_MOV_Ri_d.ds"
+#------------------------------
+
+
+
+IRSEG_A5: #--------------------
+@INC "prom.ds", "STAGE_CHECK_INTERRUPT"
+#------------------------------
+
+
+IRSEG_A4: #--------------------
+@INC "instructions\A4_MUL_AB.ds"
+#------------------------------
+
+
+IRSEG_A3: #--------------------
+#INC DPTR
+@INC "instructions\A3_INC_DPTR.ds"
+#------------------------------
+
+
+IRSEG_A2: #--------------------
+#MOV bit, C
+@INC "instructions\A2_MOV_C_b.ds"
+#------------------------------
+
+
+IRSEG_A0: #--------------------
+#ORL C, /bit
+@INC "instructions\A0_ORL_C_nb.ds"
+#------------------------------
+
+
+
+IRSEG_98_9F: #-----------------
+# SUBB A,Rn
+@INC "instructions\SUB_ADD_A_Rn.ds","A7","SUBB","SUBBF"
+#------------------------------
+
+
+IRSEG_96_97: #-----------------
+# SUBB A,@Ri
+@INC "instructions\SUB_ADD_A_Ri.ds","A7","SUBB","SUBBF"
+#------------------------------
+
+
+IRSEG_95: #--------------------
+# SUBB A,direct
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_d.ds","Q","SUBB","SUBBF"
+#------------------------------
+
+
+IRSEG_94: #--------------------
+# SUBB A,#immed
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","SUBB","SUBBF"
+#------------------------------
+
+
+
+IRSEG_93: #--------------------
+#MOVC A,@A+DPTR
+@INC "instructions\93_MOVC_A_A_DPTR.ds"
+#------------------------------
+
+
+IRSEG_92: #--------------------
+#MOV bit, C
+@INC "instructions\92_MOV_b_C.ds"
+#------------------------------
+
+
+IRSEG_90: #--------------------
+@INC "instructions\90_MOV_dptr_i.ds"
+#------------------------------
+
+
+IRSEG_88_8F: #-----------------
+@INC "instructions\88_8F_MOV_d_Rn.ds"
+#------------------------------
+
+
+
+IRSEG_86_87: #-----------------
+@INC "instructions\86_87_MOV_d_Ri.ds"
+#------------------------------
+
+
+
+IRSEG_85: #--------------------
+# MOV direct, direct
+@INC "instructions\85_MOV_d_d.ds"
+#------------------------------
+
+
+IRSEG_84: #--------------------
+@INC "instructions\84_DIV_AB.ds"
+#------------------------------
+
+
+
+IRSEG_83: #--------------------
+#MOV A,@A+PC
+@INC "instructions\83_MOVC_A_A_PC.ds"
+#------------------------------
+
+
+IRSEG_82: #--------------------
+# ANL C, bit
+@INC "instructions\ORL_ANL_C_b.ds", "AND"
+#------------------------------
+
+
+
+IRSEG_80: #--------------------
+@INC "instructions\80_SJMP_o.ds"
+#------------------------------
+
+
+
+IRSEG_78_7F: #-----------------
+@INC "instructions\78_7F_MOV_Rn_i.ds"
+#------------------------------
+
+
+
+IRSEG_76_77: #-----------------
+@INC "instructions\76_77_MOV_Ri_i.ds"
+#------------------------------
+
+
+
+IRSEG_75: #--------------------
+# MOV direct,#immed
+@INC "instructions\75_MOV_d_i.ds"
+#------------------------------
+
+
+
+IRSEG_74: #--------------------
+# MOV A, #immed
+@INC "instructions\74_MOV_A_i.ds"
+#------------------------------
+
+
+IRSEG_73: #--------------------
+@INC "instructions\73_JMP_A_DPTR.ds"
+#------------------------------
+
+
+IRSEG_72: #--------------------
+# ORL C, bit
+@INC "instructions\ORL_ANL_C_b.ds", "OR"
+#------------------------------
+
+
+IRSEG_70: #--------------------
+@INC "instructions\70_JNZ_o.ds"
+#------------------------------
+
+
+
+IRSEG_68_6F: #-----------------
+# XRL A, Rn
+@INC "instructions\OAL_A_Rn.ds","XOR"
+#------------------------------
+
+
+IRSEG_66_67: #-----------------
+# XRL A, @Ri
+@INC "instructions\OAL_A_Ri.ds","XOR"
+#------------------------------
+
+
+IRSEG_65: #--------------------
+@INC "instructions\OAL_A_d.ds","XOR"
+#------------------------------
+
+
+IRSEG_64: #--------------------
+@INC "instructions\OAL_A_i.ds","XOR"
+#------------------------------
+
+
+
+IRSEG_63: #--------------------
+# XRL direct, #immed
+@INC "instructions\OAL_d_i.ds","XOR"
+#------------------------------
+
+
+IRSEG_62: #--------------------
+@INC "instructions\OAL_d_A.ds","XOR"
+#------------------------------
+
+
+IRSEG_60: #--------------------
+@INC "instructions\60_JZ_o.ds"
+#------------------------------
+
+
+
+IRSEG_58_5F: #-----------------
+# ANL A, Rn
+@INC "instructions\OAL_A_Rn.ds","AND"
+#------------------------------
+
+
+
+IRSEG_56_57: #-----------------
+@INC "instructions\OAL_A_Ri.ds","AND"
+#------------------------------
+
+
+
+IRSEG_55: #--------------------
+@INC "instructions\OAL_A_d.ds","AND"
+#------------------------------
+
+
+IRSEG_54: #--------------------
+# ANL A,#immed
+@INC "instructions\OAL_A_i.ds","AND"
+#------------------------------
+
+
+IRSEG_53: #--------------------
+# ANL direct, #immed
+@INC "instructions\OAL_d_i.ds","AND"
+#------------------------------
+
+
+IRSEG_52: #--------------------
+@INC "instructions\OAL_d_A.ds","AND"
+#------------------------------
+
+IRSEG_50: #--------------------
+# JNC offset
+@INC "instructions\50_JNC_o.ds"
+#------------------------------
+
+
+## IRSEG_48_4F ----------------
+IRSEG_48_4F:
+@INC "instructions\OAL_A_Rn.ds","OR"
+#------------------------------
+
+
+## IRSEG_46_47 --------------------
+IRSEG_46_47:
+@INC "instructions\OAL_A_Ri.ds","OR"
+#------------------------------
+
+
+IRSEG_45: #--------------------
+# OR A, direct
+@INC "instructions\OAL_A_d.ds","OR"
+#------------------------------
+
+
+IRSEG_44: #--------------------
+# OR A, #immed
+@INC "instructions\OAL_A_i.ds","OR"
+#------------------------------
+
+
+
+IRSEG_43: #--------------------
+# ORL direct, #immed
+@INC "instructions\OAL_d_i.ds","OR"
+#------------------------------
+
+
+IRSEG_42: #--------------------
+# ORL direct, A
+@INC "instructions\OAL_d_A.ds","OR"
+#------------------------------
+
+
+IRSEG_40: #--------------------
+@INC "instructions\40_JC_o.ds"
+#------------------------------
+
+
+
+IRSEG_38_3F: #-----------------
+@INC "instructions\SUB_ADD_A_Rn.ds","A7","ADDC","ADDCF"
+#------------------------------
+
+
+
+IRSEG_36_37: #-----------------
+@INC "instructions\SUB_ADD_A_Ri.ds","A7","ADDC","ADDCF"
+#------------------------------
+
+
+
+IRSEG_35: #--------------------
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_d.ds","Q","ADDC","ADDCF"
+#------------------------------
+
+
+IRSEG_34: #--------------------
+# ADDC A,#immed
+RF(PSW), BR(A7) # BR <- CY
+@INC "instructions\SUB_ADD_A_i.ds","Q","ADDC","ADDCF"
+#------------------------------
+
+
+IRSEG_33: #--------------------
+# RLC A
+@INC "instructions\33_RLC_A.ds"
+#------------------------------
+
+
+IRSEG_32: #--------------------
+@INC "instructions\32_RETI.ds"
+#------------------------------
+
+
+IRSEG_30: #--------------------
+# JNB bit, offset
+@INC "instructions\30_JNB_b_o.ds"
+#------------------------------
+
+
+IRSEG_28_2F: #-----------------
+@INC "instructions\SUB_ADD_A_Rn.ds","ZERO","ADDC","ADDCF"
+#------------------------------
+
+
+
+IRSEG_26_27: #-----------------
+@INC "instructions\SUB_ADD_A_Ri.ds","ZERO","ADDC","ADDCF"
+#------------------------------
+
+
+
+IRSEG_25: #--------------------
+@INC "instructions\SUB_ADD_A_d.ds","ZERO","ADDC","ADDCF"
+#------------------------------
+
+
+IRSEG_24: #--------------------
+@INC "instructions\SUB_ADD_A_i.ds","ZERO","ADDC","ADDCF"
+#------------------------------
+
+
+
+IRSEG_23: #--------------------
+# RL A
+@INC "instructions\23_RL_A.ds"
+#------------------------------
+
+
+IRSEG_22: #--------------------
+@INC "instructions\22_RET.ds"
+#------------------------------
+
+
+IRSEG_20: #--------------------
+@INC "instructions\20_JB_b_o.ds"
+#------------------------------
+
+
+
+IRSEG_18_1F: #-----------------
+@INC "instructions\18_1F_DEC_Rn.ds"
+#------------------------------
+
+
+
+
+
+
+IRSEG_16_17: #--------------------
+# DEC @Ri
+@INC "instructions\INC_DEC_ri.ds", "DEC"
+#----------------------------------
+
+
+
+IRSEG_15: #--------------------
+#DEC direct
+@INC "instructions\15_DEC_d.ds"
+#------------------------------
+
+
+IRSEG_14: #--------------------
+#DEC A
+@INC "instructions\14_DEC_A.ds"
+#------------------------------
+
+
+
+IRSEG_13: #--------------------
+# RRC A
+@INC "instructions\13_RRC_A.ds"
+#------------------------------
+
+
+IRSEG_12: #--------------------
+@INC "instructions\12_LCALL_a16.ds"
+#------------------------------
+
+
+IRSEG_10: #--------------------
+@INC "instructions\10_JBC_b_o.ds"
+#------------------------------
+
+
+
+IRSEG_8_F: #--------------------
+@INC "instructions\08_0F_INC_Rn.ds"
+#------------------------------
+
+
+IRSEG_6_7: #--------------------
+# INC @Ri
+@INC "instructions\INC_DEC_Ri.ds","INC"
+#------------------------------
+
+
+IRSEG_5: #--------------------
+@INC "instructions\05_INC_direct.ds"
+#------------------------------
+
+
+IRSEG_4: #--------------------
+# INC A
+@INC "instructions\04_INC_A.ds"
+#------------------------------
+
+
+
+IRSEG_3: #--------------------
+# RR A
+@INC "instructions\03_RR_A.ds"
+#------------------------------
+
+
+IRSEG_2: #--------------------
+#LJMP addr16
+@INC "instructions\02_LJMP_a16.ds"
+#------------------------------
+
+
+IRSEG_0: #--------------------
+J(STAGE_CHECK_INTERRUPT)
+#------------------------------
+
+
+CSEG_AJMP_ADDR11:
+@INC "instructions\x01_AJMP_a11.ds"
+
+CSEG_ACALL_ADDR11:
+@INC "instructions\x11_ACALL_a11.ds"
+
+ADDC_PC_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\addc_pc.ds","__0", "STAGE_CHECK_INTERRUPT_PCH_IN_SR"
+
+ADDC_PC_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\addc_pc.ds","STAGE_CHECK_INTERRUPT_PCH_IN_SR", "STAGE_CHECK_INTERRUPT_PCH_IN_SR"
+
+ADDC_PC_SKIP_PF_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\addc_pc.ds","__0", "STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR"
+
+
+ADDC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\addc_pc.ds","STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR", "STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR"
+
+
+
+INC_PC_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_jchkint.ds"
+
+INC_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_npch_jchkint.ds"
+
+INC_PC_SKIP_PF_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_spf_jchkint.ds"
+
+INC_PC_SKIP_PF_PCH_IN_SR_BEFORE_CHECK_INTERRUPT:
+@INC "snippet\inc_pc_srwr_spf_npch_jchkint.ds"
+######################################################## 
+#  support 4 interrupt , when we talk about IE and IP, we only care about low-nibble( but we alsoconsider EA(IE[7]))# 
+# 1. check IE
+# 2. select IRQ with IP
+# 3. J to interrupt vector
+######################################################## 
+STAGE_CHECK_INTERRUPT:
+@INC "int_jump_to.ds", "STAGE_FETCH",                      "STAGE_FETCH_LOAD_OPCODE"
+
+STAGE_CHECK_INTERRUPT_PCH_IN_SR:
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_LOAD_PCH",         "STAGE_FETCH_LOAD_OPCODE"
+
+STAGE_CHECK_INTERRUPT_SKIP_PF:
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_PF",               "STAGE_FETCH_LOAD_OPCODE_SKIP_PF"
+
+STAGE_CHECK_INTERRUPT_SKIP_PF_PCH_IN_SR:
+@INC "int_jump_to.ds", "STAGE_FETCH_SKIP_PF_SKIP_LOAD_PCH", "STAGE_FETCH_LOAD_OPCODE_SKIP_PF"
+######################################################## 
+# reset all register and PC to 0
+######################################################## 
+STAGE_RESET_ALL:
+RF(A,   WE), LI(0)
+RF(B,   WE), LI(0)
+RF(SP,  WE), LI(7)
+RF(PSW, WE), LI(0)
+RF(DPL, WE), LI(0)
+RF(DPH, WE), LI(0)
+RF(IE,  WE), LI(0)
+RF(IP,  WE), LI(0)
+RF(PCL, WE), LI(@0)
+RF(PCH, WE), LI(@1)
+RF(IR,  WE), LI(0)
+RF(ISR, WE), LI(0)
+RF(T3, WE), LI(0)
+J(STAGE_FETCH)

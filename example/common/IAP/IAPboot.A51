@@ -24,35 +24,24 @@
 ;       (0xFFFF - R7 << 8 + R6)
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+$NOMOD51
+SP      DATA    0x81
+DPL     DATA    0x82
+DPH     DATA    0x83
+SCON    DATA    0x98
+SBUF    DATA    0x99
 
-;; set this flag to enable the function to get the
-;; count of timeout( coressponding to the expect time you want
-;; to want                                                                             
-TEST_WAIT_UART_FLAG EQU 0
-TEST_WAIT_UART_EXPECT_US EQU 6000
- 
-;-----------------------------------------------------------
+TUARTL  DATA    0x9A
+TUARTH  DATA    0x9B
 
-;PSW     DATA    D0H
-;ACC     DATA    E0H
-;B       DATA    F0H
-;SP      DATA    81H
-;DPL     DATA    82H
-;DPH     DATA    83H
-;SCON    DATA    98H
-;SBUF    DATA    99H
-TUARTL  DATA    9AH
-TUARTH  DATA    9BH
+PSW     DATA    0xD0
+ACC     DATA    0xE0
+B       DATA    0xF0
 
-DBGR    DATA    0xFF
-DBGPAR1 DATA    0xFE
-DBGPAR0 DATA    0xFD
-    
-DBGR_HALT_PROGRAM   EQU 0x04
-DBGR_START_TIMMER   EQU 0x05
 
-; RI     BIT     98H
-; REN    BIT     9CH
+RI     BIT     98H
+TI     BIT     99H
+REN    BIT     9CH
 
 
 LOAD_C16 MACRO   L, H, num
@@ -63,55 +52,7 @@ LOAD_C16 MACRO   L, H, num
 LOAD_TIMER MACRO TL, TH, tick
     LOAD_C16 TL, TH,  (0xFFFF - tick + 1)
     ENDM
-    
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;
-;;;;;         START of the program
-;;;;;
-CSEG AT 0x0000
-MOV SP, #7
-
-IF TEST_WAIT_UART_FLAG <> 0
-    CLR 0x20.0
-    LOAD_C16 DBGPAR0, DBGPAR1, TEST_WAIT_UART_EXPECT_US
-    MOV     DBGR, #DBGR_START_TIMMER
-    CALL    TEST_WAIT_UART_INIT
-ELSE
-    CALL 0xFF00
-ENDIF
-
-
-MOV DBGR, #DBGR_HALT_PROGRAM
-JMP $
-
-TEST_WAIT_UART_INIT:
-    LOAD_C16 R6,R7, 0xFFFF
-    JMP TEST_WAIT_UART
-    
-TEST_WAIT_UART:
-JNB     P3.0, TEST_WAIT_UART_COUNTDOWN
-MOV     R5, SBUF
-CLR     P3.0
-RET
-
-TEST_WAIT_UART_COUNTDOWN:
-;; COUNT_DONW -= -1
-MOV     A, R6
-ORL     A, R7
-JZ      TEST_WAIT_UART_TIMEOUT
-
-
-MOV     A, R6
-DEC     R6
-JNZ     TEST_WAIT_UART
-
-DEC     R7
-JMP     TEST_WAIT_UART
-
-TEST_WAIT_UART_TIMEOUT:
-RET
-
+ 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -138,8 +79,8 @@ USR_CMD_READ_ECHO               EQU 4
 ;; a 16 bit counter,as the counter count down to 0,
 ;; we will deem such case as timeout so that we go to 
 ;; user program directly wait 
-WAIT_HANDSHAKE_MAX_COUNT EQU 5000 ; for comman case . around 10ms
-WAIT_SHORT_MAX_COUNT EQU 10000 ; for comman case . around 10ms
+WAIT_HANDSHAKE_MAX_COUNT EQU 5000 ; 
+WAIT_SHORT_MAX_COUNT EQU 60000 ;
 ;; when the host didn't enable SDP accidently, we will use this
 ;; to trgger
 ;;       countdown, size, data0,addr0   , data1,addr1   , data2,addr2  ,   
@@ -195,8 +136,6 @@ INC R0
 MOV R1,  #HANDSHAKE_TOLERABLE_MISMATCH
 CJNE R0, #SEQ_HANDSHAKE_LEN, HAND_SHAKE_NEXT
 
-
-
 ;;;;;;; ----------- user commands
 USER_COMMANDS:
 ACALL READ_UART_WAIT_LONG
@@ -204,8 +143,6 @@ ACALL READ_UART_WAIT_LONG
 MOV  A, R5
 MOV  R3, A
 CJNE A, #USR_CMD_INTERNAL_MICRO_PROGRAM, OP_NEXT2
-
-
     ;;  0 -- call internal ROM's micro_program
     ; get size, store in 0x17
     ACALL READ_UART_WAIT_SHORT  ;;; get PSW.1
@@ -356,5 +293,5 @@ EXIT_PROGRAM:
     MOV DPL, A
     MOV DPH, A
     MOV PSW, A
-    RET
+    JMP 0
 END
