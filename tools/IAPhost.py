@@ -5,7 +5,7 @@ from typing import Dict, Iterable, Union
 from serial import Serial, SerialException
 from serial.tools import list_ports
 import argparse
-from time import time
+from time import sleep, time
 
 RETRY_HANDSHAKE = 5
 RETRY_PROGRAMMING_A_PAGEF_AILED = 5
@@ -121,6 +121,7 @@ class AbstractProtocolCodec:
         '''
         pass
 
+
     @abstractmethod
     def read_intn(self, n: int) -> int:
         '''
@@ -128,6 +129,14 @@ class AbstractProtocolCodec:
         '''
         pass
 
+    @abstractmethod
+    def data_arrived(self) -> bool:
+        '''
+           check if any data arrived, in other word
+           check if we can get value immediately from read_intn(1)
+        '''
+        pass
+    
     def send_int8(self, val: int):
         self.send_intn(val, 1)
 
@@ -175,7 +184,11 @@ class AbstractProtocolCodec:
     def handshake_knockdoor(self, code0):
         while True:
             # S: hello? anyone here?
-            self.send_int8(code0)
+            while True:
+                self.send_int8(code0)
+                if self.data_arrived():
+                    break
+                sleep(0.001)
             if self.expect_int8(0xFF ^ code0):
                 # C: sure, I'm here
                 # S: fine, next question!
@@ -312,6 +325,14 @@ class ByteIOProtocolCodec(AbstractProtocolCodec):
         
         return int.from_bytes(self._IOread(n), 'little')
 
+    
+    def data_arrived(self) -> bool:
+        '''
+           check if any data arrived, in other word
+           check if we can get value immediately from read_intn(1)
+        '''
+        return self._IO.in_waiting > 0
+    
 class DumpProtocolCodec(AbstractProtocolCodec):
     def __init__(self,tWC, sent_stream, expected_received_stream):
         '''
@@ -335,7 +356,15 @@ class DumpProtocolCodec(AbstractProtocolCodec):
 
     def read_intn(self, n: int):
         pass
-   
+    
+    
+    def data_arrived(self) -> bool:
+        '''
+           check if any data arrived, in other word
+           check if we can get value immediately from read_intn(1)
+        '''
+        return True
+
     def expect_intn(self, val:int, nbytes: int) -> bool:
         self._rval = val
         d = val.to_bytes(nbytes, 'little')
@@ -426,8 +455,7 @@ def programming_file(device:AbstractProtocolCodec, data: Dict[int,Iterable], ret
 
 def main():
     argparser = argparse.ArgumentParser(
-        description="a toolbox contain 7400 tester, AT28C programmer and"
-                    "customer(myself) hardware tester")
+        description="IAP downloader for hm51")
     argparser.add_argument('-s', '--sent-bytes-dump-file', dest='sent_bytes_dump_file',
                            help='simulate a promgramming process, store the sent bytes to the file', action='store',
                            type=argparse.FileType('wb'), default=None)
