@@ -19,23 +19,23 @@ char cmd_buf_size = 0;
 const char * int_trigger_methods[2] = {"low level",  "falling edge"};
 const char * timer_functions[2] = {"timer",  "counter"};
 
-/*
-const char *const dbg_char = 
-    "set IE 0x8F\n"
-    "set TMOD 0xDD\n"
-    "set TCON 0x11\n"
+
+/*const char *const dbg_char = 
+    "set IE 0x8A\n"
+    "set TMOD 0xC0\n"
+    "set TCON 0x50\n"
     "monitor\nq"
     "monitor\n";
 char dbg_i = 0;
 
-char getchar()
+char _getkey()
 {
     if (dbg_char[dbg_i] != 0)
         return dbg_char[dbg_i++];
     
     while (1)
         ;
-}    */  
+}*/     
 
 void cmd_get_line()
 {
@@ -170,28 +170,35 @@ void cmd_monitor_interrupt()
         GETBIT(valSFR, BIDX_ET1),
         GETBIT(valSFR, BIDX_ES));
 
-    valSFR = TCON;
+        valSFR = TCON;
         printf(
         "IT0:%u(%s), IT1:%u(%s)\n",
         GETBIT(valSFR, BIDX_IT0),
         int_trigger_methods[GETBIT(valSFR, BIDX_IT0)],
         GETBIT(valSFR, BIDX_IT1),
         int_trigger_methods[GETBIT(valSFR, BIDX_IT1)]);
+          
         
-       valSFR = TMOD;     
+        valSFR = TCON;
         printf(
-        "TR0:%u\tGATE0:%u\tC/~T0:%u(%s)\n",
-        GETBIT(valSFR, BIDX_TR0),
-        GETBIT(valSFR, BIDX_GATE0),
-        GETBIT(valSFR, BIDX_CnT0),
-        timer_functions[GETBIT(valSFR, BIDX_CnT0)]);
-        
+            "TR0:%u\t",
+            GETBIT(valSFR, BIDX_TR0));
+        valSFR = TMOD; 
+        printf("GATE0:%u\tC/~T0:%u(%s)\n",
+            GETBIT(valSFR, BIDX_GATE0),
+            GETBIT(valSFR, BIDX_CnT0),
+            timer_functions[GETBIT(valSFR, BIDX_CnT0)]);
+            
+        valSFR = TCON;
+        printf(     
+            "TR1:%u\t",
+            GETBIT(valSFR, BIDX_TR1));
+        valSFR = TMOD; 
         printf(                                                                     
-        "TR1:%u\tGATE1:%u\tC/~T1:%u(%s)\n",
-        GETBIT(valSFR, BIDX_TR1),
-        GETBIT(valSFR, BIDX_GATE1),
-        GETBIT(valSFR, BIDX_CnT1),
-        timer_functions[GETBIT(valSFR, BIDX_CnT1)]);
+            "GATE1:%u\tC/~T1:%u(%s)\n",
+            GETBIT(valSFR, BIDX_GATE1),
+            GETBIT(valSFR, BIDX_CnT1),
+            timer_functions[GETBIT(valSFR, BIDX_CnT1)]);
     cmd_cnt_int_IE0 = 0;
     cmd_cnt_int_TF0 = 0;
     cmd_cnt_int_IE1 = 0;
