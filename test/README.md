@@ -2,13 +2,9 @@
 ---
 # Table of Content  <!-- omit in toc -->
 - [Hardware and simulator requirment](#hardware-and-simulator-requirment)
-  - [assertion](#assertion)
-  - [exit](#exit)
-  - [dump](#dump)
 - [Manual test instructions](#manual-test-instructions)
 - [Test table](#test-table)
 - [The test case](#the-test-case)
-  - [create new test case](#create-new-test-case)
 
 
 
@@ -228,18 +224,17 @@ What we need to pay attention to is how to load `A` into `ARG1`. Obviously,`MOV 
 
 ### create new test case
 
- In this section, I will explain how to write correct test case generation script.
 
- *directory and filename*
+ Enter into ``/test/generate`` directory, then you should create a sub-package(namely, a folder) to contain your script. 
+ 
+ For example then sub-package's name is ``mytest``, then you should create a ".py" file in it, for example ``testbalabala.py``. finally, you get a structure like ``test/generate/mytest/testbalabala.py``.
 
- the generation script should be stored in then '/test/generate' diectory, and it shouldn't start with '__'(which means it's a util file).
+ In ``testbalabala.py``, you should create a variable ``p`` and it must be the instance of the ``asm_test``(see ``test/generate/testutil.py``)
 
- *command line arguments format*
-
- assume your generation script is 'XX\.py', the test case runner require the following format:
+ Now you can try to add some string of A51 code to ``p``.
+### run it
+ Assume that you already written the test code on ``test/generate/mytest/testbalabala.py``, and you want all temporary output be in the ``./temp``, you cnas use this:
 
  ``` bash
-  XX.py -o <output_dir>
+  python ./test/test_process.py -A -H -A -C -m generate.mytest -f testbalabala.py -o ./temp
  ```
-
- the generation script should generate a assembly file named XX.A51 and store it in the directory `<output_dir>`.

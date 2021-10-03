@@ -5,16 +5,6 @@
 - [Introductions](#introductions)
 - [Don't Assume What Will Hardware Doing](#dont-assume-what-will-hardware-doing)
 - [Logical Design And Resources Of The Circuit](#logical-design-and-resources-of-the-circuit)
-  - [Interface](#interface)
-  - [Core resource](#core-resource)
-  - [Add SFR](#add-sfr)
-  - [Interrupt](#interrupt)
-  - [SFR and Peripherals](#sfr-and-peripherals)
-    - [P0, P1](#p0-p1)
-    - [TCON](#tcon)
-    - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
-    - [SCON](#scon)
-    - [SBUF](#sbuf)
 
 ## Introductions
 The majority of this document is the introduction of resources which in circuit simulation file. although the practical hardware is slightly differ to software simulation, I always put the hardware introduction into a [README-hd.md](README-hd.md) due to timing constraints and drive capabilities.
@@ -44,42 +34,42 @@ Although there are some default peripherals in the design, but they are only for
 
 However, if you are lazy or intreasted in peripherals, don't worry, It's not powerful but easy to use, you can see the details in there.
 
-``` python
+``` 
       ╔════════════════╗
-──/1──╢>CLKI       CLKO╟───/1───
-──/1──╢/CLR          IO╟───/8───
-──/1──╢MC       /SFR_WE╟───/1───
-──/1──╢SW       /SFR_OE╟───/1───
-──/1──╢Go       IRR_CLR╟───/8───
-──/1──╢Stall    Address╟──/8───
-──/8──╢IRR_IN          ║
-      ║                ║
+──/1──╢>CLK_in       PC╟───/16───
+──/1──╢/CLR        MIPC╟───/12───
+──/8──╢IRQ_IN       CLK╟───/1───
+──/1──╢MC         BUS_D╟───/8───
+──/1──╢SW       Address╟───/8───    
+──/1──╢Go       ~SFR_WE╟───/1───
+──/1──╢Stall    ~SFR_OE╟───/1───
+      ║       ~IRR_CLRB╟───/8─── 
       ╚════════════════╝     
 
 ```
-  - CLKI
+  - CLK_in
     - the clock input, used to generate the main clock of the CPU and the WE pulse of the asynchronous RAM chip. In the current design, 12MHz is preferred.
   
-  - CLKO
+  - CLK
     - CPU's main clock, provide clock to peripherals(SFR).
+  
   - Run Control
-    - MC, manual clock, using this to step each microinstruction when SW is high. It's contain synchronization circuit, so it's suitable for manual operatation.
-    - SW, switch between manual clock or free run. It's contain synchronization circuit, so it's suitable for manual operatation.
-    - Go, let CORE leave stall state. It's contain synchronization circuit, so it's suitable for manual operatation.
+    - MC, manual clock, using this to step each micro-instruction when SW is high. It's contain synchronization circuit, so it's suitable for manual operatation.
+    - SW, switch between manual clock or free run.
+    - Go, let CORE leave stall state.
     - Stall, let CORE enter stall state immediately.
   
- - IO Pin
-   -  output data when writing SFR.
-   -  receive data when reading SRF.
+ - Data bus
+   -  BUS_D, output data when writing SFR, receive data when reading SFR.
   
 -  Control Pin
-   - IRR_IN, connect IRR to this so that CPU can check if there are interrupt happend.
-   -  IRR_CLRB, clear IRR bit according to this control.
+   -  IRQ_IN, connect this to interrupt requests so that CPU can check if there are any interrupt happend.
+   -  ~IRR_CLRB, clear IRR bit according to this control.
    -  /SFR_WE, SFR write enable,active low, prepared for clocked chip.
    -  /SFR_OE, SFR output enable, active low.
    
  - Address Pin
-   - using to select SFR by RAM address.
+   - Address， using to select SFR by RAM address.
 
 ### Core resource
  - RAM, 0x100 byte
@@ -103,10 +93,10 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
     ║      CLKO╟──────────────────╢>CLK     ║     └───────┯────┘ 
     ║          ║              ┌───╢WE       ║             |OE
     ║          ║           ╔═╗|   ╚═════════╝             |
-    ║   /SFR_WE╟───/1─╢~╟──╢&╟┘                           |
+    ║   ~SFR_WE╟───/1─╢~╟──╢&╟┘                           |
     ║          ║       MD ─╢ ║     ╔═╗                    |
     ║          ║           ╚═╝ MD ─╢&╟────────────────────┘
-    ║   /SFR_OE╟───/1────╢~╟───────╢ ║               
+    ║   ~SFR_OE╟───/1────╢~╟───────╢ ║               
     ║          ║        0-7        ╚═╝               
     ║          ║              ╔══════════╗                                        
     ║          ║              ║Comparator║                                            
@@ -124,17 +114,9 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
 
   In principle, the `IRR_IN` should connect to IRR output, `IRR_IN[0]` should be the highest priority interrupt request, and `IRR_IN[7]` should be the lowest priority interrupt request.
 
-  At some point after the CPU accepts the interrupt, the CPU will set `IRR_CLR[N]` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits `IRR[N]` in the register at this time.
+  At some point after the CPU accepts the interrupt, the CPU will set `~IRR_CLR[N]` to 1. If there are any interrupt bits to be cleared by the CPU (such as IT0, IT1) instead of clearing the interrupt register bits (such as TI, RI) by software, you should clear the corresponding interrupt request bits `IRR[N]` in the register at this time.
 
 
-  ```
-    ╔═════════════╗        ╔═════════╗
-    ║          CLK╟───/8───╢>        ║
-   ┌╢IRR_IN     IO╟───/8───╢   IRR  Q╟─┐
-   |║      IRR_CLR╟───/8───╢         ║ |                    
-   |╚═════════════╝        ╚═════════╝ |                      
-   └───────────────────────────────────┘                                   
-  ```
   Here is an example of IRR logic.
 
   ``` 
@@ -142,7 +124,7 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
     CLK ────────────────────────╢>CLK   Q╟─┐
     IRQ ───────────────┐  ╔═╗   ║ IRR[0] ║ |     
                    ╔═╗ └──╢|╟───╢ D      ║ |     
-  /IRR_CLR[N]──────╢&╟────╢ ║   ╚════════╝ |                  
+  ~IRR_CLR[0]──────╢&╟────╢ ║   ╚════════╝ |                  
                  ┌─╢ ║    ╚═╝              | 
                  | ╚═╝                     |            
                  └─────────────────────────┘        
@@ -168,14 +150,15 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
 |   A0    |         |        |         |         |       |       |   |   |
 |   98    | (SCON)  |  SBUF  |         |         |       |       |   |   |
 |   90    |  (P1)   |        |         |         |       |       |   |   |
-|   88    |  TCON   |        |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
+|   88    |  TCON   | (TMOD) |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
 |   80    |  (P0)   | **SP** | **DPL** | **DPH** |       |       |   |   |
 
 
-#### P0, P1
+#### P0(0x80), P1(0x90)
 |      Bit      |  7  |  6  |  5  |  4  |  3  | 2   |  1  |  0  |
 |:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
+
 `P0` `P1` are connect to 8 digit 7-segment display.
 `P0`'s each bit was used to select the digit,
  `P0[0]` coressponds to digtal 0(far right) and `P0[7]` is used to select digit 7 (far left).
@@ -184,22 +167,33 @@ However, if you are lazy or intreasted in peripherals, don't worry, It's not pow
  P1 is used to light the segments in one digit, `P1[0]` to `P1[7]` are corresponding to `a~g, dp`.
 
 
-#### TCON
+#### TCON(0x88)
 |      Bit      |  7  |  6  |  5  |  4  |  3  |  2  |  1  |  0  |
 |:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |     Name      | TF1 | TR1 | TF0 | TR0 | IE1 | IT1 | IE0 | IT0 |
 | Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
 
-All bits in this TCON are readable and writable and it's function is consistent with the standand.
+All bits in this TCON are readable and writable and it's function is consistent with the standand. 
   - IT0 : The interrupt type of external interrupt 0. When it is 0, the type is level trigger, otherwise, it is falling edge trigger.
   - IE0 : Interrupt 0 flag, set to 1 when  external interrupt 0 occurred, automatically cleared when returning from the corresponding interrupt routine(return by RETI).
   - IT1, IE1 : Same function as interrupt 0, just relevant to interrupt 1.
 
-  - TR0: Timmer0 enable bit, timmer0 only counts when it is 0.
+  - TR0: Timmer0 enable bit, timmer0 only start to count when it is 1.
   - TF0: Timmer1 overflow bit, set when Timmer0 is overflows(set).
   - TR1, TF1: Same function as Timmer0, just relevant to timmer1.
+#### TMOD(0x89)
+|      Bit      |  7  |  6   | 5 | 4 |  3  |  2  | 1 | 0 |
+|:-------------:|:---:|:----:|:-:|:-:|:---:|:---:|:-:|:-:|
+|     Name      |GATE1| C/~T1| X | X |GATE0|C/~T0| X | X |
+| Accessibility | R/W | R/W  | X | X | R/W | R/W | X | X |
 
-#### TL0, TH0, TL1, TH1
+  The function of timmer is different from standard.
+
+  - GATE_n : When TR_n is 1, The timmer_n will only start to count when ~XINT_n is 1.
+  - C/~T_n : When TR_n is 1, regarding the GATE_n, the timmer_n will count 1 when there is falling edge at ~XINT_n.
+
+  
+#### TL0(0x8A), TL1(0x8B), TH0(0x8C), TH1(0x8D)
 |      Bit      | 7 - 0 |
 |:-------------:|:-----:|
 | Accessibility |   W   |
@@ -207,17 +201,17 @@ All bits in this TCON are readable and writable and it's function is consistent 
 TLn and THn will form a 16-bit timmer named 'timmern', when you write value to TLn and THn, you are actully writing the reaload value for this timmern,
 and the timmern will automatically load the value when overflow or timmer is disabled.
 
-``` python
+``` MIPS
 MOV TL0, 0x00
-MOV TH0, 0xFF  # count from 0xFF00  to 0xFFFF, 0x100 cycle total.
-MOV TCON, 0x20 # eable timmer 0
+MOV TH0, 0xFF  ; count from 0xFF00  to 0xFFFF, 0x100 cycle total.
+MOV TCON, 0x20 ; eable timmer 0
 
 INT_TIMMER0:
   #do something
   reti
 ```
 
-#### SCON
+#### SCON(0x98)
 |      Bit      | 7 | 6 | 5 | 4 | 3 | 2 |  1  |  0  |
 |:-------------:|:-:|:-:|:-:|:-:|:-:|:--|:---:|:---:|
 |     Name      | X | X | X | X | X | X | TI  | RI  |
@@ -225,29 +219,29 @@ INT_TIMMER0:
 
 This register is used to indicate SBUF's state. 
   - RI: set when SBUF received a byte.
-  - TI: set when byte in SBUF was sent.
+  - TI: set when byte in SBUF was sent. actually the simulator will can send the data immediately, but we have this bit just for letting the same code be suitable to hardware.
 
- notice: RI and TI won't be cleared by hardware.
+ notice: you should set TI at first place before sending any data. RI and TI won't be cleared by hardware.
 
 
-``` python
-# interrupt routine example
+``` MIPS
+; interrupt routine example
 INT_SERIAL:
   JB  RI, SERIAL_REC:
   JB  TI, SERIAL_SENT:
-  #opss! what's wrong here?
+  ;opss! what's wrong here?
 SERIAL_REC:
-  #do something relate to recived byte
+  ;do something relate to recived byte
   CLR RI 
   reti
 
 SERIAL_SENT:
-  #do something relate to byte sent
+  ;do something relate to byte sent
   CLR TI
   reti
 ```
 
-#### SBUF
+#### SBUF(0x99)
 |      Bit      | 7 - 0 |
 |:-------------:|:-----:|
 | Accessibility |  R/W  |

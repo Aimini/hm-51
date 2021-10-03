@@ -25,11 +25,11 @@ usage = """
         spiltbytebin.py input.txt 3
 
         input.txt1
-            AB
+            AD
         input.txt2
-            CD    
+            BE    
         input.txt3
-            EF
+            CF
 """
 
 if len(sys.argv) < 3:

@@ -132,14 +132,14 @@ def generate_low_by_op(ci, f,  b, a):
         RH = ci << 3
     elif f == 0x7: # XCHD/EXTB
         RL = b
-        # EXTB A,B(BIDX)
-        # extract BIT ,BIT =  A[B], BIT at Q[7]
+        # EXTB A(BIDX),B
+        # extract BIT ,BIT =  B[A], BIT at Q[7]
         #
-        # for example A = 0110 1001
-        # if B = 0, Q = 1 000 0000, CO = 1
-        # if B = 1, Q = 0 000 0000, CO = 0
-        # if B = 3, Q = 1 000 0000, CO = 1
-        # in low part we just care of A in range [3:0],
+        # for example B = 0110 1001
+        # if A = 0, Q = 1 000 0000, CO = 1
+        # if A = 1, Q = 0 000 0000, CO = 0
+        # if A = 3, Q = 1 000 0000, CO = 1
+        # in low part we just care of B[3:0],
         # and beacause of output bit is in Q[7], we must send extracted bit
         # to high part by using co.
         co = get_bit(b, a & 7)
@@ -230,8 +230,8 @@ def generate_high_by_op(ci, f, b, a):
     elif f == 0x7:  #XCHD/EXTB
         #XCHD
         RL = a
-        # EXTB A,B(BIDX)
-        # extract BIT ,BIT =  A[B], BIT at Q[7] and co
+        # EXTB A(BIDX),B
+        # extract BIT ,BIT =  B[A], BIT at Q[7] and co
         bidx = a & 7
         if bidx < 4:
             co = ci

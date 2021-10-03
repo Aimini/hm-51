@@ -163,10 +163,9 @@ if __name__ == "__main__":
         'file of the simulation should in output directory')
     arg_parser.add_argument(
         '-B', '--data-bus', dest='data_bus', action='store_const', const=True, default=False,
-        help='dump data_bus'
-        'file of the simulation should in output directory')
+        help='dump data_bus')
     arg_parser.add_argument('-m', '--module-path', action='store', type=str, dest='module_path',
-         help='the path of module where to earch the script_file. required if you need to generate ASM file.')
+         help='the path of module where to search the script_file. required if you need to generate ASM file.')
     arg_parser.add_argument('-f', '--script-file', action='store', type=str, dest='script_file',
         required=True,
          help='python script file name in given "--module-path"  that can get a "ams_test" object, we only need the name of file, so path like ../xx/test.py, a/b/test.hex, will all fine')

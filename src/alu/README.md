@@ -580,18 +580,18 @@ Cooperate with [INSB](#6-insb) function, it's simply transmit signal `C` from lo
 
 #### 7. EXTB
 
-`Q[7] = A[B[2:0]]` .
+`Q[7] = B[A[2:0]]` .
 |       7       | 6-4 |                3                 | 2-0 |
 |:-------------:|:---:|:--------------------------------:|:---:|
-| A\[B\[2:0\]\] |  X  | B\[2:0\] < 4 ? A\[B\[2:0\]\] : 0 |  X  |
+| B\[A\[2:0\]\] |  X  | A\[2:0\] < 4 ? B\[A\[2:0\]\] : 0 |  X  |
 
 Let see how it work.
 
-Usually, the B is the result of [BIDX](#11-bidx), so `B[2:0]` and `B[6:4]` is the same value, they are both the bit index.
+Usually, the A is the result of [BIDX](#11-bidx), so `A[2:0]` and `A[6:4]` is the same value, they are both the bit index.
 
-In low part, `B[2:0] < 4` meaing the bix you want get is in `A[3:0]` , we get the bit from it, but the final output of bit is in `Q[7]` , so we need send the bit from low part chip to high part chip, which what you see at `Q[3]` .
+In low part, `A[2:0] < 4` meaing the bit you want get is in `B[3:0]` , we get the bit from it, but the final output of bit is in `Q[7]` , so we need send the bit from low part chip to high part chip, which what you see at `Q[3]` .
 
-In high part, `B[2:0] < 4` meaing the bix you want get is in low part, so we set the `Q[7]` to the value of `C` . But if `B[2:0] >= 4` , we take bit from `A[7:4]` as output.
+In high part, `A[2:0] < 4` meaing the bit that you wanna get is in low part, so we set the `Q[7]` to the value of `C` . But if `A[2:0] >= 4` , we take bit from `B[7:4]` as output.
 
 #### 8. ISRSET
 

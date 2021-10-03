@@ -3,32 +3,8 @@
 ## Table of Cotents  <!-- omit in toc -->
 - [Introduction](#introduction)
 - [The Technical Points](#the-technical-points)
-  - [Clock Generator](#clock-generator)
-  - [Timming Constraint](#timming-constraint)
-  - [Hold Time](#hold-time)
-  - [Drive Capability](#drive-capability)
-    - [decoder](#decoder)
-    - [data bus](#data-bus)
 - [Hardware Resources](#hardware-resources)
-  - [Interrupt](#interrupt)
-  - [SFR map](#sfr-map)
-  - [TCON](#tcon)
-  - [TL0, TH0, TL1, TH1](#tl0-th0-tl1-th1)
-  - [SCON](#scon)
-  - [SBUF](#sbuf)
 - [Modules' pictures](#modules-pictures)
-  - [Clock Generator](#clock-generator-1)
-  - [MIPC and Decoder](#mipc-and-decoder)
-  - [RF](#rf)
-  - [ALU ,WR and BR](#alu-wr-and-br)
-  - [SR, RAM, ROM and XRAM](#sr-ram-rom-and-xram)
-  - [MISC](#misc)
-  - [SCON,TCON](#scontcon)
-  - [Serial Receiver(SBUF)](#serial-receiversbuf)
-  - [Serial Transmitter(SBUF)](#serial-transmittersbuf)
-  - [Timmer(TL0, TL1, TH0, TH1)](#timmertl0-tl1-th0-th1)
-  - [Prototype](#prototype)
-  - [output of the test program](#output-of-the-test-program)
 - [Some Problems](#some-problems)
   
 ## Introduction
@@ -43,9 +19,10 @@
 
   ![](doc_assets/async_ram_we.svg)
 
-  The simple solution is to freeze the data bus for one more cycle, which means writing to RAM/XRAM will take 2 cycles:
+  ~~The simple solution is to freeze the data bus for one more cycle, which means writing to RAM/XRAM will take 2 cycles:~~
 
-  ![](doc_assets/async_ram_we-sol-freeze-data.svg)
+  ~~![](doc_assets/async_ram_we-sol-freeze-data.svg)~~
+  **notice: do not use this one, the transient change in mipc while caused the glitch on the output of the decoder, then propagate to the tristate buffer of the data bus, then make the glitch on data bus too!**
   
   Since the duration of `WE` pulse is pretty short compare to one clock cycle, what I had done is to steal some time before rising edge of CLK to generate a tiny pulse of `CLKA`, then using `CLKA`, `RAM_WE` and NAND gate to generate `/RAM_WE_PULSE`.
 
@@ -53,7 +30,7 @@
 
   Actually, I'm not steal but use a higher frequency clock(mark as `XCLK`) and clock divider to generate the main clock(labeled `CLK`), then select the proper piece of `XCLK` as `CLKA`.
 
-  For example, I'm using a 12MHz `XCLK` and divide it into 1MHz `CLK`, that's how `CLKA` configured:
+  For example, I'm using a 6MHz `XCLK` and divide it into 1MHz `CLK`, that's how `CLKA` configured:
 
   ![](doc_assets/clock-generator.svg)
 
@@ -99,21 +76,15 @@ For my design, if you have glimpse of the ALU design, you will know that signifc
   ![](doc_assets/timming-Ts.svg)
 
   So `Ts = 123`, then according the datasheet and clock design, we have: 
-  - `Txclk = 1000/12`
+  - `Txclk = 1000/6`
   - `Trwe = 20`
   - `Trs = 0`(eqvialent)
   
 Now we can verify the timming constraint:
   -  `Tbr < n Txclk` => `623 < 1000`
   -  `Tp + Ts < n Txclk` => `684 < 1000`
-  -  `Tp + Trs < (n - 1) Txclk` => `561 < 916.666`
-  -  `Trwe < Txclk` => `20 < 83.333`
-
-Now we can verify the timming constraint:
-  -  `Tbr < n Txclk` => `623 < 1000`
-  -  `Tp + Ts < n Txclk` => `684 < 1000`
-  -  `Tp + Trs < (n - 1) Txclk` => `561 < 916.666`
-  -  `Trwe < Txclk` => `20 < 83.333`
+  -  `Tp + Trs < (n - 1) Txclk` => `561 < 833.33`
+  -  `Trwe < Txclk` => `20 < 166.66`
  
 Actually， it's totally fine in theory if you divide the `XCLK` by 9, but I still want a reguler frequency of `CLK` :
   -  `Tbr < n Txclk` => `623 < 750`
@@ -134,14 +105,16 @@ Actually， it's totally fine in theory if you divide the `XCLK` by 9, but I sti
 |        chip         | family |  IOH   | IIH | IOL  |          IIL          |
 |:-------------------:|:------:|:------:|:---:|:----:|:---------------------:|
 |         F00         |   F    |  -1m   | 20u | 20m  |         -600u         |
-|        LS138        |   LS   | -400u  | 20u |  8m  | -400u(-200u for data) |
-| LS153(data, select) |   LS   | -400u  | 20u |  8m  |         -400u         |
+|        LS138        |   LS   | -400u  | 20u |  8m  | -400u(select,en) -200u(data) |
+| LS153 |   LS   | -400u  | 20u(data) |  8m  |         -400u(data)         |
+| LS157 |   LS   | -400u  | 20u(data) |  8m  |         -400u(data)         |
 |        LS161        |   LS   | -400u  | 20u |  8m  |         -400u         |
 |        LS194        |   LS   | -400u  | 20u |  8m  |         -400u         |
 |        LS245        |   LS   |  -15m  | 20u | 24m  |         -200u         |
 |        LS541        |   LS   |  -15m  | 20u | 24m  |         -200u         |
 |       AT28C64       |  CMOS  | -400u  | 10u | 2.1m |         -10u          |
 |      IDT6116SA      |  CMOS  | -4000u | 10u |  8m  |         -10u          |
+|      IDT72220      |  CMOS  | -2000u | 10u |  8m  |         -10u          |
 |       DM85S68       |   ?    | -5200u | 50u | 16m  |         -250u         |
 
 According to the table, if we use the same series of chips, we can estimate the LS series can drive about 20 successors and CMOS can drive at least 40:
@@ -197,54 +170,53 @@ IcIL = -250-3*400-2*10-4*10-400 = -1910u
 
  *inputs in peripheral*
 
-| LS194 |    LS161     |
-|:-----:|:------------:|
-| SBUF  | TCON,TL0,TL1 |
-|       |   TH0,TH1    |
-|       |     SCON     |
+| LS194 |    LS161     | IDT72220 |
+|:-----:|:------------:|:--------:|
+| SBUF  | TCON,TL0,TL1 |   SBUF   |
+|       |   TH0,TH1    |          |
+|       | TUARTL,TUARTH|          |
+|       |     SCON     |          |
 ``` js
-IpIH = 20 + 7*20 = 160u
-IpIL = -400 - 7*400 = -3200u
+IpIH = 20 + 8*20 + 10 = 190u
+IpIL = -400 - 8*400 - 10 = -3610u
 ```
 
  *outputs*
-|       LS541        | IDT6116SA | AT28C64 |
-|:------------------:|:---------:|:-------:|
-|       ALUDH        |    RAM    |  ALUS   |
-|       ALUDL        |   XRAM    |   ROM   |
-|         RF         |           |         |
-| periphrial or SFRs |           |         |
+|       LS541        | IDT6116SA | AT28C64 | IDT72220 |
+|:------------------:|:---------:|:-------:|:--------:|
+|       ALUDH        |    RAM    |  ALUS   |   SBUF   |
+|       ALUDL        |   XRAM    |   ROM   |          |
+|         RF         |           |         |          |
+| periphrial or SFRs |           |         |          |
 
 ``` js
-IOH = max(-15000,-4000,-400) = -400u
-IOL = min( 24000, 8000, 2100) = 2100u
+IOH = max(-15000,-4000,-400, -2000) = -400u
+IOL = min( 24000, 8000, 2100, 8000) = 2100u
 ```
 Then we can calculate remaining drive capablity:
 ``` js
-IIH = IcIH + IpIH = 350u
-IIL = IcIL + IpIL = -5110u
+IIH = IcIH + IpIH = 380u
+IIL = IcIL + IpIL = -5520u
 
-IrOH = IOH + IIH = -50u
-IrOL = IOL + IIL = -3010u
+IrOH = IOH + IIH = -20u
+IrOL = IOL + IIL = -3420u
 ```
 
 Look at the poor drive capability of low logic level of AT28C64, it need 3010uA more in IOL! add a buffer for they(ALUS and ROM) can fix this problem, like add 74LS541:
 ``` js
-IOH = max(-15000,-4000,-15000)u = -4000u
-IOL = min(24000,  8000, 24000)u = 8000u
+IOH = max(-15000,-4000,-15000,-2000)u = -2000u
+IOL = min(24000,  8000, 24000, 8000)u = 8000u
 
-IrOH = -4000u + 350u = -3650u
-IrOL = 8000u + -5110u = 2890u
+IrOH = -2000u + 380u = -1620u
+IrOL = 8000u + -5520u = 2480u
 ```
 ## Hardware Resources
 ### Interrupt
 
    The IRRs is ordered by priority as IT0, TF0, IT1, TF1, TI, RI.
-   
-   **NOTICE:** TI and RI are assigned to seperate interrupt numbers, which will be cleared by hardware.
 
 
-### SFR map
+### SFR and Peripherals
  All available SFRs are listed in the following table, The internal SFR are marked in bold
  and the SFRs that only implement part of standard function will included in parentheses.
 | Address |    0    |   1    |    2    |    3    |   4   | 5     | 6 | 7 |
@@ -262,121 +234,151 @@ IrOL = 8000u + -5110u = 2890u
 |   A8    | **IE**  |        |         |         |       |       |   |   |
 |   A0    |         |        |         |         |       |       |   |   |
 |   98    | (SCON)  |  SBUF  |         |         |       |       |   |   |
-|   90    |         |        |         |         |       |       |   |   |
-|   88    | (TCON)  |        |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
-|   80    |         | **SP** | **DPL** | **DPH** |       |       |   |   |
+|   90    |  (P0DRV)|        |         |         |       |       |   |   |
+|   88    |  TCON   | (TMOD) |  (TL0)  |  (TL1)  | (TH0) | (TH1) |   |   |
+|   80    |  (P0)   | **SP** | **DPL** | **DPH** |       |       |   |   |
 
 
+#### P0(0x80)
+|      Bit      |  7  |  6  |  5  |  4  |  3  | 2   |  1  |  0  |
+|:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
 
+  A general port, in default state, it's output(via a resister) is weak. read P0 will get the value of the pin.
+#### P0DRV(0x90)
+|      Bit      |  7  |  6  |  5  |  4  |  3  | 2   |  1  |  0  |
+|:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
 
-
-### TCON
+  Control the drive capability of P0, `P0[n]` will output stronger current if `P0DRV[n]` is 1.
+#### TCON(0x88)
 |      Bit      |  7  |  6  |  5  |  4  |  3  |  2  |  1  |  0  |
 |:-------------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |     Name      | TF1 | TR1 | TF0 | TR0 | IE1 | IT1 | IE0 | IT0 |
 | Accessibility | R/W | R/W | R/W | R/W | R/W | R/W | R/W | R/W |
 
-All bits in this TCON are readable and writable and it's function is consistent with the standand.
+All bits in this TCON are readable and writable and it's function is consistent with the standand. 
   - IT0 : The interrupt type of external interrupt 0. When it is 0, the type is level trigger, otherwise, it is falling edge trigger.
   - IE0 : Interrupt 0 flag, set to 1 when  external interrupt 0 occurred, automatically cleared when returning from the corresponding interrupt routine(return by RETI).
   - IT1, IE1 : Same function as interrupt 0, just relevant to interrupt 1.
 
-  - TR0: Timmer0 enable bit, timmer0 only counts when it is 0.
+  - TR0: Timmer0 enable bit, timmer0 only start to count when it is 1.
   - TF0: Timmer1 overflow bit, set when Timmer0 is overflows(set).
   - TR1, TF1: Same function as Timmer0, just relevant to timmer1.
+#### TMOD(0x89)
+|      Bit      |  7  |  6   | 5 | 4 |  3  |  2  | 1 | 0 |
+|:-------------:|:---:|:----:|:-:|:-:|:---:|:---:|:-:|:-:|
+|     Name      |GATE1| C/~T1| X | X |GATE0|C/~T0| X | X |
+| Accessibility | R/W | R/W  | X | X | R/W | R/W | X | X |
 
-### TL0, TH0, TL1, TH1
+  The function of timmer is different from standard.
+
+  - GATE_n : When TR_n is 1, The timmer_n will only start to count when ~XINT_n is 1.
+  - C/~T_n : When TR_n is 1, regarding the GATE_n, the timmer_n will count 1 when there is falling edge at ~XINT_n.
+
+  
+#### TL0(0x8A), TL1(0x8B), TH0(0x8C), TH1(0x8D)
 |      Bit      | 7 - 0 |
 |:-------------:|:-----:|
 | Accessibility |   W   |
 
-TLn and THn will form a 16-bit timmer named 'timmern', when you write value to TLn and THn, you are actully writing the reaload value for this timmern,
-and the timmern will automatically load the value when overflow or timmer is disabled.
+TLn and THn will form a 16-bit timmer named `timmer_n`, when you write value to TLn and THn, you are actully writing the reaload value for this `timmer_n`,
+and the `timmer_n` will automatically load the value when overflow or timmer is disabled(`TRn` is 0).
 
-``` python
+``` MIPS
 MOV TL0, 0x00
-MOV TH0, 0xFF  # count from 0xFF00  to 0xFFFF, 0x100 cycle total.
-MOV TCON, 0x20 # eable timmer 0
+MOV TH0, 0xFF  ; count from 0xFF00  to 0xFFFF, 0x100 cycle total.
+MOV TCON, 0x20 ; eable timmer 0
 
 INT_TIMMER0:
-  #do something
+  ;do something
   reti
 ```
 
-### SCON
+#### SCON(0x98)
 |      Bit      | 7 | 6 | 5 | 4 | 3 | 2 |  1  |  0  |
 |:-------------:|:-:|:-:|:-:|:-:|:-:|:--|:---:|:---:|
-|     Name      | X | X | X | X | X | X | TI  | RI  |
-| Accessibility | X | X | X | X | X | X | R/W | R/W |
+|     Name      | X | X | X | REN | X | X | TI  | RI  |
+| Accessibility | X | X | X | R/W | X | X | R/W | R/W |
 
 This register is used to indicate SBUF's state. 
-  - RI: set when SBUF received a byte.
-  - TI: set when byte in SBUF was sent.
-  - 
- notice: RI and TI won't be cleared by hardware.
+  - RI: indicate if you can read data from `SBUF`. There is a FIFO in UART receiving port, if any data exists in FIFO, the FIFO will pop out the most top data to SBUF and set `RI` to 1 after each time you clear `RI`.
+  - TI: indicate if  if you can write data to `SBUF`. There is a FIFO in UART sending port, `TI` is just a flag to show if any space in the FIFO, you don't need to clear it.
+  - REN: the UART will only receive data when this is 1.
+
+ notice: you should set `TI` at first place before sending any data. `RI` and `TI` won't be cleared by hardware.
 
 
-``` python
-# interrupt routine example
+``` MIPS
+; interrupt routine example
 INT_SERIAL:
   JB  RI, SERIAL_REC:
   JB  TI, SERIAL_SENT:
-  #opss! what's wrong here?
+  ;opss! what's wrong here?
 SERIAL_REC:
-  #do something relate to recived byte
+  ;do something relate to recived byte
   CLR RI 
   reti
 
 SERIAL_SENT:
-  #do something relate to byte sent
-  CLR TI
+  ;do something relate to byte sent
   reti
 ```
 
-### SBUF
+#### SBUF(0x99)
 |      Bit      | 7 - 0 |
 |:-------------:|:-----:|
 | Accessibility |  R/W  |
 
-Writing a byte to SBUF will start the process of sending bytes via UART,
- while reading SBUF will read the most recently received byte.
+Writing a byte to SBUF will send the byte to the sending FIFO, And the UART will send all data in FIFO automatically.
+
+ Reading SBUF will read the most recently received byte, 
  
+
  ## Modules' pictures
- ### Clock Generator
- ![](doc_assets/pic/mod-CLK-GEN.JPG)
+ ### Core board
+ ![](doc_assets/pic/core_board.jpg)
 
- ### MIPC and Decoder
- ![](doc_assets/pic/mod-MIPC-decoder.JPG)
+ ### UART
+ ![](doc_assets/pic/uart.JPG)
 
-  ### RF
- ![](doc_assets/pic/mod-RF.JPG)
+  ### Timer of UART
+ ![](doc_assets/pic/uart_timmer.JPG)
 
- ### ALU ,WR and BR
- ![](doc_assets/pic/mod-ALU-BR.JPG)
+ ### Interrupt and timer
+ ![](doc_assets/pic/interrupt_timer.JPG)
 
- ### SR, RAM, ROM and XRAM
- ![](doc_assets/pic/mod-RAMROMXRAM.JPG)
+ ### Finished core board
+ ![](doc_assets/pic/finished_core_board.jpg)
  
-  ### MISC
- ![](doc_assets/pic/mod-MISC.JPG)
+  ### Assembled board
+ ![](doc_assets/pic/assembled_board.jpg)
 
-  ### SCON,TCON
- ![](doc_assets/pic/mod-SCON-TCON.JPG)
+ ![](doc_assets/pic/assembled_board_2.jpg)
 
- ### Serial Receiver(SBUF)
- ![](doc_assets/pic/mod-SBUF-r.JPG)
-
- ### Serial Transmitter(SBUF)
- ![](doc_assets/pic/mod-SBUF-t.JPG)
-
-  ### Timmer(TL0, TL1, TH0, TH1)
- ![](doc_assets/pic/mod-Timmer.JPG)
-
- ### Prototype
- ![](doc_assets/pic/prototype.JPG)
-
- ### output of the test program
- ![](doc_assets/pic/test-output.JPG)
-
+  ### Test
+  ![](doc_assets/pic/test1.gif)
  ## Some Problems
-When I plug in the T0 and T1 modules, the CPU will work abnormally. It seems that it's a problem with the drive capacity of the data bus. I would recommand your guys to use the 74HC series.
+  ### Solid a pin to the GND accidently 
+
+  Actually I thought it must be that the chip had broken, because whatever the input is, the output is always 0. I tried to replace the chip but the result remained the same. then I suspected that all chips are broken. but the chips are working perfectly under my test code. then I checked the output carefully, to watch the  PCB layout file, to measure the connection of the wire, 
+  
+  yes...finally I found that, a decoupling capacitor is placed close to the pin, so I thought the pin is connected to power or ground and soldered the pin and the capacitor together.
+
+
+  ### Forgot to connect reset pin of a register. 
+  the second, I use a register to control the CE, WE, OE of th ROM, I forgot to connect the reset pin! But No matter what the value of the reset pin the register thinks is, if the register once be reset to 0, the ROM will works fine.
+
+  This problem only occurs after you use this register (meaning you try to program the ROM) and then reset the circuit. The register may be in a quantum superposition state, reset or still maintain the last value. But at most time, it will be reset.
+
+  whatever, I found this bug...
+
+  ### A 6 MHz crystal oscillator
+
+  The current design uses a 6 MHz oscillator, which is divided by 6 to generate the CPU clock.
+  
+  But originally, I chose a 12Mhz oscillator and divided it by 12. Unfortunately, it didn't work well. after several inspection, I found it related to the RAM and XRAM. So I started to suspect it's problem of `CLKA` then I replaced oscillator with a 6MHz one, yes, it did be solved.
+
+  I guess it must be some nosie arround the `CLKA` signal such as ringing, ground bouncing. But I don't have oscilloscope.
+
+  whatever, I solved it.
